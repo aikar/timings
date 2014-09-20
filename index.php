@@ -12,6 +12,7 @@
  *
  */
 
+require_once "init.php";
 
 $file = str_replace(array("\r\n", "\r"), "\n", Util::sanitize($file));
 

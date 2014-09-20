@@ -8,3 +8,9 @@ if (TIMINGS_ENV == 'dev') {
 	error_reporting(E_ALL & ~E_NOTICE);
 	ini_set('display_errors', true);
 }
+
+spl_autoload_register(function($cls) {
+	if (file_exists("lib/$cls.php")) {
+		require_once "lib/$cls.php";
+	}
+});

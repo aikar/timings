@@ -16,7 +16,7 @@ class SpigotTimings {
 
 	function collectData() {
 		/*
-		 * The PasteLoader will parse for POSTed data and then
+		 * The PasteLoader will parse for POSTed data and then redirect with ?cache=
 		 */
 		PasteLoader::check();
 
