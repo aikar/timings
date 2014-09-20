@@ -54,7 +54,7 @@
 			$pct_tot_raw = ($time[0] / ($sample ? $sample : $total));
 			$pct_tot = Util::pct($pct_tot_raw, 1, 10, 50, 20, 10);
 			$origevent = $event;
-			if (preg_match("/\.([a-zA-Z0-9\$_]+::.+)/s", $event, $em)) {
+			if (preg_match('/\.([a-zA-Z0-9\$_]+::.+)/s', $event, $em)) {
 				$event = $em[1];
 			}
 			$event = trim($event);
