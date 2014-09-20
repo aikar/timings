@@ -50,3 +50,6 @@
 		$("#info-" + $(btn).attr('info')).dialog({width: "80%", modal: true});
 	}
 </script>
+
+<?php
+

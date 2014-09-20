@@ -115,7 +115,7 @@ $playerTicks = 0;
 $totalTimings = 0;
 $totalViolations = 0;
 $activatedEntityTicks = 0;
-$report = array_sort($report, 'Total', SORT_DESC);
+$report = Util::array_sort($report, 'Total', SORT_DESC);
 foreach ($report as &$rep) {
 	arsort($rep);
 	array_walk($rep, function (&$ent, $k) use (&$totalViolations, &$totalTimings, &$total, &$entityTicks, &$numTicks, &$playerTicks, &$activatedEntityTicks) {
@@ -161,10 +161,6 @@ if ($highEntityTick) {
 require_once "template/reports.php";
 require_once "template/footer.php";
 
-
-function showInfo($id, $title) {
-	return "<b>$title</b><button class='learnmore' info='$id' onclick='showInfo(this)' title='$title'>Learn More</button></b>";
-}
 $buffer = ob_get_contents();
 ob_end_clean();
 echo $head;
@@ -187,7 +183,7 @@ if ($activatedEntityTicks && $numTicks) {
 	if ($totalAvgEntities > 800 && $activatedPercent > .70) {
 		$highEntityTick = true;
 	}
-	$activatedPercent = pct($activatedPercent, 1, 5, 75, 60, 50);
+	$activatedPercent = Util::pct($activatedPercent, 1, 5, 75, 60, 50);
 	echo number_format($activatedAvgEntities, 2);
 	echo ' / ';
 	echo number_format($totalAvgEntities, 2);
@@ -212,62 +208,5 @@ echo "</span><hr />";
 
 echo $buffer;
 
-function pct($pct, $mod = 1, $pad = 8, $high = 0, $med = 0, $low = 0)
-{
-	$num = round($pct * 100, 2);
-	$prefix = '';
-	$suffix = '';
-	if ($num * $mod > $high && $high != 0) {
-		$prefix = '<span style="background:black;color:red">';
-		$suffix = '</span>';
-	} elseif ($num * $mod > $med && $med != 0) {
-		$prefix = '<span style="background:black;color:orange">';
-		$suffix = '</span>';
-	} else if ($num * $mod > $low && $low != 0) {
-		$prefix = '<span style="background:black;color:yellow">';
-		$suffix = '</span>';
-	}
-	return $prefix . pad(number_format($num, 2) . '%', $pad) . $suffix;
-}
-
-function pad($string, $len, $right = false)
-{
-	return str_pad($string, $len, ' ', $right ? STR_PAD_RIGHT : STR_PAD_LEFT);
-}
-
-function array_sort($array, $on, $order = SORT_ASC)
-{
-	$new_array = array();
-	$sortable_array = array();
-
-	if (count($array) > 0) {
-		foreach ($array as $k => $v) {
-			if (is_array($v)) {
-				foreach ($v as $k2 => $v2) {
-					if ($k2 == $on) {
-						$sortable_array[$k] = $v2;
-					}
-				}
-			} else {
-				$sortable_array[$k] = $v;
-			}
-		}
-
-		switch ($order) {
-			case SORT_ASC:
-				asort($sortable_array);
-				break;
-			case SORT_DESC:
-				arsort($sortable_array);
-				break;
-		}
-
-		foreach ($sortable_array as $k => $v) {
-			$new_array[$k] = $array[$k];
-		}
-	}
-
-	return $new_array;
-}
 
 ?>
