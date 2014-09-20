@@ -32,7 +32,7 @@ class SpigotTimings {
 		} else if (!empty($_GET['cache'])) {
 			$id = $_GET['cache'];
 		}
-		$id = Util::sanitizeMD5($id);
+		$id = Util::sanitizeHex($id);
 		if ($id) {
 			$this->data = $cache->get($id);
 			if (!$this->data && $storage) {

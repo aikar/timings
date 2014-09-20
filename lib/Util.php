@@ -12,7 +12,7 @@ class Util {
 		return htmlentities(strip_tags($inp));
 	}
 
-	public static function sanitizeMD5($id) {
+	public static function sanitizeHex($id) {
 		return preg_replace('/[^a-zA-Z0-9]/ms', '', $id);
 	}
 }
