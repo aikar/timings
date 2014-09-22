@@ -11,6 +11,15 @@ class SpigotTimings {
 	private $data;
 	private $checkedType = false;
 	private $isLegacy = false;
+	private $id;
+
+	/**
+	 * @return mixed
+	 */
+	public function getId() {
+		return $this->id;
+	}
+
 	function __construct() {
 	}
 
@@ -35,6 +44,7 @@ class SpigotTimings {
 			$id = $_GET['cache'];
 		}
 		$id = Util::sanitizeHex($id);
+		$this->id = $id;
 
 		if ($id) {
 			$this->data = $cache->get($id);
@@ -53,7 +63,7 @@ class SpigotTimings {
 	}
 
 	public function convertFromLegacy() {
-		$this->data = (new LegacyConverter($this->data))->convert();
+		$this->data = (new LegacyConverter($this, $this->data))->convert();
 	}
 
 	public function loadData() {

@@ -26,10 +26,15 @@ class LegacyConverter {
 	private $total;
 	private $sample;
 	private $version;
+	/**
+	 * @var SpigotTimings
+	 */
+	private $timings;
 
-	function __construct($data)
+	function __construct(SpigotTimings $timings, $data)
 	{
 		$this->data = $data;
+		$this->timings = $timings;
 	}
 
 	public function processData() {
@@ -42,7 +47,7 @@ class LegacyConverter {
 		if (preg_match('/Sample time (.+?) \(/', $file, $sampm)) {
 			$this->sample = Util::xml($sampm[1]);
 		}
-		$subminecraft = 'Minecraft - Breakdown (counted by other timings, not included in total)  ';
+		$subminecraft = 'Minecraft';
 		$this->report = array($subminecraft => array());
 		$report =& $this->report;
 		$current = null;
@@ -100,8 +105,8 @@ class LegacyConverter {
 						if (!isset($report[$subminecraft][$m[0]])) {
 							$report[$subminecraft][$m[0]] = $data;
 						} else {
-							$report[$subminecraft][$m[0]][0] += $m[1];;
-							$report[$subminecraft][$m[0]][1] += $m[2];;
+							$report[$subminecraft][$m[0]][0] += $m[1];
+							$report[$subminecraft][$m[0]][1] += $m[2];
 						}
 					}
 				}
@@ -153,29 +158,47 @@ class LegacyConverter {
 		$this->processData();
 		$handlers = '';
 		$i = 0;
+		$_total = 0;
+		$_count = 0;
 		foreach ($this->report as $group => $timings) {
 			$group = Util::xml($group);
+			if (strstr($group, "*org.bukkit.craftbukkit")) {
+				// Bugged data?
+				continue;
+			}
 			foreach ($timings as $name => $v) {
 				$i++;
 				$name = Util::xml($name);
 				$count = $v[1];
 				$total = $v[0];
+				$_total += $total;
+				$_count += $count;
+				$root = ($group == "Minecraft" && substr($name, 0, 2) != "**" ? 1 : 0);
+				if (!$root && $group == "Minecraft") {
+					$name = substr($name, 3);
+				}
 				$handlers .= <<<XML
-		<handler id="$i" parent="0" group="$group" name="$name" count="$count" total="$total" lagCount="0" lagTotal="0" />
+		<handler id="$i" parent="0" group="$group" name="$name" count="$count" total="$total" lagCount="0" lagTotal="0" root="$root"/>
+
 XML;
 			}
 		}
-
+		$estimatedCost = 150 * $_count;
 		$xml .= <<<XML
 
 		<timings>
+<!-- Automatically converted from {$this->timings->getId()} to Timings v2 format
+-->
 		<version>{$this->version}</version>
-		<maxplayers>200</maxplayers>
+		<maxplayers>1000</maxplayers>
 		<server>Spigot Server</server>
 		<sampletime>{$this->sample}</sampletime>
-		<system name="" version="" arch="" totalmem="0" usedmem="0" maxme="0" runtime="0" />
+		<system name="" version="" arch="" totalmem="0" usedmem="0" maxmem="0" runtime="{$this->sample}" />
 		<ping min="0" max="0" avg="0" />
-		<handlers>$handlers</handlers>
+		<!-- Guessing at cost basis to 150 -->
+		<handlers base="150" count="$_count" cost="$estimatedCost">
+		$handlers
+		</handlers>
 		<worlds />
 		<plugins />
 		<spigotconfig />
