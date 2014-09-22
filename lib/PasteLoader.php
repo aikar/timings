@@ -14,7 +14,7 @@ class PasteLoader {
 		if ($data && strlen($data) < MAX_CACHE_BYTES) {
 			$key = md5($data);
 			Cache::put($key, $data);
-			header("Location: timings.php?cache=$key");
+			header("Location: ?cache=$key");
 			exit;
 		}
 	}
