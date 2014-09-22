@@ -71,6 +71,10 @@ class Util {
 		return $new_array;
 	}
 
+	public static function xml($attr) {
+		return htmlentities($attr);
+	}
+
 	public static function showInfo($id, $title) {
 		return "<b>$title</b><button class='learnmore' info='$id' onclick='showInfo(this)' title='$title'>Learn More</button></b>";
 	}

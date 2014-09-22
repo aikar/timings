@@ -60,7 +60,8 @@ class SpigotTimings {
 		if ($this->isLegacy()) {
 			$this->convertFromLegacy();
 		}
-
+		header("Content-Type: text/xml");
+		echo $this->data;
 
 	}
 

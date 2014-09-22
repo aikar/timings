@@ -8,6 +8,7 @@ if (TIMINGS_ENV == 'dev') {
 	error_reporting(E_ALL & ~E_NOTICE);
 	ini_set('display_errors', true);
 }
+require_once "lib/Util.php";
 
 spl_autoload_register(function($cls) {
 	if (file_exists("lib/$cls.php")) {

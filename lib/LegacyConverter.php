@@ -40,7 +40,7 @@ class LegacyConverter {
 		$file = preg_replace($spigotConfigPattern, "", $file);
 
 		if (preg_match('/Sample time (.+?) \(/', $file, $sampm)) {
-			$this->sample = $sampm[1];
+			$this->sample = Util::xml($sampm[1]);
 		}
 		$subminecraft = 'Minecraft - Breakdown (counted by other timings, not included in total)  ';
 		$this->report = array($subminecraft => array());
@@ -48,7 +48,7 @@ class LegacyConverter {
 		$current = null;
 		$this->version = '';
 		if (preg_match('/# Version (git-Spigot-)?(.*)/i', $file, $m)) {
-			$this->version = $m[2];
+			$this->version = Util::xml($m[2]);
 		}
 // legacy
 		$exclude = array('entityAIJump', 'entityAILoot', 'entityAIMove',
@@ -133,13 +133,13 @@ class LegacyConverter {
 					$converter->numTicks = max($ent[1], $converter->numTicks);
 				}
 				if ($k == '** entityBaseTick' || $k == 'entityBaseTick' || $k == '** tickEntity') {
-					$converter->entityTicks = $ent[1];
+					$converter->entityTicks = Util::xml($ent[1]);
 				}
 				if ($k == "** activatedTickEntity") {
-					$converter->activatedEntityTicks = $ent[1];
+					$converter->activatedEntityTicks = Util::xml($ent[1]);
 				}
 				if ($k == "** tickEntity - EntityPlayer") {
-					$converter->playerTicks = $ent[1];
+					$converter->playerTicks = Util::xml($ent[1]);
 				}
 			});
 		}
@@ -150,16 +150,57 @@ class LegacyConverter {
 
 	public function convert() {
 		$xml = '<?xml version="1.0" encoding="UTF-8"?>';
-		$xml .= '<timings>';
 		$this->processData();
-
-		foreach ($this->report as $k => $v) {
-			echo "$k => " . print_r($v);
+		$handlers = '';
+		$i = 0;
+		foreach ($this->report as $group => $timings) {
+			$group = Util::xml($group);
+			foreach ($timings as $name => $v) {
+				$i++;
+				$name = Util::xml($name);
+				$count = $v[1];
+				$total = $v[0];
+				$handlers .= <<<XML
+		<handler id="$i" parent="0" group="$group" name="$name" count="$count" total="$total" lagCount="0" lagTotal="0" />
+XML;
+			}
 		}
 
+		$xml .= <<<XML
 
+		<timings>
+		<version>{$this->version}</version>
+		<maxplayers>200</maxplayers>
+		<server>Spigot Server</server>
+		<sampletime>{$this->sample}</sampletime>
+		<system name="" version="" arch="" totalmem="0" usedmem="0" maxme="0" runtime="0" />
+		<ping min="0" max="0" avg="0" />
+		<handlers>$handlers</handlers>
+		<worlds />
+		<plugins />
+		<spigotconfig />
+		<bukkitconfig />
+		</timings>
+XML;
 
 		return $xml;
-
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
