@@ -15,15 +15,10 @@
  */
 class LegacyConverter {
 
+	// NEW: https://gist.githubusercontent.com/anonymous/ebc590012c9594248859/raw/timings.xml
 	private $data;
 	private $report;
-	private $totalTimings;
-	private $activatedEntityTicks;
-	private $totalViolations;
-	private $playerTicks;
-	private $entityTicks;
-	private $numTicks;
-	private $total;
+
 	private $sample;
 	private $version;
 	/**
@@ -100,7 +95,6 @@ class LegacyConverter {
 							$active[$m[0]][1] += $m[2];
 						}
 
-						$active['Total'] += $m[1];
 					} else {
 						if (!isset($report[$subminecraft][$m[0]])) {
 							$report[$subminecraft][$m[0]] = $data;
@@ -112,45 +106,8 @@ class LegacyConverter {
 				}
 			}
 		}
-		$report[$subminecraft]['Total'] = intval($report['Minecraft']['Total']) - 1;
-
-
-		$this->total = 0;
-		$this->numTicks = 0;
-		$this->entityTicks = 0;
-		$this->playerTicks = 0;
-		$this->totalTimings = 0;
-		$this->totalViolations = 0;
-		$this->activatedEntityTicks = 0;
-
-		$report = Util::array_sort($report, 'Total', SORT_DESC);
-
-		$converter = $this;
-		foreach ($report as &$rep) {
-			arsort($rep);
-			array_walk($rep, function (&$ent, $k) use (&$converter) {
-				if ($k == 'Total') $converter->total += $ent;
-				$converter->totalTimings += $ent[1];
-				if (isset($ent[2]) && $k != '** Full Server Tick') {
-					$converter->totalViolations += $ent[2];
-				}
-				if (stristr($k, ' - entityBaseTick') || stristr($k, ' - entityTick') || $k == 'Full Server Tick') {
-					$converter->numTicks = max($ent[1], $converter->numTicks);
-				}
-				if ($k == '** entityBaseTick' || $k == 'entityBaseTick' || $k == '** tickEntity') {
-					$converter->entityTicks = Util::xml($ent[1]);
-				}
-				if ($k == "** activatedTickEntity") {
-					$converter->activatedEntityTicks = Util::xml($ent[1]);
-				}
-				if ($k == "** tickEntity - EntityPlayer") {
-					$converter->playerTicks = Util::xml($ent[1]);
-				}
-			});
-		}
-
-		$this->numTicks = max(1,$this->numTicks);
-		$this->total -= $report[$subminecraft]['Total'];
+		// Why did I do this?
+		//$report[$subminecraft]['Total'] = intval($report['Minecraft']['Total']) - 1;
 	}
 
 	public function convert() {

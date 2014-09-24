@@ -13,6 +13,12 @@ class SpigotTimings {
 	private $isLegacy = false;
 	private $id;
 
+	public static function init() {
+		$timings = new SpigotTimings();
+		$timings->collectData();
+		$timings->loadData();
+	}
+
 	/**
 	 * @return mixed
 	 */
@@ -20,7 +26,7 @@ class SpigotTimings {
 		return $this->id;
 	}
 
-	function __construct() {
+	private function __construct() {
 	}
 
 	public function collectData() {
@@ -72,6 +78,9 @@ class SpigotTimings {
 		}
 		header("Content-Type: text/xml");
 		echo $this->data;
+	}
+
+	public function getReport() {
 
 	}
 

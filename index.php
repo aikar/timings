@@ -14,9 +14,8 @@
 
 require_once "init.php";
 
-$timings = new SpigotTimings();
-$timings->collectData();
-$timings->loadData();
+SpigotTimings::init();
+
 //require_once "template/reports.php";
 //require_once "template/footer.php";
 
