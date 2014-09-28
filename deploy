@@ -1,0 +1,82 @@
+#!/bin/bash
+
+# Aikar timings deploy script
+
+#install location for prod
+prod="dev_prod"
+
+timestamp() {
+date +"%F_%H.%M.%S"
+}
+backup="$(timestamp)"
+
+c() {
+if [ $2 ]; then
+	echo -e "\e[$1;$2m"
+else
+	echo -e "\e[$1m"
+fi
+}
+ce() {
+echo -e "\e[m"
+}
+
+if [ ! -d ".git" ]; then
+	echo "Please run from dev checkout";
+	return 1;
+fi
+echo "$(c 32)You are in git branch$(ce)"
+git branch || exit
+echo
+echo "$(c 32)Current branch:$(ce)"
+echo
+git log -n 1 | cat -
+
+echo
+echo "$(c 32)Current production:$(ce)"
+echo
+git log -n 1 production | cat -
+
+echo
+read -p "$(c 32)  Are you sure you want to deploy this? Press $(c 1 33)y/n $(ce)" -n 1 -r
+echo ""
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+echo "$(c 1 31)Aborted$(ce)"
+exit;
+fi
+
+echo "$(c 33)Resetting production branch to here..$(ce)"
+(
+	git branch -f production || exit 1
+	git push origin production || exit 1
+) || (
+	echo "$(c 1 31)  Failed to push up to github$(ce)"
+	exit 1
+) || exit
+echo "$(c 33)Branched and pushed up to github$(ce)..$(ce)"
+
+(
+	cd .. || exit 1
+	mkdir -p prod_backups || exit 1
+	cp -r $prod prod_backups/$backup || exit 1
+) || (
+	echo "$(c 1 31)  Failed to backup$(ce)"
+	exit 1
+) || exit
+echo "$(c 33)Backed up locally$(ce).."
+(
+	cd ../$prod
+	git pull || exit 1
+	git branch -f production origin/production || exit 1
+	git checkout production || exit 1
+) || (
+	cd ..
+	echo "Moving to failed"
+	mkdir failed
+	mv $prod failed/$backup
+	echo "Copying backup"
+	cp -r prod_backups/$backup $prod || exit 1
+	echo "$(c 1 31)  Something went wrong on rollout, restored backup"
+	exit 1
+) || exit 1
+echo "$(c 32)==== Production rollout complete ====$(ce)"
