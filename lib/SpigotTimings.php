@@ -30,11 +30,6 @@ class SpigotTimings {
 	}
 
 	public function collectData() {
-		/*
-		 * The PasteLoader will parse for POSTed data and then redirect with ?cache=
-		 */
-		PasteLoader::check();
-
 		/**
 		 * @var StorageService $storage
 		 */
@@ -46,17 +41,19 @@ class SpigotTimings {
 			$storage = new UBPasteService();
 		} else if (!empty($_GET['id'])) {
 			$id = $_GET['id'];
+		} else if (TIMINGS_ENV == 'dev') {
+			$id = 'c871022ab1c14e068293d8431dadfd43'; // DEV test
 		}
 		$id = Util::sanitizeHex($id);
 		$this->id = $id;
 
 		if ($id) {
-			$this->data = $storage->get($id);
+			$this->data = trim($storage->get($id));
 		}
 	}
 	public function isLegacy() {
 		if (!$this->checkedType) {
-			$start = substr($this->data, 0, 4);
+			$start = substr($this->data, 0, 5);
 			$this->isLegacy = $start != '<?xml';
 			$this->checkedType = true;
 		}

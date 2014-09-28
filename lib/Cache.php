@@ -22,9 +22,9 @@ class Cache {
 		return null;
 	}
 	public static function put($key, $data) {
-		if (strlen($data) < MAX_CACHE_BYTES) {
-			file_put_contents(self::getFile($key).".gz", gzencode($data));
-		}
+		$file = self::getFile($key).".gz";
+		$data = gzencode($data);
+		file_put_contents($file, $data);
 	}
 	private static function getFile($key) {
 		return self::$base . md5($key);
