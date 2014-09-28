@@ -3,7 +3,7 @@
 # Aikar timings deploy script
 
 #install location for prod
-prod="dev_prod"
+prod="prod"
 
 timestamp() {
 date +"%F_%H.%M.%S"
