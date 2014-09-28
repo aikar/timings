@@ -35,28 +35,23 @@ class SpigotTimings {
 		 */
 		PasteLoader::check();
 
-		$cache = new CacheStorage();
-		$storage = null;
+		/**
+		 * @var StorageService $storage
+		 */
+		$storage = new CacheStorage();
 		$id = null;
-		$_GET['url'] =6870867;
 
 		if (!empty($_GET['url'])) {
 			$id = $_GET['url'];
 			$storage = new UBPasteService();
 		} else if (!empty($_GET['id'])) {
 			$id = $_GET['id'];
-			$storage = new GistService();
-		} else if (!empty($_GET['cache'])) {
-			$id = $_GET['cache'];
 		}
 		$id = Util::sanitizeHex($id);
 		$this->id = $id;
 
 		if ($id) {
-			$this->data = $cache->get($id);
-			if (!$this->data && $storage) {
-				$this->data = $storage->get($id);
-			}
+			$this->data = $storage->get($id);
 		}
 	}
 	public function isLegacy() {
@@ -68,13 +63,10 @@ class SpigotTimings {
 		return $this->isLegacy;
 	}
 
-	public function convertFromLegacy() {
-		$this->data = (new LegacyConverter($this, $this->data))->convert();
-	}
-
 	public function loadData() {
 		if ($this->isLegacy()) {
-			$this->convertFromLegacy();
+			LegacyHandler::load($this->data);
+			die;
 		}
 		header("Content-Type: text/xml");
 		echo $this->data;
