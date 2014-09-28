@@ -17,7 +17,7 @@ class Cache {
 		} else if (file_exists($file)) {
 			$data = trim(file_get_contents($file));
 			self::put($key, $data);
-			//unlink($file); // Disabled for now while legacy code is the primary code
+			unlink($file);
 		}
 		return null;
 	}
