@@ -180,20 +180,19 @@ ob_start();
 </head>
 <body>
 <?php echo '<!-- ' . $totalTimings . ' -->'; ?>
-
+<div style="text-align: center;margin: auto">
 <div style="text-align:center;width: 310px;margin:auto;float: left">
 	<br />
-	&copy; Aikar of <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Empire Minecraft</a>
-	<a href="http://github.com/aikar/timings" title="Source Code">[source]</a>
-	<br />
+	&copy; Aikar of <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Empire Minecraft</a><br />
+	<a href="http://github.com/aikar/timings" title="Source Code">[source]</a> <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=payments%40starlis%2ecom&lc=US&item_name=Aikar%20Timings&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHostedGuest">[donate]</a>
 	<br />
 	<p>For the advanced timings data, you need to use Spigot:
 		<a href="http://spigotmc.org" title="Spigot">spigotmc.org</a>.<br />
 	</p>
 </div>
 
-<div class="topright" style="float: left">
-
+<div class="topright" style="float: right;margin:0 20px">
+<br/>
 <div style="text-align:center;margin:auto">
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<!-- Spigot Timings -->
@@ -207,6 +206,7 @@ ob_start();
 </div>
 
 
+</div>
 </div>
 <?php
 /*
