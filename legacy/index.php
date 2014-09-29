@@ -39,6 +39,7 @@ if (preg_match('/# Version (git-Spigot-)?(.*)/i', $legacyData, $m)) {
 $exclude = array('entityAIJump', 'entityAILoot', 'entityAIMove',
 	'entityTickRest', 'entityAI', 'entityBaseTick');
 foreach (explode("\n", $legacyData) as $line) {
+	if (empty($line)) continue;
 	if ($line[0] != " " && $line[0] != "#") {
 		$plugin = $line;
 		if ($plugin == 'Custom Timings' || $plugin == "Minecraft - ** indicates it&#39;s already counted by another timing") {
@@ -480,6 +481,7 @@ function showInfo($id, $title) {
 $buffer = ob_get_contents();
 ob_end_clean();
 echo $head;
+$highEntityTick = false;
 if ($legacyData) {
 	echo "<span class='head'><pre>";
 
@@ -490,7 +492,7 @@ if ($legacyData) {
 	if ($version) {
 		echo "  - Spigot Version: $version\n";
 	}
-	$highEntityTick = false;
+
 	$activatedPercent = 1;
 	if ($activatedEntityTicks && $numTicks) {
 		echo "Average Entities: ";
