@@ -28,7 +28,7 @@ if (preg_match('/Sample time (.+?) \(/', $legacyData, $sampm)) {
 	$sample = $sampm[1];
 }
 $subkey = 'Minecraft - Breakdown (counted by other timings, not included in total)  ';
-$report = array($subkey => array());
+$report = array($subkey => array('Total' => 0), 'Minecraft' => array('Total' => 0));
 $current = null;
 $version  = '';
 if (preg_match('/# Version (git-Spigot-)?(.*)/i', $legacyData, $m)) {
@@ -92,7 +92,9 @@ foreach (explode("\n", $legacyData) as $line) {
 						$report[$subkey][$tasks][1] += $m[2];
 					}
 				}
-				$active['Total'] += $m[1];
+				if (!empty($m[1])) {
+					@$active['Total'] += $m[1];
+				}
 			} else {
 				if (!isset($report[$subkey][$m[0]])) {
 					$report[$subkey][$m[0]] = $data;
@@ -104,7 +106,7 @@ foreach (explode("\n", $legacyData) as $line) {
 		}
 	}
 }
-$report[$subkey]['Total'] = intval($report['Minecraft']['Total']) - 1;
+$report[$subkey]['Total'] = intval(@$report['Minecraft']['Total']) - 1;
 
 
 $total = 0;
