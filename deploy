@@ -67,8 +67,9 @@ echo "$(c 33)Backed up locally$(ce).."
 (
 	cd ../$prod
 	git fetch origin || exit 1
-	git checkout origin/production || exit 1
-	git branch -f production origin/production || exit 1
+	git checkout production || exit 1
+	git branch -f production_backup || exit 1
+	git reset --hard origin/production || exit 1
 	git checkout production || exit 1
 ) || (
 	cd ..
