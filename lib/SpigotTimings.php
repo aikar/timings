@@ -61,16 +61,19 @@ class SpigotTimings {
 	}
 
 	public function loadData() {
-		if ($this->isLegacy()) {
+		if ($this->isLegacy() || TIMINGS_ENV != 'dev') {
 			LegacyHandler::load($this->data);
 			die;
 		}
-		header("Content-Type: text/xml");
-		echo $this->data;
+		if (!empty($_GET['raw'])) {
+			header("Content-Type: text/xml");
+			echo $this->data;
+			die;
+		}
+		require "template/index.php";
 	}
 
 	public function getReport() {
 
 	}
-
 } 

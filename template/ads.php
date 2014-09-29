@@ -1,7 +1,7 @@
 <?php
 function ad_banner_top_right() {
 ?>
-	<div syle="text-align:center;margin:auto">
+
 		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 		<!-- Spigot Timings -->
 		<ins class="adsbygoogle responsive-ad"
@@ -11,12 +11,10 @@ function ad_banner_top_right() {
 		<script>
 			(adsbygoogle = window.adsbygoogle || []).push({});
 		</script>
-	</div>
 <?php
 }
 function ad_banner_bottom() {
 ?>
-	<div style="text-align:center;margin:auto">
 		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 		<!-- Spigot Timings - Bottom -->
 		<ins class="adsbygoogle responsive-ad"
@@ -27,10 +25,9 @@ function ad_banner_bottom() {
 			(adsbygoogle = window.adsbygoogle || []).push({});
 		</script>
 
-	</div>
 <?php
 }
-function ad_link_top() {
+function ad_link() {
 ?>
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<!-- Spigot Timings Links -->
