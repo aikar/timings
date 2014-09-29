@@ -34,6 +34,7 @@ $version  = '';
 if (preg_match('/# Version (git-Spigot-)?(.*)/i', $legacyData, $m)) {
 	$version = $m[2];
 }
+$highEntityTick = false;
 
 // legacy
 $exclude = array('entityAIJump', 'entityAILoot', 'entityAIMove',
@@ -48,7 +49,7 @@ foreach (explode("\n", $legacyData) as $line) {
 		$report[$plugin] = array();
 		$current =& $report[$plugin];
 	} else if ($line[0] == " ") {
-		if (preg_match("/(.+?) Time: (\\d+) Count: (\\d+) Avg: (\\d+)/", $line, $m)) {
+		if (preg_match("/(.+?) Time: (\\d+) Count: (\\d+) Avg: /", $line, $m)) {
 			array_shift($m);
 
 			$active =& $current;
@@ -73,14 +74,14 @@ foreach (explode("\n", $legacyData) as $line) {
 				}
 				$active =& $report[trim($xplugin)];
 			}
-			$data = array(@$m[1], $m[2], $m[4]);
+
+			$data = array(@$m[1], $m[2]);
 			if (!in_array($m[0], $exclude) && substr($m[0], 0, 2) != "**") {
 				if (!isset($current[@$m[0]])) {
 					$active[$m[0]] = $data;
 				} else {
 					$active[$m[0]][0] += $m[1];
 					$active[$m[0]][1] += $m[2];
-					$active[$m[0]][2] += $m[4];
 				}
 				$tasks = '** Tasks';
 				if (substr($m[0], 0, 5) == "Task:") {
@@ -89,7 +90,6 @@ foreach (explode("\n", $legacyData) as $line) {
 					} else {
 						$report[$subkey][$tasks][0] += $m[1];
 						$report[$subkey][$tasks][1] += $m[2];
-						$report[$subkey][$tasks][2] += $m[4];
 					}
 				}
 				$active['Total'] += $m[1];
@@ -97,9 +97,8 @@ foreach (explode("\n", $legacyData) as $line) {
 				if (!isset($report[$subkey][$m[0]])) {
 					$report[$subkey][$m[0]] = $data;
 				} else {
-					$report[$subkey][$m[0]][0] += $m[1];;
-					$report[$subkey][$m[0]][1] += $m[2];;
-					$report[$subkey][$m[0]][2] += $m[4];;
+					$report[$subkey][$m[0]][0] += $m[1];
+					$report[$subkey][$m[0]][1] += $m[2];
 				}
 			}
 		}
@@ -481,7 +480,7 @@ function showInfo($id, $title) {
 $buffer = ob_get_contents();
 ob_end_clean();
 echo $head;
-$highEntityTick = false;
+
 if ($legacyData) {
 	echo "<span class='head'><pre>";
 
