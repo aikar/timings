@@ -26,7 +26,7 @@ class Cache {
 		$data = gzencode($data);
 		file_put_contents($file, $data);
 	}
-	private static function getFile($key) {
+	public static function getFile($key) {
 		return self::$base . md5($key);
 	}
 }
