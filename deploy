@@ -48,7 +48,7 @@ fi
 echo "$(c 33)Resetting production branch to here..$(ce)"
 (
 	git branch -f production || exit 1
-	git push origin production || exit 1
+	git push origin production -f || exit 1
 ) || (
 	echo "$(c 1 31)  Failed to push up to github$(ce)"
 	exit 1
