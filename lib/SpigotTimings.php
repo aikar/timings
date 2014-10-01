@@ -53,8 +53,8 @@ class SpigotTimings {
 	}
 	public function isLegacy() {
 		if (!$this->checkedType) {
-			$start = substr($this->data, 0, 5);
-			$this->isLegacy = $start != '<?xml';
+			$start = substr($this->data, 0, 2);
+			$this->isLegacy = $start != '{"';
 			$this->checkedType = true;
 		}
 		return $this->isLegacy;
@@ -66,8 +66,8 @@ class SpigotTimings {
 			die;
 		}
 		if (!empty($_GET['raw'])) {
-			header("Content-Type: text/xml");
-			echo $this->data;
+			header("Content-Type: text/plain");
+			echo json_encode(json_decode($this->data), JSON_PRETTY_PRINT);
 			die;
 		}
 		require "template/index.php";
