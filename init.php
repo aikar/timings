@@ -24,4 +24,7 @@ spl_autoload_register(function($cls) {
 	if (file_exists("lib/$cls.php")) {
 		require_once "lib/$cls.php";
 	}
+	if (file_exists("lib/json/$cls.php")) {
+		require_once "lib/json/$cls.php";
+	}
 });

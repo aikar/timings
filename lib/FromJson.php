@@ -56,6 +56,9 @@ trait FromJson {
 		if (class_exists($className) && in_array(__TRAIT__, class_uses($className))) {
 			$data = call_user_func("$className::createObject", $data);
 		}
+		if (preg_match('/@mapper (.+?)\s/', $comment, $matches)) {
+			$data = call_user_func($matches[1], $data);
+		}
 		return $data;
 	}
 }
