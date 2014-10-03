@@ -23,10 +23,16 @@ class Security {
 			Log::severe("Sent Bad GZIP Data");
 			Uploader::error("Invalid Format");
 		}
+	}
 
-		$json = json_decode($data);
-		if (empty($json)) {
+	public function validateJson($data) {
+		if (empty($data)) {
 			Uploader::error("Invalid Format");
+		}
+
+		$count = count($data['data']);
+		if ($count > 25) { // 24 frames + current snapshot
+			Uploader::error("Too many History Entries. Please lower your history-length. Server only supports a max of 24 entries, which is calculated as length / interval.");
 		}
 	}
 
