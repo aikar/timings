@@ -9,11 +9,14 @@
 
 class MinuteReport {
 	public $time;
-	// TODO: Finish classes
+
 	/**
-	 * @var TPSRecord
+	 * @var float
 	 */
 	public $tps;
+
+	// TODO: Finish classes
+	// TODO: Update FromJson to support array initilizing like this
 	/**
 	 * @var TicksRecord
 	 */

@@ -7,13 +7,17 @@
  * @license MIT
  */
 
-class TimingHandler extends TimingData {
+
+class HandlerGroup {
 	use FromJson;
 
 	/**
-	 * @index 5
-	 * @var TimingData[]
+	 * @index @key
 	 */
-	public $children;
+	public $name;
 
-}
+	/**
+	 * @var string[]
+	 */
+	public $handlers;
+} 

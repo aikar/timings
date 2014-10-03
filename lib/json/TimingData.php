@@ -8,11 +8,20 @@
  */
 
 class TimingData {
+	use FromJson;
 	/**
 	 * @index 0
 	 * @var int
 	 */
 	public $id;
+
+	/**
+	 * @index 0
+	 * @var string
+	 * @mapper TimingData::getName
+	 */
+	public $name;
+
 	/**
 	 * @index 1
 	 * @var int
@@ -33,4 +42,9 @@ class TimingData {
 	 * @var int
 	 */
 	public $lagTotal;
+
+	public static function getName($id, TimingData $obj, $prop, TimingsMaster $root, $key) {
+		// TODO: Figure out how to do this.
+		//$root->idmap->handlerMap
+	}
 } 

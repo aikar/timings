@@ -9,6 +9,7 @@
 
 
 class TimingHistory {
+	use FromJson;
 	public $id;
 	public $start;
 	public $end;
