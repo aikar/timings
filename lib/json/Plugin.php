@@ -8,6 +8,7 @@
  */
 
 class Plugin {
+	use FromJson;
 	/**
 	 * @index @key
 	 */

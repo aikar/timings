@@ -7,7 +7,7 @@
  * @license MIT
  */
 
-class TimingsSystemdata {
+class TimingsSystemData {
 	use FromJson;
 	public $timingcost;
 	public $name;

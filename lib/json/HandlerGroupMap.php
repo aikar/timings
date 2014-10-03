@@ -8,7 +8,7 @@
  */
 
 
-class HandlerGroup {
+class HandlerGroupMap {
 	use FromJson;
 
 	/**

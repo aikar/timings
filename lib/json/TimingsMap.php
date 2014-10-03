@@ -12,7 +12,7 @@ class TimingsMap {
 	use FromJson;
 	/**
 	 * @index handlers
-	 * @var HandlerGroup[]
+	 * @var HandlerGroupMap[]
 	 */
 	public $handlerMap;
 
