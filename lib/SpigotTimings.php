@@ -14,7 +14,9 @@ class SpigotTimings {
 	private $id;
 
 	public static function init() {
+		global $timings;
 		$timings = new SpigotTimings();
+		$GLOBALS['timings'] = $timings;
 		$timings->collectData();
 		$timings->loadData();
 	}
@@ -42,7 +44,7 @@ class SpigotTimings {
 		} else if (!empty($_GET['id'])) {
 			$id = $_GET['id'];
 		} else if (TIMINGS_ENV == 'dev') {
-			$id = 'c871022ab1c14e068293d8431dadfd43'; // DEV test
+			$id = '8cac6deaab1245a893ba5353a87b8d3d'; // DEV test
 		}
 		$id = Util::sanitizeHex($id);
 		$this->id = $id;
@@ -70,6 +72,7 @@ class SpigotTimings {
 			echo json_encode(json_decode($this->data), JSON_PRETTY_PRINT);
 			die;
 		}
+		$this->data = TimingsMaster::createObject(json_decode($this->data));
 		require "template/index.php";
 	}
 
