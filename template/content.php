@@ -2,6 +2,13 @@
 <hr />
 <div id="content">
 Dev site is still under development.
+
+<pre>
+<?php
+global $timings;
+var_dump($timings->data);
+?>
+</pre>
 </div>
 
 <hr />
