@@ -89,6 +89,16 @@ class Util {
 	public static function showInfo($id, $title) {
 		return "<b>$title</b><button class='learnmore' info='$id' onclick='showInfo(this)' title='$title'>Learn More</button></b>";
 	}
+
+	public static function flattenObject($data) {
+		$data = (array) $data;
+		foreach ($data as $k => $v) {
+			if (is_object($v)) {
+				$data[$k] = self::flattenObject($v);
+			}
+		}
+		return $data;
+	}
 }
 
 
