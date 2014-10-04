@@ -27,7 +27,7 @@ trait FromJson {
             $name = $prop->getName();
             $comment = $prop->getDocComment();
 
-            if (preg_match('/@index ([@\w\-]+)/', $comment, $matches)) {
+            if (preg_match('/@index\s+([@\w\-]+)/', $comment, $matches)) {
                 $name = $matches[1];
                 if ($name == '@key') {
                     $prop->setValue($obj, self::getPropertyFromJson($parentKey, $comment, $obj, $prop->getName(), $root, null));
@@ -77,7 +77,7 @@ trait FromJson {
      */
     private static function getPropertyFromJson($data, $comment, $obj, $prop, $root, $key = null) {
         $className = null;
-        if (preg_match('/@var ([\w_]+)(\[.*?\])?/', $comment, $matches)) {
+        if (preg_match('/@var\s+([\w_]+)(\[.*?\])?/', $comment, $matches)) {
             $className = $matches[1];
         }
         if (class_exists($className) && in_array(__TRAIT__, class_uses($className))) {
@@ -85,7 +85,7 @@ trait FromJson {
         } else if (!is_scalar($data)) {
             $data = Util::flattenObject($data);
         }
-        if (preg_match('/@mapper (.+?)\s/', $comment, $matches)) {
+        if (preg_match('/@mapper\s+(.+?)\s/', $comment, $matches)) {
             $data = call_user_func($matches[1], $data, $obj, $prop, $root, $key);
         }
 
