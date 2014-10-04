@@ -9,15 +9,16 @@
 
 
 class HandlerGroupMap {
-	use FromJson;
+    use FromJson;
 
-	/**
+    /**
 	 * @index @key
 	 */
-	public $name;
+    public $name;
 
-	/**
-	 * @var string[]
-	 */
-	public $handlers;
+    /**
+     * @index @value
+     * @var string[]
+     */
+    public $handlers;
 } 

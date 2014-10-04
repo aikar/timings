@@ -44,7 +44,7 @@ class SpigotTimings {
         } else if (!empty($_GET['id'])) {
             $id = $_GET['id'];
         } else if (TIMINGS_ENV == 'dev') {
-            $id = '8cac6deaab1245a893ba5353a87b8d3d'; // DEV test
+            $id = '39e4e66ed46b44e99f44a2ab062b47a8'; // DEV test
         }
         $id = Util::sanitizeHex($id);
         $this->id = $id;
@@ -75,6 +75,7 @@ class SpigotTimings {
             die;
         }
         $this->data = TimingsMaster::createObject(json_decode($this->data));
+        $GLOBALS['timings'] = $this->data;
         require "template/index.php";
     }
 

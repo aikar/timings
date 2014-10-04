@@ -10,15 +10,35 @@
 class TimingHistory {
     use FromJson;
 
+    /**
+     * @index @key
+     * @var int
+     */
     public $id;
+
     /**
      * @index s
      */
     public $start;
+
     /**
      * @index e
+     * @var int
      */
     public $end;
+
+    /**
+     * @index tk
+     * @var int
+     */
+    public $totalTicks;
+
+    /**
+     * @index tm
+     * @var int
+     */
+    public $totalTime;
+
     /**
      * @index h
      * @var TimingHandler[]
