@@ -8,16 +8,19 @@
  * @license MIT
  */
 class MinuteReport {
+    use FromJson;
+    /**
+     * @index t
+     * @var int
+     */
     public $time;
 
     /**
      * @var float
      */
     public $tps;
-
-    // TODO: Finish classes
-    // TODO: Update FromJson to support array initilizing like this
     /**
+     * @index tick
      * @var TicksRecord
      */
     public $ticks;
