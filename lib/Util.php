@@ -102,6 +102,22 @@ class Util {
 
         return $data;
     }
+
+    public static function has_trait($class, $traits) {
+        if (is_object($class)) {
+            $class = get_class($class);
+        }
+        if (!class_exists($class)) {
+            return false;
+        }
+        $uses = class_uses($class);
+        foreach ((array) $traits as $trait) {
+            if (!in_array($trait, $uses)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 

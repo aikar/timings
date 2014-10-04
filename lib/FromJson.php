@@ -16,10 +16,12 @@ trait FromJson {
         $class = __CLASS__;
         $ref = new ReflectionClass($class);
         $props = $ref->getProperties(ReflectionProperty::IS_PUBLIC);
-        $obj = new self();
-        if (in_array('FromJsonSingleton', class_uses($class))) {
+
+        if (Util::has_trait($class, 'Singleton')) {
             /** @noinspection PhpUndefinedMethodInspection */
-            self::getInstance($obj);
+            $obj = self::getInstance();
+        } else {
+            $obj = new self();
         }
 
 
@@ -90,8 +92,12 @@ trait FromJson {
         }
 
         if (preg_match('/@mapper\s+(.+?)\s/', $parent->comment, $matches)) {
-            $data = call_user_func($matches[1], $data, $parent);
-        } else if (class_exists($className) && in_array(__TRAIT__, class_uses($className))) {
+            $cb = $matches[1];
+            if (!strstr($cb, "::")) {
+                $cb = __CLASS__ . "::$cb";
+            }
+            $data = call_user_func($cb, $data, $parent);
+        } else if (Util::has_trait($className, __TRAIT__)) {
             $data = call_user_func("$className::createObject", $data, $parent);
         } else if (!is_scalar($data)) {
             $data = Util::flattenObject($data);
@@ -100,22 +106,7 @@ trait FromJson {
         return $data;
     }
 }
-trait FromJsonSingleton {
-    public static $instance = null;
 
-    /**
-     * @param null $set
-     *
-     * @return $this
-     */
-    public static function getInstance($set = null) {
-        static $instance = null;
-        if ($set != null) {
-            $instance = $set;
-        }
-        return $instance;
-    }
-}
 class FromJsonParent {
     /**
      * @var FromJsonParent

@@ -22,8 +22,16 @@ echo "totalTime: $totalTime - Timings cost: $cost - " . ($cost * $totalTimings) 
     . (($cost * $totalTimings) / ($timings->sampletime * 1000000000)) * 100;
 
 echo "<br />\n\n";
-var_dump($timings->data[190]);
-//var_dump($timings->idmap);
+foreach ($timings->data as $handlers) {
+    $lag = array_filter($handlers->handlers, function ($e) {
+
+        return $e->lagTotal > 10;
+    });
+    usort($lag, function ($a, $b) {
+        return $a->lagTotal > $b->lagTotal ? -1 : 1;
+    });
+    if (!empty($lag))print_r($lag);
+}
 ?>
 </pre>
 </div>

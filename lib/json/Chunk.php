@@ -23,28 +23,28 @@ class Chunk {
     public $chunkZ;
 
     /**
-     * @mapper Chunk::chunkToBlock
+     * @mapper chunkToBlock
      * @index x
      * @var int
      */
     public $blockX;
 
     /**
-     * @mapper Chunk::chunkToBlock
+     * @mapper chunkToBlock
      * @index z
      * @var int
      */
     public $blockZ;
 
     /**
-     * @mapper Chunk::getTileEntityName
+     * @mapper getTileEntityName
      * @index te
      * @var int[]
      */
     public $tileEntities;
 
     /**
-     * @mapper Chunk::getEntityName
+     * @mapper getEntityName
      * @index e
      * @var int[]
      */

@@ -8,7 +8,7 @@
  * @license MIT
  */
 class TimingsMaster {
-    use FromJson, FromJsonSingleton;
+    use FromJson, Singleton;
 
     public $version;
     public $maxplayers;

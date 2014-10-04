@@ -8,7 +8,7 @@
  * @license MIT
  */
 class TimingsMap {
-    use FromJson, FromJsonSingleton;
+    use FromJson, Singleton;
 
     /**
      * @index handlers

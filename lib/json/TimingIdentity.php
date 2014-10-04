@@ -15,7 +15,7 @@ class TimingIdentity {
      */
     public $name;
     /**
-     * @mapper TimingIdentity::getGroupName
+     * @mapper getGroupName
      * @index @key
      * @var string
      */
