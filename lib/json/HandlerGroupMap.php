@@ -17,7 +17,7 @@ class HandlerGroupMap {
 
     /**
      * @index @value
-     * @var string[]
+     * @var TimingIdentity[]
      */
     public $handlers;
 } 

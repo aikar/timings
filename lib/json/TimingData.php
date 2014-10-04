@@ -44,7 +44,7 @@ class TimingData {
      */
     public $lagTotal;
 
-    public static function getName($id, TimingData $obj, $prop, TimingsMaster $root, $key) {
+    public static function getName($id, FromJsonParent $parent) {
         // TODO: Figure out how to do this.
         //$root->idmap->handlerMap
     }

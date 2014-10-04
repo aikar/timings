@@ -44,7 +44,7 @@ class SpigotTimings {
         } else if (!empty($_GET['id'])) {
             $id = $_GET['id'];
         } else if (TIMINGS_ENV == 'dev') {
-            $id = '39e4e66ed46b44e99f44a2ab062b47a8'; // DEV test
+            $id = 'b037954709f8432ca64ca1db7f4ecfb2'; // DEV test
         }
         $id = Util::sanitizeHex($id);
         $this->id = $id;
