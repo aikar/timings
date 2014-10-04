@@ -10,9 +10,6 @@ trait FromJson {
      * @param                $rootData
      * @param FromJsonParent $parentObj
      *
-     * @internal param $data
-     * @internal param FromJsonParent $parentKey
-     *
      * @return $this
      */
     public static function createObject($rootData, $parentObj = null) {
@@ -20,6 +17,10 @@ trait FromJson {
         $ref = new ReflectionClass($class);
         $props = $ref->getProperties(ReflectionProperty::IS_PUBLIC);
         $obj = new self();
+        if (in_array('FromJsonSingleton', class_uses($class))) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            self::getInstance($obj);
+        }
 
 
         foreach ($props as $prop) {
@@ -48,11 +49,6 @@ trait FromJson {
             } else {
                 $data = null;
             }
-            if ($class == "HandlerGroupMap") {
-
-                //var_dump($index, $data);
-                //echo "\n";
-            }
 
             if ($data) {
 
@@ -63,7 +59,8 @@ trait FromJson {
                     $result = [];
                     foreach ($data as $key => $entry) {
                         $arrParent = new FromJsonParent($key, $comment, $result, $parent);
-                        $result[$key] = self::getData($entry, $arrParent);
+                        $thisData = self::getData($entry, $arrParent);
+                        $result[$arrParent->name] = $thisData;
                     }
                     $data = $result;
                 } else {
@@ -82,13 +79,8 @@ trait FromJson {
     }
 
     /**
-     * @param      $data    mixed
-     * @param      $comment string
-     * @param      $obj
-     * @param      $prop
-     * @param      $root
-     * @param null $key
-     *
+     * @param                $data
+     * @param FromJsonParent $parent
      * @return mixed
      */
     private static function getData($data, FromJsonParent $parent) {
@@ -97,19 +89,33 @@ trait FromJson {
             $className = $matches[1];
         }
 
-        if (class_exists($className) && in_array(__TRAIT__, class_uses($className))) {
+        if (preg_match('/@mapper\s+(.+?)\s/', $parent->comment, $matches)) {
+            $data = call_user_func($matches[1], $data, $parent);
+        } else if (class_exists($className) && in_array(__TRAIT__, class_uses($className))) {
             $data = call_user_func("$className::createObject", $data, $parent);
         } else if (!is_scalar($data)) {
             $data = Util::flattenObject($data);
-        }
-        if (preg_match('/@mapper\s+(.+?)\s/', $parent->comment, $matches)) {
-            $data = call_user_func($matches[1], $data, $parent);
         }
 
         return $data;
     }
 }
+trait FromJsonSingleton {
+    public static $instance = null;
 
+    /**
+     * @param null $set
+     *
+     * @return $this
+     */
+    public static function getInstance($set = null) {
+        static $instance = null;
+        if ($set != null) {
+            $instance = $set;
+        }
+        return $instance;
+    }
+}
 class FromJsonParent {
     /**
      * @var FromJsonParent

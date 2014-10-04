@@ -8,7 +8,7 @@
  * @license MIT
  */
 class TimingsMap {
-    use FromJson;
+    use FromJson, FromJsonSingleton;
 
     /**
      * @index handlers
@@ -33,4 +33,25 @@ class TimingsMap {
      * @var string[]
      */
     public $entityTypeMap;
+
+    /**
+     * @var TimingIdentity[]
+     */
+    private $idMap = array();
+    public function init() {
+        foreach ($this->handlerMap as $group) {
+            foreach ($group->handlers as $id => $handlerId) {
+                $this->idMap[$id] = $handlerId;
+            }
+        }
+    }
+
+    /**
+     * @param $id
+     *
+     * @return TimingIdentity
+     */
+    public static function getId($id) {
+        return self::getInstance()->idMap[$id];
+    }
 } 

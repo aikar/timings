@@ -22,7 +22,8 @@ echo "totalTime: $totalTime - Timings cost: $cost - " . ($cost * $totalTimings) 
     . (($cost * $totalTimings) / ($timings->sampletime * 1000000000)) * 100;
 
 echo "<br />\n\n";
-var_dump($timings->idmap);
+var_dump($timings->data[190]->handlers);
+//var_dump($timings->idmap);
 ?>
 </pre>
 </div>
