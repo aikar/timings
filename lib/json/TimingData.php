@@ -12,7 +12,7 @@ class TimingData {
 
     /**
      * @index 0
-     * @mapper TimingsMap::getId
+     * @mapper TimingsMap::getHandlerIdentity
      * @var TimingIdentity
      */
     public $id;

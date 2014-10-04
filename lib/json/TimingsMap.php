@@ -51,7 +51,35 @@ class TimingsMap {
      *
      * @return TimingIdentity
      */
-    public static function getId($id) {
+    public static function getHandlerIdentity($id) {
         return self::getInstance()->idMap[$id];
+    }
+
+    /**
+     * @param $id
+     *
+     * @return string
+     */
+    public static function getWorldName($id) {
+        return self::getInstance()->worldMap[$id];
+    }
+
+    /**
+     * @param $id
+     *
+     * @return string
+     */
+    public static function getEntityType($id) {
+        return self::getInstance()->entityTypeMap[$id];
+    }
+
+
+    /**
+     * @param $id
+     *
+     * @return string
+     */
+    public static function getTileEntityType($id) {
+        return self::getInstance()->tileEntityTypeMap[$id];
     }
 } 

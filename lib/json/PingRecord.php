@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Spigot Timings Parser
+ *
+ * Written by Aikar <aikar@aikar.co>
+ *
+ * @license MIT
+ */
 
 class PingRecord {
     use FromJson;

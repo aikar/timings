@@ -46,6 +46,11 @@ class TimingHistory {
     public $handlers;
 
     /**
+     * @index w
+     * @var World[]
+     */
+    public $worldData;
+    /**
      * @index mp
      * @var MinuteReport[]
      */
