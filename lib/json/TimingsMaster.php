@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spigot Timings Parser
  *
@@ -6,44 +7,44 @@
  *
  * @license MIT
  */
-
 class TimingsMaster {
-	use FromJson;
-	public $version;
-	public $maxplayers;
-	public $start;
-	public $end;
-	public $sampletime;
+    use FromJson;
 
-	// <privacy false>
-	public $server;
-	public $motd;
-	/**
-	 * @index online-mode
-	 */
-	public $onlinemode;
-	public $icon;
-	// </privacy false>
+    public $version;
+    public $maxplayers;
+    public $start;
+    public $end;
+    public $sampletime;
 
-	/**
-	 * @var TimingsSystemData
-	 */
-	public $system;
+    // <privacy false>
+    public $server;
+    public $motd;
+    /**
+     * @index online-mode
+     */
+    public $onlinemode;
+    public $icon;
+    // </privacy false>
 
-	/**
-	 * @var TimingsMap
-	 */
-	public $idmap;
+    /**
+     * @var TimingsSystemData
+     */
+    public $system;
 
-	/**
-	 * @var Plugin[]
-	 */
-	public $plugins;
+    /**
+     * @var TimingsMap
+     */
+    public $idmap;
 
-	/**
-	 * @var TimingHistory[]
-	 */
-	public $data;
+    /**
+     * @var Plugin[]
+     */
+    public $plugins;
+
+    /**
+     * @var TimingHistory[]
+     */
+    public $data;
 }
 
 

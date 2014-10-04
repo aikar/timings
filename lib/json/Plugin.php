@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spigot Timings Parser
  *
@@ -6,16 +7,16 @@
  *
  * @license MIT
  */
-
 class Plugin {
-	use FromJson;
-	/**
-	 * @index @key
-	 */
-	public $name;
+    use FromJson;
 
-	public $version;
-	public $description;
-	public $website;
-	public $authors;
+    /**
+     * @index @key
+     */
+    public $name;
+
+    public $version;
+    public $description;
+    public $website;
+    public $authors;
 } 

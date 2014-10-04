@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spigot Timings Parser
  *
@@ -6,24 +7,23 @@
  *
  * @license MIT
  */
-
 class MinuteReport {
-	public $time;
+    public $time;
 
-	/**
-	 * @var float
-	 */
-	public $tps;
+    /**
+     * @var float
+     */
+    public $tps;
 
-	// TODO: Finish classes
-	// TODO: Update FromJson to support array initilizing like this
-	/**
-	 * @var TicksRecord
-	 */
-	public $ticks;
-	/**
-	 * @var PingRecord
-	 */
-	public $ping;
+    // TODO: Finish classes
+    // TODO: Update FromJson to support array initilizing like this
+    /**
+     * @var TicksRecord
+     */
+    public $ticks;
+    /**
+     * @var PingRecord
+     */
+    public $ping;
 
 } 

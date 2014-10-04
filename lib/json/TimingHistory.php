@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spigot Timings Parser
  *
@@ -6,28 +7,27 @@
  *
  * @license MIT
  */
-
-
 class TimingHistory {
-	use FromJson;
-	public $id;
-	/**
-	 * @index s
-	 */
-	public $start;
-	/**
-	 * @index e
-	 */
-	public $end;
-	/**
-	 * @index h
-	 * @var TimingHandler[]
-	 */
-	public $handlers;
+    use FromJson;
 
-	/**
-	 * @index mp
-	 * @var MinuteReport[]
-	 */
-	public $minuteReports;
+    public $id;
+    /**
+     * @index s
+     */
+    public $start;
+    /**
+     * @index e
+     */
+    public $end;
+    /**
+     * @index h
+     * @var TimingHandler[]
+     */
+    public $handlers;
+
+    /**
+     * @index mp
+     * @var MinuteReport[]
+     */
+    public $minuteReports;
 } 

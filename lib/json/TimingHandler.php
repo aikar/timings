@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spigot Timings Parser
  *
@@ -6,14 +7,13 @@
  *
  * @license MIT
  */
-
 class TimingHandler extends TimingData {
-	use FromJson;
+    use FromJson;
 
-	/**
-	 * @index 5
-	 * @var TimingData[]
-	 */
-	public $children;
+    /**
+     * @index 5
+     * @var TimingData[]
+     */
+    public $children;
 
 }

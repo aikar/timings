@@ -14,7 +14,99 @@ Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
 version: 2.7.0
 */
-html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}del,ins{text-decoration:none;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:baseline;}sub{vertical-align:baseline;}legend{color:#000;}input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}input,button,textarea,select{*font-size:100%;}body{font:13px/1.231 arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}select,input,button,textarea,button{font:99% arial,helvetica,clean,sans-serif;}table{font-size:inherit;font:100%;}pre,code,kbd,samp,tt{font-family:monospace;*font-size:108%;line-height:100%;}
+html {
+	color: #000;
+	background: #FFF;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+	margin: 0;
+	padding: 0;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+fieldset, img {
+	border: 0;
+}
+
+address, caption, cite, code, dfn, em, strong, th, var, optgroup {
+	font-style: inherit;
+	font-weight: inherit;
+}
+
+del, ins {
+	text-decoration: none;
+}
+
+li {
+	list-style: none;
+}
+
+caption, th {
+	text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-size: 100%;
+	font-weight: normal;
+}
+
+q:before, q:after {
+	content: '';
+}
+
+abbr, acronym {
+	border: 0;
+	font-variant: normal;
+}
+
+sup {
+	vertical-align: baseline;
+}
+
+sub {
+	vertical-align: baseline;
+}
+
+legend {
+	color: #000;
+}
+
+input, button, textarea, select, optgroup, option {
+	font-family: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	font-weight: inherit;
+}
+
+input, button, textarea, select {
+	*font-size: 100%;
+}
+
+body {
+	font: 13px/1.231 arial, helvetica, clean, sans-serif;
+	*font-size: small;
+	*font: x-small;
+}
+
+select, input, button, textarea, button {
+	font: 99% arial, helvetica, clean, sans-serif;
+}
+
+table {
+	font-size: inherit;
+	font: 100%;
+}
+
+pre, code, kbd, samp, tt {
+	font-family: monospace;
+	*font-size: 108%;
+	line-height: 100%;
+}
 
 /*
  * XenForo Core CSS
@@ -30,116 +122,138 @@ body {
 }
 
 /* counteract the word-wrap setting in 'body' */
-pre, textarea
-{
+pre, textarea {
 	word-wrap: normal;
 }
 
-a:link,  a:visited {
+a:link, a:visited {
 	color: rgb(33, 123, 213);
 	text-decoration: none;
 }
 
 html, body {
-    padding: 0;
-    margin: 0;
+	padding: 0;
+	margin: 0;
 	height: 100%;
-    background-color: #F0F0F0;
-    color: #141414;
+	background-color: #F0F0F0;
+	color: #141414;
 	font-family: 'Trebuchet MS', Helvetica, Arial, sans-serif;
 	word-wrap: break-word;
 	line-height: 1.27;
 }
+
 .pre {
 	font-family: monospace;
 }
 
 .secondaryBar {
-    position: relative;
+	position: relative;
 }
+
 button {
-    float: left;
-    overflow: hidden;
-    margin: 5px;
+	float: left;
+	overflow: hidden;
+	margin: 5px;
 }
+
 .hidden {
-    display: none;
+	display: none;
 }
+
 .learnmore span {
 	padding: 2px 6px !important;
 }
+
 .learnmore {
-	font-family: "Verdana,​Arial,​sans-serif",serif;
+	font-family: "Verdana,​Arial,​sans-serif", serif;
 	height: 24px;
 	margin: 0 15px;
 	padding: 0 5px;
 	font-size: 1em !important;
 }
+
 div.title {
-    background: #CCC;
-    width: 100%;
-    padding: 3px;
+	background: #CCC;
+	width: 100%;
+	padding: 3px;
 }
+
 hr {
-    margin: 0;
+	margin: 0;
 }
+
 span.head pre {
-    padding: 0;
-    margin: 5px;
+	padding: 0;
+	margin: 5px;
 }
+
 pre {
-    tab-size: 4;
-    -moz-tab-size: 4;
-    -o-tab-size:  4;
+	tab-size: 4;
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
 }
+
 .sectionReport button {
-    float: none;
+	float: none;
 }
+
 hr {
 	clear: both;
 }
+
 pre {
 	margin: 0;
 }
+
 #header {
 	float: left;
 	width: 100%;
 	/*height: 100px;*/
 }
+
 #header-left {
 	width: 310px;
 	text-align: center;
 	float: left;
 }
+
 #header-right {
 
-	margin:10px 20px 0;
-	text-align:center;
+	margin: 10px 20px 0;
+	text-align: center;
 }
+
 #bottom-ad {
 	margin: 10px auto 40px;
-	text-align:center;
+	text-align: center;
 }
+
 #content {
 	padding: 20px 15px;
 }
+
 .ad_links {
 	clear: both;
-	margin:2px auto;
-	text-align:center;
+	margin: 2px auto;
+	text-align: center;
 }
+
 #body-wrap {
 
 }
-html, body, #body-wrap , #wrapper {
+
+html, body, #body-wrap, #wrapper {
 	min-height: 100%;
 }
+
 #wrapper {
 	margin: 0 auto -33px;
 }
+
 .push, #footer {
 	height: 33px;
 }
+
 #footer {
 	clear: both;
 	color: white;
@@ -147,31 +261,54 @@ html, body, #body-wrap , #wrapper {
 	opacity: .9;
 	padding: 0 15px;
 }
+
 #footer span {
 	line-height: 30px;
 	padding: 0 5px;
 }
-.responsive-ad { width: 320px; height: 50px; }
-@media(max-width: 700px) {
+
+.responsive-ad {
+	width: 320px;
+	height: 50px;
+}
+
+@media (max-width: 700px) {
 	#header-right {
 		width: 100%;
 		text-align: center !important;
 	}
 }
-@media(min-width: 750px) {
-	#header-right .responsive-ad { width: 468px; height: 60px; }
+
+@media (min-width: 750px) {
+	#header-right .responsive-ad {
+		width: 468px;
+		height: 60px;
+	}
 }
 
-@media(min-width: 600px) {
-	#bottom-ad .responsive-ad { width: 468px; height: 60px; }
+@media (min-width: 600px) {
+	#bottom-ad .responsive-ad {
+		width: 468px;
+		height: 60px;
+	}
 }
-@media(min-width: 750px) {
 
-	#bottom-ad .responsive-ad { width: 728px; height: 90px; text-align:right;}
+@media (min-width: 750px) {
+
+	#bottom-ad .responsive-ad {
+		width: 728px;
+		height: 90px;
+		text-align: right;
+	}
 }
-@media(min-width: 1084px) {
-	#header-right .responsive-ad { width: 728px; height: 90px; }
+
+@media (min-width: 1084px) {
+	#header-right .responsive-ad {
+		width: 728px;
+		height: 90px;
+	}
 }
+
 @media (max-width: 750px) {
 	#header-right .responsive-ad {
 		text-align: center !important;

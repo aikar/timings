@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spigot Timings Parser
  *
@@ -6,31 +7,30 @@
  *
  * @license MIT
  */
-
-
 class TimingsMap {
-	use FromJson;
-	/**
-	 * @index handlers
-	 * @var HandlerGroupMap[]
-	 */
-	public $handlerMap;
+    use FromJson;
 
-	/**
-	 * @index worlds
-	 * @var string[]
-	 */
-	public $worldMap;
+    /**
+     * @index handlers
+     * @var HandlerGroupMap[]
+     */
+    public $handlerMap;
 
-	/**
-	 * @index tileentity
-	 * @var string[]
-	 */
-	public $tileEntityTypeMap;
+    /**
+     * @index worlds
+     * @var string[]
+     */
+    public $worldMap;
 
-	/**
-	 * @index entity
-	 * @var string[]
-	 */
-	public $entityTypeMap;
+    /**
+     * @index tileentity
+     * @var string[]
+     */
+    public $tileEntityTypeMap;
+
+    /**
+     * @index entity
+     * @var string[]
+     */
+    public $entityTypeMap;
 } 

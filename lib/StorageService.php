@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spigot Timings Parser
  *
@@ -6,12 +7,11 @@
  *
  * @license MIT
  */
-
 abstract class StorageService {
-	public abstract function get($id);
+    public abstract function get($id);
 
-	protected function requestUrl($url) {
-		// TODO: Set UA etc
-		return file_get_contents($url);
-	}
+    protected function requestUrl($url) {
+        // TODO: Set UA etc
+        return file_get_contents($url);
+    }
 }
