@@ -19,7 +19,7 @@ foreach ($timings->data as $data) {
 }
 $cost = $timings->system->timingcost;
 echo "totalTime: $totalTime - Timings cost: $cost - " . ($cost * $totalTimings) . " - Pct: "
-    . (($cost * $totalTimings) / ($timings->sampletime*1000000000))*100;
+    . (($cost * $totalTimings) / ($timings->sampletime * 1000000000)) * 100;
 
 echo "<br />";
 var_dump($timings->data);

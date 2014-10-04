@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spigot Timings Parser
  *
@@ -6,14 +7,12 @@
  *
  * @license MIT
  */
-
-
 class HandlerGroupMap {
     use FromJson;
 
     /**
-	 * @index @key
-	 */
+     * @index @key
+     */
     public $name;
 
     /**

@@ -6,11 +6,11 @@
  * @license MIT
  */
 
-$(document).ready(function() {
-    $('#paste_toggle').click(function() {
-        $('#paste').toggle();
-    });
-    $('.show_rest').click(function() {
-        $(this).parent().find('.hidden').toggle();
-    })
+$(document).ready(function () {
+  $('#paste_toggle').click(function () {
+    $('#paste').toggle();
+  });
+  $('.show_rest').click(function () {
+    $(this).parent().find('.hidden').toggle();
+  })
 });

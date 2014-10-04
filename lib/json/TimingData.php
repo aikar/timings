@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spigot Timings Parser
  *
@@ -6,45 +7,45 @@
  *
  * @license MIT
  */
-
 class TimingData {
-	use FromJson;
-	/**
-	 * @index 0
-	 * @var int
-	 */
-	public $id;
+    use FromJson;
 
-	/**
-	 * @index 0
-	 * @var string
-	 * @mapper TimingData::getName
-	 */
-	public $name;
+    /**
+     * @index 0
+     * @var int
+     */
+    public $id;
 
-	/**
-	 * @index 1
-	 * @var int
-	 */
-	public $count;
-	/**
-	 * @index 2
-	 * @var int
-	 */
-	public $total;
-	/**
-	 * @index 3
-	 * @var int
-	 */
-	public $lagCount;
-	/**
-	 * @index 4
-	 * @var int
-	 */
-	public $lagTotal;
+    /**
+     * @index  0
+     * @var string
+     * @mapper TimingData::getName
+     */
+    public $name;
 
-	public static function getName($id, TimingData $obj, $prop, TimingsMaster $root, $key) {
-		// TODO: Figure out how to do this.
-		//$root->idmap->handlerMap
-	}
+    /**
+     * @index 1
+     * @var int
+     */
+    public $count;
+    /**
+     * @index 2
+     * @var int
+     */
+    public $total;
+    /**
+     * @index 3
+     * @var int
+     */
+    public $lagCount;
+    /**
+     * @index 4
+     * @var int
+     */
+    public $lagTotal;
+
+    public static function getName($id, TimingData $obj, $prop, TimingsMaster $root, $key) {
+        // TODO: Figure out how to do this.
+        //$root->idmap->handlerMap
+    }
 } 
