@@ -13,11 +13,46 @@ $(document).ready(function () {
   $('.show_rest').click(function () {
     $(this).parent().find('.hidden').toggle();
   });
+  var data = window.timingsData || {
+    history:[],
+    start: 1,
+    end: 1
+  };
+  var values = data.history;
+  var start = data.start;
+  var end = data.end;
 
-  $('#time-selector').slider({
-    values:window.timingsData.history,
-    range: true
+  var slider = $('#time-selector').slider({
+    min: 0,
+    max: values.length - 1,
+    values: [values.indexOf(start), values.indexOf(end)],
+    range: true,
+    slide: function(event, ui) {
+      start = values[ui.values[0]];
+      end = values[ui.values[1]];
+      updateRanges();
+      goRange();
+    }
   });
+  updateRanges();
+
+  var redirectTimer = 0;
+  function goRange() {
+    if (redirectTimer) {
+      clearTimeout(redirectTimer);
+    }
+    redirectTimer = setTimeout(function() {
+      window.location = "?id=" + data.id + "&start=" + start + "&end=" + end;
+    }, 5000);
+  }
+  function updateRanges() {
+    var startDate = new Date(start*1000);
+    var endDate = new Date(end*1000);
+    $('#start-time').text(startDate.toDateString());
+    $('#end-time').text(endDate.toDateString());
+  }
+  console.log(slider.slider("option", "value", 1));
+
 
   $('.learnmore').button();
 

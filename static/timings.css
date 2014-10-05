@@ -1,334 +1,58 @@
-/**
- * Spigot Timings Parser
- *
- * Written by Aikar <aikar@aikar.co>
- *
- * @license MIT
- */
+/******************************************************************************* The MIT License (MIT)  Copyright (c) 2014. Daniel Ennis (Aikar) <aikar@aikar.co>  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.  @license MIT *****************************************************************************/
+@import url(reset.css);
+/************************************** GENERAL ************************************ */
+body { height: 100%; background-color: #F0F0F0; color: #141414; font-family: "Trebuchet MS", Helvetica, Arial, sans-serif; word-wrap: break-word; line-height: 1; margin: 0; }
 
-/*
- * YUI reset-fonts.css
- *
-Copyright (c) 2009, Yahoo! Inc. All rights reserved.
-Code licensed under the BSD License:
-http://developer.yahoo.net/yui/license.txt
-version: 2.7.0
-*/
-html {
-	color: #000;
-	background: #FFF;
-}
+a:link, a:visited { color: #217bd5; text-decoration: none; }
 
-body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
-	margin: 0;
-	padding: 0;
-}
+pre, textarea { word-wrap: normal; }
 
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
+.hidden { display: none; }
 
-fieldset, img {
-	border: 0;
-}
+hr { margin: 0; clear: both; }
 
-address, caption, cite, code, dfn, em, strong, th, var, optgroup {
-	font-style: inherit;
-	font-weight: inherit;
-}
+pre { font-family: monospace; tab-size: 4; -moz-tab-size: 4; -o-tab-size: 4; margin: 0; }
 
-del, ins {
-	text-decoration: none;
-}
+/************************************** FOOTER ************************************ */
+html, body, #body-wrap, #wrapper { min-height: 100%; }
 
-li {
-	list-style: none;
-}
+#wrapper { margin: 0 auto -33px; }
 
-caption, th {
-	text-align: left;
-}
+.push, #footer { height: 33px; }
 
-h1, h2, h3, h4, h5, h6 {
-	font-size: 100%;
-	font-weight: normal;
-}
+#footer { clear: both; color: white; background: #111; opacity: 0.9; padding: 0 15px; }
 
-q:before, q:after {
-	content: '';
-}
+#footer span { line-height: 30px; padding: 0 5px; }
 
-abbr, acronym {
-	border: 0;
-	font-variant: normal;
-}
+#header { float: left; width: 100%; }
 
-sup {
-	vertical-align: baseline;
-}
+/*height: 100px */
+#header-left { width: 310px; text-align: center; float: left; }
 
-sub {
-	vertical-align: baseline;
-}
+#header-right { margin: 10px 20px 0; text-align: center; }
 
-legend {
-	color: #000;
-}
+#bottom-ad { margin: 10px auto 40px; text-align: center; }
 
-input, button, textarea, select, optgroup, option {
-	font-family: inherit;
-	font-size: inherit;
-	font-style: inherit;
-	font-weight: inherit;
-}
+#content { padding: 20px 15px; }
 
-input, button, textarea, select {
-	*font-size: 100%;
-}
+.ad_links { clear: both; margin: 2px auto; text-align: center; }
 
-body {
-	font: 13px/1.231 arial, helvetica, clean, sans-serif;
-	*font-size: small;
-	*font: x-small;
-}
+.responsive-ad { width: 320px; height: 50px; }
 
-select, input, button, textarea, button {
-	font: 99% arial, helvetica, clean, sans-serif;
-}
+#history-selector { width: 500px; height: 100px; position: relative; padding: 0; margin: 10px auto; text-align: center; }
 
-table {
-	font-size: inherit;
-	font: 100%;
-}
+body .ui-slider .ui-slider-handle { height: 57px !important; }
 
-pre, code, kbd, samp, tt {
-	font-family: monospace;
-	*font-size: 108%;
-	line-height: 100%;
-}
+#tps-graph, #time-selector { position: absolute; top: 0; left: 0; width: 500px; height: 50px; padding: 0; }
 
-/*
- * XenForo Core CSS
- *
- */
+#header-right { width: 100%; text-align: center !important; }
 
-html {
+#header-right .responsive-ad { width: 468px; height: 60px; }
 
-}
+#bottom-ad .responsive-ad { width: 468px; height: 60px; }
 
-body {
+@media (min-width: 750px) { #bottom-ad .responsive-ad { width: 728px; height: 90px; text-align: right; } }
+@media (min-width: 1084px) { #header-right .responsive-ad { width: 728px; height: 90px; } }
+@media (max-width: 750px) { #header-right .responsive-ad { text-align: center !important; } }
 
-}
-
-/* counteract the word-wrap setting in 'body' */
-pre, textarea {
-	word-wrap: normal;
-}
-
-a:link, a:visited {
-	color: rgb(33, 123, 213);
-	text-decoration: none;
-}
-
-html, body {
-	padding: 0;
-	margin: 0;
-	height: 100%;
-	background-color: #F0F0F0;
-	color: #141414;
-	font-family: 'Trebuchet MS', Helvetica, Arial, sans-serif;
-	word-wrap: break-word;
-	line-height: 1.27;
-}
-
-.pre {
-	font-family: monospace;
-}
-
-.secondaryBar {
-	position: relative;
-}
-
-button {
-	float: left;
-	overflow: hidden;
-	margin: 5px;
-}
-
-.hidden {
-	display: none;
-}
-
-.learnmore span {
-	padding: 2px 6px !important;
-}
-
-.learnmore {
-	font-family: "Verdana,​Arial,​sans-serif", serif;
-	height: 24px;
-	margin: 0 15px;
-	padding: 0 5px;
-	font-size: 1em !important;
-}
-
-div.title {
-	background: #CCC;
-	width: 100%;
-	padding: 3px;
-}
-
-hr {
-	margin: 0;
-}
-
-span.head pre {
-	padding: 0;
-	margin: 5px;
-}
-
-pre {
-	tab-size: 4;
-	-moz-tab-size: 4;
-	-o-tab-size: 4;
-}
-
-.sectionReport button {
-	float: none;
-}
-
-hr {
-	clear: both;
-}
-
-pre {
-	margin: 0;
-}
-
-#header {
-	float: left;
-	width: 100%;
-	/*height: 100px;*/
-}
-
-#header-left {
-	width: 310px;
-	text-align: center;
-	float: left;
-}
-
-#header-right {
-
-	margin: 10px 20px 0;
-	text-align: center;
-}
-
-#bottom-ad {
-	margin: 10px auto 40px;
-	text-align: center;
-}
-
-#content {
-	padding: 20px 15px;
-}
-
-.ad_links {
-	clear: both;
-	margin: 2px auto;
-	text-align: center;
-}
-
-#body-wrap {
-
-}
-
-html, body, #body-wrap, #wrapper {
-	min-height: 100%;
-}
-
-#wrapper {
-	margin: 0 auto -33px;
-}
-
-.push, #footer {
-	height: 33px;
-}
-
-#footer {
-	clear: both;
-	color: white;
-	background: #111;
-	opacity: .9;
-	padding: 0 15px;
-}
-
-#footer span {
-	line-height: 30px;
-	padding: 0 5px;
-}
-
-.responsive-ad {
-	width: 320px;
-	height: 50px;
-}
-#history-selector {
-	width: 500px;
-	height: 100px;
-	position: relative;
-	padding:0;
-	margin: 10px auto;
-	text-align: center;
-}
-body .ui-slider .ui-slider-handle {
-	height: 57px !important;
-}
-#tps-graph, #time-selector {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 500px;
-	height: 50px;
-	padding:0;
-}
-@media (max-width: 700px) {
-	#header-right {
-		width: 100%;
-		text-align: center !important;
-	}
-}
-
-@media (min-width: 750px) {
-	#header-right .responsive-ad {
-		width: 468px;
-		height: 60px;
-	}
-}
-
-@media (min-width: 600px) {
-	#bottom-ad .responsive-ad {
-		width: 468px;
-		height: 60px;
-	}
-}
-
-@media (min-width: 750px) {
-
-	#bottom-ad .responsive-ad {
-		width: 728px;
-		height: 90px;
-		text-align: right;
-	}
-}
-
-@media (min-width: 1084px) {
-	#header-right .responsive-ad {
-		width: 728px;
-		height: 90px;
-	}
-}
-
-@media (max-width: 750px) {
-	#header-right .responsive-ad {
-		text-align: center !important;
-	}
-}
+/*# sourceMappingURL=timings.css.map */

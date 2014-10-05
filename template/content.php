@@ -33,7 +33,7 @@ foreach ($timingsData->data as $handlers) {
         return $a->lagTotal > $b->lagTotal ? -1 : 1;
     });
     foreach ($lag as $l) {
-        echo $l->id->name . "::".$l->lagTotal."\n";
+        echo $l->id . "::".$l->lagCount."::".$l->lagTotal."\n";
 
     }
 }
