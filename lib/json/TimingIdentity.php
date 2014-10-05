@@ -20,4 +20,8 @@ class TimingIdentity {
      * @var string
      */
     public $group;
+
+    public function __toString() {
+        return $this->group . "::" . $this->name;
+    }
 } 

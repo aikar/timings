@@ -6,6 +6,5 @@
  *
  * @license MIT
  */
-
 require_once "init.php";
 SpigotTimings::bootstrap();

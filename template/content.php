@@ -22,6 +22,9 @@ echo "totalTime: $totalTime - Timings cost: $cost - " . ($cost * $totalTimings) 
 
 echo "<br />\n\n";
 foreach ($timingsData->data as $handlers) {
+    /**
+     * @var TimingHandler[] $lag
+     */
     $lag = array_filter($handlers->handlers, function ($e) {
 
         return $e->lagTotal > 10;
@@ -29,7 +32,10 @@ foreach ($timingsData->data as $handlers) {
     usort($lag, function ($a, $b) {
         return $a->lagTotal > $b->lagTotal ? -1 : 1;
     });
-    if (!empty($lag))print_r($lag);
+    foreach ($lag as $l) {
+        echo $l->id->name . "::".$l->lagTotal."\n";
+
+    }
 }
 
 ?>
