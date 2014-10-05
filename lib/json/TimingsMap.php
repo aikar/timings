@@ -11,8 +11,13 @@ class TimingsMap {
     use FromJson, Singleton;
 
     /**
+     * @index groups
+     * @var string[]
+     */
+    public $groupMap;
+    /**
      * @index handlers
-     * @var HandlerGroupMap[]
+     * @var TimingIdentity[]
      */
     public $handlerMap;
 
@@ -35,15 +40,12 @@ class TimingsMap {
     public $entityTypeMap;
 
     /**
-     * @var TimingIdentity[]
+     * @param $id
+     *
+     * @return string
      */
-    private $idMap = array();
-    public function init() {
-        foreach ($this->handlerMap as $group) {
-            foreach ($group->handlers as $id => $handlerId) {
-                $this->idMap[$id] = $handlerId;
-            }
-        }
+    public static function getGroupName($id) {
+        return self::getInstance()->groupMap[$id];
     }
 
     /**

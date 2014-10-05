@@ -10,18 +10,14 @@ class TimingIdentity {
      */
     public $id;
     /**
-     * @index @value
+     * @index n
      * @var string
      */
     public $name;
     /**
-     * @mapper getGroupName
-     * @index @key
+     * @mapper TimingsMap::getGroupName
+     * @index g
      * @var string
      */
     public $group;
-
-    public static function getGroupName($id, FromJsonParent $parent) {
-        return $parent->parent->parent->obj->name;
-    }
 } 
