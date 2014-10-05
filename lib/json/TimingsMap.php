@@ -54,7 +54,7 @@ class TimingsMap {
      * @return TimingIdentity
      */
     public static function getHandlerIdentity($id) {
-        return self::getInstance()->idMap[$id];
+        return self::getInstance()->handlerMap[$id];
     }
 
     /**
