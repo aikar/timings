@@ -8,30 +8,23 @@
  * @license MIT
  */
 class SpigotTimings {
+    use Singleton;
     private $data;
     private $checkedType = false;
     private $isLegacy = false;
     private $id;
-
-    public static function init() {
-        global $timings;
-        $timings = new SpigotTimings();
-        $GLOBALS['timings'] = $timings;
-        $timings->collectData();
-        $timings->loadData();
-    }
-
     /**
-     * @return mixed
+     * @var StorageService
      */
-    public function getId() {
-        return $this->id;
+    private $storage;
+
+    public static function bootstrap() {
+        $timings = self::getInstance();
+        $timings->prepareData();
+        Template::render();
     }
 
-    private function __construct() {
-    }
-
-    public function collectData() {
+    public function prepareData() {
         /**
          * @var StorageService $storage
          */
@@ -40,17 +33,19 @@ class SpigotTimings {
 
         if (!empty($_GET['url'])) {
             $id = $_GET['url'];
-            $storage = new UBPasteService();
+            $storage = new LegacyStorageService();
         } else if (!empty($_GET['id'])) {
             $id = $_GET['id'];
         } else if (TIMINGS_ENV == 'dev') {
-            $id = 'b037954709f8432ca64ca1db7f4ecfb2'; // DEV test
+            $id = 'b3b6514347a04b36971c3304fd9cbd50'; // DEV test
         }
         $id = Util::sanitizeHex($id);
         $this->id = $id;
+        $this->storage = $storage;
 
-        if ($id) {
-            $this->data = trim($storage->get($id));
+        if ($storage instanceof LegacyStorageService || TIMINGS_ENV != 'dev') {
+            LegacyHandler::load(trim($storage->get($id)));
+            exit;
         }
     }
 
@@ -65,21 +60,18 @@ class SpigotTimings {
     }
 
     public function loadData() {
-        if ($this->isLegacy() || TIMINGS_ENV != 'dev') {
-            LegacyHandler::load($this->data);
-            die;
-        }
-        if (!empty($_GET['raw'])) {
-            header("Content-Type: text/plain");
-            echo json_encode(json_decode($this->data), JSON_PRETTY_PRINT);
-            die;
-        }
-        $this->data = TimingsMaster::createObject(json_decode($this->data));
-        $GLOBALS['timings'] = $this->data;
-        require "template/index.php";
-    }
+        $id = $this->id;
+        if ($id) {
+            $this->data = trim($this->storage->get($id));
 
-    public function getReport() {
+            if (!empty($_GET['raw'])) {
+                header("Content-Type: text/plain");
+                echo json_encode(json_decode($this->data), JSON_PRETTY_PRINT);
+                die;
+            }
+            $this->data = TimingsMaster::createObject(json_decode($this->data));
+            $GLOBALS['timingsData'] = $this->data;
+        }
 
     }
 } 

@@ -271,7 +271,25 @@ html, body, #body-wrap, #wrapper {
 	width: 320px;
 	height: 50px;
 }
-
+#history-selector {
+	width: 500px;
+	height: 100px;
+	position: relative;
+	padding:0;
+	margin: 10px auto;
+	text-align: center;
+}
+body .ui-slider .ui-slider-handle {
+	height: 57px !important;
+}
+#tps-graph, #time-selector {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 500px;
+	height: 50px;
+	padding:0;
+}
 @media (max-width: 700px) {
 	#header-right {
 		width: 100%;

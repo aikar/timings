@@ -1,28 +1,27 @@
 <div class="ad_links"><?php ad_link(); ?></div>
-<hr/>
 <div id="content">
     Dev site is still under development.
 
 <pre>
 <?php
 /**
- * @var TimingsMaster $timings
+ * @var TimingsMaster $timingsData
  */
-global $timings;
+$timingsData = TimingsMaster::getInstance();
 $totalTime = 0;
 $totalTimings = 0;
-foreach ($timings->data as $data) {
+foreach ($timingsData->data as $data) {
     $totalTime += $data->totalTime;
     foreach ($data->handlers as $handler) {
         $totalTimings += $handler->count;
     }
 }
-$cost = $timings->system->timingcost;
+$cost = $timingsData->system->timingcost;
 echo "totalTime: $totalTime - Timings cost: $cost - " . ($cost * $totalTimings) . " - Pct: "
-    . (($cost * $totalTimings) / ($timings->sampletime * 1000000000)) * 100;
+    . (($cost * $totalTimings) / ($timingsData->sampletime * 1000000000)) * 100;
 
 echo "<br />\n\n";
-foreach ($timings->data as $handlers) {
+foreach ($timingsData->data as $handlers) {
     $lag = array_filter($handlers->handlers, function ($e) {
 
         return $e->lagTotal > 10;
@@ -32,6 +31,7 @@ foreach ($timings->data as $handlers) {
     });
     if (!empty($lag))print_r($lag);
 }
+
 ?>
 </pre>
 </div>

@@ -54,13 +54,3 @@
         Async Tasks do not count on this entry. See all Task: Entries for your plugins to find a culprit.
     </div>
 </div>
-
-<script type="text/javascript">
-    $('.learnmore').button();
-    function showInfo(btn) {
-        $("#info-" + $(btn).attr('info')).dialog({width: "80%", modal: true});
-    }
-</script>
-
-<?php
-

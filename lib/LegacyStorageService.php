@@ -7,12 +7,8 @@
  * @license MIT
  */
 
-/**
- * Class UBPasteService
- *
- * Processes uploads to Ubuntu Paste Service (Legacy)
- */
-class UBPasteService extends StorageService {
+
+class LegacyStorageService extends StorageService {
     public function get($id) {
         $data = Cache::get($id);
         if (!$data) {
