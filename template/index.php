@@ -57,6 +57,6 @@ Template::getInstance()->loadData();
 <script type="text/javascript">
     window.timingsData =<?=Template::getInstance()->getData();?>;
 </script>
-<script src="static/timings.js"></script>
+<script src="static/timings.min.js"></script>
 </body>
 </html>
