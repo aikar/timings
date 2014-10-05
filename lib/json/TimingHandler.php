@@ -11,6 +11,7 @@ class TimingHandler extends TimingData {
     use FromJson;
 
     /**
+     * @keymapper TimingData::mapIdKey
      * @index 5
      * @var TimingData[]
      */

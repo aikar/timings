@@ -40,6 +40,7 @@ class TimingHistory {
     public $totalTime;
 
     /**
+     * @keymapper TimingData::mapIdKey
      * @index h
      * @var TimingHandler[]
      */

@@ -37,6 +37,17 @@ class TimingData {
      */
     public $lagTotal;
 
+    /**
+     * @param                $key
+     * @param TimingData     $value
+     * @param FromJsonParent $parent
+     *
+     * @return mixed
+     */
+    public static function mapIdKey($key, $value, FromJsonParent $parent) {
+        return $value->id->id;
+    }
+
     public function addData(TimingData $data) {
         $this->count += $data->count;
         $this->total += $data->total;

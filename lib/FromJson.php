@@ -62,7 +62,17 @@ trait FromJson {
                     foreach ($data as $key => $entry) {
                         $arrParent = new FromJsonParent($key, $comment, $result, $parent);
                         $thisData = self::getData($entry, $arrParent);
-                        $result[$arrParent->name] = $thisData;
+
+                        $keyName = $arrParent->name;
+                        if (preg_match('/@keymapper\s+(.+?)\s/', $parent->comment, $matches)) {
+                            $cb = $matches[1];
+                            if (!strstr($cb, "::")) {
+                                $cb = __CLASS__ . "::$cb";
+                            }
+                            $keyName = call_user_func($cb, $keyName, $thisData, $parent);
+                        }
+
+                        $result[$keyName] = $thisData;
                     }
                     $data = $result;
                 } else {
