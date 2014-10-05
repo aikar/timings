@@ -5,7 +5,7 @@
  *
  * @license MIT
  */
-window.adCount = 0;
+
 $(document).ready(function () {
   $('#paste_toggle').click(function () {
     $('#paste').toggle();
