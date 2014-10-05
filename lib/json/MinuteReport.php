@@ -29,4 +29,10 @@ class MinuteReport {
      */
     public $ping;
 
+    /**
+     * @index fst
+     * @var TimingData
+     */
+    public $fullServerTick;
+
 } 
