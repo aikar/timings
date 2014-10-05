@@ -1,4 +1,4 @@
-
+<br style="clear:both" />
 <div id="history-selector">
     <span id="start-time"></span> - <span id="end-time"></span>
     <div id="tps-graph">

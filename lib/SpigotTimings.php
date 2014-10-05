@@ -20,6 +20,10 @@ class SpigotTimings {
     public static function bootstrap() {
         $timings = self::getInstance();
         $timings->prepareData();
+        if (!empty($_GET['raw'])) {
+            // Process Raw load before template
+            $timings->loadData();
+        }
         Template::render();
     }
 
@@ -55,7 +59,11 @@ class SpigotTimings {
 
             if (!empty($_GET['raw'])) {
                 header("Content-Type: text/plain");
-                echo json_encode(json_decode($this->data), JSON_PRETTY_PRINT);
+                if (!empty($_GET['mini'])) {
+                    echo $this->data;
+                } else {
+                    echo json_encode(json_decode($this->data), JSON_PRETTY_PRINT);
+                }
                 die;
             }
             $this->data = TimingsMaster::createObject(json_decode($this->data));
