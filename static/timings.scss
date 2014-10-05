@@ -130,24 +130,20 @@ html, body, #body-wrap, #wrapper {
 }
 
 #history-selector {
-  width: 500px;
-  height: 100px;
-  position: relative;
+  width: 700px;
   padding: 0;
   margin: 10px auto;
   text-align: center;
 }
 
 body .ui-slider .ui-slider-handle {
-  height: 57px !important;
+  height: 17px !important;
 }
 
-#tps-graph, #time-selector {
-  position: absolute;
-  top: 20px;
-  left: 0;
-  width: 500px;
-  height: 50px;
+#history-selector div#time-selector {
+  height: 10px;
+  width: 690px;
+  margin: 0 5px 10px;
   padding: 0;
 }
 

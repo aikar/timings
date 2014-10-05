@@ -34,9 +34,79 @@ $(document).ready(function () {
       goRange();
     }
   });
+
   updateRanges();
 
+  var labels = [];
+  var lagArray = [];
+  var lagKeys = Object.keys(data.lagData);
+  lagKeys.forEach(function(k, i) {
+    lagArray.push(data.lagData[k]);
+  });
+  var maxLag = getMax(lagArray);
+  console.log(maxLag);
+  var keys = Object.keys((data.tpsData));
+  var tpsData = [];
+  var lagData = [];
+  var lastLag = -1;
+  keys.forEach(function(k, i) {
+    var tps = data.tpsData[k];
+    console.log(tps, k);
+    tpsData.push(tps / 20 * maxLag);
+    if (data.lagData[k] != undefined) {
+      lastLag = data.lagData[k];
+    }
+    lagData.push(lastLag);
+    var d = new Date(k*1000);
+    labels.push(d.getHours()+":"+ d.getMinutes());
+  });
+
+
+  chart('#tps-graph').Line({
+    labels:labels,
+    datasets: [
+      {
+        fillColor: "rgba(220,220,220,0.2)",
+        strokeColor: "rgba(220,220,220,1)",
+        pointColor: "rgba(220,220,220,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(220,220,220,1)",
+        data: tpsData
+      },{
+        fillColor: "rgba(200,50,50,0.4)",
+        strokeColor: "rgba(151,187,205,1)",
+        pointColor: "rgba(151,187,205,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(151,187,205,1)",
+        data: lagData
+      }
+    ]
+  }, {
+    legendTemplate: "",
+    showScale: false
+  });
+  console.log(tpsData, lagData);
+
+  /*chart('#xlag-graph').Line({
+    labels:labels,
+    datasets: [
+      {
+        label:"Lag",
+
+      }
+    ]
+  });*/
+
+
   var redirectTimer = 0;
+  $('#time-selector').click(function(){
+    if (redirectTimer) {
+      clearTimeout(redirectTimer);
+      redirectTimer = 0;
+    }
+  });
   function goRange() {
     if (redirectTimer) {
       clearTimeout(redirectTimer);
@@ -64,8 +134,21 @@ $(document).ready(function () {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       }
     }
-  }, 1000)
+  }, 1000);
+
+  function chart(id) {
+    return new Chart($(id).get(0).getContext("2d"));
+  }
+  function getMin(array){
+    return Math.min.apply(Math,array);
+  }
+
+  function getMax(array){
+    return Math.max.apply(Math,array);
+  }
 });
+
+
 function showInfo(btn) {
   $("#info-" + $(btn).attr('info')).dialog({width: "80%", modal: true});
 }
