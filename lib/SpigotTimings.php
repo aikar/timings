@@ -9,10 +9,9 @@
  */
 class SpigotTimings {
     use Singleton;
+    public $id;
+
     private $data;
-    private $checkedType = false;
-    private $isLegacy = false;
-    private $id;
     /**
      * @var StorageService
      */
@@ -47,16 +46,6 @@ class SpigotTimings {
             LegacyHandler::load(trim($storage->get($id)));
             exit;
         }
-    }
-
-    public function isLegacy() {
-        if (!$this->checkedType) {
-            $start = substr($this->data, 0, 2);
-            $this->isLegacy = $start != '{"';
-            $this->checkedType = true;
-        }
-
-        return $this->isLegacy;
     }
 
     public function loadData() {

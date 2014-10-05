@@ -21,22 +21,23 @@ echo "totalTime: $totalTime - Timings cost: $cost - " . ($cost * $totalTimings) 
     . (($cost * $totalTimings) / ($timingsData->sampletime * 1000000000)) * 100;
 
 echo "<br />\n\n";
-foreach ($timingsData->data as $handlers) {
-    /**
-     * @var TimingHandler[] $lag
-     */
-    $lag = array_filter($handlers->handlers, function ($e) {
+$tpl = Template::getInstance();
 
-        return $e->lagTotal > 10;
-    });
-    usort($lag, function ($a, $b) {
-        return $a->lagTotal > $b->lagTotal ? -1 : 1;
-    });
-    foreach ($lag as $l) {
-        echo $l->id . "::".$l->lagCount."::".$l->lagTotal."\n";
+/**
+ * @var TimingHandler[] $lag
+ */
+//var_dump($tpl);
+$lag = array_filter($tpl->handlerData, function ($e) {
+    return $e->lagTotal > 100;
+});
+usort($lag, function ($a, $b) {
+    return $a->lagTotal > $b->lagTotal ? -1 : 1;
+});
 
-    }
+foreach ($lag as $l) {
+    echo $l->id . "::".$l->lagCount."::".$l->lagTotal."\n";
 }
+
 
 ?>
 </pre>

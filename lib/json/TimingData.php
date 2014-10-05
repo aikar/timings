@@ -36,4 +36,11 @@ class TimingData {
      * @var int
      */
     public $lagTotal;
+
+    public function addData(TimingData $data) {
+        $this->count += $data->count;
+        $this->total += $data->total;
+        $this->lagCount += $data->lagCount;
+        $this->lagTotal += $data->lagTotal;
+    }
 } 

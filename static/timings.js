@@ -14,15 +14,15 @@ $(document).ready(function () {
     $(this).parent().find('.hidden').toggle();
   });
   var data = window.timingsData || {
-    history:[],
+    ranges:[],
     start: 1,
     end: 1
   };
-  var values = data.history;
+  var values = data.ranges;
   var start = data.start;
   var end = data.end;
 
-  var slider = $('#time-selector').slider({
+  $('#time-selector').slider({
     min: 0,
     max: values.length - 1,
     values: [values.indexOf(start), values.indexOf(end)],
@@ -43,18 +43,17 @@ $(document).ready(function () {
     }
     redirectTimer = setTimeout(function() {
       window.location = "?id=" + data.id + "&start=" + start + "&end=" + end;
-    }, 5000);
+    }, 1000);
   }
   function updateRanges() {
     var startDate = new Date(start*1000);
     var endDate = new Date(end*1000);
-    $('#start-time').text(startDate.toDateString());
-    $('#end-time').text(endDate.toDateString());
+
+    $('#start-time').text(startDate.toLocaleString());
+    $('#end-time').text(endDate.toLocaleString());
   }
-  console.log(slider.slider("option", "value", 1));
 
-
-  $('.learnmore').button();
+  $('.button').button();
 
   setTimeout(function() {
     var adCount = $('.adsbygoogle').length;
