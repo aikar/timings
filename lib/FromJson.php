@@ -34,7 +34,7 @@ trait FromJson {
             if (preg_match('/@var .+?\[.*?\]/', $comment, $matches)) {
                 $isExpectingArray = true;
             }
-
+            
             $index = $name;
             if (preg_match('/@index\s+([@\w\-]+)/', $comment, $matches)) {
                 $index = $matches[1];
@@ -53,26 +53,26 @@ trait FromJson {
             }
 
             if ($data) {
-
-                if ($isExpectingArray && !is_scalar($data)) {
-
-                    $data = is_object($data) ? get_object_vars($data) : $data;
-
+                if ($isExpectingArray) {
                     $result = [];
-                    foreach ($data as $key => $entry) {
-                        $arrParent = new FromJsonParent($key, $comment, $result, $parent);
-                        $thisData = self::getData($entry, $arrParent);
+                    if (!is_scalar($data)) {
+                        $data = is_object($data) ? get_object_vars($data) : $data;
 
-                        $keyName = $arrParent->name;
-                        if (preg_match('/@keymapper\s+(.+?)\s/', $parent->comment, $matches)) {
-                            $cb = $matches[1];
-                            if (!strstr($cb, "::")) {
-                                $cb = __CLASS__ . "::$cb";
+                        foreach ($data as $key => $entry) {
+                            $arrParent = new FromJsonParent($key, $comment, $result, $parent);
+                            $thisData = self::getData($entry, $arrParent);
+
+                            $keyName = $arrParent->name;
+                            if (preg_match('/@keymapper\s+(.+?)\s/', $parent->comment, $matches)) {
+                                $cb = $matches[1];
+                                if (!strstr($cb, "::")) {
+                                    $cb = __CLASS__ . "::$cb";
+                                }
+                                $keyName = call_user_func($cb, $keyName, $thisData, $parent);
                             }
-                            $keyName = call_user_func($cb, $keyName, $thisData, $parent);
-                        }
 
-                        $result[$keyName] = $thisData;
+                            $result[$keyName] = $thisData;
+                        }
                     }
                     $data = $result;
                 } else {

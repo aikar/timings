@@ -12,6 +12,7 @@ $totalTime = 0;
 $totalTimings = 0;
 foreach ($timingsData->data as $data) {
     $totalTime += $data->totalTime;
+    //var_dump($data->minuteReports);
     foreach ($data->handlers as $handler) {
         $totalTimings += $handler->count;
     }

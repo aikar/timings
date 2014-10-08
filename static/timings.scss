@@ -130,19 +130,20 @@ html, body, #body-wrap, #wrapper {
 }
 
 #history-selector {
-  width: 700px;
+  width: 800px;
+  height: 200px;
   padding: 0;
   margin: 10px auto;
   text-align: center;
 }
 
 body .ui-slider .ui-slider-handle {
-  height: 17px !important;
+  height: 22px !important;
 }
 
 #history-selector div#time-selector {
-  height: 10px;
-  width: 690px;
+  height: 15px;
+  width: 790px;
   margin: 0 5px 10px;
   padding: 0;
 }

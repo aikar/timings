@@ -16,7 +16,8 @@ $(document).ready(function () {
   var data = window.timingsData || {
     ranges:[],
     start: 1,
-    end: 1
+    end: 1,
+    maxTime: 1
   };
   var values = data.ranges;
   var start = data.start;
@@ -38,56 +39,59 @@ $(document).ready(function () {
   updateRanges();
 
   var labels = [];
-  var lagArray = [];
-  var lagKeys = Object.keys(data.lagData);
-  lagKeys.forEach(function(k, i) {
-    lagArray.push(data.lagData[k]);
-  });
-  var maxLag = getMax(lagArray);
-  console.log(maxLag);
-  var keys = Object.keys((data.tpsData));
-  var tpsData = [];
-  var lagData = [];
-  var lastLag = -1;
-  keys.forEach(function(k, i) {
-    var tps = data.tpsData[k];
-    console.log(tps, k);
-    tpsData.push(tps / 20 * maxLag);
-    if (data.lagData[k] != undefined) {
-      lastLag = data.lagData[k];
-    }
-    lagData.push(lastLag);
+
+
+
+  data.timestamps.forEach(function(k) {
     var d = new Date(k*1000);
-    labels.push(d.getHours()+":"+ d.getMinutes());
+    labels.push(d.toLocaleString());
+  });
+  data.tpsData.forEach(function(tps, i) {
+    data.tpsData[i] = (tps/20)*data.maxTime
   });
 
 
   chart('#tps-graph').Line({
-    labels:labels,
+    labels: labels,
     datasets: [
       {
-        fillColor: "rgba(220,220,220,0.2)",
-        strokeColor: "rgba(220,220,220,1)",
-        pointColor: "rgba(220,220,220,1)",
+        data:[data.maxTime],
+        PointDotRadius: 0,
+        pointStrokeWidth: 0
+      },
+      {
+        label: "TPS",
+        fillColor: "rgba(147,69,209,.3)",
+        strokeColor: "rgba(147,69,249,.7)",
+        pointColor: "purple",
         pointStrokeColor: "#fff",
         pointHighlightFill: "#fff",
         pointHighlightStroke: "rgba(220,220,220,1)",
-        data: tpsData
+        data: data.tpsData
       },{
-        fillColor: "rgba(200,50,50,0.4)",
-        strokeColor: "rgba(151,187,205,1)",
-        pointColor: "rgba(151,187,205,1)",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
+        label: "LAG",
+        fillColor: "rgba(230,20,20,0.2)",
+        strokeColor: "rgba(255,60,60,1)",
+        pointColor: "rgba(255,150,150,1)",
+        pointStrokeColor: "#ff5533",
+        pointHighlightFill: "#ff5533",
         pointHighlightStroke: "rgba(151,187,205,1)",
-        data: lagData
+        data: data.lagData
       }
     ]
   }, {
     legendTemplate: "",
-    showScale: false
+    showScale: false,
+    multiTooltipTemplate: function(v) {
+      if (v.datasetLabel == "TPS") {
+        return (Math.round(v.value / data.maxTime * 20 * 100)/100) + " TPS";
+      } else if (v.datasetLabel == "LAG") {
+        return Math.round((v.value/data.maxTime)*100) + "% TPS Loss";
+      } else {
+        return ""
+      }
+    }
   });
-  console.log(tpsData, lagData);
 
   /*chart('#xlag-graph').Line({
     labels:labels,

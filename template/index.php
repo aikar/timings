@@ -54,7 +54,7 @@ Template::getInstance()->loadData();
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-<script src="static/Chart.js"></script>
+<script src="static/Chart.min.js"></script>
 <?php flush(); ?>
 <script type="text/javascript">
     window.timingsData =<?=Template::getInstance()->getData();?>;

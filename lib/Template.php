@@ -37,10 +37,17 @@ class Template {
         $handlerData = array();
         $lagData = array();
         $tpsData = array();
+        $timestamps = array();
+        $max = 0;
         foreach ($data->data as $history) {
-            $lagData[$history->end] = $history->handlers[1]->lagTotal;
             foreach ($history->minuteReports as $mp) {
-                $tpsData[$mp->time] = $mp->tps;
+                $total = $mp->fullServerTick->total;
+                $lag = $mp->fullServerTick->lagTotal;
+                $max = max($total, $max);
+
+                $timestamps[] = $mp->time;
+                $tpsData[] = min(20, $mp->tps);
+                $lagData[] = $lag;
             }
 
             if ($history->start >= $start && $history->end <= $end) {
@@ -55,6 +62,8 @@ class Template {
             }
         }
         $tpl->handlerData = $handlerData;
+        $tpl->js['timestamps'] = $timestamps;
+        $tpl->js['maxTime'] = $max;
         $tpl->js['lagData'] = $lagData;
         $tpl->js['tpsData'] = $tpsData;
         $tpl->js['id'] = $timings->id;
