@@ -82,6 +82,8 @@ $(document).ready(function () {
   }, {
     legendTemplate: "",
     showScale: false,
+    responsive: true,
+    maintainAspectRatio: false,
     multiTooltipTemplate: function(v) {
       if (v.datasetLabel == "TPS") {
         return (Math.round(v.value / data.maxTime * 20 * 100)/100) + " TPS";

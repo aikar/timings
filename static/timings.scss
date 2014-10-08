@@ -130,8 +130,8 @@ html, body, #body-wrap, #wrapper {
 }
 
 #history-selector {
-  width: 800px;
-  height: 200px;
+  /*width: 800px;
+  height: 200px;*/
   padding: 0;
   margin: 10px auto;
   text-align: center;
@@ -143,13 +143,13 @@ body .ui-slider .ui-slider-handle {
 
 #history-selector div#time-selector {
   height: 15px;
-  width: 790px;
-  margin: 0 5px 10px;
+  width: 98%;
+  margin: 0 auto 10px;
+  text-align: center;
   padding: 0;
 }
 
 #header-right {
-  width: 100%;
   text-align: center !important;
 }
 
