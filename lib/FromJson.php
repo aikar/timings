@@ -24,6 +24,15 @@ trait FromJson {
             $obj = new self();
         }
 
+        $classDoc = $ref->getDocComment();
+        if (preg_match('/@mapper\s+(.+?)\s/', $classDoc, $matches)) {
+            $cb = $matches[1];
+            if (!strstr($cb, "::")) {
+                $cb = __CLASS__ . "::$cb";
+            }
+            $rootData = call_user_func($cb, $rootData, $parentObj);
+        }
+
 
         foreach ($props as $prop) {
             $name = $prop->getName();
@@ -55,7 +64,7 @@ trait FromJson {
             if ($data) {
                 if ($isExpectingArray) {
                     $result = [];
-                    if (!is_scalar($data)) {
+                    if ($data && !is_scalar($data)) {
                         $data = is_object($data) ? get_object_vars($data) : $data;
 
                         foreach ($data as $key => $entry) {

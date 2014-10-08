@@ -5,6 +5,7 @@
  *
  * Written by Aikar <aikar@aikar.co>
  *
+ * @mapper normalizeData
  * @license MIT
  */
 class TimingData {
@@ -46,6 +47,19 @@ class TimingData {
      */
     public static function mapIdKey($key, $value, FromJsonParent $parent) {
         return $value->id->id;
+    }
+
+    /**
+     * @param $data
+     * @param $parent
+     *
+     * @return array
+     */
+    public static function normalizeData($data, $parent) {
+        if (!isset($data[4])) {
+            $data[4] = $data[3] = 0;
+        }
+        return $data;
     }
 
     public function addData(TimingData $data) {

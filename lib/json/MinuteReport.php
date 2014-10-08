@@ -10,29 +10,31 @@
 class MinuteReport {
     use FromJson;
     /**
-     * @index t
+     * @index 0
      * @var int
      */
     public $time;
 
     /**
+     * @index 1
      * @var float
      */
     public $tps;
-    /**
-     * @index tick
-     * @var TicksRecord
-     */
-    public $ticks;
-    /**
-     * @var PingRecord
-     */
-    public $ping;
 
     /**
-     * @index fst
+     * @index 2
+     * @var float
+     */
+    public $avgPing;
+
+    /**
+     * @index 3
      * @var TimingData
      */
     public $fullServerTick;
-
+    /**
+     * @index 4
+     * @var TicksRecord
+     */
+    public $ticks;
 } 

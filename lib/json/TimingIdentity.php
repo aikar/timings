@@ -10,13 +10,13 @@ class TimingIdentity {
      */
     public $id;
     /**
-     * @index n
+     * @index 1
      * @var string
      */
     public $name;
     /**
      * @mapper TimingsMap::getGroupName
-     * @index g
+     * @index 0
      * @var string
      */
     public $group;

@@ -1,11 +1,15 @@
 <?php
-
-/**
+/*
  * Spigot Timings Parser
  *
  * Written by Aikar <aikar@aikar.co>
  *
  * @license MIT
+ */
+
+/**
+ * @mapper normalizeData
+ * @mapper TimingData::normalizeData
  */
 class TimingHandler extends TimingData {
     use FromJson;
@@ -16,6 +20,24 @@ class TimingHandler extends TimingData {
      * @var TimingData[]
      */
     public $children;
+
+    /**
+     * @param $data
+     * @param $parent
+     *
+     * @return array
+     */
+    public static function normalizeData($data, $parent) {
+        if (!isset($data[5])) {
+            $data[5] = array();
+            if (isset($data[3]) && !is_scalar($data[3])) {
+                $data[5] = $data[3];
+            }
+
+        }
+        $data = TimingData::normalizeData($data, $parent);
+        return $data;
+    }
 
     public function __clone() {
         foreach ($this->children as &$child) {

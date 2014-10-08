@@ -11,41 +11,41 @@ class Chunk {
     use FromJson;
 
     /**
-     * @index x
+     * @index 0
      * @var int
      */
     public $chunkX;
 
     /**
-     * @index z
+     * @index 1
      * @var int
      */
     public $chunkZ;
 
     /**
      * @mapper chunkToBlock
-     * @index x
+     * @index 0
      * @var int
      */
     public $blockX;
 
     /**
      * @mapper chunkToBlock
-     * @index z
+     * @index 1
      * @var int
      */
     public $blockZ;
 
     /**
      * @mapper getTileEntityName
-     * @index te
+     * @index 3
      * @var int[]
      */
     public $tileEntities;
 
     /**
      * @mapper getEntityName
-     * @index e
+     * @index 4
      * @var int[]
      */
     public $entities;
