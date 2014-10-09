@@ -28,15 +28,32 @@ $tpl = Template::getInstance();
  * @var TimingHandler[] $lag
  */
 //var_dump($tpl);
-$lag = array_filter($tpl->handlerData, function ($e) {
-    return $e->lagTotal > 100;
-});
-usort($lag, function ($a, $b) {
+$lag = array_filter($tpl->handlerData, 'lagFilter');
+
+function lagFilter($e) {
+    return $e->lagTotal > 100 && ($e->lagTotal / $e->lagCount) > 100000;
+}
+usort($lag, 'lagSort');
+
+function lagSort($a, $b) {
     return $a->lagTotal > $b->lagTotal ? -1 : 1;
-});
+}
 
 foreach ($lag as $l) {
-    echo $l->id . "::".$l->lagCount."::".$l->lagTotal."\n";
+    printRecord($l);
+    $children = array_filter($l->children, 'lagFilter');
+    usort($children, 'lagSort');
+    foreach ($children as $child) {
+        if ($child->lagTotal > 50) {
+            echo "\t"; printRecord($child);
+        }
+    }
+}
+$i=0;
+function printRecord($l) {
+    global $i;
+    $id=$l->id->id."_".$i++;
+    echo "<a id='$id' href='#$id'>#</a>".$l->id . " - count(".$l->lagCount.") - total(".round($l->lagTotal/1000000000,3)."s) - avg(" . round(($l->lagTotal / $l->lagCount)/1000000, 4) . "ms)\n";
 }
 
 

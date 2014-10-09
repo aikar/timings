@@ -82,6 +82,7 @@ $(document).ready(function () {
   }, {
     legendTemplate: "",
     showScale: false,
+    pointHitDetectionRadius: 2,
     responsive: true,
     maintainAspectRatio: false,
     multiTooltipTemplate: function(v) {

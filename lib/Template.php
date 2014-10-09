@@ -46,7 +46,7 @@ class Template {
                 $max = max($total, $max);
 
                 $timestamps[] = $mp->time;
-                $tpsData[] = min(20, $mp->tps);
+                $tpsData[] = $mp->tps > 19.85 ? 20 : $mp->tps;
                 $lagData[] = $lag;
             }
 
