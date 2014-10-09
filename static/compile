@@ -1,0 +1,3 @@
+#!/bin/bash
+uglifyjs timings.js -c -m > timings.min.js
+scss -t compressed -no-cache --update timings.scss:timings.css
