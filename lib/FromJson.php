@@ -43,7 +43,7 @@ trait FromJson {
             if (preg_match('/@var .+?\[.*?\]/', $comment, $matches)) {
                 $isExpectingArray = true;
             }
-            
+
             $index = $name;
             if (preg_match('/@index\s+([@\w\-]+)/', $comment, $matches)) {
                 $index = $matches[1];
@@ -61,7 +61,7 @@ trait FromJson {
                 $data = null;
             }
 
-            if ($data) {
+            if ($data || $isExpectingArray) {
                 if ($isExpectingArray) {
                     $result = [];
                     if ($data && !is_scalar($data)) {
@@ -87,8 +87,8 @@ trait FromJson {
                 } else {
                     $data = self::getData($data, $parent);
                 }
+                $prop->setValue($obj, $data);
             }
-            $prop->setValue($obj, $data);
         }
         $obj->init();
 

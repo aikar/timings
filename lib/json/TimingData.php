@@ -10,7 +10,7 @@
  */
 class TimingData {
     use FromJson;
-
+    public $mergedCount = 1;
     /**
      * @index 0
      * @mapper TimingsMap::getHandlerIdentity
@@ -63,9 +63,10 @@ class TimingData {
     }
 
     public function addData(TimingData $data) {
+        $this->mergedCount++;
         $this->count += $data->count;
         $this->total += $data->total;
         $this->lagCount += $data->lagCount;
         $this->lagTotal += $data->lagTotal;
     }
-} 
+}

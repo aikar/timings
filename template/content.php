@@ -31,11 +31,16 @@ $tpl = Template::getInstance();
 $lag = array_filter($tpl->handlerData, 'lagFilter');
 
 function lagFilter($e) {
-    return $e->lagTotal > 100 && ($e->lagTotal / $e->lagCount) > 100000;
+    $e->avg = 0;
+    if ($e->lagCount > 0) {
+      $e->avg = ($e->lagTotal / $e->lagCount) * ($e->count / $e->mergedCount);
+    }
+    return $e->lagTotal > 100 && $e->avg > 100000;
 }
 usort($lag, 'lagSort');
 
 function lagSort($a, $b) {
+    return $a->avg > $b->avg ? -1 : 1;
     return $a->lagTotal > $b->lagTotal ? -1 : 1;
 }
 

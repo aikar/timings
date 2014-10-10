@@ -55,6 +55,7 @@ class Template {
                     $id = $handler->id->id;
                     if (!isset($handlerData[$id])) {
                         $handlerData[$id] = clone $handler;
+                        $handlerData[$id]->mergedCount = 1;
                     } else {
                         $handlerData[$id]->addDataFromHandler($handler);
                     }
