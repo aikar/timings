@@ -21,8 +21,7 @@ class SpigotTimings {
         $timings = self::getInstance();
         $timings->prepareData();
         if (!empty($_GET['raw'])) {
-            // Process Raw load before template
-            $timings->loadData();
+            $timings->showRaw();
         }
         Template::render();
     }
@@ -55,20 +54,28 @@ class SpigotTimings {
     public function loadData() {
         $id = $this->id;
         if ($id) {
-            $this->data = trim($this->storage->get($id));
-
-            if (!empty($_GET['raw'])) {
-                header("Content-Type: text/plain");
-                if (!empty($_GET['mini'])) {
-                    echo $this->data;
-                } else {
-                    echo json_encode(json_decode($this->data), JSON_PRETTY_PRINT);
-                }
-                die;
+            $data = Cache::getObject($id);
+            if (!$data) {
+                $data = $this->storage->get($id);
+                $data = TimingsMaster::createObject(json_decode($data));
+                Cache::putObject($id, $this->data);
             }
-            $this->data = TimingsMaster::createObject(json_decode($this->data));
-            $GLOBALS['timingsData'] = $this->data;
+            $this->data = $data;
+            $GLOBALS['timingsData'] = $data;
         }
 
+    }
+
+    public function showRaw() {
+        $id = $this->id;
+        $data = trim($this->storage->get($id));
+
+        header("Content-Type: text/plain");
+        if (!empty($_GET['mini'])) {
+            echo $data;
+        } else {
+            echo json_encode(json_decode($data), JSON_PRETTY_PRINT);
+        }
+        die;
     }
 } 

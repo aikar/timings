@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Spigot Timings Parser
  *
  * Written by Aikar <aikar@aikar.co>
@@ -8,41 +8,19 @@
  * @license MIT
  */
 class Cache {
-    public static $base = '/tmp/timings_';
-
     /**
-     * Get with arbitrary string key that will be hashed.
+     * Get Cached Data
      *
-     * @param $key
+     * @param        $key
+     * @param string $type
      *
      * @return null|string
      */
-    public static function get($key) {
-        $file = self::getFile($key);
-        if (file_exists("$file.gz")) {
-            return trim(gzdecode(file_get_contents("$file.gz")));
-        } else if (file_exists($file)) {
-            $data = trim(file_get_contents($file));
-            self::put($key, $data);
-            unlink($file);
-        }
-
-        return null;
-    }
-
-    /**
-     * Get if you know the direct hash to look up.
-     *
-     * @param $key
-     *
-     * @return null|string
-     */
-    public static function getHash($key) {
-        $file = self::$base . "$key.gz";
+    public static function get($key, $type='timings') {
+        $file = self::getFile($key, $type);
         if (file_exists($file)) {
-            $data = trim(file_get_contents($file));
-            self::put($key, $data);
-            unlink($file);
+            touch($file);
+            return trim(gzdecode(file_get_contents($file)));
         }
 
         return null;
@@ -50,30 +28,47 @@ class Cache {
 
 
     /**
-     * Use with arbitrary string key that will be hashed.
+     * Put data into cache
      *
-     * @param $key
-     * @param $data
+     * @param        $key
+     * @param        $data
+     * @param string $type
      */
-    public static function put($key, $data) {
-        $file = self::getFile($key) . ".gz";
-        $data = gzencode($data);
-        file_put_contents($file, $data);
+    public static function put($key, $data, $type='timings') {
+        $file = self::getFile($key, $type);
+        file_put_contents($file, gzencode($data));
+    }
+
+
+    /**
+     * Retrieves a cached object
+     * @param $key
+     *
+     * @return mixed
+     */
+    public static function getObject($key) {
+        return unserialize(self::get($key, "objectcache"));
     }
 
     /**
-     * Use if you already have a hash to store with.
-     *
+     * Saves serialized data for fast loading of parsed data.
      * @param $key
      * @param $data
      */
-    public static function putHash($key, $data) {
-        $file = self::$base . "$key.gz";
-        $data = gzencode($data);
-        file_put_contents($file, $data);
+    public static function putObject($key, $data) {
+        $data = serialize($data);
+        self::put($key, $data, "objectcache");
     }
 
-    public static function getFile($key) {
-        return self::$base . md5($key);
+    /**
+     * Sanitizes a key name and returns a cache file name for it.
+     * @param $key
+     * @param $type
+     *
+     * @return string
+     */
+    public static function getFile($key, $type) {
+        $key = preg_replace('/[^a-zA-Z0-9-_]/ms', '', $key);
+        return "/tmp/{$type}_{$key}.gz";
     }
 }
