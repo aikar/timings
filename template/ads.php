@@ -1,6 +1,17 @@
 <?php
+/*
+ * Aikar's Minecraft Timings Parser
+ *
+ * Written by Aikar <aikar@aikar.co>
+ * http://aikar.co
+ * http://starlis.com
+ *
+ * @license MIT
+ */
+namespace Starlis\Timings;
+
 function ad_banner_top_right() {?>
-    <!-- Spigot Timings -->
+    <!-- Timings -->
     <ins class="adsbygoogle responsive-ad"
          style="display:inline-block;"
          data-ad-client="ca-pub-9196273905174409"
@@ -8,7 +19,7 @@ function ad_banner_top_right() {?>
 <?php
 }
 function ad_banner_bottom() { ?>
-    <!-- Spigot Timings - Bottom -->
+    <!-- Timings - Bottom -->
     <ins class="adsbygoogle responsive-ad"
          style="display:inline-block;"
          data-ad-client="ca-pub-9196273905174409"
@@ -17,7 +28,7 @@ function ad_banner_bottom() { ?>
 }
 
 function ad_link() { ?>
-    <!-- Spigot Timings Links -->
+    <!-- Timings Links -->
     <ins class="adsbygoogle ad_links"
          style="display:inline-block;width:728px;height:15px"
          data-ad-client="ca-pub-9196273905174409"

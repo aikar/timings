@@ -1,4 +1,14 @@
 <?php
+/*
+ * Aikar's Minecraft Timings Parser
+ *
+ * Written by Aikar <aikar@aikar.co>
+ * http://aikar.co
+ * http://starlis.com
+ *
+ * @license MIT
+ */
+namespace Starlis\Timings;
 
 class Template {
     use Singleton;
@@ -15,7 +25,7 @@ class Template {
     }
 
     public static function loadData() {
-        $timings = SpigotTimings::getInstance();
+        $timings = Timings::getInstance();
         $timings->loadData();
         $data = TimingsMaster::getInstance();
         $tpl = self::getInstance();

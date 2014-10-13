@@ -1,4 +1,16 @@
-<div class="ad_links"><?php ad_link(); ?></div>
+<?php
+/*
+ * Aikar's Minecraft Timings Parser
+ *
+ * Written by Aikar <aikar@aikar.co>
+ * http://aikar.co
+ * http://starlis.com
+ *
+ * @license MIT
+ */
+namespace Starlis\Timings;
+
+?><div class="ad_links"><?php ad_link(); ?></div>
 <div id="content">
     Dev site is still under development.
 

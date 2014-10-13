@@ -1,4 +1,14 @@
 <?php
+/*
+ * Aikar's Minecraft Timings Parser
+ *
+ * Written by Aikar <aikar@aikar.co>
+ * http://aikar.co
+ * http://starlis.com
+ *
+ * @license MIT
+ */
+namespace Starlis\Timings;
 
 /**
  * Provides method to translate JSON Data into an object using PHP Doc comments.
@@ -14,8 +24,8 @@ trait FromJson {
      */
     public static function createObject($rootData, $parentObj = null) {
         $class = __CLASS__;
-        $ref = new ReflectionClass($class);
-        $props = $ref->getProperties(ReflectionProperty::IS_PUBLIC);
+        $ref = new \ReflectionClass($class);
+        $props = $ref->getProperties(\ReflectionProperty::IS_PUBLIC);
 
         if (Util::has_trait($class, 'Singleton')) {
             /** @noinspection PhpUndefinedMethodInspection */

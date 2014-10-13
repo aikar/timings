@@ -1,14 +1,10 @@
 <?php
-/**
- * Bukkit Timings Parser
+/*
+ * Aikar's Minecraft Timings Parser
  *
  * Written by Aikar <aikar@aikar.co>
- *
- * This file originally started out as an extremely quick hackjob... So quality isn't the best
- * but it works.
- *
- * This is now the legacy parser, since the new format is so different and the UI won't work for
- * old data set, we will keep this here for legacy files.
+ * http://aikar.co
+ * http://starlis.com
  *
  * @license MIT
  */
@@ -148,8 +144,7 @@ ob_start();
 <head>
  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Spigot Timings Viewer</title>
-	<!--link rel="stylesheet" href="http://www.spigotmc.org/css.php?css=xenforo,form,public&style=6&dir=LTR&d=1359110791"/-->
+	<title>Aikar's Timings Viewer</title>
 	<link rel="stylesheet" href="legacy/timings.css"/>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
@@ -197,7 +192,6 @@ ob_start();
 <br/>
 <div style="text-align:center;margin:auto">
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-	<!-- Spigot Timings -->
 	<ins class="adsbygoogle responsive-ad"
 	     style="display:inline-block;"
 	     data-ad-client="ca-pub-9196273905174409"
@@ -234,7 +228,6 @@ ob_start();
 */ ?>
 <div style="width:100%;clear:left;">
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- Spigot Timings Links -->
 <ins class="adsbygoogle"
      style="clear:left;margin-top:20px;display:inline-block;width:728px;height:15px"
      data-ad-client="ca-pub-9196273905174409"
@@ -260,7 +253,7 @@ if (!$legacyData) {
 
 	?>
 	<div style="padding:50px;margin:auto;text-align: center">
-		To use the Spigot Timings parser, please type <b>/timings paste</b> in game, console or RCON.
+		To use the Timings parser, please type <b>/timings paste</b> in game, console or RCON.
 		It will then give you a link to view it on this page.<br /><br />
 
 		The old Paste option has been removed for now as it is not needed.
@@ -394,7 +387,6 @@ if ($sample) {
 
 	<div style="text-align:center;margin:auto">
 		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<!-- Spigot Timings - Bottom -->
 		<ins class="adsbygoogle responsive-ad"
 		     style="display:inline-block;"
 		     data-ad-client="ca-pub-9196273905174409"

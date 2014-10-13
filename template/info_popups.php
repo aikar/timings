@@ -1,3 +1,17 @@
+<?php
+/*
+ * Aikar's Minecraft Timings Parser
+ *
+ * Written by Aikar <aikar@aikar.co>
+ * http://aikar.co
+ * http://starlis.com
+ *
+ * @license MIT
+ */
+namespace Starlis\Timings;
+
+?>
+
 <div style="display: none">
     <div id="info-connhandler" title="About Connection Handler">
         <b>Connection Handler</b> (previously labeled <b>Player Tick</b>) is a wide wrapper of many things

@@ -1,3 +1,21 @@
+<?php
+/*
+ * Aikar's Minecraft Timings Parser
+ *
+ * Written by Aikar <aikar@aikar.co>
+ * http://aikar.co
+ * http://starlis.com
+ *
+ * @license MIT
+ */
+namespace Starlis\Timings;
+
+/**
+ * This is an old imported file from legacy - unused but for reference until its fully uneeded.
+ */
+
+?>
+
 <div id="reports">
     <?php
     foreach ($report as $plugin => $timings) {

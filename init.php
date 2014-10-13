@@ -1,4 +1,15 @@
 <?php
+/*
+ * Aikar's Minecraft Timings Parser
+ *
+ * Written by Aikar <aikar@aikar.co>
+ * http://aikar.co
+ * http://starlis.com
+ *
+ * @license MIT
+ */
+namespace Starlis\Timings;
+
 header("Content-Type: text/html");
 define('TIMINGS_ENV', basename(__DIR__));
 define('MAX_CACHE_BYTES', 1024 * 512);
@@ -21,6 +32,7 @@ if (file_exists('../security/security.php')) {
 }
 libxml_disable_entity_loader(true);
 spl_autoload_register(function ($cls) {
+    $cls = str_replace("Starlis\\Timings\\", "", $cls);
     if (file_exists("lib/$cls.php")) {
         require_once "lib/$cls.php";
     }

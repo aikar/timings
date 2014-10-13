@@ -1,11 +1,14 @@
 <?php
 /*
- * Spigot Timings Parser
+ * Aikar's Minecraft Timings Parser
  *
  * Written by Aikar <aikar@aikar.co>
+ * http://aikar.co
+ * http://starlis.com
  *
  * @license MIT
  */
+namespace Starlis\Timings;
 
 /**
  * @mapper normalizeData

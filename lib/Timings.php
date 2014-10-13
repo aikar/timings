@@ -1,13 +1,16 @@
 <?php
-
-/**
- * Spigot Timings Parser
+/*
+ * Aikar's Minecraft Timings Parser
  *
  * Written by Aikar <aikar@aikar.co>
+ * http://aikar.co
+ * http://starlis.com
  *
  * @license MIT
  */
-class SpigotTimings {
+namespace Starlis\Timings;
+
+class Timings {
     use Singleton;
     public $id;
 
@@ -55,6 +58,7 @@ class SpigotTimings {
         $id = $this->id;
         if ($id) {
             $data = Cache::getObject($id);
+
             if (!$data) {
                 $data = $this->storage->get($id);
                 $data = TimingsMaster::createObject(json_decode($data));
@@ -63,7 +67,6 @@ class SpigotTimings {
             $this->data = $data;
             $GLOBALS['timingsData'] = $data;
         }
-
     }
 
     public function showRaw() {

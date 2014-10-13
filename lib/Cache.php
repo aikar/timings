@@ -1,12 +1,15 @@
 <?php
-
 /*
- * Spigot Timings Parser
+ * Aikar's Minecraft Timings Parser
  *
  * Written by Aikar <aikar@aikar.co>
+ * http://aikar.co
+ * http://starlis.com
  *
  * @license MIT
  */
+namespace Starlis\Timings;
+
 class Cache {
     /**
      * Get Cached Data
@@ -67,7 +70,7 @@ class Cache {
      *
      * @return string
      */
-    public static function getFile($key, $type) {
+    public static function getFile($key, $type ='timings') {
         $key = preg_replace('/[^a-zA-Z0-9-_]/ms', '', $key);
         return "/tmp/{$type}_{$key}.gz";
     }
