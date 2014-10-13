@@ -18,6 +18,7 @@ class TimingsMap {
      * @var string[]
      */
     public $groupMap;
+
     /**
      * @index handlers
      * @var TimingIdentity[]

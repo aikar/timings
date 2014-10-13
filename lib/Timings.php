@@ -58,11 +58,10 @@ class Timings {
         $id = $this->id;
         if ($id) {
             $data = Cache::getObject($id);
-
             if (!$data) {
                 $data = $this->storage->get($id);
                 $data = TimingsMaster::createObject(json_decode($data));
-                Cache::putObject($id, $this->data);
+                Cache::putObject($id, $data);
             }
             $this->data = $data;
             $GLOBALS['timingsData'] = $data;

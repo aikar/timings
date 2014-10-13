@@ -27,7 +27,7 @@ trait FromJson {
         $ref = new \ReflectionClass($class);
         $props = $ref->getProperties(\ReflectionProperty::IS_PUBLIC);
 
-        if (Util::has_trait($class, 'Singleton')) {
+        if (Util::has_trait($class, 'Starlis\Timings\Singleton')) {
             /** @noinspection PhpUndefinedMethodInspection */
             $obj = self::getInstance();
         } else {
@@ -40,6 +40,10 @@ trait FromJson {
             if (!strstr($cb, "::")) {
                 $cb = __CLASS__ . "::$cb";
             }
+            if (!strstr($cb, "\\")) {
+                $cb = __NAMESPACE__ . "\\$cb";
+            }
+            $cb = explode("::", $cb, 2);
             $rootData = call_user_func($cb, $rootData, $parentObj);
         }
 
@@ -85,8 +89,12 @@ trait FromJson {
                             if (preg_match('/@keymapper\s+(.+?)\s/', $parent->comment, $matches)) {
                                 $cb = $matches[1];
                                 if (!strstr($cb, "::")) {
-                                    $cb = __CLASS__ . "::$cb";
+                                    $cb =  __CLASS__ . "::$cb";;
                                 }
+                                if (!strstr($cb, "\\")) {
+                                    $cb = __NAMESPACE__ . "\\$cb";
+                                }
+                                $cb = explode("::", $cb, 2);
                                 $keyName = call_user_func($cb, $keyName, $thisData, $parent);
                             }
 
@@ -118,15 +126,22 @@ trait FromJson {
         $className = null;
         if (preg_match('/@var\s+([\w_]+)(\[.*?\])?/', $parent->comment, $matches)) {
             $className = $matches[1];
+            if (!strstr($className, "\\")) {
+                $className = __NAMESPACE__."\\$className";
+            }
         }
 
         if (preg_match('/@mapper\s+(.+?)\s/', $parent->comment, $matches)) {
             $cb = $matches[1];
             if (!strstr($cb, "::")) {
-                $cb = __CLASS__ . "::$cb";
+                $cb =  __CLASS__ . "::$cb";;
             }
+            if (!strstr($cb, "\\")) {
+                $cb = __NAMESPACE__ . "\\$cb";
+            }
+            $cb = explode("::", $cb, 2);
             $data = call_user_func($cb, $data, $parent);
-        } else if (Util::has_trait($className, __TRAIT__)) {
+        } else if ($className && Util::has_trait($className, __TRAIT__)) {
             $data = call_user_func("$className::createObject", $data, $parent);
         } else if (!is_scalar($data)) {
             $data = Util::flattenObject($data);

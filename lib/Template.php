@@ -28,6 +28,7 @@ class Template {
         $timings = Timings::getInstance();
         $timings->loadData();
         $data = TimingsMaster::getInstance();
+
         $tpl = self::getInstance();
         $tpl->js['ranges'] = array();
         $ranges =& $tpl->js['ranges'];
@@ -72,6 +73,7 @@ class Template {
                 }
             }
         }
+
         $tpl->handlerData = $handlerData;
         $tpl->js['timestamps'] = $timestamps;
         $tpl->js['maxTime'] = $max;

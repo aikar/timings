@@ -39,7 +39,7 @@ class Uploader {
 
         $cacheFile = Cache::getFile($key);
         Log::info("Uploaded $uncompressedSize bytes as $key to $cacheFile");
-        Cache::put($key, $data, true);
+        Cache::put($key, $data);
         header("Location: " . BASE_URL_VIEW . "/?id=$key");
         self::error("Compressed Size: $compressedSize\nUncompressed Size: $uncompressedSize\nRaw Upload: " . BASE_URL_VIEW . "/?id=$key&raw=1");
     }

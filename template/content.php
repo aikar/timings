@@ -20,6 +20,7 @@ namespace Starlis\Timings;
  * @var TimingsMaster $timingsData
  */
 $timingsData = TimingsMaster::getInstance();
+
 $totalTime = 0;
 $totalTimings = 0;
 foreach ($timingsData->data as $data) {
@@ -39,33 +40,32 @@ $tpl = Template::getInstance();
 /**
  * @var TimingHandler[] $lag
  */
-//var_dump($tpl);
-$lag = array_filter($tpl->handlerData, 'lagFilter');
+$lag = array_filter($tpl->handlerData, __NAMESPACE__.'\lagFilter');
 
-function lagFilter($e) {
-    $e->avg = 0;
-    if ($e->lagCount > 0) {
-      $e->avg = ($e->lagTotal / $e->lagCount) * ($e->count / $e->mergedCount);
-    }
-    return $e->lagTotal > 100 && $e->avg > 100000;
-}
-usort($lag, 'lagSort');
-
-function lagSort($a, $b) {
-    return $a->avg > $b->avg ? -1 : 1;
-    return $a->lagTotal > $b->lagTotal ? -1 : 1;
-}
-
+usort($lag, __NAMESPACE__.'\lagSort');
 foreach ($lag as $l) {
     printRecord($l);
-    $children = array_filter($l->children, 'lagFilter');
-    usort($children, 'lagSort');
+    $children = array_filter($l->children, __NAMESPACE__.'\lagFilter');
+    usort($children, __NAMESPACE__.'\lagSort');
     foreach ($children as $child) {
         if ($child->lagTotal > 50) {
             echo "\t"; printRecord($child);
         }
     }
 }
+
+function lagFilter($e) {
+    $e->avg = 0;
+    if ($e->lagCount > 0) {
+        $e->avg = ($e->lagTotal / $e->lagCount) * $e->mergedCount;
+    }
+    return $e->lagTotal > 1000 && $e->avg > 2000000;
+}
+function lagSort($a, $b) {
+    //return $a->avg > $b->avg ? -1 : 1;
+    return $a->lagTotal > $b->lagTotal ? -1 : 1;
+}
+
 $i=0;
 function printRecord($l) {
     global $i;

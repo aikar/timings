@@ -60,7 +60,9 @@ class Cache {
      */
     public static function putObject($key, $data) {
         $data = serialize($data);
-        self::put($key, $data, "objectcache");
+        if ($data) {
+            self::put($key, $data, "objectcache");
+        }
     }
 
     /**
