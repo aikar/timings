@@ -32,11 +32,10 @@ if (file_exists('../security/security.php')) {
 }
 libxml_disable_entity_loader(true);
 spl_autoload_register(function ($cls) {
-    $cls = str_replace("Starlis\\Timings\\", "", $cls);
+    $cls = str_replace("\\","/",str_replace("Starlis\\Timings\\", "", $cls));
+
     if (file_exists("lib/$cls.php")) {
         require_once "lib/$cls.php";
-    }
-    if (file_exists("lib/json/$cls.php")) {
-        require_once "lib/json/$cls.php";
+        return;
     }
 });

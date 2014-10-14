@@ -9,8 +9,11 @@
  * @license MIT
  */
 namespace Starlis\Timings;
-
-?><div class="ad_links"><?php ad_link(); ?></div>
+use Starlis\Timings\Json\TimingHandler;
+use Starlis\Timings\Json\TimingsMaster;
+?>
+<div class="ad_links"><?php
+ad_link(); ?></div>
 <div id="content">
     Dev site is still under development.
 

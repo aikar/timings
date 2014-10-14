@@ -8,22 +8,19 @@
  *
  * @license MIT
  */
-namespace Starlis\Timings;
+namespace Starlis\Timings\Json;
+use Starlis\Timings\FromJson;
 
-class World {
+class Plugin {
     use FromJson;
 
     /**
-     * @mapper TimingsMap::getWorldName
      * @index @key
-     * @var string
      */
-    public $worldName;
+    public $name;
 
-    /**
-     * @index @value
-     * @var Chunk[]
-     */
-    public $chunks;
-
-}
+    public $version;
+    public $description;
+    public $website;
+    public $authors;
+} 

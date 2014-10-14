@@ -8,7 +8,9 @@
  *
  * @license MIT
  */
-namespace Starlis\Timings;
+namespace Starlis\Timings\Json;
+use Starlis\Timings\FromJson;
+use Starlis\Timings\Singleton;
 
 class TimingsMaster {
     use FromJson, Singleton;

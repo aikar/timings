@@ -109,10 +109,18 @@ class Util {
     public static function has_trait($class, $traits) {
         if (is_object($class)) {
             $class = get_class($class);
+        } else {
+            // Exclude normal PHP types that are obviously not class names, so we do not invoke the auto loader.
+            $check = preg_replace("/[^a-z]/","", strtolower($class));
+            if (in_array($check, ["int","integer","float","double","resource","object","array",
+                "mixed","callback","number","null","string","boolean"])) {
+                return false;
+            }
+            if (!class_exists($class)) {
+                return false;
+            }
         }
-        if (!class_exists($class)) {
-            return false;
-        }
+
         $uses = class_uses($class);
         foreach ((array) $traits as $trait) {
             if (!in_array($trait, $uses)) {
@@ -120,6 +128,25 @@ class Util {
             }
         }
         return true;
+    }
+
+    /**
+     * Due to __NAMESPACE__ inside of traits resolving the traits namespace and not the implementing classes,
+     * this method provides a way to look up the namespace of a FQCN.
+     *
+     * @param $class
+     *
+     * @return null|string
+     */
+    public static function getNamespace($class) {
+        if (!class_exists($class)) {
+            return null;
+        }
+        $pos = strrpos($class, '\\');
+        if ($pos === false) {
+            return '';
+        }
+        return substr($class, 0, $pos);
     }
 }
 

@@ -41,7 +41,7 @@ trait FromJson {
                 $cb = __CLASS__ . "::$cb";
             }
             if (!strstr($cb, "\\")) {
-                $cb = __NAMESPACE__ . "\\$cb";
+                $cb = Util::getNamespace(__CLASS__) . "\\$cb";
             }
             $cb = explode("::", $cb, 2);
             $rootData = call_user_func($cb, $rootData, $parentObj);
@@ -92,7 +92,7 @@ trait FromJson {
                                     $cb =  __CLASS__ . "::$cb";;
                                 }
                                 if (!strstr($cb, "\\")) {
-                                    $cb = __NAMESPACE__ . "\\$cb";
+                                    $cb = Util::getNamespace(__CLASS__) . "\\$cb";
                                 }
                                 $cb = explode("::", $cb, 2);
                                 $keyName = call_user_func($cb, $keyName, $thisData, $parent);
@@ -127,7 +127,7 @@ trait FromJson {
         if (preg_match('/@var\s+([\w_]+)(\[.*?\])?/', $parent->comment, $matches)) {
             $className = $matches[1];
             if (!strstr($className, "\\")) {
-                $className = __NAMESPACE__."\\$className";
+                $className = Util::getNamespace(__CLASS__)."\\$className";
             }
         }
 
@@ -137,7 +137,7 @@ trait FromJson {
                 $cb =  __CLASS__ . "::$cb";;
             }
             if (!strstr($cb, "\\")) {
-                $cb = __NAMESPACE__ . "\\$cb";
+                $cb = Util::getNamespace(__CLASS__) . "\\$cb";
             }
             $cb = explode("::", $cb, 2);
             $data = call_user_func($cb, $data, $parent);

@@ -10,6 +10,9 @@
  */
 namespace Starlis\Timings;
 
+use Starlis\Timings\Json\TimingHandler;
+use Starlis\Timings\Json\TimingsMaster;
+
 class Template {
     use Singleton;
     public $history;
@@ -40,7 +43,7 @@ class Template {
 
         $last = count($ranges)-1;
         $tpl->js['start'] = $start = (!empty($_GET['start']) ? intval($_GET['start']) : $ranges[$last-1]);
-        $tpl->js['end']   = $end   = (!empty($_GET['end']) ? intval($_GET['end']) : $ranges[$last]);
+        $tpl->js['end']   = $end   = (!empty($_GET['end'])   ? intval($_GET['end'])   : $ranges[$last]);
 
         /**
          * @var TimingHandler[] $handlerData

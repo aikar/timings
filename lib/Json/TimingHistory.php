@@ -8,7 +8,8 @@
  *
  * @license MIT
  */
-namespace Starlis\Timings;
+namespace Starlis\Timings\Json;
+use Starlis\Timings\FromJson;
 
 class TimingHistory {
     use FromJson;

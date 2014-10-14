@@ -10,6 +10,8 @@
  */
 namespace Starlis\Timings;
 
+use Starlis\Timings\Json\TimingsMaster;
+
 class Timings {
     use Singleton;
     public $id;
@@ -42,7 +44,7 @@ class Timings {
         } else if (!empty($_GET['id'])) {
             $id = $_GET['id'];
         } else if (TIMINGS_ENV == 'dev') {
-            $id = '1a0307e706ae4170b6be56442951d45a'; // DEV test
+            $id = 'b3f1580dda3c4e5797caa25c2a79c5f1'; // DEV test
         }
         $id = Util::sanitizeHex($id);
         $this->id = $id;
