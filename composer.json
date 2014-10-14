@@ -8,5 +8,10 @@
             "email": "aikar@aikar.co"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+      "psr-4": {
+        "Starlis\\Timings\\": "lib/"
+      }
+    }
 }
