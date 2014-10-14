@@ -111,9 +111,10 @@ class Util {
             $class = get_class($class);
         } else {
             // Exclude normal PHP types that are obviously not class names, so we do not invoke the auto loader.
-            $check = preg_replace("/[^a-z]/","", strtolower($class));
-            if (in_array($check, ["int","integer","float","double","resource","object","array",
-                "mixed","callback","number","null","string","boolean"])) {
+            $check = preg_replace("/[^a-z]/", "", strtolower($class));
+            if (in_array($check, ["int", "integer", "float", "double", "resource", "object", "array",
+                "mixed", "callback", "number", "null", "string", "boolean"])
+            ) {
                 return false;
             }
             if (!class_exists($class)) {
@@ -122,11 +123,12 @@ class Util {
         }
 
         $uses = class_uses($class);
-        foreach ((array) $traits as $trait) {
+        foreach ((array)$traits as $trait) {
             if (!in_array($trait, $uses)) {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -146,8 +148,8 @@ class Util {
         if ($pos === false) {
             return '';
         }
+
         return substr($class, 0, $pos);
     }
 }
-
 
