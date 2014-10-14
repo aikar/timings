@@ -1,0 +1,26 @@
+/*******************************************************************************
+ * Aikar's Minecraft Timings Parser
+ * Written by Aikar <aikar@aikar.co>
+ * http://aikar.co
+ * http://starlis.com
+ *
+ * @license MIT
+ ******************************************************************************/
+
+#history-selector {
+  padding: 0;
+  margin: 10px auto;
+  text-align: center;
+}
+
+body .ui-slider .ui-slider-handle {
+  height: 22px !important;
+}
+
+#history-selector div#time-selector {
+  height: 15px;
+  width: 98%;
+  margin: 0 auto 10px;
+  text-align: center;
+  padding: 0;
+}

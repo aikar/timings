@@ -30,13 +30,14 @@ $light-gray: #DDD;
 $light-red: #FBE3E4;
 $light-yellow: #FFF6BF;
 $light-green: #E6EFC2;
+$light-blue: #CFE7FF;
 
 // Background Color
-$base-background-color: white;
+$base-background-color: $dark-gray;
 
 // Font Colors
-$base-font-color: $dark-gray;
-$base-accent-color: $blue;
+$base-font-color: $light-gray;
+$base-accent-color: $light-blue;
 
 // Link Colors
 $base-link-color: $base-accent-color;

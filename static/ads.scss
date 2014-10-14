@@ -1,0 +1,57 @@
+/*
+ * Aikar's Minecraft Timings Parser
+ *
+ * Written by Aikar <aikar@aikar.co>
+ * http://aikar.co
+ * http://starlis.com
+ *
+ * @license MIT
+ */
+
+.responsive-ad {
+  width: 320px;
+  height: 50px;
+  background: white;
+}
+
+
+#bottom-ad {
+  margin: 10px auto 40px;
+  text-align: center;
+}
+.ad_links {
+  clear: both;
+  margin: 2px auto;
+  text-align: center;
+}
+
+#header-right .responsive-ad {
+  width: 468px;
+  height: 60px;
+}
+
+#bottom-ad .responsive-ad {
+  width: 468px;
+  height: 60px;
+}
+
+@media (min-width: 750px) {
+  #bottom-ad .responsive-ad {
+    width: 728px;
+    height: 90px;
+    text-align: right;
+  }
+}
+
+@media (min-width: 1084px) {
+  #header-right .responsive-ad {
+    width: 728px;
+    height: 90px;
+  }
+}
+
+@media (max-width: 750px) {
+  #header-right .responsive-ad {
+    text-align: center !important;
+  }
+}

@@ -10,25 +10,17 @@
 
 @import "bourbon/bourbon";
 @import "neat/neat";
-@import "base/base";
+@import "base/base.scss";
 @import url(reset.css);
-
+@import "ads.scss";
+@import "timeselector.scss";
 /**************************************
  * GENERAL
  ************************************* */
 body {
   height: 100%;
-  background-color: #F0F0F0;
-  color: #141414;
-  font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
-  word-wrap: break-word;
-  line-height: 1;
-  margin: 0;
-}
-
-a:link, a:visited {
-  color: #217bd5;
-  text-decoration: none;
+  background: url("img/bg.png");
+  color: #c7c7c7;
 }
 
 pre, textarea {
@@ -47,20 +39,14 @@ hr {
 pre {
   font-family: monospace;
   tab-size: 4;
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
   margin: 0;
 }
 
 /**************************************
  * FOOTER
- ************************************* */
+ **************************************/
 html, body, #body-wrap, #wrapper {
   min-height: 100%;
-}
-
-#wrapper {
-  margin: 0 auto -33px;
 }
 
 .push, #footer {
@@ -85,7 +71,6 @@ html, body, #body-wrap, #wrapper {
   width: 100%;
 }
 
-/*height: 100px */
 #header-left {
   width: 310px;
   text-align: center;
@@ -93,12 +78,7 @@ html, body, #body-wrap, #wrapper {
 }
 
 #header-right {
-  margin: 10px 20px 0;
-  text-align: center;
-}
-
-#bottom-ad {
-  margin: 10px auto 40px;
+  margin: 35px 20px 0;
   text-align: center;
 }
 
@@ -106,68 +86,6 @@ html, body, #body-wrap, #wrapper {
   padding: 20px 15px;
 }
 
-.ad_links {
-  clear: both;
-  margin: 2px auto;
-  text-align: center;
-}
-
-.responsive-ad {
-  width: 320px;
-  height: 50px;
-}
-
-#history-selector {
-  /*width: 800px;
-  height: 200px;*/
-  padding: 0;
-  margin: 10px auto;
-  text-align: center;
-}
-
-body .ui-slider .ui-slider-handle {
-  height: 22px !important;
-}
-
-#history-selector div#time-selector {
-  height: 15px;
-  width: 98%;
-  margin: 0 auto 10px;
-  text-align: center;
-  padding: 0;
-}
-
 #header-right {
   text-align: center !important;
-}
-
-#header-right .responsive-ad {
-  width: 468px;
-  height: 60px;
-}
-
-#bottom-ad .responsive-ad {
-  width: 468px;
-  height: 60px;
-}
-
-@media (min-width: 750px) {
-  #bottom-ad .responsive-ad {
-    width: 728px;
-    height: 90px;
-    text-align: right;
-  }
-}
-
-@media (min-width: 1084px) {
-  #header-right .responsive-ad {
-    width: 728px;
-    height: 90px;
-  }
-}
-
-@media (max-width: 750px) {
-  #header-right .responsive-ad {
-    text-align: center !important;
-  }
 }
