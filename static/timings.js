@@ -9,12 +9,6 @@
  */
 
 $(document).ready(function () {
-  $('#paste_toggle').click(function () {
-    $('#paste').toggle();
-  });
-  $('.show_rest').click(function () {
-    $(this).parent().find('.hidden').toggle();
-  });
   var data = window.timingsData || {
     ranges:[],
     start: 1,

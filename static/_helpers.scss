@@ -1,0 +1,29 @@
+/*******************************************************************************
+ * Aikar's Minecraft Timings Parser
+ * Written by Aikar <aikar@aikar.co>
+ * http://aikar.co
+ * http://starlis.com
+ *
+ * @license MIT
+ ******************************************************************************/
+
+$break-small: 400px;
+$break-large: 1024px;
+
+@mixin small-screen() {
+  @media only screen and (max-width: $break-small) {
+    @content;
+  }
+}
+
+@mixin medium-screen() {
+  @media only screen and (min-width: $break-small + 1) and (max-width: $break-large - 1) {
+    @content;
+  }
+}
+
+@mixin large-screen() {
+  @media only screen and (min-width: $break-large) {
+    @content;
+  }
+}

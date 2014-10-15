@@ -7,16 +7,17 @@
  *
  * @license MIT
  */
-
+@import "reset";
 @import "bourbon/bourbon";
 @import "neat/neat";
-@import "base/base.scss";
-@import url(reset.css);
-@import "ads.scss";
-@import "timeselector.scss";
-/**************************************
- * GENERAL
- ************************************* */
+@import "base/base";
+@import "helpers";
+
+@import "header";
+@import "footer";
+@import "ads";
+@import "timeselector";
+
 body {
   height: 100%;
   background: url("img/bg.png");
@@ -25,6 +26,12 @@ body {
 
 pre, textarea {
   word-wrap: normal;
+  font-family: $monospace;
+  tab-size: 4;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  overflow: visible;
+  font-size: .7em;
 }
 
 .hidden {
@@ -36,51 +43,6 @@ hr {
   clear: both;
 }
 
-pre {
-  font-family: monospace;
-  tab-size: 4;
-  margin: 0;
-}
-
-/**************************************
- * FOOTER
- **************************************/
-html, body, #body-wrap, #wrapper {
-  min-height: 100%;
-}
-
-.push, #footer {
-  height: 33px;
-}
-
-#footer {
-  clear: both;
-  color: white;
-  background: #111;
-  opacity: 0.9;
-  padding: 0 15px;
-}
-
-#footer span {
-  line-height: 30px;
-  padding: 0 5px;
-}
-
-#header {
-  float: left;
-  width: 100%;
-}
-
-#header-left {
-  width: 310px;
-  text-align: center;
-  float: left;
-}
-
-#header-right {
-  margin: 35px 20px 0;
-  text-align: center;
-}
 
 #content {
   padding: 20px 15px;

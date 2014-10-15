@@ -1,0 +1,34 @@
+/*******************************************************************************
+ * Aikar's Minecraft Timings Parser
+ * Written by Aikar <aikar@aikar.co>
+ * http://aikar.co
+ * http://starlis.com
+ *
+ * @license MIT
+ ******************************************************************************/
+
+html, body, #body-wrap, #wrapper {
+  min-height: 100%;
+}
+
+.push, #footer {
+  height: 33px;
+}
+
+#footer {
+  clear: both;
+  color: white;
+  background: #111;
+  opacity: 0.9;
+  padding: 0 15px;
+}
+
+#footer span {
+  line-height: 30px;
+  padding: 0 5px;
+  @include small-screen {
+    a {
+      display: none;
+    }
+  }
+}

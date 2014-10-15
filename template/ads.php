@@ -30,7 +30,7 @@ function ad_banner_bottom() { ?>
 function ad_link() { ?>
     <!-- Timings Links -->
     <ins class="adsbygoogle ad_links"
-         style="display:inline-block;width:728px;height:15px"
+         style="display:inline-block;"
          data-ad-client="ca-pub-9196273905174409"
          data-ad-slot="2035978176"></ins>
 <?php

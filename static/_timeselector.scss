@@ -9,18 +9,23 @@
 
 #history-selector {
   padding: 0;
+  /*height: 200px;*/
   margin: 10px auto;
   text-align: center;
+
+  #time-selector {
+    height: 15px;
+    width: 98%;
+    margin: 0 auto 10px;
+    text-align: center;
+    padding: 0;
+  }
+
+  canvas {
+    height: 170px !important;
+  }
+  .ui-slider-handle {
+    height: 22px !important;
+  }
 }
 
-body .ui-slider .ui-slider-handle {
-  height: 22px !important;
-}
-
-#history-selector div#time-selector {
-  height: 15px;
-  width: 98%;
-  margin: 0 auto 10px;
-  text-align: center;
-  padding: 0;
-}
