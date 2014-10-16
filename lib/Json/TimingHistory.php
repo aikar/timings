@@ -51,6 +51,7 @@ class TimingHistory {
     public $handlers;
 
     /**
+     * @keymapper TimingsMap::getWorldName
      * @index w
      * @var World[]
      */

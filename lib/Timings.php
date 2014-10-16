@@ -44,7 +44,7 @@ class Timings {
         } else if (!empty($_GET['id'])) {
             $id = $_GET['id'];
         } else if (TIMINGS_ENV == 'dev') {
-            $id = 'b3f1580dda3c4e5797caa25c2a79c5f1'; // DEV test
+            $id = 'eae245afa5384414ba131200b9316f7f'; // DEV test
         }
         $id = Util::sanitizeHex($id);
         $this->id = $id;

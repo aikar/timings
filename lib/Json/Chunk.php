@@ -42,29 +42,20 @@ class Chunk {
     public $blockZ;
 
     /**
-     * @mapper getTileEntityName
-     * @index 3
+     * @keymapper TimingsMap::getTileEntityType
+     * @index 2
      * @var int[]
      */
     public $tileEntities;
 
     /**
-     * @mapper getEntityName
-     * @index 4
+     * @keymapper TimingsMap::getEntityType
+     * @index 3
      * @var int[]
      */
     public $entities;
 
     public static function chunkToBlock($i) {
         return $i << 4;
-    }
-
-    public static function getTileEntityName($count, FromJsonParent $parent) {
-        $parent->name = TimingsMap::getTileEntityType($parent->name);
-        return $count;
-    }
-    public static function getEntityName($count, FromJsonParent $parent) {
-        $parent->name = TimingsMap::getEntityType($parent->name);
-        return $count;
     }
 }

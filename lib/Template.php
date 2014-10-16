@@ -33,8 +33,8 @@ class Template {
         $data = TimingsMaster::getInstance();
 
         $tpl = self::getInstance();
-        $tpl->js['ranges'] = array();
-        $ranges =& $tpl->js['ranges'];
+
+        $ranges = [];
 
         foreach ($data->data as $history) {
             $ranges[] = $history->start;
@@ -42,18 +42,40 @@ class Template {
         }
 
         $last = count($ranges)-1;
-        $tpl->js['start'] = $start = (!empty($_GET['start']) ? intval($_GET['start']) : $ranges[$last-1]);
-        $tpl->js['end']   = $end   = (!empty($_GET['end'])   ? intval($_GET['end'])   : $ranges[$last]);
+
+        $tpl->js['ranges']   = $ranges;
+        $tpl->js['start']    = $start = (!empty($_GET['start']) ? intval($_GET['start']) : $ranges[$last-1]);
+        $tpl->js['end']      = $end   = (!empty($_GET['end'])   ? intval($_GET['end'])   : $ranges[$last]);
+
 
         /**
          * @var TimingHandler[] $handlerData
          */
-        $handlerData = array();
-        $lagData = array();
-        $tpsData = array();
-        $timestamps = array();
+        $handlerData = [];
+        $lagData     = [];
+        $tpsData     = [];
+        $tentData    = [];
+        $entData     = [];
+        $chunkData   = [];
+        $timestamps  = [];
+
         $max = 0;
         foreach ($data->data as $history) {
+            $tileEntities = 0;
+            $entities = 0;
+            $chunks = 0;
+            foreach ($history->worldData as $world) {
+                foreach ($world->chunks as $chunk) {
+                    $chunks++;
+                    foreach ($chunk->entities as $entityType => $entityCount) {
+                        $entities += $entityCount;
+                    }
+                    foreach ($chunk->tileEntities as $tileEntityType => $tileEntityCount) {
+                        $tileEntities += $tileEntityCount;
+                    }
+                }
+            }
+
             foreach ($history->minuteReports as $mp) {
                 $total = $mp->fullServerTick->total;
                 $lag = $mp->fullServerTick->lagTotal;
@@ -62,6 +84,9 @@ class Template {
                 $timestamps[] = $mp->time;
                 $tpsData[] = $mp->tps > 19.85 ? 20 : $mp->tps;
                 $lagData[] = $lag;
+                $chunkData[] = $chunks;
+                $entData[] = $entities;
+                $tentData[] = $tileEntities;
             }
 
             if ($history->start >= $start && $history->end <= $end) {
@@ -77,14 +102,17 @@ class Template {
             }
         }
 
-        $tpl->handlerData = $handlerData;
-        $tpl->js['timestamps'] = $timestamps;
-        $tpl->js['maxTime'] = $max;
-        $tpl->js['lagData'] = $lagData;
-        $tpl->js['tpsData'] = $tpsData;
-        $tpl->js['id'] = $timings->id;
-        $tpl->lagData = $lagData;
-        $tpl->tpsData = $tpsData;
+        $tpl->handlerData    = $handlerData;
+        $tpl->js['stamps']   = $timestamps;
+        $tpl->js['maxTime']  = $max;
+        $tpl->js['chunkData']= $chunkData;
+        $tpl->js['entData']  = $entData;
+        $tpl->js['tentData'] = $tentData;
+        $tpl->js['lagData']  = $lagData;
+        $tpl->js['tpsData']  = $tpsData;
+        $tpl->js['id']       = $timings->id;
+        $tpl->lagData        = $lagData;
+        $tpl->tpsData        = $tpsData;
     }
 
     public function getData() {

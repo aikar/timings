@@ -38,12 +38,21 @@ $(document).ready(function () {
 
 
 
-  data.timestamps.forEach(function(k) {
+  data.stamps.forEach(function(k) {
     var d = new Date(k*1000);
     labels.push(d.toLocaleString());
   });
   data.tpsData.forEach(function(tps, i) {
     data.tpsData[i] = (tps/20)*data.maxTime
+  });
+  data.tentData.forEach(function(count, i) {
+    data.tentData[i] = (count/5000)*data.maxTime
+  });
+  data.entData.forEach(function(count, i) {
+    data.entData[i] = (count/10000)*data.maxTime
+  });
+  data.chunkData.forEach(function(count, i) {
+    data.chunkData[i] = (count/4000)*data.maxTime
   });
 
 
@@ -57,25 +66,47 @@ $(document).ready(function () {
       },
       {
         label: "TPS",
-        fillColor: "rgba(147,69,209,.3)",
-        strokeColor: "rgba(147,69,249,.7)",
-        pointColor: "purple",
+        fillColor: "rgba(145,255,156,.6)",
+        strokeColor: "rgba(16,109,47,.7)",
+        pointColor: "rgba(16,109,47,.7)",
         pointStrokeColor: "#fff",
         pointHighlightFill: "#fff",
         pointHighlightStroke: "rgba(220,220,220,1)",
         data: data.tpsData
       },{
         label: "LAG",
-        fillColor: "rgba(230,20,20,0.2)",
+        fillColor: "rgba(230,20,20,0.6)",
         strokeColor: "rgba(255,60,60,1)",
-        pointColor: "rgba(255,150,150,1)",
+        pointColor: "rgba(255,60,60,1)",
         pointStrokeColor: "#ff5533",
         pointHighlightFill: "#ff5533",
         pointHighlightStroke: "rgba(151,187,205,1)",
         data: data.lagData
+      },
+      {
+        label: "Tile Entities",
+        fillColor: "rgba(0,0,0,0)",
+        pointColor: "#DBF76A",
+        pointStrokeColor: "#DBF76A",
+        data: data.tentData
+      },
+      {
+        label: "Entities",
+        fillColor: "rgba(0,0,0,0)",
+        pointColor: "#84E2FF",
+        pointStrokeColor: "#84E2FF",
+        data: data.entData
+      },
+      {
+        label: "Chunks",
+        fillColor: "rgba(0,0,0,0)",
+        pointColor: "#9324B5",
+        pointStrokeColor: "#9324B5",
+        data: data.chunkData
       }
     ]
   }, {
+    animation: false,
     legendTemplate: "",
     showScale: false,
     pointHitDetectionRadius: 2,
@@ -83,7 +114,13 @@ $(document).ready(function () {
     maintainAspectRatio: false,
     multiTooltipTemplate: function(v) {
       if (v.datasetLabel == "TPS") {
-        return (Math.round(v.value / data.maxTime * 20 * 100)/100) + " TPS";
+        return (Math.round(v.value / data.maxTime * 20 * 100) / 100) + " TPS";
+      } else if (v.datasetLabel == "Entities") {
+        return (Math.round(v.value / data.maxTime * 10000 * 100)/100) + " " + v.datasetLabel;
+      } else if (v.datasetLabel == "Tile Entities") {
+        return (Math.round(v.value / data.maxTime * 5000 * 100)/100) + " " + v.datasetLabel;
+      } else if (v.datasetLabel == "Chunks") {
+        return (Math.round(v.value / data.maxTime * 4000 * 100)/100) + " " + v.datasetLabel;
       } else if (v.datasetLabel == "LAG") {
         return Math.round((v.value/data.maxTime)*100) + "% TPS Loss";
       } else {
@@ -148,6 +185,14 @@ $(document).ready(function () {
 
   function getMax(array){
     return Math.max.apply(Math,array);
+  }
+  function htorgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
   }
 });
 
