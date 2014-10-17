@@ -18,7 +18,7 @@ require_once "ads.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aikar's Timings Viewer</title>
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.css"/>
     <link rel="stylesheet" href="static/timings.css"/>
     <meta name="robots" content="noindex">
 </head>

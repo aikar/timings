@@ -56,7 +56,9 @@ class Template {
         $tpsData     = [];
         $tentData    = [];
         $entData     = [];
+        $aentData    = [];
         $chunkData   = [];
+        $playerData  = [];
         $timestamps  = [];
 
         $max = 0;
@@ -64,15 +66,10 @@ class Template {
             $tileEntities = 0;
             $entities = 0;
             $chunks = 0;
+            $players = 0;
             foreach ($history->worldData as $world) {
                 foreach ($world->chunks as $chunk) {
                     $chunks++;
-                    foreach ($chunk->entities as $entityType => $entityCount) {
-                        $entities += $entityCount;
-                    }
-                    foreach ($chunk->tileEntities as $tileEntityType => $tileEntityCount) {
-                        $tileEntities += $tileEntityCount;
-                    }
                 }
             }
 
@@ -85,8 +82,10 @@ class Template {
                 $tpsData[] = $mp->tps > 19.85 ? 20 : $mp->tps;
                 $lagData[] = $lag;
                 $chunkData[] = $chunks;
-                $entData[] = $entities;
-                $tentData[] = $tileEntities;
+                $entData[] = $mp->ticks->entityTicks / $mp->ticks->timedTicks;
+                $playerData[] = $mp->ticks->playerTicks / $mp->ticks->timedTicks;
+                $aentData[] = $mp->ticks->activatedEntityTicks / $mp->ticks->timedTicks;
+                $tentData[] = $mp->ticks->tileEntityTicks / $mp->ticks->timedTicks;
             }
 
             if ($history->start >= $start && $history->end <= $end) {
@@ -107,7 +106,9 @@ class Template {
         $tpl->js['maxTime']  = $max;
         $tpl->js['chunkData']= $chunkData;
         $tpl->js['entData']  = $entData;
+        $tpl->js['aentData'] = $aentData;
         $tpl->js['tentData'] = $tentData;
+        $tpl->js['plaData']  = $playerData;
         $tpl->js['lagData']  = $lagData;
         $tpl->js['tpsData']  = $tpsData;
         $tpl->js['id']       = $timings->id;

@@ -37,22 +37,32 @@ $(document).ready(function () {
   var labels = [];
 
 
+  var scales = {
+    "Entities" : 10000,
+    "Tile Entities": 25000,
+    "Chunks": 3000,
+    "Players": 100,
+    "TPS": 20
+  }
 
   data.stamps.forEach(function(k) {
     var d = new Date(k*1000);
     labels.push(d.toLocaleString());
   });
   data.tpsData.forEach(function(tps, i) {
-    data.tpsData[i] = (tps/20)*data.maxTime
+    data.tpsData[i] = (tps/scales.TPS)*data.maxTime
+  });
+  data.plaData.forEach(function(count, i) {
+    data.plaData[i] = (count/scales.Players)*data.maxTime
   });
   data.tentData.forEach(function(count, i) {
-    data.tentData[i] = (count/5000)*data.maxTime
+    data.tentData[i] = (count/scales["Tile Entities"])*data.maxTime
   });
   data.entData.forEach(function(count, i) {
-    data.entData[i] = (count/10000)*data.maxTime
+    data.entData[i] = (count/scales.Entities)*data.maxTime
   });
   data.chunkData.forEach(function(count, i) {
-    data.chunkData[i] = (count/4000)*data.maxTime
+    data.chunkData[i] = (count/scales.Chunks)*data.maxTime
   });
 
 
@@ -66,7 +76,9 @@ $(document).ready(function () {
       },
       {
         label: "TPS",
-        fillColor: "rgba(145,255,156,.6)",
+        //fillColor: "rgba(145,255,156,.6)",
+        //fillColor: htorgba("136b06", .8),
+        fillColor: htorgba("#ABFFA8", .8),
         strokeColor: "rgba(16,109,47,.7)",
         pointColor: "rgba(16,109,47,.7)",
         pointStrokeColor: "#fff",
@@ -75,13 +87,21 @@ $(document).ready(function () {
         data: data.tpsData
       },{
         label: "LAG",
-        fillColor: "rgba(230,20,20,0.6)",
+        //fillColor: htorgba("8d0707",0.8),
+        fillColor: htorgba("ff8e01",0.8),
         strokeColor: "rgba(255,60,60,1)",
         pointColor: "rgba(255,60,60,1)",
         pointStrokeColor: "#ff5533",
         pointHighlightFill: "#ff5533",
         pointHighlightStroke: "rgba(151,187,205,1)",
         data: data.lagData
+      },
+      {
+        label: "Players",
+        fillColor: "rgba(0,0,0,0)",
+        pointColor: "#4F80FF",
+        pointStrokeColor: "#DBF76A",
+        data: data.plaData
       },
       {
         label: "Tile Entities",
@@ -113,18 +133,10 @@ $(document).ready(function () {
     responsive: true,
     maintainAspectRatio: false,
     multiTooltipTemplate: function(v) {
-      if (v.datasetLabel == "TPS") {
-        return (Math.round(v.value / data.maxTime * 20 * 100) / 100) + " TPS";
-      } else if (v.datasetLabel == "Entities") {
-        return (Math.round(v.value / data.maxTime * 10000 * 100)/100) + " " + v.datasetLabel;
-      } else if (v.datasetLabel == "Tile Entities") {
-        return (Math.round(v.value / data.maxTime * 5000 * 100)/100) + " " + v.datasetLabel;
-      } else if (v.datasetLabel == "Chunks") {
-        return (Math.round(v.value / data.maxTime * 4000 * 100)/100) + " " + v.datasetLabel;
-      } else if (v.datasetLabel == "LAG") {
+      if (v.datasetLabel == "LAG") {
         return Math.round((v.value/data.maxTime)*100) + "% TPS Loss";
       } else {
-        return ""
+        return (Math.round(v.value / data.maxTime * scales[v.datasetLabel] * 100) / 100) + " " + v.datasetLabel;
       }
     }
   });
@@ -186,13 +198,14 @@ $(document).ready(function () {
   function getMax(array){
     return Math.max.apply(Math,array);
   }
-  function htorgb(hex) {
+  function htorgba(hex, alpha) {
+    if (alpha == undefined) alpha = 1;
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16)
-    } : null;
+    return result ? "rgba(" +
+      parseInt(result[1], 16) +"," +
+      parseInt(result[2], 16) +"," +
+      parseInt(result[3], 16) +"," + alpha +")"
+     : hex;
   }
 });
 
