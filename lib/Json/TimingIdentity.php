@@ -31,7 +31,26 @@ class TimingIdentity {
      */
     public $group;
 
+    /**
+     * @var TimingHandler
+     */
+    private $handler;
+
     public function __toString() {
         return $this->group . "::" . $this->name;
+    }
+
+    /**
+     * @return TimingHandler
+     */
+    public function getHandler() {
+        return $this->handler;
+    }
+
+    /**
+     * @param TimingHandler $handler
+     */
+    public function setHandler(TimingHandler $handler) {
+        $this->handler = $handler;
     }
 } 

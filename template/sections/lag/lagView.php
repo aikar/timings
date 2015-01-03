@@ -26,7 +26,7 @@ $lagFilter = function ($e) {
         $e->avg = ($e->lagTotal / $e->lagCount) * $e->mergedCount;
     }
 
-    return $e->lagTotal > 1000 && $e->avg > 2000000;
+    return $e->lagTotal > 10 && $e->avg > 20000;
 };
 
 $lagSort = function ($a, $b) {
@@ -51,7 +51,7 @@ $tpl = Template::getInstance();
  * @var TimingHandler[] $lag
  */
 $lag = array_filter($tpl->handlerData, $lagFilter);
-
+//print_r($tpl->handlerData);
 usort($lag, $lagSort);
 foreach ($lag as $l) {
     $printRecord($l);
