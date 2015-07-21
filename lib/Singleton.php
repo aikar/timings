@@ -11,19 +11,18 @@
 namespace Starlis\Timings;
 
 trait Singleton {
-    protected static $instance;
+	protected static $instance;
 
-    function __wakeup() {
-        static::$instance = $this;
-    }
+	function __wakeup() {
+		static::$instance = $this;
+	}
 
-    /**
-     * @return $this
-     */
-    final public static function getInstance()
-    {
-        return isset(static::$instance)
-            ? static::$instance
-            : static::$instance = new static;
-    }
+	/**
+	 * @return $this
+	 */
+	final public static function getInstance() {
+		return isset(static::$instance)
+			? static::$instance
+			: static::$instance = new static;
+	}
 }

@@ -9,22 +9,23 @@
  * @license MIT
  */
 namespace Starlis\Timings\Json;
+
 use Starlis\Timings\FromJson;
 
 class World {
-    use FromJson;
+	use FromJson;
 
-    /**
-     * @mapper TimingsMap::getWorldName
-     * @index @key
-     * @var string
-     */
-    public $worldName;
+	/**
+	 * @mapper TimingsMap::getWorldName
+	 * @index @key
+	 * @var string
+	 */
+	public $worldName;
 
-    /**
-     * @index @value
-     * @var Chunk[]
-     */
-    public $chunks;
+	/**
+	 * @index @value
+	 * @var Chunk[]
+	 */
+	public $chunks;
 
 }

@@ -9,36 +9,37 @@
  * @license MIT
  */
 namespace Starlis\Timings\Json;
+
 use Starlis\Timings\FromJson;
 
 class MinuteReport {
-    use FromJson;
-    /**
-     * @index 0
-     * @var int
-     */
-    public $time;
+	use FromJson;
+	/**
+	 * @index 0
+	 * @var int
+	 */
+	public $time;
 
-    /**
-     * @index 1
-     * @var float
-     */
-    public $tps;
+	/**
+	 * @index 1
+	 * @var float
+	 */
+	public $tps;
 
-    /**
-     * @index 2
-     * @var float
-     */
-    public $avgPing;
+	/**
+	 * @index 2
+	 * @var float
+	 */
+	public $avgPing;
 
-    /**
-     * @index 3
-     * @var TimingData
-     */
-    public $fullServerTick;
-    /**
-     * @index 4
-     * @var TicksRecord
-     */
-    public $ticks;
+	/**
+	 * @index 3
+	 * @var TimingData
+	 */
+	public $fullServerTick;
+	/**
+	 * @index 4
+	 * @var TicksRecord
+	 */
+	public $ticks;
 } 

@@ -11,17 +11,17 @@
 namespace Starlis\Timings;
 ?>
 <div class="ad_links"><?php
-ad_link(); ?></div>
+	ad_link(); ?></div>
 <div id="content">
-This site is still under heavy development.
+	This site is still under heavy development.
 
-    <?php
-    switch ($_GET['section']) {
-        case "lag":
-        default:
-            require_once "sections/lag/lagView.php";
-    }
-    ?>
+	<?php
+	switch ($_GET['section']) {
+		case "lag":
+		default:
+			require_once "sections/lag/lagView.php";
+	}
+	?>
 </div>
 
 <hr/>

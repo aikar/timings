@@ -9,56 +9,57 @@
  * @license MIT
  */
 namespace Starlis\Timings\Json;
+
 use Starlis\Timings\FromJson;
 
 class TimingHistory {
-    use FromJson;
+	use FromJson;
 
-    /**
-     * @index @key
-     * @var int
-     */
-    public $id;
+	/**
+	 * @index @key
+	 * @var int
+	 */
+	public $id;
 
-    /**
-     * @index s
-     */
-    public $start;
+	/**
+	 * @index s
+	 */
+	public $start;
 
-    /**
-     * @index e
-     * @var int
-     */
-    public $end;
+	/**
+	 * @index e
+	 * @var int
+	 */
+	public $end;
 
-    /**
-     * @index tk
-     * @var int
-     */
-    public $totalTicks;
+	/**
+	 * @index tk
+	 * @var int
+	 */
+	public $totalTicks;
 
-    /**
-     * @index tm
-     * @var int
-     */
-    public $totalTime;
+	/**
+	 * @index tm
+	 * @var int
+	 */
+	public $totalTime;
 
-    /**
-     * @keymapper TimingData::mapIdKey
-     * @index h
-     * @var TimingHandler[]
-     */
-    public $handlers;
+	/**
+	 * @keymapper TimingData::mapIdKey
+	 * @index     h
+	 * @var TimingHandler[]
+	 */
+	public $handlers;
 
-    /**
-     * @keymapper TimingsMap::getWorldName
-     * @index w
-     * @var World[]
-     */
-    public $worldData;
-    /**
-     * @index mp
-     * @var MinuteReport[]
-     */
-    public $minuteReports;
+	/**
+	 * @keymapper TimingsMap::getWorldName
+	 * @index     w
+	 * @var World[]
+	 */
+	public $worldData;
+	/**
+	 * @index mp
+	 * @var MinuteReport[]
+	 */
+	public $minuteReports;
 } 

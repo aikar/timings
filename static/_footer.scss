@@ -8,27 +8,27 @@
  ******************************************************************************/
 
 html, body, #body-wrap, #wrapper {
-  min-height: 100%;
+	min-height: 100%;
 }
 
 .push, #footer {
-  height: 33px;
+	height: 33px;
 }
 
 #footer {
-  clear: both;
-  color: white;
-  background: #111;
-  opacity: 0.9;
-  padding: 0 15px;
+	clear: both;
+	color: white;
+	background: #111;
+	opacity: 0.9;
+	padding: 0 15px;
 }
 
 #footer span {
-  line-height: 30px;
-  padding: 0 5px;
-  @include small-screen {
-    a {
-      display: none;
-    }
-  }
+	line-height: 30px;
+	padding: 0 5px;
+	@include small-screen {
+		a {
+			display: none;
+		}
+	}
 }

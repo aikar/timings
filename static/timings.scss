@@ -12,42 +12,40 @@
 @import "base/base";
 @import "neat/neat";
 @import "helpers";
-
 @import "header";
 @import "footer";
 @import "ads";
 @import "timeselector";
 
 body {
-  height: 100%;
-  background: url("img/bg.png");
-  color: #c7c7c7;
+	height: 100%;
+	background: url("img/bg.png");
+	color: #c7c7c7;
 }
 
 pre, textarea {
-  word-wrap: normal;
-  font-family: $monospace;
-  tab-size: 4;
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  overflow: visible;
-  font-size: .7em;
+	word-wrap: normal;
+	font-family: $monospace;
+	tab-size: 4;
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	overflow: visible;
+	font-size: .7em;
 }
 
 .hidden {
-  display: none;
+	display: none;
 }
 
 hr {
-  margin: 0;
-  clear: both;
+	margin: 0;
+	clear: both;
 }
 
-
 #content {
-  padding: 20px 15px;
+	padding: 20px 15px;
 }
 
 #header-right {
-  text-align: center !important;
+	text-align: center !important;
 }

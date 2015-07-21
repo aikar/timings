@@ -8,45 +8,46 @@
  * @license MIT
  */
 
-
 #bottom-ad {
-  margin: 10px auto 40px;
-  text-align: center;
+	margin: 10px auto 40px;
+	text-align: center;
 }
+
 .ad_links {
-  clear: both;
-  margin: 2px auto;
-  text-align: center;
-  width:728px;
-  height:15px;
-  @include small-screen {
-    display: none;
-  }
+	clear: both;
+	margin: 2px auto;
+	text-align: center;
+	width: 728px;
+	height: 15px;
+	@include small-screen {
+		display: none;
+	}
 }
+
 .responsive-ad {
-  width: 728px;
-  height: 90px;
-  text-align: center;
-  background: white;
-  margin-left: auto;
-  margin-right: auto;
-  @include medium-screen {
-    width: 468px;
-    height: 60px;
-  }
-  @include small-screen {
-    width: 320px;
-    height: 50px;
-  }
+	width: 728px;
+	height: 90px;
+	text-align: center;
+	background: white;
+	margin-left: auto;
+	margin-right: auto;
+	@include medium-screen {
+		width: 468px;
+		height: 60px;
+	}
+	@include small-screen {
+		width: 320px;
+		height: 50px;
+	}
 }
 
 #header-right {
-  margin: 35px 20px 0;
-  text-align: right;
-  @include large-screen {
-    text-align: center;
-  }
-  @include small-screen {
-    margin: 35px 0 0;
-  }
+	margin: 35px 20px 0;
+	text-align: right;
+	@include large-screen {
+		text-align: center;
+	}
+	@include small-screen {
+		margin: 35px 0 0;
+	}
 }

@@ -9,18 +9,19 @@
  * @license MIT
  */
 namespace Starlis\Timings\Json;
+
 use Starlis\Timings\FromJson;
 
 class TimingsSystemData {
-    use FromJson;
+	use FromJson;
 
-    public $timingcost;
-    public $name;
-    public $version;
-    public $arch;
-    public $totalmem;
-    public $usedmem;
-    public $maxmem;
-    public $cpu;
-    public $runtime;
+	public $timingcost;
+	public $name;
+	public $version;
+	public $arch;
+	public $totalmem;
+	public $usedmem;
+	public $maxmem;
+	public $cpu;
+	public $runtime;
 }

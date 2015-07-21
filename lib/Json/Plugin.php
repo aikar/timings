@@ -9,18 +9,19 @@
  * @license MIT
  */
 namespace Starlis\Timings\Json;
+
 use Starlis\Timings\FromJson;
 
 class Plugin {
-    use FromJson;
+	use FromJson;
 
-    /**
-     * @index @key
-     */
-    public $name;
+	/**
+	 * @index @key
+	 */
+	public $name;
 
-    public $version;
-    public $description;
-    public $website;
-    public $authors;
+	public $version;
+	public $description;
+	public $website;
+	public $authors;
 } 

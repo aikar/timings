@@ -26,7 +26,7 @@ if (preg_match('/Sample time (.+?) \(/', $legacyData, $sampm)) {
 $subkey = 'Minecraft - Breakdown (counted by other timings, not included in total)  ';
 $report = array($subkey => array('Total' => 0), 'Minecraft' => array('Total' => 0));
 $current = null;
-$version  = '';
+$version = '';
 if (preg_match('/# Version (git-Spigot-)?(.*)/i', $legacyData, $m)) {
 	$version = $m[2];
 }
@@ -135,19 +135,19 @@ foreach ($report as &$rep) {
 }
 $recommendations = array();
 
-$numTicks = max(1,$numTicks);
+$numTicks = max(1, $numTicks);
 $total -= $report[$subkey]['Total'];
 ob_start();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
- <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Aikar's Timings Viewer</title>
 	<link rel="stylesheet" href="legacy/timings.css"/>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css"/>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 	<script src="legacy/timings.js"></script>
 	<meta name="robots" content="noindex">
@@ -155,22 +155,38 @@ ob_start();
 		pre {
 			margin: 0;
 		}
-.topright {
-	/*float: left;*/
-	/*text-align:center;*/
-}
-.responsive-ad { width: 320px; height: 50px; }
-@media(max-width: 600px) {
-	.topright {
-		width: 100%;
-		text-align: center !important;
-	}
-}
-@media(min-width: 500px) { 
-	/*.topright { text-align: right; } */
-	.responsive-ad { width: 468px; height: 60px; } 
-}
-@media(min-width: 1139px) { .responsive-ad { width: 728px; height: 90px; } }
+
+		.topright {
+			/*float: left;*/
+			/*text-align:center;*/
+		}
+
+		.responsive-ad {
+			width: 320px;
+			height: 50px;
+		}
+
+		@media (max-width: 600px) {
+			.topright {
+				width: 100%;
+				text-align: center !important;
+			}
+		}
+
+		@media (min-width: 500px) {
+			/*.topright { text-align: right; } */
+			.responsive-ad {
+				width: 468px;
+				height: 60px;
+			}
+		}
+
+		@media (min-width: 1139px) {
+			.responsive-ad {
+				width: 728px;
+				height: 90px;
+			}
+		}
 
 	</style>
 
@@ -178,31 +194,34 @@ ob_start();
 <body>
 <?php echo '<!-- ' . $totalTimings . ' -->'; ?>
 <div style="text-align: center;margin: auto">
-<div style="text-align:center;width: 310px;margin:auto;float: left">
-	<br />
-	&copy; Aikar of <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Empire Minecraft</a><br />
-	<a href="http://github.com/aikar/timings" title="Source Code">[source]</a> <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=payments%40starlis%2ecom&lc=US&item_name=Aikar%20Timings&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHostedGuest">[donate]</a>
-	<br />
-	<p>For the advanced timings data, you need to use Spigot:
-		<a href="http://spigotmc.org" title="Spigot">spigotmc.org</a>.<br />
-	</p>
-</div>
+	<div style="text-align:center;width: 310px;margin:auto;float: left">
+		<br/>
+		&copy; Aikar of <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Empire Minecraft</a><br/>
+		<a href="http://github.com/aikar/timings" title="Source Code">[source]</a> <a
+			href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=payments%40starlis%2ecom&lc=US&item_name=Aikar%20Timings&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHostedGuest">[donate]</a>
+		<br/>
 
-<div class="topright" style="float: right;margin:0 20px">
-<br/>
-<div style="text-align:center;margin:auto">
-	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-	<ins class="adsbygoogle responsive-ad"
-	     style="display:inline-block;"
-	     data-ad-client="ca-pub-9196273905174409"
-	     data-ad-slot="8082511770"></ins>
-	<script>
-		(adsbygoogle = window.adsbygoogle || []).push({});
-	</script>
-</div>
+		<p>For the advanced timings data, you need to use Spigot:
+			<a href="http://spigotmc.org" title="Spigot">spigotmc.org</a>.<br/>
+		</p>
+	</div>
+
+	<div class="topright" style="float: right;margin:0 20px">
+		<br/>
+
+		<div style="text-align:center;margin:auto">
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<ins class="adsbygoogle responsive-ad"
+			     style="display:inline-block;"
+			     data-ad-client="ca-pub-9196273905174409"
+			     data-ad-slot="8082511770"></ins>
+			<script>
+				(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+		</div>
 
 
-</div>
+	</div>
 </div>
 <?php
 /*
@@ -227,14 +246,14 @@ ob_start();
 <?php
 */ ?>
 <div style="width:100%;clear:left;">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="clear:left;margin-top:20px;display:inline-block;width:728px;height:15px"
-     data-ad-client="ca-pub-9196273905174409"
-     data-ad-slot="2035978176"></ins>
-<script>
-	(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<ins class="adsbygoogle"
+	     style="clear:left;margin-top:20px;display:inline-block;width:728px;height:15px"
+	     data-ad-client="ca-pub-9196273905174409"
+	     data-ad-slot="2035978176"></ins>
+	<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
 </div>
 <hr style="clear:left"/>
 <?php
@@ -246,20 +265,18 @@ ob_end_clean();
  ****************************/
 
 
-
-
 ob_start();
 if (!$legacyData) {
 
 	?>
 	<div style="padding:50px;margin:auto;text-align: center">
 		To use the Timings parser, please type <b>/timings paste</b> in game, console or RCON.
-		It will then give you a link to view it on this page.<br /><br />
+		It will then give you a link to view it on this page.<br/><br/>
 
 		The old Paste option has been removed for now as it is not needed.
 	</div>
 
-<?php
+	<?php
 
 } else {
 if ($highEntityTick) {
@@ -380,8 +397,8 @@ if ($sample) {
 	}
 	}
 	if ($legacyData) {
-	?>
-	<button onclick='$(".hidden").toggle()'>Toggle all hidden</button>
+		?>
+		<button onclick='$(".hidden").toggle()'>Toggle all hidden</button>
 	<?php } ?>
 	<br/><br/><br/>
 
@@ -471,6 +488,7 @@ if ($sample) {
 function showInfo($id, $title) {
 	return "<b>$title</b><button class='learnmore' info='$id' onclick='showInfo(this)' title='$title'>Learn More</button></b>";
 }
+
 $buffer = ob_get_contents();
 ob_end_clean();
 echo $head;
@@ -521,8 +539,7 @@ if ($legacyData) {
 
 echo $buffer;
 
-function pct($pct, $mod = 1, $pad = 8, $high = 0, $med = 0, $low = 0)
-{
+function pct($pct, $mod = 1, $pad = 8, $high = 0, $med = 0, $low = 0) {
 	$num = round($pct * 100, 2);
 	$prefix = '';
 	$suffix = '';
@@ -536,16 +553,15 @@ function pct($pct, $mod = 1, $pad = 8, $high = 0, $med = 0, $low = 0)
 		$prefix = '<span style="background:black;color:yellow">';
 		$suffix = '</span>';
 	}
+
 	return $prefix . pad(number_format($num, 2) . '%', $pad) . $suffix;
 }
 
-function pad($string, $len, $right = false)
-{
+function pad($string, $len, $right = false) {
 	return str_pad($string, $len, ' ', $right ? STR_PAD_RIGHT : STR_PAD_LEFT);
 }
 
-function array_sort($array, $on, $order = SORT_ASC)
-{
+function array_sort($array, $on, $order = SORT_ASC) {
 	$new_array = array();
 	$sortable_array = array();
 

@@ -9,85 +9,86 @@
  * @license MIT
  */
 namespace Starlis\Timings\Json;
+
 use Starlis\Timings\FromJson;
 use Starlis\Timings\Singleton;
 
 class TimingsMap {
-    use FromJson, Singleton;
+	use FromJson, Singleton;
 
-    /**
-     * @index groups
-     * @var string[]
-     */
-    public $groupMap;
+	/**
+	 * @index groups
+	 * @var string[]
+	 */
+	public $groupMap;
 
-    /**
-     * @index handlers
-     * @var TimingIdentity[]
-     */
-    public $handlerMap;
+	/**
+	 * @index handlers
+	 * @var TimingIdentity[]
+	 */
+	public $handlerMap;
 
-    /**
-     * @index worlds
-     * @var string[]
-     */
-    public $worldMap;
+	/**
+	 * @index worlds
+	 * @var string[]
+	 */
+	public $worldMap;
 
-    /**
-     * @index tileentity
-     * @var string[]
-     */
-    public $tileEntityTypeMap;
+	/**
+	 * @index tileentity
+	 * @var string[]
+	 */
+	public $tileEntityTypeMap;
 
-    /**
-     * @index entity
-     * @var string[]
-     */
-    public $entityTypeMap;
+	/**
+	 * @index entity
+	 * @var string[]
+	 */
+	public $entityTypeMap;
 
-    /**
-     * @param $id
-     *
-     * @return string
-     */
-    public static function getGroupName($id) {
-        return self::getInstance()->groupMap[$id];
-    }
+	/**
+	 * @param $id
+	 *
+	 * @return string
+	 */
+	public static function getGroupName($id) {
+		return self::getInstance()->groupMap[$id];
+	}
 
-    /**
-     * @param $id
-     *
-     * @return TimingIdentity
-     */
-    public static function getHandlerIdentity($id) {
-        return self::getInstance()->handlerMap[$id];
-    }
+	/**
+	 * @param $id
+	 *
+	 * @return TimingIdentity
+	 */
+	public static function getHandlerIdentity($id) {
+		return self::getInstance()->handlerMap[$id];
+	}
 
-    /**
-     * @param $id
-     *
-     * @return string
-     */
-    public static function getWorldName($id) {
-        return self::getInstance()->worldMap[$id];
-    }
+	/**
+	 * @param $id
+	 *
+	 * @return string
+	 */
+	public static function getWorldName($id) {
+		return self::getInstance()->worldMap[$id];
+	}
 
-    /**
-     * @param $id
-     *
-     * @return string
-     */
-    public static function getEntityType($id) {
-        return self::getInstance()->entityTypeMap[$id];
-    }
+	/**
+	 * @param $id
+	 *
+	 * @return string
+	 */
+	public static function getEntityType($id) {
+		return self::getInstance()->entityTypeMap[$id];
+	}
 
 
-    /**
-     * @param $id
-     *
-     * @return string
-     */
-    public static function getTileEntityType($id) {
-        return self::getInstance()->tileEntityTypeMap[$id];
-    }
+	/**
+	 * @param $id
+	 *
+	 * @return string
+	 */
+	public static function getTileEntityType($id) {
+		return self::getInstance()->tileEntityTypeMap[$id];
+	}
 } 
