@@ -2,4 +2,7 @@
 .idea/dictionaries
 .idea/misc.xml
 
+static/timings.css
+static/timings.min.js
+static/timings.css.map
 static/.sass-cache
