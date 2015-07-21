@@ -20,11 +20,7 @@ foreach ($timingsData->data as $data) {
 	}
 }
 
-$cost = $timingsData->system->timingcost;
-echo '<pre>';
-echo "Timings cost: $cost - " . ($cost * $totalTimings) . " - Pct: "
-	. round(((($cost * $totalTimings) / ($timingsData->sampletime * 1000000000 / 100))), 2) . "%\n\n";
-echo '</pre>';
+
 define('LAG_ONLY', empty($_GET['all']));
 //http://timings.aikar.co/dev/?id=2a72cf2099e0439780c91e64abadcf7d&start=1436841958&end=1436843422
 $lag = $tpl->masterHandler->children;
@@ -33,7 +29,11 @@ printRecord($tpl->masterHandler);
 usort($lag, 'lagSort');
 printRows($lag, 1);
 
-//
+$cost = $timingsData->system->timingcost;
+echo '<pre>';
+echo "Timings cost: $cost - " . ($cost * $totalTimings) . " - Pct: "
+	. round(((($cost * $totalTimings) / ($timingsData->sampletime * 1000000000 / 100))), 2) . "%\n\n";
+echo '</pre>';
 
 function printRecord($l, $depth = 0) {
 	static $i;

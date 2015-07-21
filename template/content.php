@@ -10,10 +10,11 @@
  */
 namespace Starlis\Timings;
 ?>
-<div class="ad_links"><?php
-	ad_link(); ?></div>
+<div class="ad_links">
+	<?php ad_link(); ?>
+</div>
 <div id="content">
-	This site is still under heavy development.
+	<div class="dev-warning">This site is still under heavy development.</div>
 
 	<?php
 	switch ($_GET['section']) {
