@@ -48,10 +48,31 @@ function printRecord($l) {
 	$tickAvg = round($avg * ($count / (LAG_ONLY ? $lagTicks : $ticks)), 4);
 	$tickAvg = lagView($tickAvg);
 	$avg = lagView($avg);
-	echo "<a id='$id' href='#$id'>#</a>" . $l->id . " - count(" . $count . ") - total(" .
+	echo "<a id='$id' href='#$id'>#</a>" . cleanName($l->id) . " - count(" . $count . ") - total(" .
 		round($total / 1000000000, 3) . "s) - avg({$avg}ms - {$tickAvg}ms)\n";
 }
 
+
+function cleanName($name) {
+	static $replacements = [
+		['/net\.minecraft\.server\.v[^\.]+\./', 'nms.'],
+		['/org\.bukkit\.craftbukkit\.v[^\.]+\./', 'obc.'],
+	];
+	$orig = $name;
+	foreach ($replacements as $pattern) {
+		$name = preg_replace($pattern[0], $pattern[1], $name);
+	}
+	$name = preg_replace_callback('/Event: ([a-zA-Z0-9\.]+) /', 'condensePackage', $name);
+	return "<span title='$orig'>$name</span>";
+}
+function condensePackage($v) {
+
+	$name = explode('.', $v[1]);
+	$last = array_pop($name);
+	$name = array_map(function($v) { return $v[0]; }, $name);
+	$name[] = $last;
+	return 'Event: ' .implode('.', $name).' ';
+}
 $processMap = [];
 function printRows($lag, $level) {
 	global $processMap;
