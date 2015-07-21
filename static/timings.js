@@ -164,7 +164,14 @@ $(document).ready(function () {
 			clearTimeout(redirectTimer);
 		}
 		redirectTimer = setTimeout(function () {
-			window.location = "?id=" + data.id + "&start=" + start + "&end=" + end;
+			var all = getQueryParam('all');
+			if (all) {
+				all = '&all=' + all;
+			} else {
+				all = '';
+			}
+			window.location = "?id=" + data.id + "&start=" + start + "&end=" + end + all;
+
 		}, 1000);
 	}
 
@@ -212,6 +219,15 @@ $(document).ready(function () {
 	}
 });
 
+function getQueryParam(name, def) {
+	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		results = regex.exec(location.search);
+	return results === null ?
+		def
+		:
+		decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 
 function showInfo(btn) {
 	$("#info-" + $(btn).attr('info')).dialog({width: "80%", modal: true});
