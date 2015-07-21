@@ -49,3 +49,14 @@ hr {
 #header-right {
 	text-align: center !important;
 }
+/*<a href='#$id'>#</a><span class='name'>$name</span> - count(<span class='count'>$count</span>) -
+		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>) -
+		avg(<span class='avgMs'>{$avg}ms</span> - <span class='tickAvgMs'>{$tickAvg}ms</span>)*/
+.timing-row {
+	.name {
+		color: lightseagreen;
+	}
+	.count, .totalPct, .totalTime, .avgMs, .tickAvgMs {
+		color: white;
+	}
+}

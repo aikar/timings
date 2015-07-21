@@ -24,7 +24,7 @@ $cost = $timingsData->system->timingcost;
 echo '<pre>';
 echo "Timings cost: $cost - " . ($cost * $totalTimings) . " - Pct: "
 	. round(((($cost * $totalTimings) / ($timingsData->sampletime * 1000000000 / 100))), 2) . "%\n\n";
-
+echo '</pre>';
 define('LAG_ONLY', empty($_GET['all']));
 //http://timings.aikar.co/dev/?id=2a72cf2099e0439780c91e64abadcf7d&start=1436841958&end=1436843422
 $lag = $tpl->masterHandler->children;
@@ -33,9 +33,9 @@ printRecord($tpl->masterHandler);
 usort($lag, 'lagSort');
 printRows($lag, 1);
 
-echo '</pre>';
+//
 
-function printRecord($l) {
+function printRecord($l, $depth = 0) {
 	static $i;
 	$tpl = Template::getInstance();
 	$lagTicks = $tpl->masterHandler->lagCount;
@@ -51,10 +51,21 @@ function printRecord($l) {
 	$tickAvg = round($avg * ($count / (LAG_ONLY ? $lagTicks : $ticks)), 4);
 	$tickAvg = lagView($tickAvg);
 
-	$totalPct = lagView(round($total / (LAG_ONLY ? $lagTotalTime : $totalTime) * 100, 2), 25, 15, 7, 3);
+	$totalPct = round($total / (LAG_ONLY ? $lagTotalTime : $totalTime) * 100, 2);
+	if ($l->id->name == "Full Server Tick") { // always 100%
+		$totalPct = lagView($totalPct, 200, 200, 200, 200);
+	} else {
+		$totalPct = lagView($totalPct, 25, 15, 7, 3);
+	}
 	$avg = lagView($avg);
-	echo "<a id='$id' href='#$id'>#</a>" . cleanName($l->id) . " - count(" . $count . ") - total($totalPct% " .
-		round($total / 1000000000, 3) . "s) - avg({$avg}ms - {$tickAvg}ms)\n";
+	$name = cleanName($l->id);
+	$total = round($total / 1000000000, 3);
+	$padding = ($depth * 14)."px";
+	echo "<div id='$id' class='timing-row' style='padding-left: {$padding}'>
+		<a href='#$id'>#</a><span class='name'>$name</span> - count(<span class='count'>$count</span>) -
+		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>) -
+		avg(<span class='avgMs'>{$avg}ms</span> - <span class='tickAvgMs'>{$tickAvg}ms</span>)
+		</div>\n";
 }
 
 
@@ -86,9 +97,8 @@ function printRows($lag, $level) {
 		if ($l->lagTotal < 500000) {
 			continue;
 		}
-		echo str_repeat("\t", $level);
 
-		printRecord($l);
+		printRecord($l, $level);
 		$id = $l->id->id;
 		$h = $tpl->handlerData[$id];
 
