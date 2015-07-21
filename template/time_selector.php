@@ -13,8 +13,9 @@ namespace Starlis\Timings;
 ?>
 <br style="clear:both"/>
 <div id="history-selector">
-
-	<canvas id="tps-graph" height="200"></canvas>
+	<div class="canvas-wrapper">
+	<canvas id="tps-graph" width="98%" height="200"></canvas>
+	</div>
 	<div id="time-selector"></div>
 	<span id="start-time"></span> - <span id="end-time"></span>
 </div>

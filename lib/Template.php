@@ -46,6 +46,8 @@ class Template {
 			$ranges[] = $history->start;
 			$ranges[] = $history->end;
 		}
+		//$ranges = array_unique($ranges);
+		//sort($ranges);
 
 		$last = count($ranges) - 1;
 

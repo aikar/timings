@@ -11,6 +11,8 @@
 namespace Starlis\Timings;
 
 require_once "ads.php";
+$cssver = filemtime("static/timings.css");
+$jsver = filemtime("static/timings.js");
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,7 +21,7 @@ require_once "ads.php";
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Aikar's Timings Viewer</title>
 	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.css"/>
-	<link rel="stylesheet" href="static/timings.css"/>
+	<link rel="stylesheet" href="static/timings.css?ver=<?=$cssver?>"/>
 	<meta name="robots" content="noindex">
 </head>
 <?php
@@ -70,6 +72,6 @@ Template::getInstance()->loadData();
 <script type="text/javascript">
 	window.timingsData =<?=Template::getInstance()->getData();?>;
 </script>
-<script src="static/timings.min.js"></script>
+<script src="static/timings.min.js?ver=<?=$jsver?>"></script>
 </body>
 </html>
