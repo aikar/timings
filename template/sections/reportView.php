@@ -9,6 +9,7 @@ use Starlis\Timings\Template;
 $timingsData = TimingsMaster::getInstance();
 $tpl = Template::getInstance();
 
+global $totalTime;
 $totalTime = 0;
 $totalTimings = 0;
 foreach ($timingsData->data as $data) {
@@ -21,7 +22,7 @@ foreach ($timingsData->data as $data) {
 
 $cost = $timingsData->system->timingcost;
 echo '<pre>';
-echo "totalTime: $totalTime - Timings cost: $cost - " . ($cost * $totalTimings) . " - Pct: "
+echo "Timings cost: $cost - " . ($cost * $totalTimings) . " - Pct: "
 	. round(((($cost * $totalTimings) / ($timingsData->sampletime * 1000000000 / 100))), 2) . "%\n\n";
 
 define('LAG_ONLY', empty($_GET['all']));
@@ -39,6 +40,8 @@ function printRecord($l) {
 	$tpl = Template::getInstance();
 	$lagTicks = $tpl->masterHandler->lagCount;
 	$ticks = $tpl->masterHandler->count;
+	$totalTime = $tpl->masterHandler->total;
+	$lagTotalTime = $tpl->masterHandler->lagTotal;
 
 	$id = $l->id->id . "_" . $i++;
 	$total = LAG_ONLY ? $l->lagTotal : $l->total;
@@ -47,8 +50,10 @@ function printRecord($l) {
 	$avg = round(($total / $count) / 1000000, 4);
 	$tickAvg = round($avg * ($count / (LAG_ONLY ? $lagTicks : $ticks)), 4);
 	$tickAvg = lagView($tickAvg);
+
+	$totalPct = lagView(round($total / (LAG_ONLY ? $lagTotalTime : $totalTime) * 100, 2), 25, 15, 7, 3);
 	$avg = lagView($avg);
-	echo "<a id='$id' href='#$id'>#</a>" . cleanName($l->id) . " - count(" . $count . ") - total(" .
+	echo "<a id='$id' href='#$id'>#</a>" . cleanName($l->id) . " - count(" . $count . ") - total($totalPct% " .
 		round($total / 1000000000, 3) . "s) - avg({$avg}ms - {$tickAvg}ms)\n";
 }
 
