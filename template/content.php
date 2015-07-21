@@ -19,7 +19,7 @@ namespace Starlis\Timings;
 	switch ($_GET['section']) {
 		case "lag":
 		default:
-			require_once "sections/lag/lagView.php";
+			require_once "sections/reportView.php";
 	}
 	?>
 </div>
