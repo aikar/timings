@@ -20,6 +20,11 @@ class Template {
     public $tpsData;
     public $lagData;
     /**
+     * @var TimingHandler
+     */
+    public $masterHandler;
+
+    /**
      * @var TimingHandler[]
      */
     public $handlerData;
@@ -60,6 +65,7 @@ class Template {
         $chunkData   = [];
         $playerData  = [];
         $timestamps  = [];
+        $masterHandler = null;
 
         $max = 0;
         foreach ($data->data as $history) {
@@ -97,6 +103,9 @@ class Template {
                     } else {
                         $handlerData[$id]->addDataFromHandler($handler);
                     }
+                    if ($handler->id->name == "Full Server Tick") {
+                        $masterHandler = $handlerData[$id];
+                    }
                 }
             }
         }
@@ -114,6 +123,7 @@ class Template {
         $tpl->js['id']       = $timings->id;
         $tpl->lagData        = $lagData;
         $tpl->tpsData        = $tpsData;
+        $tpl->masterHandler  = $masterHandler;
     }
 
     public function getData() {
