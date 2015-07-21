@@ -58,7 +58,7 @@ Template::getInstance()->loadData();
 </div>
 
 <div id="footer">
-    <span id="footer-left">&copy; 2014 Starlis LLC <a href="http://github.com/aikar/timings"
+    <span id="footer-left">&copy; 2013-2015 Starlis LLC <a href="http://github.com/aikar/timings"
                                                       title="Source">[source]</a> &mdash; <a
 		    href="http://aikar.co/spigot/" title="About / Donate">[about / donate]</a></span>
 	<span id="footer-right"></span>
