@@ -95,7 +95,7 @@ function printRows($lag, $level) {
 	$tpl = Template::getInstance();
 	foreach ($lag as $l) {
 		if ($l->lagTotal < 500000) {
-			continue;
+//			continue;
 		}
 
 		printRecord($l, $level);
@@ -105,19 +105,18 @@ function printRows($lag, $level) {
 		if (!empty($h->children) && ++$processMap[$id] == 1) {
 			$children = array_filter($h->children, 'lagFilter');
 			if (!empty($children)) {
-				$children = array_map('mapToHandler', $children);
+				$children = array_map(function($v) {
+					$tpl = Template::getInstance();
+					$h = $tpl->handlerData[$v->id->id];
+					$v->children = $h->children;
+					return $v;
+				}, $children);
 				usort($children, 'lagSort');
 				printRows($children, $level + 1);
 			}
 			--$processMap[$id];
 		}
 	}
-}
-
-function mapToHandler($v) {
-	$tpl = Template::getInstance();
-
-	return $tpl->handlerData[$v->id->id];
 }
 
 function lagFilter($e) {
