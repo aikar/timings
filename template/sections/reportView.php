@@ -60,12 +60,18 @@ function printRecord($l, $depth = 0) {
 	$avg = lagView($avg);
 	$name = cleanName($l->id);
 	$total = round($total / 1000000000, 3);
-	$padding = ($depth * 14)."px";
-	echo "<div id='$id' class='timing-row' style='padding-left: {$padding}'>
+
+	$indents = "";
+	for ($j = 1; $j <= $depth; $j++) {
+		$num = $j % 10;
+		$indents .= "<div class='indent depth{$num}'></div>";
+	}
+
+	echo "<div class='full-timing-row'>$indents<div id='$id' class='timing-row'>
 		<a href='#$id'>#</a><span class='name'>$name</span> - count(<span class='count'>$count</span>) -
 		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>) -
 		avg(<span class='avgMs'>{$avg}ms</span> - <span class='tickAvgMs'>{$tickAvg}ms</span>)
-		</div>\n";
+		</div></div>\n";
 }
 
 

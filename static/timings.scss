@@ -59,10 +59,49 @@ hr {
 		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>) -
 		avg(<span class='avgMs'>{$avg}ms</span> - <span class='tickAvgMs'>{$tickAvg}ms</span>)*/
 .timing-row {
+	display: table-cell;
 	.name {
 		color: lightseagreen;
 	}
 	.count, .totalPct, .totalTime, .avgMs, .tickAvgMs {
 		color: white;
+	}
+}
+
+.full-timing-row {
+	.indent {
+		padding-left: 13px;
+		border-left: 1px solid;
+		display: table-cell;
+	}
+	.depth0 {
+		border-left-color: mediumblue;
+	}
+	.depth1 {
+		border-left-color: cornflowerblue;
+	}
+	.depth2 {
+		border-left-color: green;
+	}
+	.depth3 {
+		border-left-color: lightgreen;
+	}
+	.depth4 {
+		border-left-color: greenyellow;
+	}
+	.depth5 {
+		border-left-color: yellow;
+	}
+	.depth6 {
+		border-left-color: darkorange;
+	}
+	.depth7 {
+		border-left-color: orangered;
+	}
+	.depth8 {
+		border-left-color: mediumpurple;
+	}
+	.depth9 {
+		border-left-color: darkmagenta;
 	}
 }
