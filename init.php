@@ -15,9 +15,12 @@ define('TIMINGS_ENV', basename(__DIR__));
 define('MAX_CACHE_BYTES', 1024 * 512);
 
 chdir(__DIR__);
-if (TIMINGS_ENV == 'dev') {
+if (gethostbyname("aikarip") == $_SERVER['REMOTE_ADDR']) {
 	error_reporting(E_ALL & ~E_NOTICE);
 	ini_set('display_errors', true);
+}
+
+if (TIMINGS_ENV == 'dev') {
 	define('BASE_URL', 'http://timings.aikar.co/dev');
 	define('BASE_URL_VIEW', 'http://timings.aikar.co/dev');
 } else {
