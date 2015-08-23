@@ -63,8 +63,8 @@ function printRecord($l, $depth = 0) {
 
 	$indents = "";
 	for ($j = 1; $j <= $depth; $j++) {
-		$num = $j % 10;
-		$indents .= "<div class='indent depth{$num}'></div>";
+		$num = $j % 5;
+		$indents .= "<div class='indent depth{$num} full-depth${j}'></div>";
 	}
 
 	echo "<div class='full-timing-row'>$indents<div id='$id' class='timing-row'>
