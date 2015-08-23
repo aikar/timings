@@ -345,6 +345,10 @@ if ($sample) {
 				$event = $em[1];
 			}
 			$event = trim($event);
+                        if ($event == "Task: Unknown(Single)" && substr($plugin, 0, 6) == "dynmap" && $pct_tot_raw > 0.005) {
+                                $recommendations[] = "<b>You are using DynMap, and its rendering is causing you a decent amoung of lag due to it loading chunks.</b>";
+                        }
+
 
 			$sevent = "<b title='$origevent'>$event</b>";
 
@@ -535,13 +539,16 @@ if ($legacyData) {
                 $avgTPS = $numTicks / $desiredTicks * 20;
                 if ($serverLoad < 95 && $avgTPS < 19) {
                         $recommendations[] = "<b>Notice: Your AVG TPS is less than 19 but server load is less than 95. This may mean your server is having memory issues (leak or not enough). " .
-                                "This is usually a sign that Java is spending too much time Garbage Collecting.</b>";
+                                "<br />This is usually a sign that Java is spending too much time Garbage Collecting. Try using +XX:+UseG1GC -XX:MaxGCPauseMillis=50 flags and increasing your -Xmx.</b>";
+                } else if ($serverLoad >= 99) {
+                        $recommendations[] = "<b>Your server is lagging because it is overloaded (99%+ Server Load). Try reducing View Distance if it is above 4.</b>";
                 }
+
         }
 
 	if (!empty($recommendations)) {
 		echo "<span style='color: red;display:block;margin: 5px 0'><br />";
-		echo implode("\n", $recommendations);
+		echo implode("<br />\n", $recommendations);
 		echo "</span><br /><hr />";
 	}
 }
