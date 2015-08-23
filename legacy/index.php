@@ -530,10 +530,19 @@ if ($legacyData) {
 	}
 	echo " - Server Load: $serverLoad";
 	echo '</pre></span><hr />';
+        if (preg_match("#[\\d\\.]+#", $serverLoad, $m)) {
+                $serverLoad = $m[0];
+                $avgTPS = $numTicks / $desiredTicks * 20;
+                if ($serverLoad < 95 && $avgTPS < 19) {
+                        $recommendations[] = "<b>Notice: Your AVG TPS is less than 19 but server load is less than 95. This may mean your server is having memory issues (leak or not enough). " .
+                                "This is usually a sign that Java is spending too much time Garbage Collecting.</b>";
+                }
+        }
+
 	if (!empty($recommendations)) {
-		echo "<span style='color: red;display:block;margin: 5px 0'>";
+		echo "<span style='color: red;display:block;margin: 5px 0'><br />";
 		echo implode("\n", $recommendations);
-		echo "</span><hr />";
+		echo "</span><br /><hr />";
 	}
 }
 
