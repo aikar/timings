@@ -70,38 +70,55 @@ hr {
 
 .full-timing-row {
 	.indent {
-		padding-left: 13px;
-		border-left: 1px solid;
+		padding-left: 15px;
+		border-left: 1.5px solid;
 		display: table-cell;
 	}
 	.depth0 {
-		border-left-color: mediumblue;
+		border-left-color: #0CB9E8;
 	}
 	.depth1 {
-		border-left-color: cornflowerblue;
+		border-left-color: #0DFF69;
 	}
 	.depth2 {
-		border-left-color: green;
+		border-left-color: #0D8CFF;
 	}
 	.depth3 {
-		border-left-color: lightgreen;
+		border-left-color: #00FFF1;
 	}
 	.depth4 {
-		border-left-color: greenyellow;
-	}
-	.depth5 {
-		border-left-color: yellow;
-	}
-	.depth6 {
-		border-left-color: darkorange;
-	}
-	.depth7 {
-		border-left-color: orangered;
-	}
-	.depth8 {
-		border-left-color: mediumpurple;
-	}
-	.depth9 {
-		border-left-color: darkmagenta;
+		border-left-color: #3ca24b;
 	}
 }
+
+#depth-view-bg {
+	display: none;
+
+	position: fixed;
+	bottom: 0;
+	right: 0;
+
+	z-index: 9998;
+
+	background: rgb(78,78,78);
+	background: rgba(78, 78, 78, 0.55);
+
+	overflow: hidden;
+
+	-webkit-filter: blur(10px);
+	filter: blur(10px);
+}
+
+#depth-view {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+
+	z-index: 9999;
+
+	padding: 6px;
+
+	color: whitesmoke;
+}
+
+

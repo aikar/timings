@@ -23,6 +23,8 @@ namespace Starlis\Timings;
 			require_once "sections/reportView.php";
 	}
 	?>
+	<h6 id="depth-view"></h6>
+	<div id="depth-view-bg"></div>
 </div>
 
 <hr/>

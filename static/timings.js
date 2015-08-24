@@ -217,6 +217,29 @@ $(document).ready(function () {
 		parseInt(result[3], 16) + "," + alpha + ")"
 			: hex;
 	}
+
+	$(".indent").mouseenter(function() {
+		var classes = this.className.split(/\s+/);
+		var depthclass;
+		for (var i in classes) {
+			if (classes[i].startsWith("full-depth")) {
+				depthclass = classes[i];
+				break;
+			}
+		}
+		var depth = parseInt(depthclass.replace("full-depth", ""));
+		var view = $("#depth-view");
+		view.html("Depth: " + depth);
+		var styles = {
+			height: view.css("height"),
+			width: view.css("width"),
+			display: "block"
+		};
+		$("#depth-view-bg").css(styles);
+	}).mouseleave(function() {
+		$("#depth-view").html("");
+		$("#depth-view-bg").css("display", "none");
+	});
 });
 
 function getQueryParam(name, def) {
