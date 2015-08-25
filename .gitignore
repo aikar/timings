@@ -1,6 +1,8 @@
 .idea/workspace.xml
 .idea/dictionaries
 .idea/misc.xml
+.idea/compiler.xml
+.idea/vcs.xml
 
 static/timings.css
 static/timings.min.js
