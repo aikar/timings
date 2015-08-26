@@ -79,6 +79,7 @@ class Cache {
 	public static function getFile($key, $type = 'timings') {
 		$key = preg_replace('/[^a-zA-Z0-9-_]/ms', '', $key);
 
-		return "/tmp/{$type}_{$key}.gz";
+		global $ini;
+		return $ini["tmp_path"] . "${type}_${key}.gz";
 	}
 }

@@ -10,8 +10,12 @@
  */
 namespace Starlis\Timings;
 
+// Get configuration first
+global $ini;
+$ini = parse_ini_file("config.ini", true);
+
 header("Content-Type: text/html");
-define('TIMINGS_ENV', basename(__DIR__));
+define('TIMINGS_ENV', $ini["environment"]);
 define('MAX_CACHE_BYTES', 1024 * 512);
 
 chdir(__DIR__);
@@ -21,11 +25,11 @@ if (gethostbyname("aikarip") == $_SERVER['REMOTE_ADDR']) {
 }
 
 if (TIMINGS_ENV == 'dev') {
-	define('BASE_URL', 'http://timings.aikar.co/dev');
-	define('BASE_URL_VIEW', 'http://timings.aikar.co/dev');
+	define('BASE_URL', $ini["base_url_dev"]);
+	define('BASE_URL_VIEW', $ini["base_url_view_dev"]);
 } else {
-	define('BASE_URL', 'http://timings.aikar.co/');
-	define('BASE_URL_VIEW', 'http://spigotmc.org/go/timings');
+	define('BASE_URL', $ini["base_url_prod"]);
+	define('BASE_URL_VIEW', $ini["base_url_view_prod"]);
 }
 require_once 'vendor/autoload.php';
 require_once "lib/Util.php";
