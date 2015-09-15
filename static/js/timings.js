@@ -7,7 +7,7 @@
  *
  * @license MIT
  */
-
+$(document).foundation();
 $(document).ready(function () {
 	var data = window.timingsData || {
 			ranges: [],

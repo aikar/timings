@@ -22,6 +22,7 @@ $jsvendorver = filemtime("static/dist/vendor.js");
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Aikar's Timings Viewer</title>
 	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.css"/>
+	<link rel="stylesheet" href="static/vendor/foundation/css/foundation.min.css?ver=<?=$cssver?>"/>
 	<link rel="stylesheet" href="static/dist/timings.css?ver=<?=$cssver?>"/>
 	<meta name="robots" content="noindex">
 </head>
@@ -73,6 +74,7 @@ Template::getInstance()->loadData();
 	window.timingsData =<?=Template::getInstance()->getData();?>;
 </script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+<script src="static/vendor/foundation/js/foundation.min.js?ver=<?=$jsver?>"></script>
 <script src="static/dist/timings.js?ver=<?=$jsver?>"></script>
 </body>
 </html>
