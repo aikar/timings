@@ -17,7 +17,8 @@ var fs = require('graceful-fs')
   , spawn = cp.spawn
   , execFile = cp.execFile
   , win = process.platform == 'win32'
-  , runtime = semver.parse(process.version).major < 1 ? 'node' : 'iojs'
+  , smajor = semver.parse(process.version).major
+  , runtime = smajor >= 1 && smajor < 4 ? 'iojs' : 'node'
 
 exports.usage = 'Generates ' + (win ? 'MSVC project files' : 'a Makefile') + ' for the current module'
 

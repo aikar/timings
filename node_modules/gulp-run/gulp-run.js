@@ -4,6 +4,8 @@
 
 'use strict';
 
+console.log('Warning: gulp-run is deprecated');
+
 var Transform = require('stream').Transform;
 
 var Command = require('./lib/command');

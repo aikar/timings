@@ -15,7 +15,8 @@ var fs = require('graceful-fs')
   , exec = require('child_process').exec
   , win = process.platform == 'win32'
   , semver = require('semver')
-  , runtime = semver.parse(process.version).major < 1 ? 'node' : 'iojs'
+  , smajor = semver.parse(process.version).major
+  , runtime = smajor >= 1 && smajor < 4 ? 'iojs' : 'node'
 
 exports.usage = 'Invokes `' + (win ? 'msbuild' : 'make') + '` and builds the module'
 

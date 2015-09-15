@@ -1,6 +1,11 @@
 gulp-run
 ==================================================
+
 Use shell commands in your gulp or vinyl pipeline.
+
+> **Deprecation Notice**:
+>
+> I can no longer maintain gulp-run. I will do my best to review pull requests until a new maintainer is found. If you are interested in maintaining this project, please open an issue.
 
 Many command line interfaces are built around the idea of piping. Let's take advantage of that in our Gulp pipeline! To use gulp-run, simply tell it the command to process your files; gulp-run accepts any command you could write into your shell, including I/O redirection like ` python < baz.py | cat foo.txt - bar.txt`. Additionally, `node_modules/.bin` is included on the path, so you can call programs supplied by your installed packages. Supports Unix and Windows.
 

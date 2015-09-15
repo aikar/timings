@@ -21,7 +21,8 @@ var fs = require('graceful-fs')
   , minimatch = require('minimatch')
   , mkdir = require('mkdirp')
   , win = process.platform == 'win32'
-  , runtime = semver.parse(process.version).major < 1 ? 'node' : 'iojs'
+  , smajor = semver.parse(process.version).major
+  , runtime = smajor >= 1 && smajor < 4 ? 'iojs' : 'node'
   , defaultDisturl = runtime == 'node' ?
       (process.env.NVM_NODEJS_ORG_MIRROR || 'http://nodejs.org/dist')
       :

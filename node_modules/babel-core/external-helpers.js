@@ -399,6 +399,7 @@
   };
 
   babelHelpers.selfGlobal = typeof global === "undefined" ? self : global;
+  babelHelpers.typeofReactElement = typeof Symbol === "function" && Symbol["for"] && Symbol["for"]("react.element") || 60103;
 
   babelHelpers.defaultProps = function (defaultProps, props) {
     if (defaultProps) {
