@@ -1,20 +1,18 @@
+#ifndef SASS_REMOVE_PLACEHOLDERS_H
+#define SASS_REMOVE_PLACEHOLDERS_H
+
 #pragma once
 
 #include <iostream>
 
-#ifndef SASS_AST
 #include "ast.hpp"
-#endif
-
-#ifndef SASS_OPERATION
 #include "operation.hpp"
-#endif
 
 namespace Sass {
 
     using namespace std;
 
-    struct Context;
+    class Context;
 
     class Remove_Placeholders : public Operation_CRTP<void, Remove_Placeholders> {
 
@@ -41,3 +39,5 @@ namespace Sass {
     };
 
 }
+
+#endif

@@ -101,11 +101,11 @@ exports.transform = function(fn) {
     if(file.isStream()) {
       file.contents = file.contents.pipe(new Stream.Transform());
       file.contents._transform = function(chunk, encoding, cb) {
-        cb(null, new Buffer(fn(chunk.toString())))
+        cb(null, new Buffer(fn(chunk.toString(), file)))
       };
       return cb(null, file);
     }
-    file.contents = new Buffer(fn(file.contents.toString()));
+    file.contents = new Buffer(fn(file.contents.toString(), file));
     cb(null, file);
   };
 

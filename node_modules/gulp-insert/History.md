@@ -1,4 +1,9 @@
 
+0.5.0 / 2015-08-05
+==================
+
+  * added file object as second parameter to transform hook
+
 0.4.0 / 2014-06-28
 ==================
 

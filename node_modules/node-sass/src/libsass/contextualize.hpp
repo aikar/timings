@@ -1,59 +1,38 @@
-#define SASS_CONTEXTUALIZE
+#ifndef SASS_CONTEXTUALIZE_H
+#define SASS_CONTEXTUALIZE_H
 
-#ifndef SASS_ENVIRONMENT
-#include "environment.hpp"
-#endif
-
-#ifndef SASS_OPERATION
+#include "context.hpp"
 #include "operation.hpp"
-#endif
+#include "environment.hpp"
+#include "ast_fwd_decl.hpp"
 
 namespace Sass {
-  class AST_Node;
-  class Selector;
-  class Selector_Schema;
-  class Selector_List;
-  class Complex_Selector;
-  class Compound_Selector;
-  class Wrapped_Selector;
-  class Pseudo_Selector;
-  class Attribute_Selector;
-  class Selector_Qualifier;
-  class Type_Selector;
-  class Selector_Placeholder;
-  class Selector_Reference;
-  class Simple_Selector;
-  struct Context;
-  class Eval;
   struct Backtrace;
 
   typedef Environment<AST_Node*> Env;
 
   class Contextualize : public Operation_CRTP<Selector*, Contextualize> {
 
-    Context&   ctx;
-    Eval*      eval;
-    Env*       env;
-    Selector*  parent;
-    Backtrace* backtrace;
-
-    Selector* fallback_impl(AST_Node* n);
 
   public:
+    Context&   ctx;
+    Env*       env;
+    Backtrace* backtrace;
+    Selector*  parent;
     Selector* placeholder;
     Selector* extender;
-    Contextualize(Context&, Eval*, Env*, Backtrace*, Selector* placeholder = 0, Selector* extender = 0);
+
+    Selector* fallback_impl(AST_Node* n);
+    Contextualize(Context&, Env*, Backtrace*, Selector* placeholder = 0, Selector* extender = 0);
     virtual ~Contextualize();
     Contextualize* with(Selector*, Env*, Backtrace*, Selector* placeholder = 0, Selector* extender = 0);
     using Operation<Selector*>::operator();
 
-    Selector* operator()(Selector_Schema*);
     Selector* operator()(Selector_List*);
     Selector* operator()(Complex_Selector*);
     Selector* operator()(Compound_Selector*);
     Selector* operator()(Wrapped_Selector*);
     Selector* operator()(Pseudo_Selector*);
-    Selector* operator()(Attribute_Selector*);
     Selector* operator()(Selector_Qualifier*);
     Selector* operator()(Type_Selector*);
     Selector* operator()(Selector_Placeholder*);
@@ -63,3 +42,5 @@ namespace Sass {
     Selector* fallback(U x) { return fallback_impl(x); }
   };
 }
+
+#endif

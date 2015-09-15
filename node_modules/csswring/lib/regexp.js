@@ -20,6 +20,9 @@ module.exports = {
   // font-style, font-stretch, font-variant, font-feature-settings
   descriptorFontFace: /^font-(style|stretch|variant|feature-settings)$/i,
 
+  // \(, \)
+  escapedBraces: /\\([()])/g,
+
   // 0
   number: /\d/,
 
@@ -44,6 +47,12 @@ module.exports = {
   // p > a, p + a, p ~ a
   selectorCombinators: /\s*(\\?[>+~])\s*/g,
 
+  // ;
+  semicolons: /;/g,
+
+  // ident-ifi-ers
+  sequenceOfIdentifiers: /^[\w-]+$/,
+
   // u0-10ffff, u000000-10ffff
   unicodeRangeDefault: /u\+0{1,6}-10ffff/i,
 
@@ -55,6 +64,9 @@ module.exports = {
 
   //  , \t, \r, \n
   whiteSpaces: /\s+/g,
+  whiteSpacesAfterSymbol: /([(,:])\s/g,
+  whiteSpacesBeforeSymbol: /\s([),:])/g,
+  whiteSpacesBothEndsOfSymbol: /\s([*/])\s/g,
 
   // 0%, 0em, 0ex, 0ch, 0rem, 0vw, 0vh, 0vmin, 0vmax, 0cm, 0mm, 0in, 0pt, 0pc, 0px
   zeroValueUnit: /(^|\s|\(|,)(0)(%|em|ex|ch|rem|vw|vh|vmin|vmax|cm|mm|in|pt|pc|px)/gi

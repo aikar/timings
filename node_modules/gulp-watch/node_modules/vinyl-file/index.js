@@ -2,6 +2,7 @@
 var path = require('path');
 var fs = require('graceful-fs');
 var stripBom = require('strip-bom');
+var stripBomStream = require('strip-bom-stream');
 var File = require('vinyl');
 
 exports.read = function (pth, opts, cb) {
@@ -36,7 +37,7 @@ exports.read = function (pth, opts, cb) {
 		}
 
 		if (opts.buffer === false) {
-			file.contents = fs.createReadStream(pth).pipe(stripBom.stream());
+			file.contents = fs.createReadStream(pth).pipe(stripBomStream());
 			cb(null, file);
 			return;
 		}
@@ -65,7 +66,7 @@ exports.readSync = function (pth, opts) {
 
 	if (opts.read !== false) {
 		contents = opts.buffer === false ?
-			fs.createReadStream(pth).pipe(stripBom.stream()) :
+			fs.createReadStream(pth).pipe(stripBomStream()) :
 			stripBom(fs.readFileSync(pth));
 	}
 

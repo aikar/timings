@@ -345,4 +345,80 @@ describe('Transform', function() {
     stream.write(fakeFile);
     stream.end();
   });
+
+  it('passes the vinyl file object as second parameter in buffer mode', function(done) {
+
+    var stream = insert.transform(function(data, file) {
+      var output = [];
+      output.push(file.cwd);
+      output.push(file.base);
+      output.push(file.path);
+      output.push(data);
+
+      return output.join('\n');
+    });
+
+    var fakeFile = new File({
+      cwd: __dirname,
+      base: __dirname + 'test',
+      path: __dirname + 'test/file.js',
+      contents: new Buffer('hello world')
+    });
+
+    stream.on('data', function(file) {
+
+      var contents = file.contents.toString().split('\n');
+
+      expect(contents.length).to.be.equal(4);
+      expect(contents[0]).to.be.equal(__dirname);
+      expect(contents[1]).to.be.equal(__dirname + 'test');
+      expect(contents[2]).to.be.equal(__dirname + 'test/file.js');
+      expect(contents[3]).to.be.equal('hello world');
+      done();
+    });
+
+    stream.write(fakeFile);
+    stream.end();
+  });
+
+  it('passes the vinyl file object as second parameter in stream mode', function(done) {
+
+    var stream = insert.transform(function(data, file) {
+      var output = [];
+      output.push(file.cwd);
+      output.push(file.base);
+      output.push(file.path);
+      output.push(data);
+
+      return output.join('\n');
+    });
+
+    var fakeFile = new File({
+      cwd: __dirname,
+      base: __dirname + 'test',
+      path: __dirname + 'test/file.js',
+      contents: getStreamFromBuffer(new Buffer('hello world'))
+    });
+
+    stream.on('data', function(file) {
+      var buffers = [];
+      file.contents.on('data', function(buf) {
+        buffers.push(buf);
+      });
+      file.contents.on('end', function() {
+
+        var contents = Buffer.concat(buffers).toString().split('\n');
+
+        expect(contents.length).to.be.equal(4);
+        expect(contents[0]).to.be.equal(__dirname);
+        expect(contents[1]).to.be.equal(__dirname + 'test');
+        expect(contents[2]).to.be.equal(__dirname + 'test/file.js');
+        expect(contents[3]).to.be.equal('hello world');
+        done();
+      });
+    });
+
+    stream.write(fakeFile);
+    stream.end();
+  });
 });

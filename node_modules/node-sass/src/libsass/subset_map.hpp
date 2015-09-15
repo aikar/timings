@@ -1,8 +1,9 @@
-#define SASS_SUBSET_MAP
+#ifndef SASS_SUBSET_MAP_H
+#define SASS_SUBSET_MAP_H
 
-#include <vector>
 #include <map>
 #include <set>
+#include <vector>
 #include <algorithm>
 #include <iterator>
 #include <iostream>
@@ -81,6 +82,7 @@ namespace Sass {
     vector<V> get_v(const vector<K>& s);
     bool empty() { return values_.empty(); }
     void clear() { values_.clear(); hash_.clear(); }
+    const vector<V> values(void) { return values_; }
   };
 
   template<typename K, typename V>
@@ -106,9 +108,7 @@ namespace Sass {
     sort(sorted.begin(), sorted.end());
     vector<pair<size_t, vector<K> > > indices;
     for (size_t i = 0, S = s.size(); i < S; ++i) {
-      // cerr << "looking for " << s[i] << endl;
       if (!hash_.count(s[i])) {
-        // cerr << "didn't find " << s[i] << endl;
         continue;
       }
       vector<triple<vector<K>, set<K>, size_t> > subsets = hash_[s[i]];
@@ -143,3 +143,5 @@ namespace Sass {
   }
 
 }
+
+#endif

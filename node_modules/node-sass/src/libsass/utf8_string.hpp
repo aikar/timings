@@ -1,7 +1,8 @@
-#ifndef SASS_UTF8_STRING
-#define SASS_UTF8_STRING
+#ifndef SASS_UTF8_STRING_H
+#define SASS_UTF8_STRING_H
 
 #include <string>
+#include "utf8.h"
 
 namespace Sass {
   namespace UTF_8 {
