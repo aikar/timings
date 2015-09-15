@@ -1,3 +1,0 @@
-#!/bin/bash
-uglifyjs timings.js -c -m --screw-ie8 > timings.min.js
-scss -t compressed --update timings.scss:timings.css

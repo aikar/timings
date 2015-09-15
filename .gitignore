@@ -4,6 +4,7 @@
 .idea/compiler.xml
 .idea/vcs.xml
 
+static/dist
 static/timings.css
 static/timings.min.js
 static/timings.css.map

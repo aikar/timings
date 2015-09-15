@@ -11,8 +11,9 @@
 namespace Starlis\Timings;
 
 require_once "ads.php";
-$cssver = filemtime("static/timings.css");
-$jsver = filemtime("static/timings.js");
+$cssver = filemtime("static/dist/timings.css");
+$jsver = filemtime("static/dist/timings.js");
+$jsvendorver = filemtime("static/dist/vendor.js");
 ?>
 <!DOCTYPE html>
 <html>
@@ -67,11 +68,11 @@ Template::getInstance()->loadData();
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-<script src="static/Chart.min.js"></script>
+<script src="static/dist/vendor.js?ver=<?=$jsvendorver?>"></script>
 <?php flush(); ?>
 <script type="text/javascript">
 	window.timingsData =<?=Template::getInstance()->getData();?>;
 </script>
-<script src="static/timings.min.js?ver=<?=$jsver?>"></script>
+<script src="static/dist/timings.js?ver=<?=$jsver?>"></script>
 </body>
 </html>
