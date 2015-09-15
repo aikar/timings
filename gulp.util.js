@@ -1,3 +1,12 @@
+/*
+ * Aikar's Minecraft Timings Parser
+ *
+ * Written by Aikar <aikar@aikar.co>
+ * http://aikar.co
+ * http://starlis.com
+ *
+ * @license MIT
+ */
 var _ = global._ = require('lodash');
 var fs = global.fs = require('fs');
 var path = global.path = require('path');
@@ -6,6 +15,8 @@ var ini = require('ini');
 _.mixin(require("underscore.string").exports());
 var merge = require('ordered-merge-stream');
 var insert = require('gulp-insert');
+var gulp = require('gulp');
+
 module.exports = {
 	exec: exec,
 	scheduleTask: scheduleTask,

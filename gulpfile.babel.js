@@ -1,3 +1,12 @@
+/*
+ * Aikar's Minecraft Timings Parser
+ *
+ * Written by Aikar <aikar@aikar.co>
+ * http://aikar.co
+ * http://starlis.com
+ *
+ * @license MIT
+ */
 var gulp = require('gulp');
 require('gulp-bash-completion')(gulp);
 var $ = require('gulp-load-plugins')();
