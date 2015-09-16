@@ -19,7 +19,6 @@ var csswring = require('csswring');
 var mqpacker = require('css-mqpacker');
 var bless = require('gulp-bless');
 
-//var tasks = require('require-dir')('tasks');
 var dir = __dirname;
 var paths = {};
 
@@ -30,8 +29,8 @@ paths.static = `${dir}/static`;
 paths.vendorjs = [`${paths.static}/vendor/**.js`];
 paths.js = [`${paths.static}/js/**.js`];
 // Files to watch for CSS change, but we have a single entry point
+paths.css_watch = [`${paths.static}/css/**.scss`];
 paths.css_entryfile = `${paths.static}/css/timings.scss`;
-paths.css_watch = [`${paths.static}/css/**.scss`, `${paths.static}/css/**.scss`];
 paths.dist = `${paths.static}/dist`;
 
 gulp.task('vendor', () => {
