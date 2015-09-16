@@ -10,9 +10,27 @@ This project intends to support Sponge in the future too, or any project impleme
 
 Contributing
 ======
-Note: I am currently rewriting this system to get rid of all the old hack-job code.
 
-so PR's need to wait until I'm done.
+The main thing holding up Timings v2 in Spigot is this Web UI for it! I don't have time to focus on it, so any help to get it close to usable for general public would be appreciated!
+
+Current Active Contributors:
+  - Aikar (Main of course)
+  - DemonWav
+
+Want to contribute? Contact me on Spigot IRC, and let me know what your interested in working on so we don't have people working on the same thing.
+Were considering movin the rendering aspect of the system to be done purely in JS so that may change soon.
+
+Setting Up Environment
+=====
+You need a LAMP/MAMP/WAMP stack, check out folder, copy config.ini to config.dev.ini and edit to your needs.
+
+You'll also need NodeJS v4 (first release after io.js merger)
+
+Windows and Mac users may need to "npm rebuild" but i'm unsure if the binary based deps are needed or not.
+
+To compile static resources and monitor them for changes, simply run `gulp` and control + c to abort watching.
+Gulp will monitor all files for changes and recompile the css/js for you.
+
 
 Timings File Format
 ======
