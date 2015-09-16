@@ -10,4 +10,4 @@ static/timings.min.js
 static/timings.css.map
 static/.sass-cache
 
-config.ini
+config.dev.ini

@@ -10,15 +10,20 @@
  */
 namespace Starlis\Timings;
 
+chdir(__DIR__);
+
 // Get configuration first
 global $ini;
-$ini = parse_ini_file("config.ini", true);
+$file = "config.ini";
+if (file_exists("config.dev.ini")) {
+	$ini = "confg.dev.ini";
+}
+$ini = parse_ini_file($ini, true);
 
 header("Content-Type: text/html");
 define('TIMINGS_ENV', $ini["environment"]);
 define('MAX_CACHE_BYTES', 1024 * 512);
 
-chdir(__DIR__);
 if (gethostbyname("aikarip") == $_SERVER['REMOTE_ADDR']) {
 	error_reporting(E_ALL & ~E_NOTICE);
 	ini_set('display_errors', true);
