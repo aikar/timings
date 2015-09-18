@@ -16,9 +16,9 @@ chdir(__DIR__);
 global $ini;
 $file = "config.ini";
 if (file_exists("config.dev.ini")) {
-	$ini = "confg.dev.ini";
+	$file = "config.dev.ini";
 }
-$ini = parse_ini_file($ini, true);
+$ini = parse_ini_file($file, true);
 
 header("Content-Type: text/html");
 define('TIMINGS_ENV', $ini["environment"]);
