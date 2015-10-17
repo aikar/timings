@@ -89,7 +89,6 @@ class Template {
 			$firstMP = $history->minuteReports[0];
 
 			for ($i = $firstMP->time; $i - $first < 65; $i += 60) {
-				echo date('c', $i) .' - ' . date('c', $first) ." = " . ($i - $first) . "\n<br />";
 				$clone = clone $firstMP;
 				$clone->time = $first;
 				array_unshift($history->minuteReports, $clone);
