@@ -7,7 +7,7 @@
  *
  * @license MIT
  */
-$(document).foundation();
+//$(document).foundation();
 $(document).ready(function () {
 	var data = window.timingsData || {
 			ranges: [],
@@ -240,8 +240,31 @@ $(document).ready(function () {
 		$("#depth-view").html("");
 		$("#depth-view-bg").css("display", "none");
 	});
+
+	var $timingChildren = $('.full-timing-row .children');
+
+	$timingChildren.each(function() {
+		var $this = $(this);
+		var $parent = $this.parent();
+		$parent.find(' > .name').first().before("<div class='expand-control'>[+]</div> ");
+
+		var $control = $parent.find(' > .expand-control').first();
+		$control.bind("click", expandTimings.bind($this, $parent, $control));
+	});
 });
 
+function expandTimings($p, $c) {
+	this.show();
+	$c.unbind('click');
+	$c.html('[-]');
+	$c.bind('click', collapseTimings.bind(this, $p, $c));
+}
+function collapseTimings($p, $c) {
+	this.hide();
+	$c.unbind('click');
+	$c.html('[+]');
+	$c.bind('click', expandTimings.bind(this, $p, $c));
+}
 function getQueryParam(name, def) {
 	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),

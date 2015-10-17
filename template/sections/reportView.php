@@ -35,15 +35,14 @@ echo "Timings cost: $cost - " . ($cost * $totalTimings) . " - Pct: "
 	. round(((($cost * $totalTimings) / ($timingsData->sampletime * 1000000000 / 100))), 2) . "%\n\n";
 echo '</pre>';
 
-function printRecord($l, $depth = 0) {
-	static $i;
+function printRecord($l) {
 	$tpl = Template::getInstance();
 	$lagTicks = $tpl->masterHandler->lagCount;
 	$ticks = $tpl->masterHandler->count;
 	$totalTime = $tpl->masterHandler->total;
 	$lagTotalTime = $tpl->masterHandler->lagTotal;
 
-	$id = $l->id->id . "_" . $i++;
+
 	$total = LAG_ONLY ? $l->lagTotal : $l->total;
 	$count = LAG_ONLY ? $l->lagCount : $l->count;
 
@@ -61,17 +60,32 @@ function printRecord($l, $depth = 0) {
 	$name = cleanName($l->id);
 	$total = round($total / 1000000000, 3);
 
-	$indents = "";
-	for ($j = 1; $j <= $depth; $j++) {
-		$num = $j % 5;
-		$indents .= "<div class='indent depth{$num} full-depth${j}'></div>";
-	}
-
-	echo "<div class='full-timing-row'>$indents<div id='$id' class='timing-row'>
-		<a href='#$id'>#</a><span class='name'>$name</span> - count(<span class='count'>$count</span>) -
+	echo "
+		<span class='name'>$name</span> - count(<span class='count'>$count</span>) -
 		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>) -
 		avg(<span class='avgMs'>{$avg}ms</span> - <span class='tickAvgMs'>{$tickAvg}ms</span>)
-		</div></div>\n";
+		\n";
+}
+
+/**
+ * @param $depth
+ * @param TimingHandler $l
+ *
+ * @return string
+ */
+function openRow($depth, $l) {
+	static $i;
+	$indents = "";
+	$id = $l->id->id . "_" . $i++;
+	//for ($j = 1; $j <= $depth; $j++) {
+		$num = $depth % 5;
+		$indents .= "<div class='indent depth{$num} full-depth${depth}'></div>";
+	//}
+
+	echo "<div class='full-timing-row'>$indents<div id='$id' class='timing-row'><a href='#$id'>#</a>";
+}
+function closeRow() {
+	echo "</div></div>";
 }
 
 
@@ -104,7 +118,8 @@ function printRows($lag, $level) {
 //			continue;
 		}
 
-		printRecord($l, $level);
+		openRow($level, $l);
+		printRecord($l);
 		$id = $l->id->id;
 		$h = $tpl->handlerData[$id];
 
@@ -118,10 +133,13 @@ function printRows($lag, $level) {
 					return $v;
 				}, $children);
 				usort($children, 'lagSort');
+				echo '<div class="children">';
 				printRows($children, $level + 1);
+				echo '</div>';
 			}
 			--$processMap[$id];
 		}
+		closeRow();
 	}
 }
 

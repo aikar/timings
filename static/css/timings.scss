@@ -105,7 +105,6 @@ hr {
 
 	overflow: hidden;
 
-	-webkit-filter: blur(10px);
 	filter: blur(10px);
 }
 
@@ -120,5 +119,13 @@ hr {
 
 	color: whitesmoke;
 }
+.full-timing-row .children {
+	display: none;
+}
 
+.expand-control {
+	cursor: pointer;
+	display: inline-block;
+	color: lightblue;
+}
 
