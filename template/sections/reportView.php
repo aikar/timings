@@ -45,13 +45,16 @@ function printRecord($l) {
 
 	$total = LAG_ONLY ? $l->lagTotal : $l->total;
 	$count = LAG_ONLY ? $l->lagCount : $l->count;
+	if ($count === 0 || $lagTicks === 0) {
+		return;
+	}
 
 	$avg = round(($total / $count) / 1000000, 4);
 	$tickAvg = round($avg * ($count / (LAG_ONLY ? $lagTicks : $ticks)), 4);
 	$tickAvg = lagView($tickAvg);
 
 	$totalPct = round($total / (LAG_ONLY ? $lagTotalTime : $totalTime) * 100, 2);
-	if ($l->id->name == "Full Server Tick") { // always 100%
+	if ($l->id->name === "Full Server Tick") { // always 100%
 		$totalPct = lagView($totalPct, 200, 200, 200, 200);
 	} else {
 		$totalPct = lagView($totalPct, 25, 15, 7, 3);
@@ -75,12 +78,9 @@ function printRecord($l) {
  */
 function openRow($depth, $l) {
 	static $i;
-	$indents = "";
 	$id = $l->id->id . "_" . $i++;
-	//for ($j = 1; $j <= $depth; $j++) {
-		$num = $depth % 5;
-		$indents .= "<div class='indent depth{$num} full-depth${depth}'></div>";
-	//}
+	$num = $depth % 5;
+	$indents = "<div class='indent depth{$num} full-depth${depth}'></div>";
 
 	echo "<div class='full-timing-row'>$indents<div id='$id' class='timing-row'><a href='#$id'>#</a>";
 }
