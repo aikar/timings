@@ -8,15 +8,15 @@
  ******************************************************************************/
 
 #history-selector {
-	padding: 0;
+	padding: 10px;
 	/*height: 200px;*/
 	margin: 10px auto;
 	text-align: center;
 
 	#time-selector {
 		height: 15px;
-		width: 98%;
-		margin: 0 auto 10px;
+		width: auto;
+		margin: 0 15px 10px 5px;
 		text-align: center;
 		padding: 0;
 	}
@@ -30,6 +30,6 @@
 }
 
 .canvas-wrapper {
-	width: 98%;
+	width: 100%;
 	margin: auto;
 }

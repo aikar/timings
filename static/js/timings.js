@@ -136,15 +136,22 @@ $(document).ready(function () {
 		var start = data.start;
 		var end = data.end;
 
+		var times = [];
+		for (let t of values) {
+			if (times.indexOf(t) == -1) {
+				times.push(t);
+			}
+		}
+
 		var $timeSelector = $('#time-selector');
 		$timeSelector.slider({
 			min: 0,
-			max: values.length - 1,
-			values: [values.indexOf(start), values.indexOf(end)],
+			max: times.length - 1,
+			values: [times.indexOf(start), times.indexOf(end)],
 			range: true,
 			slide: function (event, ui) {
-				start = values[ui.values[0]];
-				end = values[ui.values[1]];
+				start = times[ui.values[0]];
+				end = times[ui.values[1]];
 				updateRanges(start, end);
 				goRange();
 			}
@@ -171,7 +178,6 @@ $(document).ready(function () {
 					all = '';
 				}
 				window.location = "?id=" + data.id + "&start=" + start + "&end=" + end + all;
-
 			}, 1000);
 		}
 

@@ -42,10 +42,15 @@ class Template {
 
 		$ranges = [];
 
+		$first = -1;
 		foreach ($data->data as $history) {
 			$ranges[] = $history->start;
 			$ranges[] = $history->end;
+			if ($first === -1 || $first > $history->start) {
+				$first = $history->start;
+			}
 		}
+		$ranges = array_values(array_unique($ranges));
 		//$ranges = array_unique($ranges);
 		//sort($ranges);
 
@@ -80,6 +85,14 @@ class Template {
 				foreach ($world->chunks as $chunk) {
 					$chunks++;
 				}
+			}
+			$firstMP = $history->minuteReports[0];
+
+			for ($i = $firstMP->time; $i - $first < 65; $i += 60) {
+				echo date('c', $i) .' - ' . date('c', $first) ." = " . ($i - $first) . "\n<br />";
+				$clone = clone $firstMP;
+				$clone->time = $first;
+				array_unshift($history->minuteReports, $clone);
 			}
 
 			foreach ($history->minuteReports as $mp) {
