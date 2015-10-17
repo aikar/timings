@@ -151,5 +151,14 @@ class Util {
 
 		return substr($class, 0, $pos);
 	}
+
+	public static function buildurl($query) {
+		$get = array_merge($_GET, $query);
+		$uri = $_SERVER['REQUEST_URI'];
+		if (($pos = strpos($uri, '?')) !== false) {
+			$uri = substr($uri, 0, $pos);
+		}
+		return $uri . "?" . http_build_query($get);
+	}
 }
 

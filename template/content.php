@@ -19,10 +19,10 @@ if (!$section) $section = 'lag';
 	<div class="dev-warning">This site is still under heavy development.</div>
 	<ul id="tab-bar" data-tab class="tabs" role="tablist" data-options="deep_linking:true">
 		<li class="tab-title" role="presentational">
-			<a href="#" class="tab" role="tab" aria-controls="tabs-lag">Lag View</a>
+			<a href="<?=Util::buildurl(['all'=>0])?>" class="tab" role="tab" aria-controls="tabs-lag">Lag View</a>
 		</li>
 		<li class="tab-title" role="presentational">
-			<a href="#" class="tab" role="tab" aria-controls="tabs-all">All View</a>
+			<a href="<?=Util::buildurl(['all'=>1])?>" class="tab" role="tab" aria-controls="tabs-all">All View</a>
 		</li>
 	</ul>
 	<div class="tabs-content">
