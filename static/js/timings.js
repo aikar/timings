@@ -8,7 +8,11 @@
  * @license MIT
  */
 //$(document).foundation();
+
 $(document).ready(function () {
+	// TODO: when this damn system actually is 'done enough' one day... clean up this nightmare file more.
+	// I'm sorry for this nasty mess... :( Just trying to get it done as hacky and fast as possible as I
+	// Don't have the time to work on it! :(
 	var data = window.timingsData || {
 			ranges: [],
 			start: 1,
@@ -27,12 +31,12 @@ $(document).ready(function () {
 		slide: function (event, ui) {
 			start = values[ui.values[0]];
 			end = values[ui.values[1]];
-			updateRanges();
+			updateRanges(start, end);
 			goRange();
 		}
 	});
 
-	updateRanges();
+	updateRanges(start, end);
 
 	var labels = [];
 
@@ -170,13 +174,7 @@ $(document).ready(function () {
 			}, 1000);
 		}
 
-		function updateRanges() {
-			var startDate = new Date(start * 1000);
-			var endDate = new Date(end * 1000);
 
-			$('#start-time').text(startDate.toLocaleString());
-			$('#end-time').text(endDate.toLocaleString());
-		}
 	}
 	initializeTimeSelector();
 
@@ -184,8 +182,70 @@ $(document).ready(function () {
 	$('.button').button();
 
 	setTimeout(initializeAds, 1000);
+	initializeIndentStyles();
+	initializeCollapseControls();
+	$(window).on('hashchange', checkHashLoc);
+	checkHashLoc();
+});
 
-	$(".indent").mouseenter(function() {
+function initializeCollapseControls() {
+	var $timingChildren = $('.full-timing-row .children');
+
+	$timingChildren.each(function () {
+		var $this = $(this);
+		var $parent = $this.parent();
+		$parent.find(' > .name').first().before("<div class='expand-control'>[+]</div> ");
+
+		var $control = $parent.find(' > .expand-control').first();
+		$control.bind("click", expandTimings.bind($this, $parent));
+	});
+}
+function expandTimings($parent) {
+	$parent.find('> .children').first().show();
+	var $c = $parent.find(' > .expand-control').first()
+	$c.unbind('click');
+	$c.html('[-]');
+	$c.bind('click', collapseTimings.bind(this, $parent));
+}
+function collapseTimings($parent) {
+	$parent.find('> .children').first().hide();
+	var $c = $parent.find(' > .expand-control').first();
+	$c.unbind('click');
+	$c.html('[+]');
+	$c.bind('click', expandTimings.bind(this, $parent));
+}
+
+
+function checkHashLoc() {
+	var hash = location.hash;
+	if (!hash || hash.length < 2) {
+		return;
+	}
+
+	var el = $(hash);
+	if (!el || !el.length) {
+		return;
+	}
+	expandTimings(el);
+
+	do {
+		for (var i = 0; i < 3; i++) {
+			if (el) {
+				el = el.parent();
+			}
+		}
+		if (el && el.find('> .expand-control').length) {
+			expandTimings(el);
+		} else {
+			break;
+		}
+	} while (el);
+	$('html, body').animate({
+		scrollTop: $(hash).offset().top
+	}, 500);
+}
+function initializeIndentStyles() {
+	$(".indent").mouseenter(function () {
 		var classes = this.className.split(/\s+/);
 		var depthclass;
 		for (var i of classes) {
@@ -203,45 +263,8 @@ $(document).ready(function () {
 			display: "block"
 		};
 		$("#depth-view-bg").css(styles);
-	}).mouseleave(function() {
+	}).mouseleave(function () {
 		$("#depth-view").html("");
 		$("#depth-view-bg").css("display", "none");
 	});
-
-	var $timingChildren = $('.full-timing-row .children');
-
-	$timingChildren.each(function() {
-		var $this = $(this);
-		var $parent = $this.parent();
-		$parent.find(' > .name').first().before("<div class='expand-control'>[+]</div> ");
-
-		var $control = $parent.find(' > .expand-control').first();
-		$control.bind("click", expandTimings.bind($this, $parent, $control));
-	});
-});
-
-function expandTimings($p, $c) {
-	this.show();
-	$c.unbind('click');
-	$c.html('[-]');
-	$c.bind('click', collapseTimings.bind(this, $p, $c));
-}
-function collapseTimings($p, $c) {
-	this.hide();
-	$c.unbind('click');
-	$c.html('[+]');
-	$c.bind('click', expandTimings.bind(this, $p, $c));
-}
-function getQueryParam(name, def) {
-	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-		results = regex.exec(location.search);
-	return results === null ?
-		def
-		:
-		decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
-function showInfo(btn) {
-	$("#info-" + $(btn).attr('info')).dialog({width: "80%", modal: true});
 }

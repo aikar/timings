@@ -21,6 +21,14 @@ function htorgba(hex, alpha) {
 		: hex;
 }
 
+function updateRanges(start, end) {
+	var startDate = new Date(start * 1000);
+	var endDate = new Date(end * 1000);
+
+	$('#start-time').text(startDate.toLocaleString());
+	$('#end-time').text(endDate.toLocaleString());
+}
+
 function initializeAds() {
 	var adCount = $('.adsbygoogle').length;
 	if (adCount) {
@@ -30,4 +38,20 @@ function initializeAds() {
 			(window.adsbygoogle = window.adsbygoogle || []).push({});
 		}
 	}
+}
+
+
+
+function getQueryParam(name, def) {
+	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		results = regex.exec(location.search);
+	return results === null ?
+		def
+		:
+		decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function showInfo(btn) {
+	$("#info-" + $(btn).attr('info')).dialog({width: "80%", modal: true});
 }
