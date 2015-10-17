@@ -13,6 +13,9 @@ $(document).ready(function () {
 	// TODO: when this damn system actually is 'done enough' one day... clean up this nightmare file more.
 	// I'm sorry for this nasty mess... :( Just trying to get it done as hacky and fast as possible as I
 	// Don't have the time to work on it! :(
+
+	$('.button').button();
+
 	var data = window.timingsData || {
 			ranges: [],
 			start: 1,
@@ -20,27 +23,7 @@ $(document).ready(function () {
 			maxTime: 1
 		};
 	var values = data.ranges;
-	var start = data.start;
-	var end = data.end;
-
-	$('#time-selector').slider({
-		min: 0,
-		max: values.length - 1,
-		values: [values.indexOf(start), values.indexOf(end)],
-		range: true,
-		slide: function (event, ui) {
-			start = values[ui.values[0]];
-			end = values[ui.values[1]];
-			updateRanges(start, end);
-			goRange();
-		}
-	});
-
-	updateRanges(start, end);
-
 	var labels = [];
-
-
 	var scales = {
 		"Entities": 10000,
 		"Tile Entities": 25000,
@@ -150,8 +133,26 @@ $(document).ready(function () {
 
 	initializeChart();
 	function initializeTimeSelector() {
+		var start = data.start;
+		var end = data.end;
+
+		var $timeSelector = $('#time-selector');
+		$timeSelector.slider({
+			min: 0,
+			max: values.length - 1,
+			values: [values.indexOf(start), values.indexOf(end)],
+			range: true,
+			slide: function (event, ui) {
+				start = values[ui.values[0]];
+				end = values[ui.values[1]];
+				updateRanges(start, end);
+				goRange();
+			}
+		});
+
+		updateRanges(start, end);
 		var redirectTimer = 0;
-		$('#time-selector').click(function () {
+		$timeSelector.click(function () {
 			if (redirectTimer) {
 				clearTimeout(redirectTimer);
 				redirectTimer = 0;
@@ -178,11 +179,7 @@ $(document).ready(function () {
 	}
 	initializeTimeSelector();
 
-
-	$('.button').button();
-
 	setTimeout(initializeAds, 1000);
-	initializeIndentStyles();
 	initializeCollapseControls();
 	$(window).on('hashchange', checkHashLoc);
 	checkHashLoc();
@@ -200,20 +197,7 @@ function initializeCollapseControls() {
 		$control.bind("click", expandTimings.bind($this, $parent));
 	});
 }
-function expandTimings($parent) {
-	$parent.find('> .children').first().show();
-	var $c = $parent.find(' > .expand-control').first()
-	$c.unbind('click');
-	$c.html('[-]');
-	$c.bind('click', collapseTimings.bind(this, $parent));
-}
-function collapseTimings($parent) {
-	$parent.find('> .children').first().hide();
-	var $c = $parent.find(' > .expand-control').first();
-	$c.unbind('click');
-	$c.html('[+]');
-	$c.bind('click', expandTimings.bind(this, $parent));
-}
+
 
 
 function checkHashLoc() {
@@ -243,28 +227,4 @@ function checkHashLoc() {
 	$('html, body').animate({
 		scrollTop: $(hash).offset().top
 	}, 500);
-}
-function initializeIndentStyles() {
-	$(".indent").mouseenter(function () {
-		var classes = this.className.split(/\s+/);
-		var depthclass;
-		for (var i of classes) {
-			if (classes[i].startsWith("full-depth")) {
-				depthclass = classes[i];
-				break;
-			}
-		}
-		var depth = parseInt(depthclass.replace("full-depth", ""));
-		var view = $("#depth-view");
-		view.html("Depth: " + depth);
-		var styles = {
-			height: view.css("height"),
-			width: view.css("width"),
-			display: "block"
-		};
-		$("#depth-view-bg").css(styles);
-	}).mouseleave(function () {
-		$("#depth-view").html("");
-		$("#depth-view-bg").css("display", "none");
-	});
 }

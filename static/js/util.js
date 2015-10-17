@@ -55,3 +55,18 @@ function getQueryParam(name, def) {
 function showInfo(btn) {
 	$("#info-" + $(btn).attr('info')).dialog({width: "80%", modal: true});
 }
+
+function expandTimings($parent) {
+	$parent.find('> .children').first().show();
+	var $c = $parent.find(' > .expand-control').first()
+	$c.unbind('click');
+	$c.html('[-]');
+	$c.bind('click', collapseTimings.bind(this, $parent));
+}
+function collapseTimings($parent) {
+	$parent.find('> .children').first().hide();
+	var $c = $parent.find(' > .expand-control').first();
+	$c.unbind('click');
+	$c.html('[+]');
+	$c.bind('click', expandTimings.bind(this, $parent));
+}
