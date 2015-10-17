@@ -43,7 +43,7 @@ $(document).ready(function () {
 		"Chunks": 3000,
 		"Players": 100,
 		"TPS": 20
-	}
+	};
 
 	data.stamps.forEach(function (k) {
 		var d = new Date(k * 1000);
