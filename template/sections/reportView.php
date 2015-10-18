@@ -114,8 +114,8 @@ function printRows($lag, $level) {
 	global $processMap;
 	$tpl = Template::getInstance();
 	foreach ($lag as $l) {
-		if ($l->lagTotal < 500000) {
-//			continue;
+		if ($l->lagTotal < 500000 && !empty($_GET['nofilter'])) {
+			continue;
 		}
 
 		$lagTicks = (int) $tpl->masterHandler->lagCount;
