@@ -34,6 +34,7 @@ class Template {
 	}
 
 	public static function loadData() {
+		global $ini;
 		$timings = Timings::getInstance();
 		$timings->loadData();
 		$data = TimingsMaster::getInstance();
@@ -57,8 +58,11 @@ class Template {
 		$last = count($ranges) - 1;
 
 		$tpl->js['ranges'] = $ranges;
-		$tpl->js['start'] = $start = (!empty($_GET['start']) ? intval($_GET['start']) : $ranges[$last - 1]);
-		$tpl->js['end'] = $end = (!empty($_GET['end']) ? intval($_GET['end']) : $ranges[$last]);
+		$defStart = (int) (!empty($ini['dev_def_start']) ? $ini['dev_def_start'] : $ranges[$last - 1]);
+		$defEnd = (int) (!empty($ini['dev_def_end']) ? $ini['dev_def_end'] : $ranges[$last]);
+
+		$tpl->js['start'] = $start = (int) (!empty($_GET['start']) ?  $_GET['start'] : $defStart);
+		$tpl->js['end'] = $end = (int) (!empty($_GET['end']) ? $_GET['end'] : $defEnd);
 
 
 		/**
