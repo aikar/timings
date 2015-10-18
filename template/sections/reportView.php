@@ -37,14 +37,14 @@ echo '</pre>';
 
 function printRecord($l) {
 	$tpl = Template::getInstance();
-	$lagTicks = $tpl->masterHandler->lagCount;
+	$lagTicks = (int) $tpl->masterHandler->lagCount;
 	$ticks = $tpl->masterHandler->count;
 	$totalTime = $tpl->masterHandler->total;
 	$lagTotalTime = $tpl->masterHandler->lagTotal;
 
 
-	$total = LAG_ONLY ? $l->lagTotal : $l->total;
-	$count = LAG_ONLY ? $l->lagCount : $l->count;
+	$total = (int) (LAG_ONLY ? $l->lagTotal : $l->total);
+	$count = (int) (LAG_ONLY ? $l->lagCount : $l->count);
 	if ($count === 0 || $lagTicks === 0) {
 		return;
 	}
@@ -118,6 +118,11 @@ function printRows($lag, $level) {
 //			continue;
 		}
 
+		$lagTicks = (int) $tpl->masterHandler->lagCount;
+		$count = (int) (LAG_ONLY ? $l->lagCount : $l->count);
+		if ($count === 0 || $lagTicks === 0) {
+			continue;
+		}
 		openRow($level, $l);
 		printRecord($l);
 		$id = $l->id->id;
