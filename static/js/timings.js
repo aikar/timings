@@ -153,32 +153,26 @@ $(document).ready(function () {
 				start = times[ui.values[0]];
 				end = times[ui.values[1]];
 				updateRanges(start, end);
-				goRange();
 			}
 		});
+		$timeSelector.on('slidestart', clearRedirectTimer);
+		$timeSelector.on('slidechange', redirectToNewTimeRange);
 
 		updateRanges(start, end);
+
 		var redirectTimer = 0;
-		$timeSelector.click(function () {
+
+		function clearRedirectTimer() {
 			if (redirectTimer) {
 				clearTimeout(redirectTimer);
 				redirectTimer = 0;
 			}
-		});
-
-		function goRange() {
-			if (redirectTimer) {
-				clearTimeout(redirectTimer);
-			}
+		}
+		function redirectToNewTimeRange() {
+			clearRedirectTimer();
 			redirectTimer = setTimeout(function () {
-				var all = getQueryParam('all');
-				if (all) {
-					all = '&all=' + all;
-				} else {
-					all = '';
-				}
-				window.location = "?id=" + data.id + "&start=" + start + "&end=" + end + all;
-			}, 1000);
+				window.location = $.query.set("start", start).set("end", end).toString();
+			}, 1500);
 		}
 
 
