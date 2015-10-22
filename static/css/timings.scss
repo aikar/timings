@@ -12,7 +12,6 @@
 @import "base/base";
 @import "neat/neat";
 @import "helpers";
-@import "header";
 @import "footer";
 @import "ads";
 @import "timeselector";
@@ -53,9 +52,6 @@ hr {
 	margin: auto auto 25px;
 }
 
-#header-right {
-	text-align: center !important;
-}
 /*<a href='#$id'>#</a><span class='name'>$name</span> - count(<span class='count'>$count</span>) -
 		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>) -
 		avg(<span class='avgMs'>{$avg}ms</span> - <span class='tickAvgMs'>{$tickAvg}ms</span>)*/
@@ -102,3 +98,11 @@ hr {
 	color: lightblue;
 }
 
+.server-name {
+	.online-server {
+		color: green;
+	}
+	.offline-server {
+		color: red;
+	}
+}

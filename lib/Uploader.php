@@ -32,8 +32,11 @@ class Uploader {
 		if (isset($json['icon'])) {
 			$img = self::getServerIcon($json['icon']);
 			$json['icon'] = $img;
+			Log::info("Valid Image: $img");
 			$data = json_encode($json);
 			$uncompressedSize = strlen($data);
+		} else {
+
 		}
 		$key = Util::uuid(false);
 
@@ -48,6 +51,7 @@ class Uploader {
 		$base64 = substr($base64, strlen("data:image/png;base64,"));
 		$img = imagecreatefromstring(base64_decode($base64));
 		if (!$img) {
+			Log::info("Bad Image");
 			return null;
 		}
 		$hash = sha1($base64);
@@ -55,9 +59,10 @@ class Uploader {
 		@imagepng($img, $tmp);
 		$info = @getimagesize($tmp);
 
-		if (!empty($info) && $info[0] == 64 && $info[1] == 64 && $info['mime'] == 'image/png') {
+		if (!empty($info) && $info[0] === 64 && $info[1] === 64 && $info['mime'] === 'image/png') {
 			return $hash;
 		}
+		Log::info("Bad Image Meta: " . print_r($info, true));
 		unlink($tmp);
 
 		return null;

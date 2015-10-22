@@ -44,9 +44,7 @@ Template::getInstance()->loadData();
 				<a href="http://spigotmc.org" title="Spigot">spigotmc.org</a>.<br/>
 			</p>
 		</div>
-		<div id="header-right">
-
-		</div>
+		<?php require_once "header-right.php"; ?>
 	</div>
 
 	<div id="body-wrap">

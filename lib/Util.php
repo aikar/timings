@@ -160,5 +160,9 @@ class Util {
 		}
 		return $uri . "?" . http_build_query($get);
 	}
+
+	public static function esc($server) {
+		return htmlentities($server);
+	}
 }
 
