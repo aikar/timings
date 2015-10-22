@@ -53,6 +53,7 @@ $(document).ready(function () {
 			data.chunkData[i] = (count / scales.Chunks) * data.maxTime
 		});
 	}
+
 	initializeData();
 	function initializeChart() {
 		chart('#tps-graph').Line({
@@ -168,6 +169,7 @@ $(document).ready(function () {
 				redirectTimer = 0;
 			}
 		}
+
 		function redirectToNewTimeRange() {
 			clearRedirectTimer();
 			redirectTimer = setTimeout(function () {
@@ -177,6 +179,7 @@ $(document).ready(function () {
 
 
 	}
+
 	initializeTimeSelector();
 
 	setTimeout(initializeAds, 1000);
@@ -197,7 +200,6 @@ function initializeCollapseControls() {
 		$control.bind("click", expandTimings.bind($this, $parent));
 	});
 }
-
 
 
 function checkHashLoc() {

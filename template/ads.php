@@ -12,10 +12,12 @@ namespace Starlis\Timings;
 
 function ad_banner_top_right() { ?>
 	<!-- Timings -->
+	<div id="ad-top-banner">
 	<ins class="adsbygoogle responsive-ad"
 	     style="display:inline-block;"
 	     data-ad-client="ca-pub-9196273905174409"
 	     data-ad-slot="8082511770"></ins>
+	</div>
 	<?php
 }
 

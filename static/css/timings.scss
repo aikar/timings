@@ -16,6 +16,7 @@
 @import "footer";
 @import "ads";
 @import "timeselector";
+@import "ui";
 
 body {
 	height: 100%;
@@ -91,34 +92,6 @@ hr {
 	}
 }
 
-#depth-view-bg {
-	display: none;
-
-	position: fixed;
-	bottom: 0;
-	right: 0;
-
-	z-index: 9998;
-
-	background: rgb(78,78,78);
-	background: rgba(78, 78, 78, 0.55);
-
-	overflow: hidden;
-
-	filter: blur(10px);
-}
-
-#depth-view {
-	position: fixed;
-	bottom: 0;
-	right: 0;
-
-	z-index: 9999;
-
-	padding: 6px;
-
-	color: whitesmoke;
-}
 .full-timing-row .children {
 	display: none;
 }
