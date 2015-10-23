@@ -164,5 +164,37 @@ class Util {
 	public static function esc($server) {
 		return htmlentities($server);
 	}
+	public static function mccolor($str) {
+		$input = nl2br(str_replace('&sect;', '§', $str));
+		$input = preg_replace("/§([0-9lmnora-f])+/", '|#§#|§$1', $input);
+		$array = explode('|#§#|', $input);
+
+		$numOpen = 0;
+		$output = "";
+		foreach ($array as $k => $part) {
+			if (!$part || substr($part, 0, 2) !== '§') {
+				$output .= $part;
+				continue;
+			}
+			$p = strtolower($part[2]);
+
+			$rest = strlen($part) >= 3 ? substr($part, 3) : "";
+
+			if (in_array($p, ['l', 'm', 'n', 'o'], true)) {
+				$numOpen++;
+				$output .= "<span class='mc_$p'>$rest";
+				continue;
+			} else if ($p === 'r' || $numOpen > 0) {
+				$output .= str_repeat('</span>', $numOpen);
+				$numOpen = 0;
+			}
+			$output .= "<span class='mc_$p'>$rest";
+			$numOpen++;
+		}
+		$output .= str_repeat('</span>', $numOpen);
+
+
+		return str_replace('§', '&sect;', $output);
+	}
 }
 

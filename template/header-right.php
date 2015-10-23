@@ -14,7 +14,7 @@ $system = $timingsData->system;
 
 	<span class="server-name">Server: <b class="<?=($timingsData->onlinemode === true ? "online-server" : "offline-server")?>"
 			><?=Util::esc($timingsData->server)?></b> (max: <?=Util::esc($timingsData->maxplayers)?>)</span><br />
-	<span>MOTD: <b><?=Util::esc($timingsData->motd)?></b></span><br />
+	<span>MOTD: <b><?=Util::mccolor(Util::esc($timingsData->motd))?></b></span><br />
 	<span>Version: <b><?=Util::esc($timingsData->version)?></b></span><br />
 	<span title="OS: <?=Util::esc("{$system->name} {$system->version} {$system->arch} CPU: {$system->cpu}")?>">
 		Uptime: <b><?=Util::esc(round($system->runtime / 60 / 60, 2))?>hr</b> -
