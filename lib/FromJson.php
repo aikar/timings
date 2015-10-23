@@ -35,12 +35,12 @@ trait FromJson {
 		}
 
 		$classDoc = $ref->getDocComment();
-		if (preg_match('/@mapper\s+(.+?)\s/', $classDoc, $matches)) {
+		if ($classDoc && preg_match('/@mapper\s+(.+?)\s/', $classDoc, $matches)) {
 			$cb = $matches[1];
-			if (!strstr($cb, "::")) {
+			if (false === strpos($cb, "::")) {
 				$cb = __CLASS__ . "::$cb";
 			}
-			if (!strstr($cb, "\\")) {
+			if (false === strpos($cb, "\\")) {
 				$cb = Util::getNamespace(__CLASS__) . "\\$cb";
 			}
 			$cb = explode("::", $cb, 2);
@@ -54,22 +54,22 @@ trait FromJson {
 			$parent = new FromJsonParent($name, $comment, $obj, $parentObj, null);
 
 			$isExpectingArray = false;
-			if (preg_match('/@var .+?\[.*?\]/', $comment, $matches)) {
+			if ($comment && preg_match('/@var .+?\[.*?\]/', $comment, $matches)) {
 				$isExpectingArray = true;
 			}
 
 			$index = $name;
-			if (preg_match('/@index\s+([@\w\-]+)/', $comment, $matches)) {
+			if ($comment && preg_match('/@index\s+([@\w\-]+)/', $comment, $matches)) {
 				$index = $matches[1];
 
 			}
 			$vars = is_object($rootData) ? get_object_vars($rootData) : $rootData;
 
-			if ($index == '@key') {
+			if ($index === '@key') {
 				$data = $parentObj->name;
-			} else if ($index == '@value') {
+			} else if ($index === '@value') {
 				$data = $rootData;
-			} else if (isset($vars[$index])) {
+			} else if (array_key_exists($index, $vars)) {
 				$data = $vars[$index];
 			} else {
 				$data = null;
@@ -86,12 +86,12 @@ trait FromJson {
 							$thisData = self::getData($entry, $arrParent);
 
 							$keyName = $arrParent->name;
-							if (preg_match('/@keymapper\s+(.+?)\s/', $parent->comment, $matches)) {
+							if ($parent->comment && preg_match('/@keymapper\s+(.+?)\s/', $parent->comment, $matches)) {
 								$cb = $matches[1];
-								if (!strstr($cb, "::")) {
+								if (false === strpos($cb, "::")) {
 									$cb = __CLASS__ . "::$cb";;
 								}
-								if (!strstr($cb, "\\")) {
+								if (false === strpos($cb, "\\")) {
 									$cb = Util::getNamespace(__CLASS__) . "\\$cb";
 								}
 								$cb = explode("::", $cb, 2);
@@ -125,19 +125,19 @@ trait FromJson {
 	 */
 	private static function getData($data, FromJsonParent $parent) {
 		$className = null;
-		if (preg_match('/@var\s+([\w_]+)(\[.*?\])?/', $parent->comment, $matches)) {
+		if ($parent->comment && preg_match('/@var\s+([\w_]+)(\[.*?\])?/', $parent->comment, $matches)) {
 			$className = $matches[1];
-			if (!strstr($className, "\\")) {
+			if (strpos($className, "\\") === false) {
 				$className = Util::getNamespace(__CLASS__) . "\\$className";
 			}
 		}
 
-		if (preg_match('/@mapper\s+(.+?)\s/', $parent->comment, $matches)) {
+		if ($parent->comment && preg_match('/@mapper\s+(.+?)\s/', $parent->comment, $matches)) {
 			$cb = $matches[1];
-			if (!strstr($cb, "::")) {
+			if (strpos($cb, "::") === false) {
 				$cb = __CLASS__ . "::$cb";;
 			}
-			if (!strstr($cb, "\\")) {
+			if (strpos($cb, "\\") === false) {
 				$cb = Util::getNamespace(__CLASS__) . "\\$cb";
 			}
 			$cb = explode("::", $cb, 2);
