@@ -52,6 +52,7 @@ class Uploader {
 		$img = imagecreatefromstring(base64_decode($base64));
 		if (!$img) {
 			Log::info("Bad Image");
+
 			return null;
 		}
 		$hash = sha1($base64);
@@ -69,6 +70,11 @@ class Uploader {
 	}
 
 	public static function error($str) {
+		if ($str === "Unauthorized") {
+			header("HTTP/1.1 401 Unauthorized", 401);
+		} else {
+			header("HTTP/1.1 400 Bad Request", 400);
+		}
 		echo $str;
 		exit;
 	}
