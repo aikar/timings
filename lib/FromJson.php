@@ -59,20 +59,21 @@ trait FromJson {
 			}
 
 			$index = $name;
-			if ($comment && preg_match('/@index\s+([@\w\-]+)/', $comment, $matches)) {
+			if ($comment && preg_match('/@index\s+([:@\w\-]+)/', $comment, $matches)) {
 				$index = $matches[1];
 
 			}
 			$vars = is_object($rootData) ? get_object_vars($rootData) : $rootData;
 
+			$data = null;
 			if ($index === '@key') {
 				$data = $parentObj->name;
 			} else if ($index === '@value') {
 				$data = $rootData;
 			} else if (array_key_exists($index, $vars)) {
 				$data = $vars[$index];
-			} else {
-				$data = null;
+			} else if (strpos($index, "::") !== false) {
+				$data = self::executeCb($index, [$obj, $rootData, $parentObj]);
 			}
 
 			if ($data || $isExpectingArray) {
@@ -87,15 +88,7 @@ trait FromJson {
 
 							$keyName = $arrParent->name;
 							if ($parent->comment && preg_match('/@keymapper\s+(.+?)\s/', $parent->comment, $matches)) {
-								$cb = $matches[1];
-								if (false === strpos($cb, "::")) {
-									$cb = __CLASS__ . "::$cb";;
-								}
-								if (false === strpos($cb, "\\")) {
-									$cb = util::getNamespace(__CLASS__) . "\\$cb";
-								}
-								$cb = explode("::", $cb, 2);
-								$keyName = call_user_func($cb, $keyName, $thisData, $parent);
+								$keyName = self::executeCb($matches[1], [$keyName, $thisData, $parent]);
 							}
 
 							$result[$keyName] = $thisData;
@@ -133,15 +126,7 @@ trait FromJson {
 		}
 
 		if ($parent->comment && preg_match('/@mapper\s+(.+?)\s/', $parent->comment, $matches)) {
-			$cb = $matches[1];
-			if (strpos($cb, "::") === false) {
-				$cb = __CLASS__ . "::$cb";;
-			}
-			if (strpos($cb, "\\") === false) {
-				$cb = util::getNamespace(__CLASS__) . "\\$cb";
-			}
-			$cb = explode("::", $cb, 2);
-			$data = call_user_func($cb, $data, $parent);
+			$data = self::executeCb($matches[1], [$data, $parent]);
 		} else if ($className && util::has_trait($className, __TRAIT__)) {
 			$data = call_user_func("$className::createObject", $data, $parent);
 		} else if (!is_scalar($data)) {
@@ -149,6 +134,18 @@ trait FromJson {
 		}
 
 		return $data;
+	}
+	private static function executeCb($cb, $args) {
+		if (strpos($cb, "::") === false) {
+			$cb = __CLASS__ . "::$cb";;
+		}
+		if (strpos($cb, "\\") === false) {
+			$cb = util::getNamespace(__CLASS__) . "\\$cb";
+		}
+
+		$cb = explode("::", $cb, 2);
+
+		return is_callable($cb) ? call_user_func_array($cb, $args) : null;
 	}
 }
 
