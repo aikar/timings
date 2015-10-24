@@ -26,6 +26,9 @@ define('MAX_CACHE_BYTES', 1024 * 512);
 if ($ini['trusted_ip'] === $_SERVER['REMOTE_ADDR'] || gethostbyname("aikarip") === $_SERVER['REMOTE_ADDR']) {
 	error_reporting(E_ALL & ~E_NOTICE);
 	ini_set('display_errors', true);
+	define('DEBUGGING', true);
+} else {
+	define('DEBUGGING', false);
 }
 
 if (TIMINGS_ENV === 'dev') {
