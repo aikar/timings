@@ -43,7 +43,7 @@ class Timings {
 			$storage = new LegacyStorageService();
 		} else if (!empty($_GET['id'])) {
 			$id = $_GET['id'];
-		} else if (TIMINGS_ENV == 'dev') {
+		} else if (TIMINGS_ENV === 'dev') {
 			global $ini;
 			$id = $ini["dev_id"]; // DEV test
 		}
@@ -51,7 +51,7 @@ class Timings {
 		$this->id = $id;
 		$this->storage = $storage;
 
-		if ($storage instanceof LegacyStorageService || TIMINGS_ENV != 'dev') {
+		if ($storage instanceof LegacyStorageService || TIMINGS_ENV !== 'dev') {
 			LegacyHandler::load(trim($storage->get($id)));
 			exit;
 		}
@@ -61,7 +61,7 @@ class Timings {
 		$id = $this->id;
 		if ($id) {
 			$data = Cache::getObject($id);
-			if (!$data) {
+			if (!$data || ((int) util::array_get($_GET['nocache']) === 1 && DEBUGGING)) {
 				$data = $this->storage->get($id);
 				$data = TimingsMaster::createObject(json_decode($data));
 				Cache::putObject($id, $data);
