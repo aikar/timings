@@ -45,23 +45,25 @@ class Chunk {
 
 	/**
 	 * @keymapper TimingsMap::getTileEntityType
-	 * @index     2
+	 * @index     3
 	 * @var int[]
 	 */
 	public $tileEntities;
 
 	/**
 	 * @keymapper TimingsMap::getEntityType
-	 * @index     3
+	 * @index     2
 	 * @var int[]
 	 */
 	public $entities;
 
 	/**
-	 * @index Chunk::calculateChunkId
+	 * @index Chunk::calculateAreaId
 	 * @var string
 	 */
-	public $chunkId;
+	public $areaId;
+	public $areaLocX;
+	public $areaLocZ;
 
 
 	public static function chunkToBlock($i) {
@@ -73,7 +75,10 @@ class Chunk {
 	 *
 	 * @return string
 	 */
-	public static function calculateChunkId($chunk) {
-		return $chunk->chunkX . ":" . $chunk->chunkZ;
+	public static function calculateAreaId($chunk) {
+		$chunk->areaLocX = (floor($chunk->chunkX / 4) * 4) << 4;
+		$chunk->areaLocZ = (floor($chunk->chunkZ / 4) * 4) << 4;
+
+		return $chunk->areaLocX . ":" . $chunk->areaLocZ;
 	}
 }
