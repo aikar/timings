@@ -1,0 +1,50 @@
+[
+    {
+        "name": "brandonwamboldt/utilphp",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/brandonwamboldt/utilphp.git",
+            "reference": "36c32efc4f0679c05163464a550f45c8d83fe683"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/brandonwamboldt/utilphp/zipball/36c32efc4f0679c05163464a550f45c8d83fe683",
+            "reference": "36c32efc4f0679c05163464a550f45c8d83fe683",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "satooshi/php-coveralls": "dev-master"
+        },
+        "time": "2015-02-02 17:56:14",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "utilphp\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Brandon Wamboldt",
+                "email": "brandon.wamboldt@gmail.com"
+            }
+        ],
+        "description": "util.php is a collection of useful functions and snippets that you need or could use every day, designed to avoid conflicts with existing projects",
+        "homepage": "https://github.com/brandonwamboldt/utilphp",
+        "keywords": [
+            "collection",
+            "helpers",
+            "php",
+            "utility"
+        ]
+    }
+]
