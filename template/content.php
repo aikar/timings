@@ -19,6 +19,7 @@ if (!$section) $section = 'lag';
 <div id="content">
 	<div class="dev-warning">This site is still under heavy development.</div>
 	<?php ad_banner_top_right(); ?>
+	<!-- http://refills.bourbon.io/#accordion-tabs -->
 	<div id="tab-bar" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
 		<ul class="tabs ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
 			<li class="tab-title ui-state-default ui-corner-top <?=$section=="lag"?' ui-tabs-active ui-state-active':''?>">

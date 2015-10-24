@@ -44,7 +44,7 @@ class Uploader {
 		Log::info("Uploaded $uncompressedSize bytes as $key to $cacheFile");
 		Cache::put($key, $data);
 		header("Location: " . BASE_URL_VIEW . "/?id=$key");
-		self::error("Compressed Size: $compressedSize\nUncompressed Size: $uncompressedSize\nRaw Upload: " . BASE_URL_VIEW . "/?id=$key&raw=1");
+		self::output("Compressed Size: $compressedSize\nUncompressed Size: $uncompressedSize\nRaw Upload: " . BASE_URL_VIEW . "/?id=$key&raw=1");
 	}
 
 	public static function getServerIcon($base64) {
@@ -68,12 +68,15 @@ class Uploader {
 
 		return null;
 	}
-
+	public static function output($str) {
+		echo $str;
+		exit;
+	}
 	public static function error($str) {
 		if ($str === "Unauthorized") {
 			header("HTTP/1.1 401 Unauthorized", 401);
 		} else {
-			header("HTTP/1.1 400 Bad Request", 400);
+			header("HTTP/1.1 400 $str", 400);
 		}
 		echo $str;
 		exit;
