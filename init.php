@@ -23,7 +23,7 @@ header("Content-Type: text/html");
 define('TIMINGS_ENV', $ini["environment"]);
 define('MAX_CACHE_BYTES', 1024 * 512);
 
-if ($ini['trusted_ip'] === $_SERVER['REMOTE_ADDR']) {
+if ($ini['trusted_ip'] === $_SERVER['REMOTE_ADDR'] || gethostbyname("aikarip") === $_SERVER['REMOTE_ADDR']) {
 	error_reporting(E_ALL & ~E_NOTICE);
 	ini_set('display_errors', true);
 }
@@ -36,7 +36,7 @@ if (TIMINGS_ENV === 'dev') {
 	define('BASE_URL_VIEW', $ini["base_url_view_prod"]);
 }
 require_once 'vendor/autoload.php';
-require_once "lib/Util.php";
+require_once "lib/util.php";
 // To make it a little harder to try to exploit the uploader, implement a closed source version
 // of the security class if it exists, else fall back to the simple rules.
 if (!empty($ini['custom_security'])) {

@@ -38,7 +38,7 @@ class Uploader {
 		} else {
 
 		}
-		$key = Util::uuid(false);
+		$key = util::uuid(false);
 
 		$cacheFile = Cache::getFile($key);
 		Log::info("Uploaded $uncompressedSize bytes as $key to $cacheFile");

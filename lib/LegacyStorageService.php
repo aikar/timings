@@ -21,6 +21,6 @@ class LegacyStorageService extends StorageService {
 		} else {
 		}
 
-		return Util::sanitize($data);
+		return util::sanitize($data);
 	}
 }

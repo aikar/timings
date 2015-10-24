@@ -27,7 +27,7 @@ trait FromJson {
 		$ref = new \ReflectionClass($class);
 		$props = $ref->getProperties(\ReflectionProperty::IS_PUBLIC);
 
-		if (Util::has_trait($class, 'Starlis\Timings\Singleton')) {
+		if (util::has_trait($class, 'Starlis\Timings\Singleton')) {
 			/** @noinspection PhpUndefinedMethodInspection */
 			$obj = self::getInstance();
 		} else {
@@ -41,7 +41,7 @@ trait FromJson {
 				$cb = __CLASS__ . "::$cb";
 			}
 			if (false === strpos($cb, "\\")) {
-				$cb = Util::getNamespace(__CLASS__) . "\\$cb";
+				$cb = util::getNamespace(__CLASS__) . "\\$cb";
 			}
 			$cb = explode("::", $cb, 2);
 			$rootData = call_user_func($cb, $rootData, $parentObj);
@@ -92,7 +92,7 @@ trait FromJson {
 									$cb = __CLASS__ . "::$cb";;
 								}
 								if (false === strpos($cb, "\\")) {
-									$cb = Util::getNamespace(__CLASS__) . "\\$cb";
+									$cb = util::getNamespace(__CLASS__) . "\\$cb";
 								}
 								$cb = explode("::", $cb, 2);
 								$keyName = call_user_func($cb, $keyName, $thisData, $parent);
@@ -128,7 +128,7 @@ trait FromJson {
 		if ($parent->comment && preg_match('/@var\s+([\w_]+)(\[.*?\])?/', $parent->comment, $matches)) {
 			$className = $matches[1];
 			if (strpos($className, "\\") === false) {
-				$className = Util::getNamespace(__CLASS__) . "\\$className";
+				$className = util::getNamespace(__CLASS__) . "\\$className";
 			}
 		}
 
@@ -138,14 +138,14 @@ trait FromJson {
 				$cb = __CLASS__ . "::$cb";;
 			}
 			if (strpos($cb, "\\") === false) {
-				$cb = Util::getNamespace(__CLASS__) . "\\$cb";
+				$cb = util::getNamespace(__CLASS__) . "\\$cb";
 			}
 			$cb = explode("::", $cb, 2);
 			$data = call_user_func($cb, $data, $parent);
-		} else if ($className && Util::has_trait($className, __TRAIT__)) {
+		} else if ($className && util::has_trait($className, __TRAIT__)) {
 			$data = call_user_func("$className::createObject", $data, $parent);
 		} else if (!is_scalar($data)) {
-			$data = Util::flattenObject($data);
+			$data = util::flattenObject($data);
 		}
 
 		return $data;

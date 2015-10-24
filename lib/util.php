@@ -10,7 +10,7 @@
  */
 namespace Starlis\Timings;
 
-class Util {
+class util extends \utilphp\util {
 	public static function sanitize($inp) {
 		return htmlentities(strip_tags($inp));
 	}
@@ -34,7 +34,7 @@ class Util {
 			$suffix = '</span>';
 		}
 
-		return $prefix . pad(number_format($num, 2) . '%', $pad) . $suffix;
+		return $prefix . \pad(number_format($num, 2) . '%', $pad) . $suffix;
 	}
 
 	public static function pad($string, $len, $right = false) {
@@ -165,7 +165,7 @@ class Util {
 		return htmlentities($server);
 	}
 	public static function mccolor($str) {
-		$input = nl2br(str_replace('&sect;', '§', $str));
+		$input = nl2br(str_replace('&sect;', '§', str_replace('\\n', "\n", $str)));
 		$input = preg_replace("/§([0-9lmnora-f])+/", '|#§#|§$1', $input);
 		$array = explode('|#§#|', $input);
 

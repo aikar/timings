@@ -47,7 +47,7 @@ class Timings {
 			global $ini;
 			$id = $ini["dev_id"]; // DEV test
 		}
-		$id = Util::sanitizeHex($id);
+		$id = util::sanitizeHex($id);
 		$this->id = $id;
 		$this->storage = $storage;
 

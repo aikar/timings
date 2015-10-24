@@ -32,7 +32,7 @@ if ($activatedEntityTicks && $numTicks) {
 	if ($totalAvgEntities > 800 && $activatedPercent > .70) {
 		$highEntityTick = true;
 	}
-	$activatedPercent = Util::pct($activatedPercent, 1, 5, 75, 60, 50);
+	$activatedPercent = util::pct($activatedPercent, 1, 5, 75, 60, 50);
 	echo number_format($activatedAvgEntities, 2);
 	echo ' / ';
 	echo number_format($totalAvgEntities, 2);
