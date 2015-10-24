@@ -37,6 +37,7 @@ class Template {
 		global $ini;
 		$timings = Timings::getInstance();
 		$timings->loadData();
+
 		$data = TimingsMaster::getInstance();
 
 		$tpl = self::getInstance();
@@ -80,6 +81,7 @@ class Template {
 		$masterHandler = null;
 
 		$max = 0;
+		$areaMap = [];
 		foreach ($data->data as $history) {
 			$tileEntities = 0;
 			$entities = 0;
@@ -87,6 +89,27 @@ class Template {
 			$players = 0;
 			foreach ($history->worldData as $world) {
 				foreach ($world->chunks as $chunk) {
+					$areaId = $chunk->areaId;
+					if (!array_key_exists($areaId, $areaMap)) {
+						$areaMap[$areaId] = [
+							"count" => 0,
+							"x" => $chunk->areaLocX,
+							"z" => $chunk->areaLocZ,
+							"e" => [],
+							"ec" => 0,
+							"te" => [],
+							"tec" => 0,
+						];
+					}
+					$areaMap[$areaId]['count']++;
+					foreach ($chunk->tileEntities as $id => $count) {
+						$areaMap[$areaId]['te'][$id] += $count;
+						$areaMap[$areaId]['tec'] += $count;
+					}
+					foreach ($chunk->entities as $id => $count) {
+						$areaMap[$areaId]['e'][$id] += $count;
+						$areaMap[$areaId]['ec'] += $count;
+					}
 					$chunks++;
 				}
 			}
@@ -116,13 +139,13 @@ class Template {
 			if ($history->start >= $start && $history->end <= $end) {
 				foreach ($history->handlers as $handler) {
 					$id = $handler->id->id;
-					if (!isset($handlerData[$id])) {
+					if (!array_key_exists($id, $handlerData)) {
 						$handlerData[$id] = clone $handler;
 						$handlerData[$id]->mergedCount = 1;
 					} else {
 						$handlerData[$id]->addDataFromHandler($handler);
 					}
-					if ($handler->id->name == "Full Server Tick") {
+					if ($handler->id->name === "Full Server Tick") {
 						$masterHandler = $handlerData[$id];
 					}
 				}
