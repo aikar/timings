@@ -12,6 +12,7 @@ namespace Starlis\Timings\Json;
 
 use Starlis\Timings\FromJson;
 use Starlis\Timings\FromJsonParent;
+use Starlis\Timings\util;
 
 class Chunk {
 	use FromJson;
@@ -56,7 +57,23 @@ class Chunk {
 	 */
 	public $entities;
 
+	/**
+	 * @index Chunk::calculateChunkId
+	 * @var string
+	 */
+	public $chunkId;
+
+
 	public static function chunkToBlock($i) {
 		return $i << 4;
+	}
+
+	/**
+	 * @param $chunk Chunk
+	 *
+	 * @return string
+	 */
+	public static function calculateChunkId($chunk) {
+		return $chunk->chunkX . ":" . $chunk->chunkZ;
 	}
 }
