@@ -20,7 +20,7 @@ if (file_exists("config.dev.ini")) {
 	$ini = array_merge($ini, parse_ini_file("config.dev.ini", true));
 }
 header("Content-Type: text/html");
-define('TIMINGS_ENV', $ini["environment"]);
+define('TIMINGS_ENV', basename(__DIR__) == 'prod' ? 'prod' : $ini["environment"]);
 define('MAX_CACHE_BYTES', 1024 * 512);
 
 if ($ini['trusted_ip'] === $_SERVER['REMOTE_ADDR'] || gethostbyname("aikarip") === $_SERVER['REMOTE_ADDR']) {
