@@ -2,6 +2,7 @@
 use Starlis\Timings\Json\TimingHandler;
 use Starlis\Timings\Json\TimingsMaster;
 use Starlis\Timings\Template;
+use Starlis\Timings\util;
 
 /**
  * @var TimingsMaster $timingsData
@@ -45,7 +46,7 @@ function printRecord($l) {
 
 	$total = (int) (LAG_ONLY ? $l->lagTotal : $l->total);
 	$count = (int) (LAG_ONLY ? $l->lagCount : $l->count);
-	if ($count === 0 || $lagTicks === 0) {
+	if ($count === 0 || (LAG_ONLY && $lagTicks === 0)) {
 		return;
 	}
 
@@ -114,13 +115,14 @@ function printRows($lag, $level) {
 	global $processMap;
 	$tpl = Template::getInstance();
 	foreach ($lag as $l) {
-		if ($l->lagTotal < 500000 && !empty($_GET['nofilter'])) {
+		if (($l->total < 500000 || (LAG_ONLY && $l->lagTotal < 500000))
+			&& empty(util::array_get($_GET['nofilter']))) {
 			continue;
 		}
 
 		$lagTicks = (int) $tpl->masterHandler->lagCount;
 		$count = (int) (LAG_ONLY ? $l->lagCount : $l->count);
-		if ($count === 0 || $lagTicks === 0) {
+		if ($count === 0 || (LAG_ONLY && $lagTicks === 0)) {
 			continue;
 		}
 		openRow($level, $l);
