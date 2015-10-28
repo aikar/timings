@@ -145,12 +145,14 @@ class Template {
 					} else {
 						$handlerData[$id]->addDataFromHandler($handler);
 					}
-					if ($handler->id->name === "Full Server Tick") {
+					if ($handler->id->name === "Full Server Tick" && $masterHandler === null) {
 						$masterHandler = $handlerData[$id];
 					}
 				}
 			}
 		}
+
+		if (DEBUGGING && util::array_get($_GET['showmaster'])) util::var_dump($masterHandler);
 
 		$tpl->handlerData = $handlerData;
 		$tpl->js['stamps'] = $timestamps;
