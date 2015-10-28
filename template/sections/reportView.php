@@ -160,10 +160,10 @@ function lagFilter($e) {
 	$count = LAG_ONLY ? $e->lagCount : $e->count;
 	$total = LAG_ONLY ? $e->lagTotal : $e->total;
 	if ($count > 0) {
-		$e->avg = ($total / $count) * $e->mergedCount;
+		//$e->avg = ($total / $count) * $e->mergedCount;
 	}
 
-	return $total > 10 && $e->avg > 20000;
+	return $total > 5 && $e->avg > 2000;
 }
 
 function lagSort($a, $b) {

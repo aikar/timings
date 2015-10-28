@@ -17,7 +17,7 @@ $system = $timingsData->system;
 	<span>MOTD: <b><?=util::mccolor(util::esc($timingsData->motd))?></b></span><br />
 	<span>Version: <b><?=util::esc($timingsData->version)?></b></span><br />
 	<span title="OS: <?=util::esc("{$system->name} {$system->version} {$system->arch} CPU: {$system->cpu}")?>">
-		Uptime: <b><?=util::esc(round($system->runtime / 60 / 60, 2))?>hr</b> -
+		Uptime: <b><?=util::esc(round($system->runtime / 60 / 60 / 1000, 2))?>hr</b> -
 		Memory: <b><?=util::esc($system->maxmem / 1024 / 1024)?>MB</b>
 	</span>
 </div>
