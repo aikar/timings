@@ -23,6 +23,7 @@ foreach ($timingsData->data as $data) {
 
 global $section;
 define('LAG_ONLY', $section === 'lag');
+define('NOFILTER', !empty(util::array_get($_GET['nofilter'])));
 //http://timings.aikar.co/dev/?id=2a72cf2099e0439780c91e64abadcf7d&start=1436841958&end=1436843422
 $lag = $tpl->masterHandler->children;
 
@@ -115,8 +116,8 @@ function printRows($lag, $level) {
 	global $processMap;
 	$tpl = Template::getInstance();
 	foreach ($lag as $l) {
-		if (($l->total < 500000 || (LAG_ONLY && $l->lagTotal < 500000))
-			&& empty(util::array_get($_GET['nofilter']))) {
+
+		if (($l->total < 500000 || (LAG_ONLY && $l->lagTotal < 500000)) && !NOFILTER) {
 			continue;
 		}
 
@@ -131,7 +132,11 @@ function printRows($lag, $level) {
 		$h = $tpl->handlerData[$id];
 
 		if (!empty($h->children) && ++$processMap[$id] == 1) {
-			$children = array_filter($h->children, 'lagFilter');
+			if (!NOFILTER) {
+				$children = array_filter($h->children, 'lagFilter');
+			} else {
+				$children = $h->children;
+			}
 			if (!empty($children)) {
 				$children = array_map(function($v) {
 					$tpl = Template::getInstance();
