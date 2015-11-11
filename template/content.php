@@ -28,6 +28,9 @@ if (!$section) $section = 'lag';
 			<li class="tab-title ui-state-default ui-corner-top <?=$section=="all"?' ui-tabs-active ui-state-active':''?>">
 				<a href="<?=util::buildurl(['section'=>'all'])?>" class="tab ui-tabs-anchor" role="tab" aria-controls="tabs-all">All View</a>
 			</li>
+                        <li class="tab-title ui-state-default ui-corner-top <?=$section=="plugins"?' ui-tabs-active ui-state-active':''?>">
+				<a href="<?=util::buildurl(['section'=>'plugins'])?>" class="tab ui-tabs-anchor" role="tab" aria-controls="tabs-all">All View</a>
+			</li>
 		</ul>
 
 
@@ -37,6 +40,9 @@ if (!$section) $section = 'lag';
 		case "chunks":
 			require_once "sections/chunks.php";
 			break;
+                case "plugins":
+                        require_once "sections/pluginView.php";
+                        break;
 		case "lag":
 		case "all":
 		default:
