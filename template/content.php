@@ -29,7 +29,7 @@ if (!$section) $section = 'lag';
 				<a href="<?=util::buildurl(['section'=>'all'])?>" class="tab ui-tabs-anchor" role="tab" aria-controls="tabs-all">All View</a>
 			</li>
                         <li class="tab-title ui-state-default ui-corner-top <?=$section=="plugins"?' ui-tabs-active ui-state-active':''?>">
-				<a href="<?=util::buildurl(['section'=>'plugins'])?>" class="tab ui-tabs-anchor" role="tab" aria-controls="tabs-all">All View</a>
+				<a href="<?=util::buildurl(['section'=>'plugins'])?>" class="tab ui-tabs-anchor" role="tab" aria-controls="tabs-all">Plugin View</a>
 			</li>
 		</ul>
 
