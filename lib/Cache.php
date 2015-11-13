@@ -80,6 +80,6 @@ class Cache {
 		$key = preg_replace('/[^a-zA-Z0-9-_]/ms', '', $key);
 
 		global $ini;
-		return $ini["tmp_path"] . "${type}_${key}.gz";
+		return $ini["tmp_path"] . "/${type}_${key}.gz";
 	}
 }
