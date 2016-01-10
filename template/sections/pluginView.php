@@ -6,20 +6,12 @@
  * @license MIT
  */
 
-use Starlis\Timings\Json\TimingHandler;
 use Starlis\Timings\Json\TimingsMaster;
-use Starlis\Timings\Template;
-use Starlis\Timings\util;
 
 /**
  * @var TimingsMaster $timingsData
  */
 $timingsData = TimingsMaster::getInstance();
-
-echo '<pre>';
-echo "Timings cost: $cost - " . ($cost * $totalTimings) . " - Pct: "
- . round(((($cost * $totalTimings) / ($timingsData->sampletime * 1000000000 / 100))), 2);
-echo "%</pre>\n";
 
 echo '<h5>Installed Plugins:</h5>'."\n";
 
@@ -27,14 +19,7 @@ $plugins = $timingsData->plugins;
 
 printRows($plugins);
 
-/**
- * @param $depth
- * @param TimingHandler $l
- *
- * @return string
- */
 function openRow($depth, $id) {
-    static $i;
     $num = $depth % 5;
     $indents = "<div class='indent depth{$num} full-depth${depth}'></div>";
     echo "<div class='full-timing-row'>$indents<div id='$id' class='timing-row'><a href='#$id'># </a>";
