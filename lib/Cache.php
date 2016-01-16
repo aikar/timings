@@ -25,6 +25,9 @@ class Cache {
 	 */
 	public static function get($key, $type = 'timings') {
 		$file = self::getFile($key, $type);
+		if (!file_exists($file)) {
+			$file = self::getFile($key, $type, ROOT_DIR);
+		}
 		if (file_exists($file)) {
 			touch($file);
 
@@ -80,10 +83,13 @@ class Cache {
 	 *
 	 * @return string
 	 */
-	public static function getFile($key, $type = 'timings') {
+	public static function getFile($key, $type = 'timings', $dir = null) {
 		$key = preg_replace('/[^a-zA-Z0-9-_]/ms', '', $key);
 
 		global $ini;
-		return $ini["tmp_path"] . "/${type}_${key}.gz";
+		if (\is_null($dir)) {
+			$dir = $ini["tmp_path"];
+		}
+		return $dir . "/${type}_${key}.gz";
 	}
 }

@@ -11,7 +11,7 @@
 namespace Starlis\Timings;
 
 chdir(__DIR__);
-
+define('ROOT_DIR', __DIR__);
 // Get configuration first
 global $ini;
 
