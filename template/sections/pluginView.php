@@ -19,7 +19,14 @@ $plugins = $timingsData->plugins;
 
 printRows($plugins);
 
+/**
+ * @param $depth
+ * @param TimingHandler $l
+ *
+ * @return string
+ */
 function openRow($depth, $id) {
+    static $i;
     $num = $depth % 5;
     $indents = "<div class='indent depth{$num} full-depth${depth}'></div>";
     echo "<div class='full-timing-row'>$indents<div id='$id' class='timing-row'><a href='#$id'># </a>";
