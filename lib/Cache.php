@@ -1,13 +1,17 @@
 <?php
-/*
- * Aikar's Minecraft Timings Parser
+/**
+ * Copyright (c) (2016) - Aikar's Minecraft Timings Parser
  *
- * Written by Aikar <aikar@aikar.co>
- * http://aikar.co
- * http://starlis.com
+ *  Written by Aikar <aikar@aikar.co>
+ *    + Contributors (See AUTHORS)
  *
- * @license MIT
+ *  http://aikar.co
+ *  http://starlis.com
+ *
+ *  @license MIT
+ *
  */
+
 namespace Starlis\Timings;
 
 class Cache {
