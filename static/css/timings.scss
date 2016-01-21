@@ -22,6 +22,7 @@ body {
 	height: 100%;
 	background: url("../img/bg.png");
 	color: #c7c7c7;
+	font-size: 1em;
 }
 
 pre, textarea {
@@ -56,7 +57,11 @@ hr {
 /*<a href='#$id'>#</a><span class='name'>$name</span> - count(<span class='count'>$count</span>) -
 		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>) -
 		avg(<span class='avgMs'>{$avg}ms</span> - <span class='tickAvgMs'>{$tickAvg}ms</span>)*/
+body #content * {
+	font-size: 1em;
+}
 .timing-row {
+
 	display: table-cell;
 	width: 100%;
 	.name {
