@@ -134,7 +134,9 @@ module.exports = function Command(commandTemplate, opts) {
 			// Write the buffered output to stdout
 			var logContents = logStream.read();
 			if (logContents !== null) process.stdout.write(logContents);
+		});
 
+		subshell.once('exit', function(code) {
 			// Report an error if the command exited with a non-zero exit code.
 			if (code !== 0) {
 				var errmsg = util.format(
@@ -146,9 +148,8 @@ module.exports = function Command(commandTemplate, opts) {
 				err.status = code;
 				return callback(err);
 			}
-
 			callback(null);
-		});
+	});
 
 		// The file wrapping stdout is as the one wrapping stdin (same metadata)
 		// with different contents.

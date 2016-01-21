@@ -1,5 +1,0 @@
-/*# This comment will strip! */
-.foo {
-  color: black;
-}
-/*# sourceMappingURL=this.comment.will.strip.depending.on.postcss.map.option */
