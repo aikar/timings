@@ -21,8 +21,10 @@ foreach ($timingsData->data as $data) {
 	}
 }
 
-global $section;
+global $section, $propTotal, $propCount;
 define('LAG_ONLY', $section === 'lag');
+$propTotal = LAG_ONLY ? 'lagTotal' : 'total';
+$propCount = LAG_ONLY ? 'lagCount' : 'count';
 define('NOFILTER', !empty(util::array_get($_GET['nofilter'])));
 //http://timings.aikar.co/dev/?id=2a72cf2099e0439780c91e64abadcf7d&start=1436841958&end=1436843422
 $lag = $tpl->masterHandler->children;
@@ -38,37 +40,42 @@ echo "Timings cost: $cost - " . ($cost * $totalTimings) . " - Pct: "
 echo '</pre>';
 
 function printRecord($l) {
+	global $propCount, $propTotal;
 	$tpl = Template::getInstance();
-	$lagTicks = (int) $tpl->masterHandler->lagCount;
-	$ticks = $tpl->masterHandler->count;
-	$totalTime = $tpl->masterHandler->total;
-	$lagTotalTime = $tpl->masterHandler->lagTotal;
+	$totalTicks = $tpl->masterHandler->{$propCount};
+	$totalTime = $tpl->masterHandler->{$propTotal};
 
 
-	$total = (int) (LAG_ONLY ? $l->lagTotal : $l->total);
-	$count = (int) (LAG_ONLY ? $l->lagCount : $l->count);
-	if ($count === 0 || (LAG_ONLY && $lagTicks === 0)) {
+	$total = (int) $l->{$propTotal};
+	$count = (int) $l->{$propCount};
+	if ($count === 0) {
 		return;
 	}
 
 	$avg = round(($total / $count) / 1000000, 4);
-	$tickAvg = round($avg * ($count / (LAG_ONLY ? $lagTicks : $ticks)), 4);
-	$tickAvg = lagView($tickAvg);
+	$tickAvg = round($avg * ($count / $totalTicks), 4);
 
-	$totalPct = round($total / (LAG_ONLY ? $lagTotalTime : $totalTime) * 100, 2);
+
+	$totalPct = round(($total / $totalTime) * 100, 2);
 	if ($l->id->name === "Full Server Tick") { // always 100%
-		$totalPct = lagView($totalPct, 200, 200, 200, 200);
+		$totalPct = pctView($totalPct, 200, 200, 200, 200);
+		$pctOfTick = pctView($tickAvg / 50 * 100, 90, 80, 75, 70);
 	} else {
-		$totalPct = lagView($totalPct, 25, 15, 7, 3);
+		$totalPct = pctView($totalPct, 25, 15, 7, 3);
+		$pctOfTick = pctView($tickAvg / 50 * 100, 50, 30, 20, 10);
 	}
-	$avg = lagView($avg);
+	$avgCountTick = number_format($count / $totalTicks, 2);
+
+	$tickAvg = pctView($tickAvg);
+	$avg = pctView($avg);
 	$name = cleanName($l->id);
 	$total = round($total / 1000000000, 3);
 
+
 	echo "
-		<span class='name'>$name</span> - count(<span class='count'>$count</span>) -
-		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>) -
-		avg(<span class='avgMs'>{$avg}ms</span> - <span class='tickAvgMs'>{$tickAvg}ms</span>)
+		<span class='name' style>$name</span> - count(<span class='count'>$count</span>) -
+		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>, {$pctOfTick}% of tick) -
+		avg(<span class='avgMs'>{$avg}ms</span> per - <span class='tickAvgMs'>{$tickAvg}ms/$avgCountTick per tick</span>)
 		\n";
 }
 
@@ -172,17 +179,21 @@ function lagSort($a, $b) {
 	$total = LAG_ONLY ? 'lagTotal' : 'total';
 	return $a->$total > $b->$total ? -1 : 1;
 }
-
-function lagView($tickAvg, $t1 = 25, $t2 = 15, $t3 = 5, $t4 = 1) {
-	if ($tickAvg > $t1) {
-		$tickAvg = "<span style='color:red'>$tickAvg</span>";
-	} else if ($tickAvg > $t2) {
-		$tickAvg = "<span style='color:orange'>$tickAvg</span>";
-	} else if ($tickAvg > $t3) {
-		$tickAvg = "<span style='color:yellow'>$tickAvg</span>";
-	} else if ($tickAvg > $t4) {
-		$tickAvg = "<span style='color:white'>$tickAvg</span>";
+function pctView($val, $t1 = 25, $t2 = 15, $t3 = 5, $t4 = 1) {
+	return pctViewMod($val, 1, $t1, $t2, $t3, $t4);
+}
+function pctViewMod($val, $mod = 1, $t1 = 25, $t2 = 15, $t3 = 5, $t4 = 1) {
+	$valnum = number_format($val, 2);
+	$val *= $mod;
+	if ($val > $t1) {
+		$valnum = "<span style='color:red'>$valnum</span>";
+	} else if ($val > $t2) {
+		$valnum = "<span style='color:orange'>$valnum</span>";
+	} else if ($val > $t3) {
+		$valnum = "<span style='color:yellow'>$valnum</span>";
+	} else if ($val > $t4) {
+		$valnum = "<span style='color:white'>$valnum</span>";
 	}
 
-	return $tickAvg;
+	return $valnum;
 }
