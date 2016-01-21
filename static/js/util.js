@@ -56,17 +56,17 @@ function showInfo(btn) {
 	$("#info-" + $(btn).attr('info')).dialog({width: "80%", modal: true});
 }
 
-function expandTimings($parent) {
-	$parent.find('> .children').first().show();
-	var $c = $parent.find(' > .expand-control').first()
-	$c.unbind('click');
-	$c.html('[-]');
-	$c.bind('click', collapseTimings.bind(this, $parent));
-}
-function collapseTimings($parent) {
-	$parent.find('> .children').first().hide();
-	var $c = $parent.find(' > .expand-control').first();
-	$c.unbind('click');
-	$c.html('[+]');
-	$c.bind('click', expandTimings.bind(this, $parent));
+function toggleTimings($parent) {
+	var $c = $parent.find('> .row-wrap > .expand-control').first();
+	if ($parent.data('shown')) {
+		$parent.find('> .children').first().hide();
+		$parent.data('shown', 0);
+		$parent.addClass('show-children');
+		$c.html('[+]');
+	} else {
+		$parent.find('> .children').first().show();
+		$parent.data('shown', 1);
+		$parent.removeClass('show-children');
+		$c.html('[-]');
+	}
 }

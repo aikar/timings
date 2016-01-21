@@ -194,10 +194,11 @@ function initializeCollapseControls() {
 	$timingChildren.each(function () {
 		var $this = $(this);
 		var $parent = $this.parent();
-		$parent.find('.name').first().before("<div class='expand-control'>[+]</div> ");
+		$parent.find('> .row-wrap > .name').first().before("<div class='expand-control'>[+]</div> ");
 
-		var $control = $parent.find('.expand-control').first();
-		$control.bind("click", expandTimings.bind($this, $parent));
+		var $control = $parent.find('> .row-wrap > .expand-control').first();
+		$parent.find('> .row-wrap').bind("click", toggleTimings.bind($this, $parent));
+		$control.bind("click", toggleTimings.bind($this, $parent));
 	});
 }
 
@@ -212,7 +213,7 @@ function checkHashLoc() {
 	if (!el || !el.length) {
 		return;
 	}
-	expandTimings(el);
+	toggleTimings(el);
 
 	do {
 		for (var i = 0; i < 3; i++) {
@@ -220,8 +221,8 @@ function checkHashLoc() {
 				el = el.parent();
 			}
 		}
-		if (el && el.find('.expand-control').length) {
-			expandTimings(el);
+		if (el && el.find('> .row-wrap > .expand-control').length) {
+			toggleTimings(el);
 		} else {
 			break;
 		}
