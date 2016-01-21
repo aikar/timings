@@ -16,6 +16,7 @@ The main thing holding up Timings v2 in Spigot is this Web UI for it! I don't ha
 Current Active Contributors:
   - Aikar (Main of course)
   - DemonWav
+  - willies952002
 
 Want to contribute? Contact me on Spigot IRC, and let me know what your interested in working on so we don't have people working on the same thing.
 Were considering movin the rendering aspect of the system to be done purely in JS so that may change soon.

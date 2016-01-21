@@ -34,7 +34,7 @@ class util extends \utilphp\util {
 			$suffix = '</span>';
 		}
 
-		return $prefix . \pad(number_format($num, 2) . '%', $pad) . $suffix;
+		return $prefix . self::pad(number_format($num, 2) . '%', $pad) . $suffix;
 	}
 
 	public static function pad($string, $len, $right = false) {
