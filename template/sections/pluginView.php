@@ -6,20 +6,12 @@
  * @license MIT
  */
 
-use Starlis\Timings\Json\TimingHandler;
 use Starlis\Timings\Json\TimingsMaster;
-use Starlis\Timings\Template;
-use Starlis\Timings\util;
 
 /**
  * @var TimingsMaster $timingsData
  */
 $timingsData = TimingsMaster::getInstance();
-
-echo '<pre>';
-echo "Timings cost: $cost - " . ($cost * $totalTimings) . " - Pct: "
- . round(((($cost * $totalTimings) / ($timingsData->sampletime * 1000000000 / 100))), 2);
-echo "%</pre>\n";
 
 echo '<h5>Installed Plugins:</h5>'."\n";
 
