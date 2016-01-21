@@ -9,6 +9,7 @@
  * @license MIT
  */
 namespace Starlis\Timings;
+global $section;
 $section = @$_GET['section'];
 if (!$section) $section = 'lag';
 

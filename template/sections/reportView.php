@@ -111,6 +111,7 @@ function condensePackage($v) {
 	$name[] = $last;
 	return 'Event: ' .implode('.', $name).' ';
 }
+
 $processMap = [];
 function printRows($lag, $level) {
 	global $processMap;
