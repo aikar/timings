@@ -46,7 +46,7 @@ Of course, this package can be used as PostCSS plugin:
     
     var css = fs.readFileSync("test.css", "utf8");
     postcss([
-      require("autoprefixer-core")(),
+      require("autoprefixer")(),
       require("csswring")()
     ]).process(css).then(function (result) {
       fs.writeFileSync("test.min.css", result.css);
