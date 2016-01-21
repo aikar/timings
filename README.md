@@ -14,12 +14,14 @@ Contributing
 The main thing holding up Timings v2 in Spigot is this Web UI for it! I don't have time to focus on it, so any help to get it close to usable for general public would be appreciated!
 
 Current Active Contributors:
-  - Aikar (Main of course)
+  - Aikar - Project Owner
   - DemonWav
   - willies952002
 
-Want to contribute? Contact me on Spigot IRC, and let me know what your interested in working on so we don't have people working on the same thing.
-Were considering movin the rendering aspect of the system to be done purely in JS so that may change soon.
+Want to contribute? Join #aikar Spigot IRC ([join here](https://irc.spi.gt/iris/?channels=#aikar)), 
+and let me know what your interested in working on so we don't have people working on the same thing.
+
+We're currently in the middle of migrating the JS code to Dart. So hold off before working on any JS code.
 
 Setting Up Environment
 =====
