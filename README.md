@@ -2,11 +2,12 @@ Aikar's Minecraft Timings Viewer
 =======
 
 This is the system behind <http://timings.aikar.co/> that processes timing reports.
-This code base is primarily targeting Timings v2, currently in development for Spigot.
+This code base is primarily targeting Timings v2, currently released for PaperSpigot and SpongeForge.
+
+It is unknown when it will be added to Spigot, so we suggest moving to PaperSpigot! [Learn More and Get PaperSpigot here](https://paper.readthedocs.org/en/paper-1.8/)
 
 If you can think of something to improve the system please feel free to PR it.
-
-This project intends to support Sponge in the future too, or any project implementing the "Aikar Timings System" starting with v2. 
+ 
 
 Contributing
 ======
@@ -34,10 +35,25 @@ Windows and Mac users may need to "npm rebuild" but i'm unsure if the binary bas
 To compile static resources and monitor them for changes, simply run `gulp` and control + c to abort watching.
 Gulp will monitor all files for changes and recompile the css/js for you.
 
+An initial debug data file is included in the project that will automatically load for dev environments.
+
+You may create config.dev.ini to override config options like so:
+
+>trusted_ip="10.0.1.100"  
+>custom_security="../security/security.php"  
+>dev_id=ae6cfe033ca541f39a0fc52c3b51b2e1
+
 
 Timings File Format
 ======
-This file format is still subject to rapid change, so please do not try to parse any preview I've given for production use!
+The timings v2 file format is not designed for public use. It is highly condensed and meant to be specially known how to parse it.
+
+While the overall structure of the file is now done, we are still planning future additions to the data dump.
+
+We ask that instead of trying to parse this file for your needs, to instead PR the change to this project instead so
+everyone can benefit from it.
+
+This file format is proprietary and may change without notice. 
 
 License
 ======
