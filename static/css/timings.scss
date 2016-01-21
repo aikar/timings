@@ -58,12 +58,30 @@ hr {
 		avg(<span class='avgMs'>{$avg}ms</span> - <span class='tickAvgMs'>{$tickAvg}ms</span>)*/
 .timing-row {
 	display: table-cell;
+	width: 100%;
 	.name {
+		display: inline-block;
 		color: lightseagreen;
+
+	}
+	.name, .expand-control, > a {
+		float: left;
+	}
+	.row-info, .row-info-total, .row-info-avg {
+		float:right;
+		display:inline-block;
+		max-width: 850px;
 	}
 	.count, .totalPct, .totalTime, .avgMs, .tickAvgMs {
 		color: white;
 	}
+}
+.row-info-avg {
+	min-width: 350px;
+	text-align: right;
+}
+.row-info-total {
+	margin: auto 20px;
 }
 
 .full-timing-row {
@@ -91,12 +109,15 @@ hr {
 
 .full-timing-row .children {
 	display: none;
+	clear:both;
+	width: 100%;
 }
 
 .expand-control {
 	cursor: pointer;
 	display: inline-block;
 	color: lightblue;
+	padding: 0 6px;
 }
 
 .server-name {

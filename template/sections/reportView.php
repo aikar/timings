@@ -29,7 +29,16 @@ define('NOFILTER', !empty(util::array_get($_GET['nofilter'])));
 //http://timings.aikar.co/dev/?id=2a72cf2099e0439780c91e64abadcf7d&start=1436841958&end=1436843422
 $lag = $tpl->masterHandler->children;
 
+?>
+<div class="full-timing-row">
+	<div class="indent depth1 full-depth1"></div>
+	<div class="timing-row">
+<?php
 printRecord($tpl->masterHandler);
+?>
+	</div>
+</div>
+<?php
 usort($lag, 'lagSort');
 printRows($lag, 1);
 
@@ -73,9 +82,16 @@ function printRecord($l) {
 
 
 	echo "
-		<span class='name' style>$name</span> - count(<span class='count'>$count</span>) -
-		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>, {$pctOfTick}% of tick) -
+		<div class='name' style>$name</div>
+
+		<div class='row-info-avg'>
 		avg(<span class='avgMs'>{$avg}ms</span> per - <span class='tickAvgMs'>{$tickAvg}ms/$avgCountTick per tick</span>)
+		</div>
+
+		<div class='row-info-total'>- count(<span class='count'>$count</span>) -
+		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>, <span class='pctOfTick'>{$pctOfTick}% of tick</span>)
+		</div>
+
 		\n";
 }
 
