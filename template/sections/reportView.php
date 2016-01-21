@@ -82,6 +82,7 @@ function printRecord($l) {
 
 
 	echo "
+<div class='row-wrap'>
 		<div class='name' style>$name</div>
 
 		<div class='row-info-avg'>
@@ -91,7 +92,7 @@ function printRecord($l) {
 		<div class='row-info-total'>- count(<span class='count'>$count</span>) -
 		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>, <span class='pctOfTick'>{$pctOfTick}% of tick</span>)
 		</div>
-
+</div>
 		\n";
 }
 

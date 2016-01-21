@@ -194,9 +194,9 @@ function initializeCollapseControls() {
 	$timingChildren.each(function () {
 		var $this = $(this);
 		var $parent = $this.parent();
-		$parent.find(' > .name').first().before("<div class='expand-control'>[+]</div> ");
+		$parent.find('.name').first().before("<div class='expand-control'>[+]</div> ");
 
-		var $control = $parent.find(' > .expand-control').first();
+		var $control = $parent.find('.expand-control').first();
 		$control.bind("click", expandTimings.bind($this, $parent));
 	});
 }
@@ -220,13 +220,13 @@ function checkHashLoc() {
 				el = el.parent();
 			}
 		}
-		if (el && el.find('> .expand-control').length) {
+		if (el && el.find('.expand-control').length) {
 			expandTimings(el);
 		} else {
 			break;
 		}
 	} while (el);
 	$('html, body').animate({
-		scrollTop: $(hash).offset().top
+		scrollTop: $(hash).offset().top-45
 	}, 500);
 }

@@ -110,6 +110,12 @@ body #content * {
 	.depth4 {
 		border-left-color: #3ca24b;
 	}
+	.row-wrap {
+		overflow: hidden;
+	}
+	.row-wrap:hover {
+		background: #555;
+	}
 }
 
 .full-timing-row .children {
