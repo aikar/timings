@@ -70,7 +70,7 @@ function printRecord($l) {
 		$totalPct = pctView($totalPct, 200, 200, 200, 200);
 		$pctOfTick = pctView($tickAvg / 50 * 100, 90, 80, 75, 70);
 	} else {
-		$totalPct = pctView($totalPct, 25, 15, 7, 3);
+		$totalPct = pctViewMod($totalPct, $totalPct / ($tickAvg / 50 * 100), 50, 30, 20, 10);
 		$pctOfTick = pctView($tickAvg / 50 * 100, 50, 30, 20, 10);
 	}
 	$avgCountTick = number_format($count / $totalTicks, 2);
@@ -209,7 +209,7 @@ function pctViewMod($val, $mod = 1, $t1 = 25, $t2 = 15, $t3 = 5, $t4 = 1) {
 	} else if ($val > $t3) {
 		$valnum = "<span style='color:yellow'>$valnum</span>";
 	} else if ($val > $t4) {
-		$valnum = "<span style='color:white'>$valnum</span>";
+		$valnum = "<span style='color:#ccc'>$valnum</span>";
 	}
 
 	return $valnum;
