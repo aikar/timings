@@ -83,15 +83,19 @@ function printRecord($l) {
 
 	echo "
 <div class='row-wrap'>
-		<div class='name' style>$name</div>
+	<div class='name' style>$name</div>
+
+	<div class='row-info'>
+
+		<div class='row-info-total'>count(<span class='count'>$count</span>)
+		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>, <span class='pctOfTick'>{$pctOfTick}% of tick</span>)
+		</div>
 
 		<div class='row-info-avg'>
 		avg(<span class='avgMs'>{$avg}ms</span> per - <span class='tickAvgMs'>{$tickAvg}ms/$avgCountTick per tick</span>)
 		</div>
 
-		<div class='row-info-total'>- count(<span class='count'>$count</span>) -
-		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>, <span class='pctOfTick'>{$pctOfTick}% of tick</span>)
-		</div>
+	</div>
 </div>
 		\n";
 }

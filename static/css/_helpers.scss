@@ -7,8 +7,9 @@
  * @license MIT
  ******************************************************************************/
 
-$break-small: 400px;
+$break-small: 700px;
 $break-large: 1024px;
+$break-xlarge: 1381px;
 
 @mixin small-screen() {
 	@media only screen and (max-width: $break-small) {
@@ -24,6 +25,16 @@ $break-large: 1024px;
 
 @mixin large-screen() {
 	@media only screen and (min-width: $break-large) {
+		@content;
+	}
+}
+@mixin less-than-large-screen() {
+	@media only screen and (max-width: $break-large - 1) {
+		@content;
+	}
+}
+@mixin less-than-xlarge-screen() {
+	@media only screen and (max-width: $break-xlarge ) {
 		@content;
 	}
 }

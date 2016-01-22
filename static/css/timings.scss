@@ -67,26 +67,42 @@ body #content * {
 	.name {
 		display: inline-block;
 		color: lightseagreen;
+		max-width: 500px;
+		@include less-than-xlarge-screen {
+			max-width: 325px;
+		}
 
 	}
+
 	.name, .expand-control, > a {
 		float: left;
 	}
-	.row-info, .row-info-total, .row-info-avg {
+	.row-info {
 		float:right;
+	}
+	.row-info-avg {
+		min-width: 350px;
+		text-align: right;
+	}
+
+	.row-info-total {
+		margin: auto 20px;
+	}
+
+	.row-info, .row-info-total, .row-info-avg {
 		display:inline-block;
 		max-width: 850px;
+		@include small-screen {
+			display: block;
+			text-align: left;
+			min-width: inherit;
+			width: 100%;
+			margin: auto;
+		}
 	}
 	.count, .totalPct, .totalTime, .avgMs, .tickAvgMs {
 		color: white;
 	}
-}
-.row-info-avg {
-	min-width: 350px;
-	text-align: right;
-}
-.row-info-total {
-	margin: auto 20px;
 }
 
 .full-timing-row {
