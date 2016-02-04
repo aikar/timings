@@ -40,9 +40,8 @@ Template::getInstance()->loadData();
 			<span>This system has taken many weeks to develop. If it has helped you, consider donating :)</span>
 			<br/>
 
-			<p>Requires Spigot:
-				<a href="http://spigotmc.org" title="Spigot">spigotmc.org</a>.<br/>
-			</p>
+			<p>Requires <a href="http://paper.emc.gs" title="Paper Minecraft Server">Paper</a>
+				or <a href="https://www.spongepowered.org" title="Sponge Minecraft Server">Sponge</a></p>
 		</div>
 		<?php require_once "header-right.php"; ?>
 	</div>
