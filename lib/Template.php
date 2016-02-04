@@ -59,8 +59,8 @@ class Template {
 		$last = count($ranges) - 1;
 
 		$tpl->js['ranges'] = $ranges;
-		$defStart = (int) (!empty($ini['dev_def_start']) ? $ini['dev_def_start'] : $ranges[$last - 1]);
-		$defEnd = (int) (!empty($ini['dev_def_end']) ? $ini['dev_def_end'] : $ranges[$last]);
+		$defStart = (int) ($timings->id === $ini['dev_id'] && !empty($ini['dev_def_start']) ? $ini['dev_def_start'] : $ranges[0]);
+		$defEnd = (int) ($timings->id === $ini['dev_id'] && !empty($ini['dev_def_end']) ? $ini['dev_def_end'] : $ranges[$last]);
 
 		$tpl->js['start'] = $start = (int) (!empty($_GET['start']) ?  $_GET['start'] : $defStart);
 		$tpl->js['end'] = $end = (int) (!empty($_GET['end']) ? $_GET['end'] : $defEnd);
