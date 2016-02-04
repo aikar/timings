@@ -23,7 +23,7 @@ $jsvendorver = filemtime("static/dist/vendor.js");
 	<title>Aikar's Timings Viewer</title>
 	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.css"/>
 	<link rel="stylesheet" href="static/dist/timings.css?ver=<?=$cssver?>"/>
-	<meta name="robots" content="noindex">
+	<meta name="robots" content="noindex,nofollow">
 </head>
 <?php
 flush();
