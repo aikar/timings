@@ -12,3 +12,5 @@ static/.sass-cache
 
 config.dev.ini
 nbproject/
+
+/node_modules
