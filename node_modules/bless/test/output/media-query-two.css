@@ -1,9 +1,0 @@
-@import url('media-query-two-blessed1.css');
-
-@media print {
-    #test { color: #090; }
-    p {
-        font-weight: bold;
-        text-decoration: underline;
-    }
-}
