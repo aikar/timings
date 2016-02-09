@@ -52,6 +52,10 @@ function printRecord($l) {
 	global $propCount, $propTotal;
 	$tpl = Template::getInstance();
 	$totalTicks = $tpl->masterHandler->{$propCount};
+	if (!$totalTicks) {
+		util::var_dump($tpl->masterHandler);
+		return;
+	}
 	$totalTime = $tpl->masterHandler->{$propTotal};
 
 
@@ -70,7 +74,14 @@ function printRecord($l) {
 		$totalPct = pctView($totalPct, 200, 200, 200, 200);
 		$pctOfTick = pctView($tickAvg / 50 * 100, 90, 80, 75, 70);
 	} else {
-		$totalPct = pctViewMod($totalPct, $totalPct / ($tickAvg / 50 * 100), 50, 30, 20, 10);
+		$tickAvgMod = $tickAvg / 50 * 100;
+		if ($tickAvgMod) {
+			$tickAvgMod = $totalPct / $tickAvgMod;
+		} else {
+			$tickAvgMod = 0;
+		}
+		$totalPct = pctViewMod($totalPct, $tickAvgMod, 50, 30, 20, 10);
+
 		$pctOfTick = pctView($tickAvg / 50 * 100, 50, 30, 20, 10);
 	}
 	$avgCountTick = number_format($count / $totalTicks, 2);

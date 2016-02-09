@@ -125,7 +125,9 @@ class Template {
 				$total = $mp->fullServerTick->total;
 				$lag = $mp->fullServerTick->lagTotal;
 				$max = max($total, $max);
-
+				if (!$mp->ticks->timedTicks) {
+					continue;
+				}
 				$timestamps[] = $mp->time;
 				$tpsData[] = $mp->tps > 19.85 ? 20 : $mp->tps;
 				$lagData[] = $lag;
