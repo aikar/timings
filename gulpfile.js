@@ -26,7 +26,7 @@ var paths = {};
 
 
 paths.static = `${dir}/static`;
-paths.vendorjs = [`${paths.static}/vendor/**.js`];
+paths.vendorjs = [`${dir}/vendor/js/**.js`];
 paths.js = [`${paths.static}/js/**.js`];
 // Files to watch for CSS change, but we have a single entry point
 paths.css_watch = [`${paths.static}/css/**.scss`];
