@@ -8,6 +8,7 @@
  * @license MIT
  */
 var gulp = require('gulp');
+var runSeq = require('run-sequence').use(gulp);
 require('gulp-bash-completion')(gulp);
 var $ = require('gulp-load-plugins')();
 var $u = require('./gulp.util');
@@ -18,6 +19,7 @@ var postcss = require('gulp-postcss');
 var csswring = require('csswring');
 var mqpacker = require('css-mqpacker');
 var bless = require('gulp-bless');
+var shell = require("gulp-shell");
 
 var dir = __dirname;
 var paths = {};
@@ -28,6 +30,8 @@ var paths = {};
 paths.static = `${dir}/static`;
 paths.vendorjs = [`${dir}/vendor/js/**.js`];
 paths.js = [`${paths.static}/js/**.js`];
+paths.dart = [`${paths.static}/dart/timings.dart`];
+paths.dart_watch = [`${paths.static}/dart/**.dart`];
 // Files to watch for CSS change, but we have a single entry point
 paths.css_watch = [`${paths.static}/css/**.scss`];
 paths.css_entryfile = `${paths.static}/css/timings.scss`;
@@ -51,6 +55,16 @@ gulp.task('js', () => {
 		;
 });
 
+gulp.task('dart-prep', shell.task([
+	"if [ ! -f .packages ]; then pub get && rm -rf packages/ && find -xtype l -delete; fi"
+]));
+
+gulp.task('dart', ['dart-prep'], shell.task([
+	`mkdir -p ${paths.dist} ${dir}/build`,
+	`dart2js -o ${dir}/build/timings.js -m -c --packages=${dir}/.packages ${paths.dart}`,
+	`cp ${dir}/build/timings.js ${paths.dist}/timings.js`
+]));
+
 gulp.task('css', () => {
 	var processors = [
 		autoprefixer({browsers: ['last 2 versions', 'IE 9', 'IE 10']}),
@@ -72,9 +86,13 @@ gulp.task('css', () => {
 		.pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('default', ['vendor', 'css', 'js'], () => {
+gulp.task('build', ['vendor', 'js', 'css']);
+gulp.task('builddart', ['vendor', 'dart', 'css']);
+
+gulp.task('default', ['build'], () => {
 	$.watch(paths.js,  () => $u.scheduleTask('js', 1500));
 	$.watch(paths.css_watch, () => $u.scheduleTask('css', 1500));
+	$.watch(paths.dart_watch, () => $u.scheduleTask('dart', 1500));
 	setImmediate(() => {
 		$.util.log('================================================================');
 		$.util.log('===================== NOW MONITORING FILES =====================');

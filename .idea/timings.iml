@@ -2,8 +2,10 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/legacy" />
+      <excludeFolder url="file://$MODULE_DIR$/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
       <excludeFolder url="file://$MODULE_DIR$/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/packages" />
       <excludeFolder url="file://$MODULE_DIR$/static/dist" />
       <excludeFolder url="file://$MODULE_DIR$/template/static" />
     </content>
@@ -13,5 +15,7 @@
     <orderEntry type="library" name="Timings Modules" level="project" />
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="Node.js v4.2.1 Core Modules" level="application" />
+    <orderEntry type="library" name="Dart SDK" level="application" />
+    <orderEntry type="library" name="Dart Packages" level="project" />
   </component>
 </module>

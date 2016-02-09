@@ -3,6 +3,9 @@
 .idea/misc.xml
 .idea/compiler.xml
 .idea/vcs.xml
+.idea/uiDesigner.xml
+# contains user specific settings
+.idea/libraries/Dart_Packages.xml
 
 static/dist
 static/timings.css
@@ -12,3 +15,9 @@ static/.sass-cache
 
 config.dev.ini
 nbproject/
+
+.pub
+pubspec.lock
+.packages
+build/
+**/packages/
