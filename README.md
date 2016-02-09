@@ -26,11 +26,14 @@ We're currently in the middle of migrating the JS code to Dart. So hold off befo
 
 Setting Up Environment
 =====
-You need a LAMP/MAMP/WAMP stack, check out folder, copy config.ini to config.dev.ini and edit to your needs.
+You need A webserver such as Apache or Nginx, and PHP 5.6.
+Apache is preferred incase .htaccess is needed.
 
-You'll also need NodeJS v4 (first release after io.js merger)
+Check out repo, copy config.ini to config.dev.ini and edit to your needs.
 
-Windows and Mac users may need to "npm rebuild" but i'm unsure if the binary based deps are needed or not.
+You'll also need NodeJS v4 LTS
+
+If you are not using Ubuntu 14.04, you may need to "npm rebuild" but i'm unsure if the binary based deps are needed or not.
 
 To compile static resources and monitor them for changes, simply run `gulp` and control + c to abort watching.
 Gulp will monitor all files for changes and recompile the css/js for you.
@@ -43,6 +46,18 @@ You may create config.dev.ini to override config options like so:
 >custom_security="../security/security.php"  
 >dev_id=ae6cfe033ca541f39a0fc52c3b51b2e1
 
+Current Priorities
+=====
+
+Updating the web UI to include plugin data, per-timings (v1 style) data, config viewing, "chunk/region" reports, is a top priority.
+
+Also anything to make the web UI LOOK better is needed. Current idea is to use Polymer UI components.
+
+JS to DART
+======
+
+We are migrating the JS front end code to Dart, as Dart is a nicer language and gives us a project to learn it. This is still pending so try
+to hold off on major JS changes until that is done and you then write the change in Dart.
 
 Timings File Format
 ======
