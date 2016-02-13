@@ -42,7 +42,11 @@ Template::getInstance()->loadData();
 			<br/>
 
 			<p>Requires <a href="http://paper.emc.gs" title="Paper Minecraft Server">Paper</a>
-				or <a href="https://www.spongepowered.org" title="Sponge Minecraft Server">Sponge</a></p>
+				or <a href="https://www.spongepowered.org" title="Sponge Minecraft Server">Sponge</a>
+				<br />
+				<a href="https://www.youtube.com/watch?v=T4J0A9l7bfQ" title="Timings v2 Tutorial">Video Tutorial</a>
+			</p>
+
 		</div>
 		<?php require_once "header-right.php"; ?>
 	</div>
