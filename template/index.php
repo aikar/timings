@@ -10,7 +10,7 @@
  */
 namespace Starlis\Timings;
 
-require_once "ads.php";
+require_once __DIR__ . "/ads.php";
 $cssver = filemtime("static/dist/timings.css");
 $jsver = filemtime("static/dist/timings.js");
 $jsvendorver = filemtime("static/dist/vendor.js");
@@ -48,22 +48,22 @@ Template::getInstance()->loadData();
 			</p>
 
 		</div>
-		<?php require_once "header-right.php"; ?>
+		<?php require_once __DIR__ . "/header-right.php"; ?>
 	</div>
 
 	<div id="body-wrap">
-		<?php require_once "time_selector.php"; ?>
-		<?php require_once "content.php"; ?>
+		<?php require_once __DIR__ . "/time_selector.php"; ?>
+		<?php require_once __DIR__ . "/content.php"; ?>
 		<div id="bottom-ad">
 			<?php ad_banner_bottom(); ?>
 		</div>
-		<?php require_once "info_popups.php"; ?>
+		<?php require_once __DIR__ . "/info_popups.php"; ?>
 	</div>
 	<div class="push"></div>
 </div>
 
 <div id="footer">
-    <span id="footer-left">&copy; 2013-2015 Starlis LLC <a href="http://github.com/aikar/timings"
+    <span id="footer-left">&copy; 2013-<?=date('Y')?> Starlis LLC <a href="http://github.com/aikar/timings"
                                                       title="Source">[source]</a> &mdash; <a
 		    href="http://aikar.co/spigot/" title="About / Donate">[about / donate]</a></span>
 	<span id="footer-right"></span>
