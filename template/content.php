@@ -24,13 +24,13 @@ if (!$section) $section = 'lag';
 	<div id="tab-bar" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
 		<ul class="tabs ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
 			<li class="tab-title ui-state-default ui-corner-top <?=$section=="lag"?' ui-tabs-active ui-state-active':''?>">
-				<a href="<?=util::buildurl(['section'=>'lag'])?>" class="tab ui-tabs-anchor" role="tab">Lag View</a>
+				<a href="<?=util::buildurl(['section'=>'lag'])?>" class="tab ui-tabs-anchor">Lag View</a>
 			</li>
 			<li class="tab-title ui-state-default ui-corner-top <?=$section=="all"?' ui-tabs-active ui-state-active':''?>">
-				<a href="<?=util::buildurl(['section'=>'all'])?>" class="tab ui-tabs-anchor" role="tab">All View</a>
+				<a href="<?=util::buildurl(['section'=>'all'])?>" class="tab ui-tabs-anchor">All View</a>
 			</li>
                         <li class="tab-title ui-state-default ui-corner-top <?=$section=="plugins"?' ui-tabs-active ui-state-active':''?>">
-				<a href="<?=util::buildurl(['section'=>'plugins'])?>" class="tab ui-tabs-anchor" role="tab">Plugin View</a>
+				<a href="<?=util::buildurl(['section'=>'plugins'])?>" class="tab ui-tabs-anchor">Plugin View</a>
 			</li>
 		</ul>
 
