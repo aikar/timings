@@ -39,18 +39,18 @@ if (!$section) $section = 'lag';
 	<?php
 	switch ($section) {
 		case "chunks":
-			require_once "sections/chunks.php";
+			require_once __DIR__ . "/sections/chunks.php";
 			break;
                 case "plugins":
-                        require_once "sections/pluginView.php";
+                        require_once __DIR__ . "/sections/pluginView.php";
                         break;
 		case "lag":
 		case "all":
 		default:
-			require_once "sections/reportView.php";
+			require_once __DIR__ . "/sections/reportView.php";
 	}
 	?>
-
+		</section>
 	</div>
 </div>
 
