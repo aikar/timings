@@ -19,6 +19,8 @@ class Template {
 	public $js = array();
 	public $tpsData;
 	public $lagData;
+	public $areaMap;
+
 	/**
 	 * @var TimingHandler
 	 */
@@ -30,7 +32,7 @@ class Template {
 	public $handlerData;
 
 	public static function render() {
-		require "template/index.php";
+		require __DIR__ ."/../template/index.php";
 	}
 
 	public static function loadData() {
@@ -89,26 +91,34 @@ class Template {
 			$players = 0;
 			foreach ($history->worldData as $world) {
 				foreach ($world->chunks as $chunk) {
-					$areaId = $chunk->areaId;
-					if (!array_key_exists($areaId, $areaMap)) {
-						$areaMap[$areaId] = [
-							"count" => 0,
-							"x" => $chunk->areaLocX,
-							"z" => $chunk->areaLocZ,
-							"e" => [],
-							"ec" => 0,
-							"te" => [],
-							"tec" => 0,
-						];
-					}
-					$areaMap[$areaId]['count']++;
-					foreach ($chunk->tileEntities as $id => $count) {
-						$areaMap[$areaId]['te'][$id] += $count;
-						$areaMap[$areaId]['tec'] += $count;
-					}
-					foreach ($chunk->entities as $id => $count) {
-						$areaMap[$areaId]['e'][$id] += $count;
-						$areaMap[$areaId]['ec'] += $count;
+					if (@$_GET['section'] === 'chunks') {
+						$worldName = $world->worldName;
+						$areaId = $worldName . ':' . $chunk->areaId;
+						if (!isset($areaMap[$worldName])) {
+							$areaMap[$worldName] = [];
+						}
+
+						if (!array_key_exists($areaId, $areaMap[$worldName])) {
+							$areaMap[$worldName][$areaId] = [
+								"count" => 0,
+								"world" => $world->worldName,
+								"x" => $chunk->areaLocX,
+								"z" => $chunk->areaLocZ,
+								"e" => [],
+								"ec" => 0,
+								"te" => [],
+								"tec" => 0,
+							];
+						}
+						$areaMap[$worldName][$areaId]['count']++;
+						foreach ($chunk->tileEntities as $id => $count) {
+							$areaMap[$worldName][$areaId]['te'][$id] += $count;
+							$areaMap[$worldName][$areaId]['tec'] += $count;
+						}
+						foreach ($chunk->entities as $id => $count) {
+							$areaMap[$worldName][$areaId]['e'][$id] += $count;
+							$areaMap[$worldName][$areaId]['ec'] += $count;
+						}
 					}
 					$chunks++;
 				}
@@ -157,6 +167,7 @@ class Template {
 		if (DEBUGGING && util::array_get($_GET['showmaster'])) util::var_dump($masterHandler);
 
 		$tpl->handlerData = $handlerData;
+		$tpl->areaMap = $areaMap;
 		$tpl->js['stamps'] = $timestamps;
 		$tpl->js['maxTime'] = $max;
 		$tpl->js['chunkData'] = $chunkData;
