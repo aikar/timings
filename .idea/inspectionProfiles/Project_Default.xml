@@ -13,8 +13,10 @@
         </value>
       </option>
     </inspection_tool>
+    <inspection_tool class="ForgottenDebugOutputInspection" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="IsEmptyFunctionUsageInspection" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="IsNullFunctionUsageInspection" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="UnNecessaryDoubleQuotesInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="UnSafeIsSetOverArrayInspection" enabled="false" level="WARNING" enabled_by_default="false" />
   </profile>
 </component>

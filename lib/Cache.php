@@ -29,7 +29,9 @@ class Cache {
 			$file = self::getFile($key, $type, ROOT_DIR);
 		}
 		if (file_exists($file)) {
-			touch($file);
+			if (is_writable($file)) {
+				touch($file);
+			}
 
 			return trim(gzdecode(file_get_contents($file)));
 		}

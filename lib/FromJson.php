@@ -133,6 +133,10 @@ trait FromJson {
 			$data = util::flattenObject($data);
 		}
 
+		if ($parent->comment && preg_match('/@filter\s+(.+?)\s/', $parent->comment, $matches)) {
+			$data = self::executeCb($matches[1], [$data, $parent]);
+		}
+
 		return $data;
 	}
 	private static function executeCb($cb, $args) {
@@ -156,7 +160,7 @@ class FromJsonParent {
 	public $parent;
 	public $comment, $obj, $name, $root;
 
-	function __construct($name, $comment, $obj, $parent) {
+	public function __construct($name, $comment, $obj, $parent) {
 		$this->name = $name;
 		$this->comment = $comment;
 		$this->obj = $obj;

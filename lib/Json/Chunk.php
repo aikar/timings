@@ -17,31 +17,14 @@ use Starlis\Timings\util;
 class Chunk {
 	use FromJson;
 
-	/**
-	 * @index 0
-	 * @var int
-	 */
-	public $chunkX;
 
 	/**
-	 * @index 1
-	 * @var int
+	 * @index Chunk::calculateAreaId
+	 * @var string
 	 */
-	public $chunkZ;
-
-	/**
-	 * @mapper chunkToBlock
-	 * @index  0
-	 * @var int
-	 */
-	public $blockX;
-
-	/**
-	 * @mapper chunkToBlock
-	 * @index  1
-	 * @var int
-	 */
-	public $blockZ;
+	public $areaId;
+	public $areaLocX;
+	public $areaLocZ;
 
 	/**
 	 * @keymapper TimingsMap::getTileEntityType
@@ -57,14 +40,6 @@ class Chunk {
 	 */
 	public $entities;
 
-	/**
-	 * @index Chunk::calculateAreaId
-	 * @var string
-	 */
-	public $areaId;
-	public $areaLocX;
-	public $areaLocZ;
-
 
 	public static function chunkToBlock($i) {
 		return $i << 4;
@@ -75,10 +50,9 @@ class Chunk {
 	 *
 	 * @return string
 	 */
-	public static function calculateAreaId($chunk) {
-		$chunk->areaLocX = (floor($chunk->chunkX / 4) * 4) << 4;
-		$chunk->areaLocZ = (floor($chunk->chunkZ / 4) * 4) << 4;
-
-		return $chunk->areaLocX . ":" . $chunk->areaLocZ;
+	public static function calculateAreaId($obj, $rootData) {
+		$obj->areaLocX = (floor($rootData[0] / 4) * 4) >> 4;
+		$obj->areaLocZ = (floor($rootData[1] / 4) * 4) >> 4;
+		return $obj->areaLocX . ":" . $obj->areaLocZ;
 	}
 }
