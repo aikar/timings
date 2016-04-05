@@ -55,8 +55,8 @@ class Region {
 	 *
 	 */
 	public static function calculateRegionId(Region $obj, $rootData) {
-		$obj->areaLocX = floor($rootData[0] >> 4) << 4 << 4;
-		$obj->areaLocZ = floor($rootData[1] >> 4) << 4 << 4;
+		$obj->areaLocX = floor($rootData[0] >> 5) << 5 << 4;
+		$obj->areaLocZ = floor($rootData[1] >> 5) << 5 << 4;
 		return $obj->areaLocX . ":" . $obj->areaLocZ;
 	}
 }

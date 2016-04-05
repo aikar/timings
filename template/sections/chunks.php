@@ -33,9 +33,10 @@ $sortChunk = function($c1, $c2) use($template, $timingsData) {
         return $c1c < $c2c ? 1 : -1;
     }
 };
-echo "<br /><h2>NOTICE: Counts are NOT EXACT!!!</h2>They are a representation of number of times seen 
-within this selected history window. They will be much higher than seen in game. It is intended 
-to help you identify where the most TE/E's are.<br /><br />";
+echo "<br /><h2>NOTICE: Counts are NOT EXACT!!!</h2>These are summaries by region.<br />
+They are a representation of number of times seen within this selected history window. 
+They will be much higher than seen in game. It is intended 
+to help you identify where the most TE/E's are.<br/>A region can cover 512 blocks around the coordinates.<br /><br />";
 
 foreach ($template->areaMap as $worldName => $chunks) {
     usort($chunks, $sortChunk);
