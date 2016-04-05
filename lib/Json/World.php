@@ -12,7 +12,7 @@ namespace Starlis\Timings\Json;
 
 use Starlis\Timings\FromJson;
 use Starlis\Timings\FromJsonParent;
-use util;
+use utilphp\util;
 
 class World {
 	use FromJson;
@@ -25,31 +25,41 @@ class World {
 	public $worldName;
 
 	/**
-	 * @keymapper World::mergeChunk
+	 * @keymapper World::mergeRegion
 	 * @index @value
-	 * @var Chunk[]
+	 * @var Region[]
 	 */
-	public $chunks;
-	public static function mergeChunk($ignored, Chunk $chunk, FromJsonParent $parent) {
-		$regionId = $chunk->areaLocX . ":" . $chunk->areaLocZ;
-		$world = $parent->obj->chunks;
+	public $regions;
+
+
+	public static function mergeRegion($ignored, Region $region, FromJsonParent $parent) {
 		/**
-		 * @var Chunk $prevChunk
+		 * @var World $world
+		 * @var Region $prevChunk
+		 * @var Region[] $regions
 		 */
-		$prevChunk = $world[$regionId];
+
+		$regionId = $region->regionId;
+		$world = $parent->obj;
+		$regions = &$world->regions;
+		$prevChunk = $regions[$regionId];
 		if ($prevChunk) {
 			if (!empty($prevChunk->tileEntities)) {
 				foreach ($prevChunk->tileEntities as $type => $count) {
-					$chunk->tileEntities[$type] += $count;
+					$region->tileEntities[$type] += $count;
 				}
 			}
 			if (!empty($prevChunk->entities)) {
 				foreach ($prevChunk->entities as $type => $count) {
-					$chunk->entities[$type] += $count;
+					$region->entities[$type] += $count;
 				}
 			}
+			$region->chunkCount = $prevChunk->chunkCount + 1;
+		} else {
+			$region->chunkCount = 1;
 		}
-		$parent->obj->chunks[$regionId] = $chunk;
+		$regions[$regionId] = $region;
+		$region->world = $world;
 
 		return $regionId;
 	}

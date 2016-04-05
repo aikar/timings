@@ -10,6 +10,7 @@
  */
 namespace Starlis\Timings;
 
+use Starlis\Timings\Json\Region;
 use Starlis\Timings\Json\TimingHandler;
 use Starlis\Timings\Json\TimingsMaster;
 
@@ -85,15 +86,15 @@ class Template {
 		$max = 0;
 		$areaMap = [];
 		foreach ($data->data as $history) {
-			$tileEntities = 0;
-			$entities = 0;
 			$chunks = 0;
-			$players = 0;
 			foreach ($history->worldData as $world) {
-				foreach ($world->chunks as $chunk) {
+				foreach ($world->regions as $region) {
+					/**
+					 * @var Region $region
+					 */
 					if (@$_GET['section'] === 'chunks') {
 						$worldName = $world->worldName;
-						$areaId = $worldName . ':' . $chunk->areaId;
+						$areaId = $region->regionId;
 						if (!isset($areaMap[$worldName])) {
 							$areaMap[$worldName] = [];
 						}
@@ -102,25 +103,25 @@ class Template {
 							$areaMap[$worldName][$areaId] = [
 								"count" => 0,
 								"world" => $world->worldName,
-								"x" => $chunk->areaLocX,
-								"z" => $chunk->areaLocZ,
+								"x" => $region->areaLocX,
+								"z" => $region->areaLocZ,
 								"e" => [],
 								"ec" => 0,
 								"te" => [],
 								"tec" => 0,
 							];
 						}
-						$areaMap[$worldName][$areaId]['count']++;
-						foreach ($chunk->tileEntities as $id => $count) {
+						$areaMap[$worldName][$areaId]['count'] += $region->chunkCount;
+						foreach ($region->tileEntities as $id => $count) {
 							$areaMap[$worldName][$areaId]['te'][$id] += $count;
 							$areaMap[$worldName][$areaId]['tec'] += $count;
 						}
-						foreach ($chunk->entities as $id => $count) {
+						foreach ($region->entities as $id => $count) {
 							$areaMap[$worldName][$areaId]['e'][$id] += $count;
 							$areaMap[$worldName][$areaId]['ec'] += $count;
 						}
 					}
-					$chunks++;
+					$chunks += $region->chunkCount;
 				}
 			}
 			$firstMP = $history->minuteReports[0];

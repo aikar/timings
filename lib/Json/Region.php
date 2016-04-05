@@ -14,15 +14,22 @@ use Starlis\Timings\FromJson;
 use Starlis\Timings\FromJsonParent;
 use Starlis\Timings\util;
 
-class Chunk {
+// TODO: rename to region
+class Region {
 	use FromJson;
 
-
 	/**
-	 * @index Chunk::calculateAreaId
+	 * @index Region::calculateRegionId
 	 * @var string
 	 */
-	public $areaId;
+	public $regionId;
+
+	/**
+	 * @var World
+	 */
+	public $world;
+
+	public $chunkCount;
 	public $areaLocX;
 	public $areaLocZ;
 
@@ -41,18 +48,15 @@ class Chunk {
 	public $entities;
 
 
-	public static function chunkToBlock($i) {
-		return $i << 4;
-	}
-
 	/**
-	 * @param $chunk Chunk
-	 *
+	 * @param Region $obj
+	 * @param array $rootData From json data
 	 * @return string
+	 *
 	 */
-	public static function calculateAreaId($obj, $rootData) {
-		$obj->areaLocX = (floor($rootData[0] / 4) * 4) >> 4;
-		$obj->areaLocZ = (floor($rootData[1] / 4) * 4) >> 4;
+	public static function calculateRegionId(Region $obj, $rootData) {
+		$obj->areaLocX = floor($rootData[0] >> 4) << 4 << 4;
+		$obj->areaLocZ = floor($rootData[1] >> 4) << 4 << 4;
 		return $obj->areaLocX . ":" . $obj->areaLocZ;
 	}
 }

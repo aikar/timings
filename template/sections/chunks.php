@@ -40,12 +40,12 @@ to help you identify where the most TE/E's are.<br /><br />";
 foreach ($template->areaMap as $worldName => $chunks) {
     usort($chunks, $sortChunk);
     echo "<h3>$worldName</h3>";
-    foreach ($chunks as $area) {
-        echo $area['world'] . ':' . ($area['x']) . ',' . ($area['z']). "<br />\n";
-        echo "Totals: {$area['ec']} Entities - {$area['tec']} Tile Entities<br />";
-        echo "Area Seen: {$area['count']} times<br/><br/>";
+    foreach ($chunks as $region) {
+        echo $region['world'] . ':' . $region['x'] . ',' . $region['z'] . "<br />\n";
+        echo "Totals: {$region['ec']} Entities - {$region['tec']} Tile Entities<br />";
+        echo "Area Seen: {$region['count']} times<br/><br/>";
         echo '<div class="chunk-row full-timing-row">';
-        $stuff = $area['te'] + $area['e'];
+        $stuff = $region['te'] + $region['e'];
         arsort($stuff);
         foreach ($stuff as $k => $v)  {
             echo "<span class='indent full-child'>$k: $v</span>";
