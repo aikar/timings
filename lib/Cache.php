@@ -61,7 +61,8 @@ class Cache {
 	 * @return mixed
 	 */
 	public static function getObject($key) {
-		return unserialize(self::get($key, "objectcache"));
+		global $ini;
+		return unserialize(self::get($key, "objectcache" . $ini['cache_ver']));
 	}
 
 	/**
@@ -73,7 +74,8 @@ class Cache {
 	public static function putObject($key, $data) {
 		$data = serialize($data);
 		if ($data) {
-			self::put($key, $data, "objectcache");
+			global $ini;
+			self::put($key, $data, "objectcache" . $ini['cache_ver']);
 		}
 	}
 
