@@ -32,6 +32,9 @@ if (!$section) $section = 'lag';
 			<li class="tab-title ui-state-default ui-corner-top <?=$section=="chunks"?' ui-tabs-active ui-state-active':''?>">
 				<a href="<?=util::buildurl(['section'=>'chunks'])?>" class="tab ui-tabs-anchor">Chunks View</a>
 			</li>
+			<li class="tab-title ui-state-default ui-corner-top <?=$section=="config"?' ui-tabs-active ui-state-active':''?>">
+				<a href="<?=util::buildurl(['section'=>'config'])?>" class="tab ui-tabs-anchor">Config</a>
+			</li>
 			<!--li class="tab-title ui-state-default ui-corner-top <?=$section=="plugins"?' ui-tabs-active ui-state-active':''?>">
 				<a href="<?=util::buildurl(['section'=>'plugins'])?>" class="tab ui-tabs-anchor">Plugin View</a>
 			</li-->
@@ -42,11 +45,14 @@ if (!$section) $section = 'lag';
 	<?php
 	switch ($section) {
 		case "chunks":
-			require_once __DIR__ . "/sections/chunks.php";
+			require_once __DIR__ . "/sections/chunksView.php";
 			break;
-                case "plugins":
-                        require_once __DIR__ . "/sections/pluginView.php";
-                        break;
+		case "config":
+			require_once __DIR__ . "/sections/configView.php";
+			break;
+		case "plugins":
+			require_once __DIR__ . "/sections/pluginView.php";
+			break;
 		case "lag":
 		case "all":
 		default:

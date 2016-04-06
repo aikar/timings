@@ -51,6 +51,11 @@ class TimingsMaster {
 	 * @var TimingHistory[]
 	 */
 	public $data;
+
+	/**
+	 * @var array[]
+	 */
+	public $config;
 }
 
 
