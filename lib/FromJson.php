@@ -82,16 +82,19 @@ trait FromJson {
 					if ($data && !is_scalar($data)) {
 						$data = is_object($data) ? get_object_vars($data) : $data;
 
+						// THREAD THIS
 						foreach ($data as $key => $entry) {
 							$arrParent = new FromJsonParent($key, $comment, $result, $parent);
 							$thisData = self::getData($entry, $arrParent);
-
-							$keyName = $arrParent->name;
+							$result[$key] = $thisData;
+						}
+						$data = $result;
+						$result = [];
+						foreach ($data as $key => $value) {
 							if ($parent->comment && preg_match('/@keymapper\s+(.+?)\s/', $parent->comment, $matches)) {
-								$keyName = self::executeCb($matches[1], [$keyName, $thisData, $parent]);
+								$key = self::executeCb($matches[1], [$key, $value, $parent]);
 							}
-
-							$result[$keyName] = $thisData;
+							$result[$key] = $value;
 						}
 					}
 					$data = $result;

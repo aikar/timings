@@ -62,6 +62,9 @@ class Timings {
 		if ($id) {
 			$data = Cache::getObject($id);
 			if (!$data || ((int) util::array_get($_GET['nocache']) === 1 && DEBUGGING)) {
+
+				$seed = $id .microtime();
+
 				$data = $this->storage->get($id);
 				$data = TimingsMaster::createObject(json_decode($data));
 				Cache::putObject($id, $data);
