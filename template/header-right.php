@@ -6,6 +6,10 @@ use Starlis\Timings\util;
 $timingsData = TimingsMaster::getInstance();
 $tpl = Template::getInstance();
 $system = $timingsData->system;
+$motd = $timingsData->motd;
+if (is_array($motd)) {
+	$motd = implode("\n", $motd);
+}
 ?>
 <div id="header-right" class=" ui-widget ui-widget-content ui-corner-all">
 	<?php if ($timingsData->icon): ?>
@@ -14,7 +18,7 @@ $system = $timingsData->system;
 
 	<span class="server-name">Server: <b class="<?=($timingsData->onlinemode === true ? "online-server" : "offline-server")?>"
 			><?=util::esc($timingsData->server)?></b> (max: <?=util::esc($timingsData->maxplayers)?>)</span><br />
-	<span>MOTD: <b><?=util::mccolor(util::esc($timingsData->motd))?></b></span><br />
+	<span>MOTD: <b><?=nl2br(util::mccolor(util::esc($motd)))?></b></span><br />
 	<span>Version: <b><?=util::esc($timingsData->version)?></b></span><br />
 	<span title="OS: <?=util::esc("{$system->name} {$system->version} {$system->arch} CPU: {$system->cpu}")?>">
 		Uptime: <b><?=util::esc(round($system->runtime / 60 / 60 / 1000, 2))?>hr</b> -
