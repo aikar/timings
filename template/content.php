@@ -11,7 +11,7 @@
 namespace Starlis\Timings;
 global $section;
 $section = @$_GET['section'];
-if (!$section) $section = 'lag';
+if (!$section) $section = 'lagsummary';
 
 ?>
 <div class="ad_links">
@@ -24,10 +24,16 @@ if (!$section) $section = 'lag';
 	<div id="tab-bar" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
 		<ul class="tabs ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
 			<li class="tab-title ui-state-default ui-corner-top <?=$section=="lag"?' ui-tabs-active ui-state-active':''?>">
-				<a href="<?=util::buildurl(['section'=>'lag'])?>" class="tab ui-tabs-anchor">Lag View</a>
+				<a href="<?=util::buildurl(['section'=>'lag'])?>" class="tab ui-tabs-anchor">Lag Tree View</a>
 			</li>
 			<li class="tab-title ui-state-default ui-corner-top <?=$section=="all"?' ui-tabs-active ui-state-active':''?>">
-				<a href="<?=util::buildurl(['section'=>'all'])?>" class="tab ui-tabs-anchor">All View</a>
+				<a href="<?=util::buildurl(['section'=>'all'])?>" class="tab ui-tabs-anchor">All Tree View</a>
+			</li>
+			<li class="tab-title ui-state-default ui-corner-top <?=$section=="lagsummary"?' ui-tabs-active ui-state-active':''?>">
+				<a href="<?=util::buildurl(['section'=>'lagsummary'])?>" class="tab ui-tabs-anchor">Lag Summary View</a>
+			</li>
+			<li class="tab-title ui-state-default ui-corner-top <?=$section=="summary"?' ui-tabs-active ui-state-active':''?>">
+				<a href="<?=util::buildurl(['section'=>'summary'])?>" class="tab ui-tabs-anchor">Summary View</a>
 			</li>
 			<li class="tab-title ui-state-default ui-corner-top <?=$section=="chunks"?' ui-tabs-active ui-state-active':''?>">
 				<a href="<?=util::buildurl(['section'=>'chunks'])?>" class="tab ui-tabs-anchor">Chunks View</a>
@@ -49,6 +55,9 @@ if (!$section) $section = 'lag';
 			break;
 		case "config":
 			require_once __DIR__ . "/sections/configView.php";
+			break;
+		case "summary": case "lagsummary":
+			require_once __DIR__ . "/sections/summaryView.php";
 			break;
 		case "plugins":
 			require_once __DIR__ . "/sections/pluginView.php";
