@@ -40,9 +40,9 @@ if (!$section) $section = 'lagsummary';
 			<div class="tab-title <?=$section=="config"?' active':''?>">
 				<a href="<?=util::buildurl(['section'=>'config'])?>" class="tab ui-tabs-anchor">Config</a>
 			</div>
-			<!--li class="tab-title <?=$section=="plugins"?' active':''?>">
-				<a href="<?=util::buildurl(['section'=>'plugins'])?>" class="tab ui-tabs-anchor">Plugin View</a>
-			</li-->
+			<li class="tab-title <?=$section=="plugins"?' active':''?>">
+				<a href="<?=util::buildurl(['section'=>'plugins'])?>" class="tab ui-tabs-anchor">Plugin List</a>
+			</li>
 		</div>
 
 
