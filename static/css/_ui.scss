@@ -7,39 +7,101 @@
  * @license MIT
  ******************************************************************************/
 
-#tab-bar li {
-	cursor: pointer;
+.content {
+	padding:10px;
+	background:white;
+	border:solid 1px silver;
+	border-top:none;
 }
-.ui-widget {
-	background: rgba(40,40,40,0.15);
-	font-family: inherit;
-}
-
 #header {
-	float: left;
 	width: 100%;
-}
-
-#header-left {
-	width: 270px;
-	text-align: center;
-	float: left;
-}
-
-#header-right {
-	text-align: center;
-
-	margin: 35px 20px 0;
-
-	min-width: 600px;
-	max-width:70%;
-	min-height: 100px;
-
-	float:right;
-	@include large-screen {
-		text-align: center;
+	background-color:$theme-color;
+	height:112px;
+	position:relative;
+	
+	.site-title {
+		position:absolute;
+		top:50%;
+		transform:translateY(-50%);
+		margin-left:30px;
+		display:inline-block;
+		color:white !important;
+		font-size:30px;
+		.subtitle {
+			text-align:center;
+			font-size:16px;
+			a {
+				color:inherit;
+			}
+		}
 	}
-	@include small-screen {
-		margin: 35px 0 0;
+}
+#header-left {
+	float:right;
+	margin:10px;
+}
+
+.row-double {
+	padding:10px;
+}
+
+.section {
+	padding:10px;
+	background-color:white;
+	box-shadow:1px 1px 1px 1px rgba(0,0,0,0.1);
+	.section-head {
+		display:block;
+		
+		.section-title {
+			font-size:15px;
+			font-weight:bold;
+			text-transform:uppercase;
+		}
+		.section-controls {
+			float:right;
+			a {
+				font-size:14px;
+				margin-left:3px;
+			}
+		}
+	}
+}
+
+a.normal {
+	color:inherit;
+}
+
+#tab-bar {
+	margin:10px;
+	& li {
+		cursor: pointer;
+	}
+}
+.tabs {
+	background-color:$theme-color-light;
+	height:47px;
+	
+	.tab-title {
+	
+		/* Floating the tab divs left removes the spacing */
+		float:left;
+		border-radius:0;
+		margin:0;
+		color:white;
+		display:inline-block;
+		padding-bottom:10px;
+		padding-top:10px;
+		padding-left:15px;
+		padding-right:15px;
+		text-transform:uppercase;
+		border-bottom:solid 3px transparent;
+		font-weight:bold;
+		&.active , &:hover {
+			border-bottom:solid 3px $theme-accent;
+			color:whiteSmoke;
+		}
+		a {
+			color:inherit;
+		}
 	}
 }

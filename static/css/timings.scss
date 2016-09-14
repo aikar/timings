@@ -1,12 +1,13 @@
 /*
  * Aikar's Minecraft Timings Parser
  *
- * Written by Aikar <aikar@aikar.co>
+ * Written by Aikar <aikar@aikar.co> - Butchered by Fudgie <thomas@ilkotech.co.uk>
  * http://aikar.co
  * http://starlis.com
  *
  * @license MIT
  */
+@import "variables";
 @import "reset";
 @import "bourbon/bourbon";
 @import "base/base";
@@ -17,11 +18,13 @@
 @import "timeselector";
 @import "ui";
 @import "minecraft";
+@import "serverinfo";
 
 body {
 	height: 100%;
-	background: url("../img/bg.png");
-	color: #c7c7c7;
+	background: $theme-background;
+	//color: #c7c7c7;
+	color:#111;
 	font-size: 1em;
 }
 
@@ -45,13 +48,13 @@ hr {
 }
 
 #content {
-	padding: 20px 15px;
+	/* padding: 20px 15px; */
 }
 .dev-warning {
 	padding: 5px;
 	text-align: center;
-	background-color: rgba(79, 32, 32, 0.79);
-	margin: auto auto 25px;
+	background-color:$theme-color-light;
+	color:whiteSmoke;
 }
 
 /*<a href='#$id'>#</a><span class='name'>$name</span> - count(<span class='count'>$count</span>) -
@@ -101,12 +104,13 @@ body #content * {
 		}
 	}
 	.count, .totalPct, .totalTime, .avgMs, .tickAvgMs {
-		color: white;
+		color: gray;
 	}
 }
 
 .full-timing-row {
 	width: 100%;
+	
 	.full-child {
 		width: 100%;
 		display: block !important;
@@ -151,15 +155,6 @@ body #content * {
 	display: inline-block;
 	color: lightblue;
 	padding: 0 6px;
-}
-
-.server-name {
-	.online-server {
-		color: green;
-	}
-	.offline-server {
-		color: red;
-	}
 }
 
 .invisible {

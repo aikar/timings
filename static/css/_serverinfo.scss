@@ -1,0 +1,49 @@
+/*
+ * Aikar's Minecraft Timings Parser
+ *
+ * Written by Aikar <aikar@aikar.co> - Butchered by Fudgie <thomas@ilkotech.co.uk>
+ * http://aikar.co
+ * http://starlis.com
+ *
+ * @license MIT
+ */
+
+#server-info {
+	text-align:center;
+	
+	width:30%;
+	height:318px;
+	
+	.server-title {
+		text-align:center;
+		font-size:30px;
+		display:inline-block;
+		padding:10px;
+		
+		.online-server {
+			color: green;
+		}
+		.offline-server {
+			color: red;
+		}
+		.server-icon {
+			border-radius:50%;
+			float:left;
+		}
+		.server-name {
+			float:left;
+			margin-left:10px;
+		}
+	}
+	table {
+		text-align:initial;
+		.fieldName {
+			font-weight:bold;
+			text-align:right;
+			padding-right:5px;
+		}
+		.fieldValue {
+			padding-left:5px;
+		}
+	}
+}

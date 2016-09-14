@@ -9,23 +9,48 @@
 
 #history-selector {
 	padding: 10px;
-	/*height: 200px;*/
-	margin: 10px auto;
 	text-align: center;
+	
+	width:69.5%;
+	float:right;
 
 	#time-selector {
-		height: 15px;
+		height: 3px;
 		width: auto;
-		margin: 0 15px 10px 5px;
+		
+		margin-left: 11px;
+		margin-right: 11px;
+		margin-top:10px;
+		margin-bottom:10px;
+		
 		text-align: center;
 		padding: 0;
+		background-color:silver;
+		position:relative;
+		
+		.ui-slider-handle {
+			height: 15px;
+			width: 15px;
+			
+			background-color:$theme-accent;
+			display: inline-block;
+			margin-top: -7.5px;
+			border-radius: 50%;
+			position:absolute;
+			z-index:2;
+			margin-left:-11px;
+		}
+		.ui-slider-range {
+			background-color: $theme-accent;
+			display: inline-block;
+			height: 3px;
+			position: absolute;
+			z-index:1;
+		}
 	}
 
 	canvas {
 		height: 220px !important;
-	}
-	.ui-slider-handle {
-		height: 22px !important;
 	}
 }
 

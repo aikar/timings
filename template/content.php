@@ -14,37 +14,36 @@ $section = @$_GET['section'];
 if (!$section) $section = 'lagsummary';
 
 ?>
-<div class="ad_links">
+<div class="ad_links advert">
 	<?php ad_link(); ?>
 </div>
 <div id="content">
-	<div class="dev-warning">This site is still under heavy development.</div>
 	<?php ad_banner_top_right(); ?>
 	<!-- http://refills.bourbon.io/#accordion-tabs -->
 	<div id="tab-bar" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
-		<ul class="tabs ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-			<li class="tab-title ui-state-default ui-corner-top <?=$section=="lag"?' ui-tabs-active ui-state-active':''?>">
+		<div class="tabs ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+			<div class="tab-title <?=$section=="lag"?' active':''?>">
 				<a href="<?=util::buildurl(['section'=>'lag'])?>" class="tab ui-tabs-anchor">Lag Tree View</a>
-			</li>
-			<li class="tab-title ui-state-default ui-corner-top <?=$section=="all"?' ui-tabs-active ui-state-active':''?>">
+			</div>
+			<div class="tab-title <?=$section=="all"?' active':''?>">
 				<a href="<?=util::buildurl(['section'=>'all'])?>" class="tab ui-tabs-anchor">All Tree View</a>
-			</li>
-			<li class="tab-title ui-state-default ui-corner-top <?=$section=="lagsummary"?' ui-tabs-active ui-state-active':''?>">
+			</div>
+			<div class="tab-title <?=$section=="lagsummary"?' ui-tabs-active ui-state-active':''?>">
 				<a href="<?=util::buildurl(['section'=>'lagsummary'])?>" class="tab ui-tabs-anchor">Lag Summary View</a>
-			</li>
-			<li class="tab-title ui-state-default ui-corner-top <?=$section=="summary"?' ui-tabs-active ui-state-active':''?>">
+			</div>
+			<div class="tab-title <?=$section=="summary"?' active':''?>">
 				<a href="<?=util::buildurl(['section'=>'summary'])?>" class="tab ui-tabs-anchor">Summary View</a>
-			</li>
-			<li class="tab-title ui-state-default ui-corner-top <?=$section=="chunks"?' ui-tabs-active ui-state-active':''?>">
+			</div>
+			<div class="tab-title <?=$section=="chunks"?' active':''?>">
 				<a href="<?=util::buildurl(['section'=>'chunks'])?>" class="tab ui-tabs-anchor">Chunks View</a>
-			</li>
-			<li class="tab-title ui-state-default ui-corner-top <?=$section=="config"?' ui-tabs-active ui-state-active':''?>">
+			</div>
+			<div class="tab-title <?=$section=="config"?' active':''?>">
 				<a href="<?=util::buildurl(['section'=>'config'])?>" class="tab ui-tabs-anchor">Config</a>
-			</li>
-			<!--li class="tab-title ui-state-default ui-corner-top <?=$section=="plugins"?' ui-tabs-active ui-state-active':''?>">
+			</div>
+			<!--li class="tab-title <?=$section=="plugins"?' active':''?>">
 				<a href="<?=util::buildurl(['section'=>'plugins'])?>" class="tab ui-tabs-anchor">Plugin View</a>
 			</li-->
-		</ul>
+		</div>
 
 
 		<section aria-hidden="false" class="content active" id="tabs-lag">
@@ -72,5 +71,5 @@ if (!$section) $section = 'lagsummary';
 	</div>
 </div>
 
-<hr/>
+<!--<hr/>-->
 <div class="ad_links"><?php ad_link(); ?></div>

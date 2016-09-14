@@ -12,15 +12,17 @@ html, body, #body-wrap, #wrapper {
 }
 
 .push, #footer {
-	height: 33px;
+	height: 70px;
 }
 
 #footer {
 	clear: both;
 	color: white;
-	background: #111;
+	background: $theme-color;
 	opacity: 0.9;
-	padding: 0 15px;
+	padding-left:20px;
+	padding-right:20px;
+	line-height:70px;
 }
 
 #footer span {

@@ -9,10 +9,11 @@
  * @license MIT
  */
 namespace Starlis\Timings;
-
 ?>
-<br style="clear:both"/>
-<div id="history-selector">
+<div id="history-selector" class="section">
+	<div class="section-head">
+		<span class="section-title">Logging Period</span>
+	</div>
 	<div class="canvas-wrapper">
 	<canvas id="tps-graph" width="98%" height="200"></canvas>
 	</div>
