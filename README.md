@@ -53,11 +53,10 @@ Updating the web UI to include plugin data, per-timings (v1 style) data, config 
 
 Also anything to make the web UI LOOK better is needed. Current idea is to use Polymer UI components.
 
-JS to DART
+JavaScript and UI
 ======
-
-We are migrating the JS front end code to Dart, as Dart is a nicer language and gives us a project to learn it. This is still pending so try
-to hold off on major JS changes until that is done and you then write the change in Dart.
+We are using JSX and React (Well, will be using React) for front end development.
+Original plans for Dart were scrapped.
 
 Timings File Format
 ======

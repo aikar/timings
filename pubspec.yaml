@@ -1,6 +1,0 @@
-name: timings
-description: Aikar's Minecraft Timings Viewer
-
-dependencies:
-  js: ^0.6.0
-  chart: ^1.0.8
