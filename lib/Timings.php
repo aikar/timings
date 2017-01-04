@@ -51,7 +51,7 @@ class Timings {
 		$this->id = $id;
 		$this->storage = $storage;
 
-		if ($storage instanceof LegacyStorageService || TIMINGS_ENV !== 'dev') {
+		if ($storage instanceof LegacyStorageService) {
 			LegacyHandler::load(trim($storage->get($id)));
 			exit;
 		}
