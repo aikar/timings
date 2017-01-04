@@ -10,7 +10,6 @@
  *  @license MIT
  *
  */
-import $ from 'jquery';
 import {toggleTimings} from "./ui";
 
 export function checkHashLoc() {

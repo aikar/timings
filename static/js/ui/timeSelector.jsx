@@ -13,8 +13,8 @@
  *
  */
 
-import $ from 'jquery';
-import data from './data.jsx';
+
+import {data} from './../data.jsx';
 
 export function initializeTimeSelector() {
 	let start = data.start;

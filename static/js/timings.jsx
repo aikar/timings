@@ -12,7 +12,6 @@
  */
 "use strict";
 
-import $ from 'jquery';
 import * as data from './data';
 import * as ads from "./ads";
 import * as ui from "./ui";

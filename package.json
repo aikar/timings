@@ -95,6 +95,8 @@
     "postcss-loader": "^1.2.1",
     "postcss-url": "~5.1.2",
     "q": "^1.4.1",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
     "readable-stream": "~2.2.2",
     "repeating": "~3.0.0",
     "replace-ext": "1.0.0",

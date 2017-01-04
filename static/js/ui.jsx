@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import {initializeTimeSelector} from "./ui/timeSelector";
 import {initializeChart} from "./ui/chart";
 
@@ -12,7 +11,7 @@ export function initializeUI() {
 	});
 
 	initializeCollapseControls();
-	initializeTimeSelector()
+	initializeTimeSelector();
 	initializeChart();
 }
 

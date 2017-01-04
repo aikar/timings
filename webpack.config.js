@@ -14,8 +14,8 @@ let webpack = require('webpack');
 let path = require('path');
 
 module.exports = {
-	context: path.join(__dirname, "static/"),
-	entry: path.join(__dirname, "static/js/timings.jsx"),
+	context: __dirname,
+	entry: path.join(__dirname, "static/js/timings"),
 	output: {
 		path: path.join(__dirname, "static/dist/"),
 		//publicPath: "static/dist/", // relative path for github pages
@@ -26,7 +26,7 @@ module.exports = {
 	},
 	resolve: {
 		//modulesDirectories: ["node_modules"],
-		extensions: ['.js', '.jsx']
+		extensions: ['', '.js', '.jsx']
 	},
 	//recordsOutputPath: path.join(__dirname, "records.json"),
 	module: {
@@ -58,11 +58,11 @@ module.exports = {
 	},
 	plugins: [
 		new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 20 }),
-		new webpack.ProvidePlugin({
-			$: "jquery",
-			jQuery: "jquery",
-			"window.jQuery": "jquery"
-		})
+		// new webpack.ProvidePlugin({
+		// 	$: "jquery",
+		// 	jQuery: "jquery",
+		// 	"window.jQuery": "jquery"
+		// })
 	],
 	//watch: true
 };

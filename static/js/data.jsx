@@ -13,19 +13,19 @@
  */
 import * as chart from './ui/chart';
 
-let data = window.timingsData || {
+export let data = window.timingsData || {
 		ranges: [],
 		start: 1,
 		end: 1,
 		maxTime: 1,
 		stamps:[],
+		lagData:[],
 		tpsData:[],
 		plaData:[],
 		tentData:[],
 		entData:[],
 		chunkData:[],
 	};
-export default data;
 export const scales = {
 	"Entities": 10000,
 	"Tile Entities": 25000,

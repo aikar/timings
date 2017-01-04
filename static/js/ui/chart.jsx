@@ -10,17 +10,18 @@
  *  @license MIT
  *
  */
-import {htorgba} from "./../util";
+import {htorgba} from './../util';
 import * as data from './../data';
 import * as Math from "lodash/math";
 
 export let labels = [];
 export function initializeChart() {
-	return new Chart($('#tps-graph').get(0).getContext("2d")).Line({
+	let chart = new Chart($('#tps-graph').get(0).getContext("2d"));
+	return chart.Line({
 		labels: labels,
 		datasets: [
 			{
-				data: [data.maxTime],
+				data: [data.data.maxTime],
 				PointDotRadius: 0,
 				pointStrokeWidth: 0
 			},
@@ -34,7 +35,7 @@ export function initializeChart() {
 				pointStrokeColor: "#fff",
 				pointHighlightFill: "#fff",
 				pointHighlightStroke: "rgba(220,220,220,1)",
-				data: data.tpsData
+				data: data.data.tpsData
 			}, {
 				label: "LAG",
 				//fillColor: htorgba("8d0707",0.8),
@@ -44,35 +45,35 @@ export function initializeChart() {
 				pointStrokeColor: "#ff5533",
 				pointHighlightFill: "#ff5533",
 				pointHighlightStroke: "rgba(151,187,205,1)",
-				data: data.lagData
+				data: data.data.lagData
 			},
 			{
 				label: "Players",
 				fillColor: "rgba(0,0,0,0)",
 				pointColor: "#4F80FF",
 				pointStrokeColor: "#DBF76A",
-				data: data.plaData
+				data: data.data.plaData
 			},
 			{
 				label: "Tile Entities",
 				fillColor: "rgba(0,0,0,0)",
 				pointColor: "#DBF76A",
 				pointStrokeColor: "#DBF76A",
-				data: data.tentData
+				data: data.data.tentData
 			},
 			{
 				label: "Entities",
 				fillColor: "rgba(0,0,0,0)",
 				pointColor: "#84E2FF",
 				pointStrokeColor: "#84E2FF",
-				data: data.entData
+				data: data.data.entData
 			},
 			{
 				label: "Chunks",
 				fillColor: "rgba(0,0,0,0)",
 				pointColor: "#9324B5",
 				pointStrokeColor: "#9324B5",
-				data: data.chunkData
+				data: data.data.chunkData
 			}
 		]
 	}, {
@@ -84,9 +85,9 @@ export function initializeChart() {
 		maintainAspectRatio: false,
 		multiTooltipTemplate: function (v) {
 			if (v.datasetLabel == "LAG") {
-				return Math.round((v.value / data.maxTime) * 100) + "% TPS Loss";
+				return Math.round((v.value / data.data.maxTime) * 100) + "% TPS Loss";
 			} else {
-				return (Math.round(v.value / data.maxTime * data.scales[v.datasetLabel] * 100) / 100) + " " + v.datasetLabel;
+				return (Math.round(v.value / data.data.maxTime * data.scales[v.datasetLabel] * 100) / 100) + " " + v.datasetLabel;
 			}
 		}
 	});

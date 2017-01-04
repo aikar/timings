@@ -31,8 +31,6 @@ var paths = {};
 paths.static = `${dir}/static`;
 paths.vendorjs = [`${dir}/vendor/js/**.js`];
 paths.js = [`${paths.static}/js/**.js`];
-paths.dart = [`${paths.static}/dart/timings.dart`];
-paths.dart_watch = [`${paths.static}/dart/**.dart`];
 // Files to watch for CSS change, but we have a single entry point
 paths.css_watch = [`${paths.static}/css/**.scss`];
 paths.css_entryfile = `${paths.static}/css/timings.scss`;
@@ -56,7 +54,7 @@ gulp.task('js', () => {
 		.pipe(gulp.dest(paths.dist))
 		;
 });
-
+*/
 gulp.task('css', () => {
 	var processors = [
 		autoprefixer({browsers: ['last 2 versions', 'IE 9', 'IE 10']}),
@@ -77,17 +75,12 @@ gulp.task('css', () => {
 		.pipe(bless())
 		.pipe(gulp.dest(paths.dist));
 });
-*/
 
 gulp.task('js', () => {
 	return gulp.src(paths.js)
 		.pipe(webpack(require('./webpack.config')));
 });
 
-gulp.task('css', () => {
-	return gulp.src(paths.css_entryfile)
-		.pipe(webpack(require('./webpack.config')));
-});
 gulp.task('build', ['vendor', 'js', 'css']);
 
 
