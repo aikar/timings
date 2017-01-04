@@ -22,7 +22,7 @@ $jsvendorver = filemtime("static/dist/vendor.js");
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Aikar's Timings Viewer</title>
 	<meta name="description" content="Aikar's Timings Viewer - View Timings v2 reports from Paper and Sponge" />
-	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.css"/>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.css"/>
 	<link rel="stylesheet" href="static/dist/timings.css?ver=<?=$cssver?>"/>
 	<meta name="robots" content="noindex,nofollow">
 </head>

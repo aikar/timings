@@ -10,9 +10,10 @@
  *  @license MIT
  *
  */
-import {htorgba} from "./util";
-import * as data from './data.jsx';
+import {htorgba} from "./../util";
+import * as data from './../data';
 import * as Math from "lodash/math";
+
 export let labels = [];
 export function initializeChart() {
 	return new Chart($('#tps-graph').get(0).getContext("2d")).Line({

@@ -11,7 +11,7 @@
  *  @license MIT
  *
  */
-import labels from './ui/chart';
+import * as chart from './ui/chart';
 
 let data = window.timingsData || {
 		ranges: [],
@@ -37,7 +37,7 @@ export const scales = {
 export function initializeData() {
 	data.stamps.forEach(function (k) {
 		const d = new Date(k * 1000);
-		labels.push(d.toLocaleString());
+		chart.labels.push(d.toLocaleString());
 	});
 	data.tpsData.forEach(function (tps, i) {
 		data.tpsData[i] = (tps / scales.TPS) * data.maxTime
