@@ -11,8 +11,12 @@ if (is_array($motd)) {
 	$motd = implode("\n", $motd);
 }
 $version = $timingsData->version;
+// Support a bug in Sponge that serialized an optional
 if (!empty($version['value'])) {
-	$version = "(Buggy Sponge Version OPTIONAL OPTIONAL) " . $version['value'];
+	$version = $version['value'];
+}
+if ($version === '$version') {
+	$version = "Sponge IDE Dev";
 }
 ?>
 <div id="header-right" class=" ui-widget ui-widget-content ui-corner-all">
