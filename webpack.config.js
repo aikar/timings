@@ -57,6 +57,7 @@ module.exports = {
 	plugins: [
 		new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 20 }),
 	],
+	// examples for chunks: https://github.com/webpack/webpack/tree/master/examples/multiple-entry-points
 	node: {
 		fs: 'empty',
 		net: 'empty',
