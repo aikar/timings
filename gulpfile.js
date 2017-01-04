@@ -7,6 +7,7 @@
  *
  * @license MIT
  */
+"use strict";
 var gulp = require('gulp');
 var runSeq = require('run-sequence').use(gulp);
 require('gulp-bash-completion')(gulp);
@@ -20,7 +21,7 @@ var csswring = require('csswring');
 var mqpacker = require('css-mqpacker');
 var bless = require('gulp-bless');
 var shell = require("gulp-shell");
-
+var webpack = require('webpack');
 var dir = __dirname;
 var paths = {};
 
@@ -45,6 +46,7 @@ gulp.task('vendor', () => {
 		;
 });
 
+/*
 gulp.task('js', () => {
 	return gulp.src(paths.js)
 		.pipe($.babel())
@@ -55,16 +57,6 @@ gulp.task('js', () => {
 		;
 });
 
-gulp.task('dart-prep', shell.task([
-	"if [ ! -f .packages ]; then pub get && rm -rf packages/ && find -xtype l -delete; fi"
-]));
-
-gulp.task('dart', ['dart-prep'], shell.task([
-	`mkdir -p ${paths.dist} ${dir}/build`,
-	`dart2js -o ${dir}/build/timings.js -m -c --packages=${dir}/.packages ${paths.dart}`,
-	`cp ${dir}/build/timings.js ${paths.dist}/timings.js`
-]));
-
 gulp.task('css', () => {
 	var processors = [
 		autoprefixer({browsers: ['last 2 versions', 'IE 9', 'IE 10']}),
@@ -72,7 +64,7 @@ gulp.task('css', () => {
 		mqpacker,
 		csswring({preserveHacks: true})
 	];
-	
+
 	return gulp.src(paths.css_entryfile)
 		.pipe($.sass({
 			outputStyle: 'nested',
@@ -85,9 +77,19 @@ gulp.task('css', () => {
 		.pipe(bless())
 		.pipe(gulp.dest(paths.dist));
 });
+*/
 
+gulp.task('js', () => {
+	return gulp.src(paths.js)
+		.pipe(webpack(require('./webpack.config')));
+});
+
+gulp.task('css', () => {
+	return gulp.src(paths.css_entryfile)
+		.pipe(webpack(require('./webpack.config')));
+});
 gulp.task('build', ['vendor', 'js', 'css']);
-gulp.task('builddart', ['vendor', 'dart', 'css']);
+
 
 gulp.task('default', ['build'], () => {
 	$.watch(paths.js,  () => $u.scheduleTask('js', 1500));
