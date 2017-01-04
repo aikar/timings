@@ -6,6 +6,7 @@
 .idea/uiDesigner.xml
 # contains user specific settings
 .idea/libraries/Dart_Packages.xml
+.babel-cache
 
 static/dist
 static/timings.css

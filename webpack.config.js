@@ -12,20 +12,18 @@
  */
 let webpack = require('webpack');
 let path = require('path');
-
 module.exports = {
 	context: __dirname,
 	entry: path.join(__dirname, "static/js/timings"),
 	output: {
 		path: path.join(__dirname, "static/dist/"),
-		//publicPath: "static/dist/", // relative path for github pages
+		publicPath: "static/dist/", // relative path for github pages
 		filename: "timings.js",
 		//chunkFilename: "[hash]/js/[id].js",
 		//hotUpdateMainFilename: "[hash]/update.json",
 		//hotUpdateChunkFilename: "[hash]/js/[id].update.js"
 	},
 	resolve: {
-		//modulesDirectories: ["node_modules"],
 		extensions: ['', '.js', '.jsx']
 	},
 	//recordsOutputPath: path.join(__dirname, "records.json"),
@@ -35,7 +33,7 @@ module.exports = {
 				test: [/\.(js|jsx)$/],
 				exclude: /node_modules/,
 				loader: 'babel',
-				cacheDirectory: "cache",
+
 				query: {
 					presets: ['react', 'es2015', 'stage-1']
 				}
@@ -58,13 +56,12 @@ module.exports = {
 	},
 	plugins: [
 		new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 20 }),
-		// new webpack.ProvidePlugin({
-		// 	$: "jquery",
-		// 	jQuery: "jquery",
-		// 	"window.jQuery": "jquery"
-		// })
 	],
-	//watch: true
+	node: {
+		fs: 'empty',
+		net: 'empty',
+		tls: 'empty'
+	}
 };
 function escapeRegExpString(str) { return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"); }
 function pathToRegExp(p) { return new RegExp("^" + escapeRegExpString(p)); }

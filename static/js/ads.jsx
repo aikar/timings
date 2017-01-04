@@ -11,14 +11,12 @@
  *  @license MIT
  *
  */
-import React from "react";
 
 export function initializeAds() {
 	setTimeout(() => {
 		const adCount = $('.adsbygoogle').length;
 		if (adCount) {
-			let ad = <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>;
-			document.body.append(ad);
+			$('<script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>').appendTo("body");
 
 			for (let i = 0; i < adCount; i++) {
 				(window.adsbygoogle = window.adsbygoogle || []).push({});

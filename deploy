@@ -71,6 +71,7 @@ echo "$(c 33)Backed up locally$(ce).."
 	git branch -f production_backup || exit 1
 	git reset --hard origin/production || exit 1
 	git checkout production || exit 1
+	gulp build-release || exit 1
 ) || (
 	cd ..
 	echo "Moving to failed"
