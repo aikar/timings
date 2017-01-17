@@ -24,3 +24,4 @@ pubspec.lock
 build/
 **/packages/
 node_modules
+npm-debug.log
