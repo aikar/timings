@@ -14,7 +14,10 @@ let webpack = require('webpack');
 let path = require('path');
 module.exports = {
 	context: __dirname,
-	entry: path.join(__dirname, "static/js/timings"),
+	entry: [
+		"babel-polyfill",
+		"./static/js/timings"
+	],
 	output: {
 		path: path.join(__dirname, "static/dist/"),
 		publicPath: "static/dist/", // relative path for github pages
@@ -35,11 +38,16 @@ module.exports = {
 				loader: 'babel',
 
 				query: {
-					presets: ['react', 'es2015', 'stage-1']
+					"presets": [
+						["es2015", {"loose": true}],
+						"react",
+						"stage-0"
+					],
+					plugins: ['transform-runtime'],
+					babelrc: false,
 				}
 			},
 			{ test: /\.json$/,   loader: "json" },
-			{ test: /\.coffee$/, loader: "coffee" },
 			{ test: /\.css$/,    loader: "style" },
 			{
 				test: /\.sass$/,
