@@ -31,9 +31,10 @@ Apache is preferred incase .htaccess is needed.
 
 Check out repo, copy config.ini to config.dev.ini and edit to your needs.
 
-You'll also need NodeJS v4 LTS
+You'll also need [NodeJS v6.9 LTS](https://nodejs.org/en/download/)
+You also need [Yarn](https://yarnpkg.com/en/docs/install).
 
-If you are not using Ubuntu 14.04, you may need to "npm rebuild" but i'm unsure if the binary based deps are needed or not.
+Run `yarn` after checking out project to install node dependencies. (This replaces `npm install`)
 
 To compile static resources and monitor them for changes, simply run `gulp` and control + c to abort watching.
 Gulp will monitor all files for changes and recompile the css/js for you.
