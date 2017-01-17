@@ -1,0 +1,24 @@
+{
+    "name": "brandonwamboldt/utilphp",
+    "type": "library",
+    "version": "1.1.0",
+    "description": "util.php is a collection of useful functions and snippets that you need or could use every day, designed to avoid conflicts with existing projects",
+    "keywords": ["php", "utility", "collection", "helpers"],
+    "homepage": "https://github.com/brandonwamboldt/utilphp",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Brandon Wamboldt",
+            "email": "brandon.wamboldt@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "utilphp\\": "src/" }
+    },
+    "require-dev": {
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "require": {
+        "php": ">=5.3.3"
+    }
+}
