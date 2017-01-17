@@ -23,7 +23,7 @@ const EnvironmentPlugin = require('webpack/lib/EnvironmentPlugin');
 const AssetsPlugin = require('assets-webpack-plugin');
 const WebpackAutoCleanBuildPlugin = require("webpack-auto-clean-build-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
+const cssPattern = '_[name]_[local]-[hash:5]';
 module.exports = function(isProduction, watch) {
 	watch = watch || false;
 	process.env.NODE_ENV = isProduction ? "production" : "development";
@@ -86,15 +86,28 @@ module.exports = function(isProduction, watch) {
 							"react",
 							"stage-0"
 						],
-						plugins: ['transform-runtime'],
+						plugins: [
+							'transform-runtime',
+							[
+								"react-css-modules",
+								{
+									filetypes: {
+										".scss": "postcss-scss",
+									},
+									allowMultiple: true,
+									generateScopedName: cssPattern
+								}
+							]
+						],
 						babelrc: false,
 					}
 				},
 				{ test: /\.json$/,   loader: "json" },
 				{ test: /\.css$/,    loader: "style" },
 				{
-					test: /\.sass$/,
-					loader: "style!sass!autoprefixer"
+					test: /\.scss$/,
+					exclude: /(node_modules)/,
+					loader: 'style!css?modules&sourceMap&localIdentName=' + cssPattern + '&importLoaders=1!sass',
 				},
 				{ test: /\.png$/,    loader: "url?prefix=img/&limit=5000" },
 				{ test: /\.jpg$/,    loader: "url?prefix=img/&limit=5000" },

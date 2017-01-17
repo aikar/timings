@@ -6,102 +6,103 @@
  *
  * @license MIT
  ******************************************************************************/
+:global {
+	.content {
+		padding: 10px;
+		background: white;
+		border: solid 1px silver;
+		border-top: none;
+	}
+	#header {
+		width: 100%;
+		background-color: $theme-color;
+		height: 112px;
+		position: relative;
 
-.content {
-	padding:10px;
-	background:white;
-	border:solid 1px silver;
-	border-top:none;
-}
-#header {
-	width: 100%;
-	background-color:$theme-color;
-	height:112px;
-	position:relative;
-	
-	.site-title {
-		position:absolute;
-		top:50%;
-		transform:translateY(-50%);
-		margin-left:30px;
-		display:inline-block;
-		color:white !important;
-		font-size:30px;
-		.subtitle {
-			text-align:center;
-			font-size:16px;
-			a {
-				color:inherit;
+		.site-title {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			margin-left: 30px;
+			display: inline-block;
+			color: white !important;
+			font-size: 30px;
+			.subtitle {
+				text-align: center;
+				font-size: 16px;
+				a {
+					color: inherit;
+				}
 			}
 		}
 	}
-}
-#header-left {
-	float:right;
-	margin:10px;
-}
+	#header-left {
+		float: right;
+		margin: 10px;
+	}
 
-.row-double {
-	padding:10px;
-}
+	.row-double {
+		padding: 10px;
+	}
 
-.section {
-	padding:10px;
-	background-color:white;
-	box-shadow:1px 1px 1px 1px rgba(0,0,0,0.1);
-	.section-head {
-		display:block;
-		
-		.section-title {
-			font-size:15px;
-			font-weight:bold;
-			text-transform:uppercase;
-		}
-		.section-controls {
-			float:right;
-			a {
-				font-size:14px;
-				margin-left:3px;
+	.section {
+		padding: 10px;
+		background-color: white;
+		box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+		.section-head {
+			display: block;
+
+			.section-title {
+				font-size: 15px;
+				font-weight: bold;
+				text-transform: uppercase;
+			}
+			.section-controls {
+				float: right;
+				a {
+					font-size: 14px;
+					margin-left: 3px;
+				}
 			}
 		}
 	}
-}
 
-a.normal {
-	color:inherit;
-}
-
-#tab-bar {
-	margin:10px;
-	& li {
-		cursor: pointer;
+	a.normal {
+		color: inherit;
 	}
-}
-.tabs {
-	background-color:$theme-color-light;
-	height:47px;
-	
-	.tab-title {
-	
-		/* Floating the tab divs left removes the spacing */
-		float:left;
-		border-radius:0;
-		margin:0;
-		color:white;
-		display:inline-block;
-		padding-bottom:10px;
-		padding-top:10px;
-		padding-left:15px;
-		padding-right:15px;
-		text-transform:uppercase;
-		border-bottom:solid 3px transparent;
-		font-weight:bold;
-		&.active , &:hover {
-			border-bottom:solid 3px $theme-accent;
-			color:whiteSmoke;
+
+	#tab-bar {
+		margin: 10px;
+		& li {
+			cursor: pointer;
 		}
-		a {
-			color:inherit;
+	}
+	.tabs {
+		background-color: $theme-color-light;
+		height: 47px;
+
+		.tab-title {
+
+			/* Floating the tab divs left removes the spacing */
+			float: left;
+			border-radius: 0;
+			margin: 0;
+			color: white;
+			display: inline-block;
+			padding-bottom: 10px;
+			padding-top: 10px;
+			padding-left: 15px;
+			padding-right: 15px;
+			text-transform: uppercase;
+			border-bottom: solid 3px transparent;
+			font-weight: bold;
+			&.active, &:hover {
+				border-bottom: solid 3px $theme-accent;
+				color: whiteSmoke;
+			}
+			a {
+				color: inherit;
+			}
 		}
 	}
 }

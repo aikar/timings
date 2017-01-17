@@ -17,6 +17,8 @@ import * as ads from "./ads";
 import * as ui from "./ui";
 import * as hash from "./hash";
 
+import styles from "../css/timings.scss"
+
 $(document).ready(function () {
 	data.initializeData();
 	ui.initializeUI();

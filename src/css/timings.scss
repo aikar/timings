@@ -20,143 +20,145 @@
 @import "minecraft";
 @import "serverinfo";
 
-body {
-	height: 100%;
-	background: $theme-background;
-	//color: #c7c7c7;
-	color:#111;
-	font-size: 1em;
-}
-
-pre, textarea {
-	word-wrap: normal;
-	font-family: $monospace;
-	tab-size: 4;
-	-moz-tab-size: 4;
-	-o-tab-size: 4;
-	overflow: visible;
-	font-size: .7em;
-}
-
-.hidden {
-	display: none;
-}
-
-hr {
-	margin: 0;
-	clear: both;
-}
-
-#content {
-	/* padding: 20px 15px; */
-}
-.dev-warning {
-	padding: 5px;
-	text-align: center;
-	background-color:$theme-color-light;
-	color:whiteSmoke;
-}
-
-/*<a href='#$id'>#</a><span class='name'>$name</span> - count(<span class='count'>$count</span>) -
-		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>) -
-		avg(<span class='avgMs'>{$avg}ms</span> - <span class='tickAvgMs'>{$tickAvg}ms</span>)*/
-body #content * {
-	font-size: 1em;
-}
-.timing-row {
-
-	display: table-cell;
-	width: 100%;
-	.name {
-		display: inline-block;
-		color: lightseagreen;
-		max-width: 500px;
-		@include less-than-xlarge-screen {
-			max-width: 325px;
-		}
-
+:global {
+	body {
+		height: 100%;
+		background: $theme-background;
+		//color: #c7c7c7;
+		color: #111;
+		font-size: 1em;
 	}
 
-	.name, .expand-control, > a {
-		float: left;
-	}
-	.row-info {
-		float:right;
-	}
-	.row-info-avg {
-		min-width: 350px;
-		text-align: right;
-	}
-
-	.row-info-total {
-		margin: auto 20px;
+	pre, textarea {
+		word-wrap: normal;
+		font-family: $monospace;
+		tab-size: 4;
+		-moz-tab-size: 4;
+		-o-tab-size: 4;
+		overflow: visible;
+		font-size: .7em;
 	}
 
-	.row-info, .row-info-total, .row-info-avg {
-		display:inline-block;
-		max-width: 850px;
-		@include small-screen {
-			display: block;
-			text-align: left;
-			min-width: inherit;
-			width: 100%;
-			margin: auto;
-		}
+	.hidden {
+		display: none;
 	}
-	.count, .totalPct, .totalTime, .avgMs, .tickAvgMs {
-		color: gray;
-	}
-}
 
-.full-timing-row {
-	width: 100%;
-	
-	.full-child {
-		width: 100%;
-		display: block !important;
+	hr {
+		margin: 0;
+		clear: both;
 	}
-	.indent {
-		padding-left: 15px;
-		border-left: 1.5px solid;
+
+	#content {
+		/* padding: 20px 15px; */
+	}
+	.dev-warning {
+		padding: 5px;
+		text-align: center;
+		background-color: $theme-color-light;
+		color: whiteSmoke;
+	}
+
+	/*<a href='#$id'>#</a><span class='name'>$name</span> - count(<span class='count'>$count</span>) -
+			total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>) -
+			avg(<span class='avgMs'>{$avg}ms</span> - <span class='tickAvgMs'>{$tickAvg}ms</span>)*/
+	body #content * {
+		font-size: 1em;
+	}
+	.timing-row {
+
 		display: table-cell;
+		width: 100%;
+		.name {
+			display: inline-block;
+			color: lightseagreen;
+			max-width: 500px;
+			@include less-than-xlarge-screen {
+				max-width: 325px;
+			}
+
+		}
+
+		.name, .expand-control, > a {
+			float: left;
+		}
+		.row-info {
+			float: right;
+		}
+		.row-info-avg {
+			min-width: 350px;
+			text-align: right;
+		}
+
+		.row-info-total {
+			margin: auto 20px;
+		}
+
+		.row-info, .row-info-total, .row-info-avg {
+			display: inline-block;
+			max-width: 850px;
+			@include small-screen {
+				display: block;
+				text-align: left;
+				min-width: inherit;
+				width: 100%;
+				margin: auto;
+			}
+		}
+		.count, .totalPct, .totalTime, .avgMs, .tickAvgMs {
+			color: gray;
+		}
 	}
-	.depth0 {
-		border-left-color: #0CB9E8;
+
+	.full-timing-row {
+		width: 100%;
+
+		.full-child {
+			width: 100%;
+			display: block !important;
+		}
+		.indent {
+			padding-left: 15px;
+			border-left: 1.5px solid;
+			display: table-cell;
+		}
+		.depth0 {
+			border-left-color: #0CB9E8;
+		}
+		.depth1 {
+			border-left-color: #0DFF69;
+		}
+		.depth2 {
+			border-left-color: #0D8CFF;
+		}
+		.depth3 {
+			border-left-color: #00FFF1;
+		}
+		.depth4 {
+			border-left-color: #3ca24b;
+		}
+		.row-wrap {
+			overflow: hidden;
+			cursor: pointer;
+		}
+		.row-wrap:hover {
+			background: #555;
+		}
 	}
-	.depth1 {
-		border-left-color: #0DFF69;
+
+	.full-timing-row .children {
+		display: none;
+		clear: both;
+		width: 100%;
 	}
-	.depth2 {
-		border-left-color: #0D8CFF;
-	}
-	.depth3 {
-		border-left-color: #00FFF1;
-	}
-	.depth4 {
-		border-left-color: #3ca24b;
-	}
-	.row-wrap {
-		overflow: hidden;
+
+	.expand-control {
 		cursor: pointer;
+		display: inline-block;
+		color: lightblue;
+		padding: 0 6px;
 	}
-	.row-wrap:hover {
-		background: #555;
+
+	.invisible {
+		display: none !important;
 	}
-}
-
-.full-timing-row .children {
-	display: none;
-	clear:both;
-	width: 100%;
-}
-
-.expand-control {
-	cursor: pointer;
-	display: inline-block;
-	color: lightblue;
-	padding: 0 6px;
-}
-
-.invisible {
-	display: none !important;
 }

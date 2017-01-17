@@ -11,9 +11,8 @@
 namespace Starlis\Timings;
 
 require_once __DIR__ . "/ads.php";
-$cssver = filemtime("static/dist/timings.css");
-$jsver = filemtime("static/dist/timings.js");
-$jsvendorver = filemtime("static/dist/vendor.js");
+$assets = json_decode(file_get_contents("dist/webpack-assets.json"), true);
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,7 +22,6 @@ $jsvendorver = filemtime("static/dist/vendor.js");
 	<title>Aikar's Timings Viewer</title>
 	<meta name="description" content="Aikar's Timings Viewer - View Timings v2 reports from Paper and Sponge" />
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-	<link rel="stylesheet" href="static/dist/timings.css?ver=<?=$cssver?>"/>
 	<meta name="robots" content="noindex,nofollow">
 </head>
 <?php
@@ -77,12 +75,12 @@ Template::getInstance()->loadData();
 	<span id="footer-right">Theme by Thomas Edwards</span>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="static/dist/vendor.js?ver=<?=$jsvendorver?>"></script>
+<script src="<?=htmlentities($assets['vendor']['js'])?>"></script>
 <?php flush(); ?>
 <script type="text/javascript">
 	window.timingsData =<?=Template::getInstance()->getData();?>;
 </script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-<script src="static/dist/timings.js?ver=<?=$jsver?>"></script>
+<script src="<?=htmlentities($assets['timings']['js'])?>"></script>
 </body>
 </html>
