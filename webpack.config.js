@@ -54,7 +54,7 @@ module.exports = function(isProduction, watch) {
 			vendor: [
 				"babel-polyfill"
 			],
-			timings: ["./static/js/timings"]
+			timings: ["./src/js/timings"]
 		},
 		watch: watch,
 		bail: isProduction,
@@ -62,8 +62,8 @@ module.exports = function(isProduction, watch) {
 		cache: !isProduction,
 		devtool: isProduction ? 'cheap-module-source-map' : 'cheap-eval-source-map',
 		output: {
-			path: path.join(__dirname, "static/dist/"),
-			publicPath: "static/dist/", // relative path for github pages
+			path: path.join(__dirname, "dist"),
+			publicPath: "dist/", // relative path for github pages
 			filename: "[name].[chunkhash].js",
 			chunkFilename: "chunk.[id].[chunkhash].js",
 			pathinfo: !isProduction,
@@ -106,7 +106,7 @@ module.exports = function(isProduction, watch) {
 			]
 		},
 		plugins: [
-			new CleanWebpackPlugin([path.join(__dirname, "static", "dist")], {
+			new CleanWebpackPlugin([path.join(__dirname, "dist")], {
 				verbose: false,
 			}),
 			new WebpackAutoCleanBuildPlugin(),
@@ -117,7 +117,7 @@ module.exports = function(isProduction, watch) {
 			new OccurenceOrderPlugin(),
 			new DedupePlugin(),
 			new UglifyJsPlugin(),
-			new AssetsPlugin({path: path.join(__dirname, "static", "dist")}),
+			new AssetsPlugin({path: path.join(__dirname, "dist")}),
 			new CommonsChunkPlugin({
 				name: 'vendor',
 				async: false,

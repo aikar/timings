@@ -9,6 +9,7 @@
 .babel-cache
 .cache
 
+dist/
 static/dist
 static/timings.css
 static/timings.min.js
