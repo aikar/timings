@@ -16,12 +16,12 @@ use Starlis\Timings\util;
  */
 $timingsData = TimingsMaster::getInstance();
 
-echo '<pre>';
-echo "Timings cost: $cost - " . ($cost * $totalTimings) . " - Pct: "
- . round(((($cost * $totalTimings) / ($timingsData->sampletime * 1000000000 / 100))), 2);
-echo "%</pre>\n";
+#echo '<pre>';
+#echo "Timings cost: $cost - " . ($cost * $totalTimings) . " - Pct: "
+# . round(((($cost * $totalTimings) / ($timingsData->sampletime * 1000000000 / 100))), 2);
+#echo "%</pre>\n";
 
-echo '<h5>Installed Plugins:</h5>'."\n";
+echo '<h1 style="font-size:25px;">This Tab is a WIP (On Hold For Now)</h1><br><h5>Installed Plugins:</h5>'."\n";
 
 $plugins = $timingsData->plugins;
 
