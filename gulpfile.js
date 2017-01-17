@@ -30,20 +30,9 @@ const gutil = require("gulp-util");
 
 
 paths.static = `${dir}/static`;
-paths.vendorjs = [`${dir}/vendor/js/**.js`];
 paths.js = [`${paths.static}/js/**.js`,`${paths.static}/js/**.jsx`];
-// Files to watch for CSS change, but we have a single entry point
-paths.css_watch = [`${paths.static}/css/**.scss`];
-paths.css_entryfile = `${paths.static}/css/timings.scss`;
 paths.dist = `${paths.static}/dist`;
 
-gulp.task('vendor', () => {
-	return gulp.src(paths.vendorjs)
-		 .pipe($.uglify({mangle: false}))
-		 .pipe($.concat('vendor.js'))
-		 .pipe(gulp.dest(paths.dist))
-		;
-});
 
 gulp.task('css', () => {
 	const processors = [
@@ -69,65 +58,22 @@ gulp.task('css', () => {
 // EXAMPLE: https://github.com/webpack/webpack-with-common-libs/blob/master/gulpfile.js
 
 const webpackConfig = require('./webpack.config');
-const webpackDevConfig = Object.create(webpackConfig);
-// modify some webpack config options
-webpackDevConfig.devtool = "cheap-module-eval-source-map";
-webpackDevConfig.debug = true;
-webpackDevConfig.output.pathinfo = true;
-webpackDevConfig.module.loaders.forEach((m) => {
-	if (m.loader == 'babel') {
-		m.query.cacheDirectory = '.babel-cache';
-	}
+
+gulp.task('build', (cb) => {
+	let config = webpackConfig(false);
+	webpack(config, config.reporter(cb));
 });
 
-const webpackDev = webpack(webpackDevConfig);
-
-gulp.task('webpack:dev', (cb) => {
-	return webpackDev.run(function(err, stats) {
-		if(err) throw new gutil.PluginError("webpack", err);
-		gutil.log("[webpack]", stats.toString({
-			// output options
-		}));
-		cb();
-	});
-});
-
-gulp.task('webpack:build', (cb) => {
+gulp.task('build:release', (cb) => {
 	// modify some webpack config options
-	const prodConfig = Object.create(webpackConfig);
-	prodConfig.devtool = 'hidden-source-map';
-	prodConfig.plugins = prodConfig.plugins.concat(
-		new webpack.DefinePlugin({
-			"process.env": {
-				// This has effect on the react lib size
-				"NODE_ENV": JSON.stringify("production")
-			}
-		}),
-		new webpack.optimize.DedupePlugin(),
-		new webpack.optimize.UglifyJsPlugin()
-	);
-	webpack(prodConfig, function(err, stats) {
-		if(err) throw new gutil.PluginError("webpack", err);
-		gutil.log("[webpack]", stats.toString({
-			// output options
-		}));
-		cb();
-	});
-});
-
-gulp.task('build-release', ['vendor', 'css'], function(cb) {
-	runSeq(['webpack:build'], cb);
+	let config = webpackConfig(true);
+	let compiler = webpack(config, config.reporter(cb));
+	compiler.on('')
 });
 
 
-gulp.task('default', ['vendor', 'css'], () => {
-	runSeq(['webpack:dev']);
-	$.watch(paths.js,  () => $u.scheduleTask('webpack:dev', 1500));
-	$.watch(paths.css_watch, () => $u.scheduleTask('css', 1500));
-	setImmediate(() => {
-		$.util.log('================================================================');
-		$.util.log('===================== NOW MONITORING FILES =====================');
-		$.util.log('================== PRESS CONTROL + C TO ABORT ==================');
-		$.util.log('================================================================');
-	});
+gulp.task('default', () => {
+	process.env.NODE_ENV = process.env.NODE_ENV || "development";
+	let config = webpackConfig(process.env.NODE_ENV === "production", true);
+	webpack(config, config.reporter());
 });

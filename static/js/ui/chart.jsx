@@ -12,7 +12,7 @@
  */
 import {htorgba} from './../util';
 import * as data from './../data';
-import * as Math from "lodash/math";
+import {round} from "lodash/math";
 
 export let labels = [];
 export function initializeChart() {
@@ -85,9 +85,9 @@ export function initializeChart() {
 		maintainAspectRatio: false,
 		multiTooltipTemplate: function (v) {
 			if (v.datasetLabel == "LAG") {
-				return Math.round((v.value / data.data.maxTime) * 100) + "% TPS Loss";
+				return round((v.value / data.data.maxTime) * 100) + "% TPS Loss";
 			} else {
-				return (Math.round(v.value / data.data.maxTime * data.scales[v.datasetLabel] * 100) / 100) + " " + v.datasetLabel;
+				return (round(v.value / data.data.maxTime * data.scales[v.datasetLabel] * 100) / 100) + " " + v.datasetLabel;
 			}
 		}
 	});
