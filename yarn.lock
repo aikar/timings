@@ -1185,6 +1185,12 @@ clap@^1.0.9:
   dependencies:
     chalk "^1.1.3"
 
+clean-webpack-plugin@^0.1.15:
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/clean-webpack-plugin/-/clean-webpack-plugin-0.1.15.tgz#facc04e0c8dba99bf451ae865ad0361f51af1df1"
+  dependencies:
+    rimraf "~2.5.1"
+
 cliui@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/cliui/-/cliui-2.1.0.tgz#4b475760ff80264c762c3a1719032e91c7fea0d1"
@@ -5520,9 +5526,9 @@ wcwidth@^1.0.0:
   dependencies:
     defaults "^1.0.3"
 
-webpack-auto-clean-build-plugin@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/webpack-auto-clean-build-plugin/-/webpack-auto-clean-build-plugin-1.0.0.tgz#a59d546de6ee421d5a5ffd4d56c2315d58c31980"
+webpack-auto-clean-build-plugin@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/webpack-auto-clean-build-plugin/-/webpack-auto-clean-build-plugin-1.0.2.tgz#891ade0dca4721c0a7b37a6503791ef4ccaab3a6"
 
 webpack-core@~0.6.9:
   version "0.6.9"

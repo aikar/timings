@@ -21,7 +21,8 @@ const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 const OccurenceOrderPlugin = require('webpack/lib/optimize/OccurenceOrderPlugin');
 const EnvironmentPlugin = require('webpack/lib/EnvironmentPlugin');
 const AssetsPlugin = require('assets-webpack-plugin');
-const WebpackCleanPlugin = require("webpack-auto-clean-build-plugin");
+const WebpackAutoCleanBuildPlugin = require("webpack-auto-clean-build-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = function(isProduction, watch) {
 	watch = watch || false;
@@ -105,7 +106,10 @@ module.exports = function(isProduction, watch) {
 			]
 		},
 		plugins: [
-			new WebpackCleanPlugin({path: path.join(__dirname, "static", "dist")}),
+			new CleanWebpackPlugin([path.join(__dirname, "static", "dist")], {
+				verbose: false,
+			}),
+			new WebpackAutoCleanBuildPlugin(),
 			new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 20 }),
 			new DefinePlugin({
 				'process.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'),

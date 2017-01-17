@@ -67,8 +67,7 @@ gulp.task('build', (cb) => {
 gulp.task('build:release', (cb) => {
 	// modify some webpack config options
 	let config = webpackConfig(true);
-	let compiler = webpack(config, config.reporter(cb));
-	compiler.on('')
+	webpack(config, config.reporter(cb));
 });
 
 
