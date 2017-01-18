@@ -45,7 +45,7 @@ Template::getInstance()->loadData();
 				</span>
 			</div>
 			&copy; <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Aikar</a>
-			<span>This system has taken many weeks to develop. If it has helped you, consider donating :)</span>
+			<span>This system has taken years to develop. If it has helped you, consider donating :)</span>
 			<br>
 			Requires <a href="http://paper.emc.gs" title="Paper Minecraft Server">Paper</a>
 			or <a href="https://www.spongepowered.org" title="Sponge Minecraft Server">Sponge</a>
