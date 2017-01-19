@@ -15,32 +15,32 @@ if (!$section) $section = 'lagsummary';
 
 ?>
 <div class="ad_links advert">
-	<?php ad_link(); ?>
+	<?php /*ad_link();*/ ?>
 </div>
 <div id="content">
 	<?php ad_banner_top_right(); ?>
 	<!-- http://refills.bourbon.io/#accordion-tabs -->
 	<div id="tab-bar" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
 		<div class="tabs ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-			<div class="tab-title <?=$section=="lag"?' active':''?>">
+			<div class="tab-title <?=$section==="lag"?' active':''?>">
 				<a href="<?=util::buildurl(['section'=>'lag'])?>" class="tab ui-tabs-anchor">Lag Tree View</a>
 			</div>
-			<div class="tab-title <?=$section=="all"?' active':''?>">
+			<div class="tab-title <?=$section==="all"?' active':''?>">
 				<a href="<?=util::buildurl(['section'=>'all'])?>" class="tab ui-tabs-anchor">All Tree View</a>
 			</div>
-			<div class="tab-title <?=$section=="lagsummary"?' ui-tabs-active ui-state-active':''?>">
+			<div class="tab-title <?=$section==="lagsummary"?' ui-tabs-active ui-state-active':''?>">
 				<a href="<?=util::buildurl(['section'=>'lagsummary'])?>" class="tab ui-tabs-anchor">Lag Summary View</a>
 			</div>
-			<div class="tab-title <?=$section=="summary"?' active':''?>">
+			<div class="tab-title <?=$section==="summary"?' active':''?>">
 				<a href="<?=util::buildurl(['section'=>'summary'])?>" class="tab ui-tabs-anchor">Summary View</a>
 			</div>
-			<div class="tab-title <?=$section=="chunks"?' active':''?>">
+			<div class="tab-title <?=$section==="chunks"?' active':''?>">
 				<a href="<?=util::buildurl(['section'=>'chunks'])?>" class="tab ui-tabs-anchor">Chunks View</a>
 			</div>
-			<div class="tab-title <?=$section=="config"?' active':''?>">
+			<div class="tab-title <?=$section==="config"?' active':''?>">
 				<a href="<?=util::buildurl(['section'=>'config'])?>" class="tab ui-tabs-anchor">Config</a>
 			</div>
-			<div class="tab-title ui-state-default ui-corner-top <?=$section=="plugins"?' ui-tabs-active ui-state-active':''?>">
+			<div class="tab-title ui-state-default ui-corner-top <?=$section==="plugins"?' ui-tabs-active ui-state-active':''?>">
 				<a href="<?=util::buildurl(['section'=>'plugins'])?>" class="tab ui-tabs-anchor">Plugin List</a>
 			</div>
 		</div>

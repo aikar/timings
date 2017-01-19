@@ -21,11 +21,12 @@
 @import "serverinfo";
 
 :global {
+
 	body {
 		height: 100%;
 		background: $theme-background;
 		//color: #c7c7c7;
-		color: #111;
+		color: $theme-color-text;
 		font-size: 1em;
 	}
 
@@ -70,7 +71,7 @@
 		width: 100%;
 		.name {
 			display: inline-block;
-			color: lightseagreen;
+			color: $theme-color-text-alt;
 			max-width: 500px;
 			@include less-than-xlarge-screen {
 				max-width: 325px;
@@ -160,5 +161,37 @@
 
 	.invisible {
 		display: none !important;
+	}
+	.themes {
+		padding: 10px;
+		overflow: hidden;
+		float: right;
+		margin: 10px;
+		height: 92px;
+		.theme-icon {
+			margin: 5px;
+			width: 25px;
+			height: 25px;
+			float: left;
+			cursor: pointer;
+			border-radius: 25px;
+		}
+		@each $theme, $colors in $theme-colors {
+			.theme-#{$theme} {
+				border: 3px solid map-get($colors, accent);
+				background: map-get($colors, base)
+			}
+		}
+
+	}
+
+	.warn-high {
+		color: red;
+	}
+	.warn-medium {
+		color: #ff7820;
+	}
+	.warn-low {
+		color: #ffbf2e;
 	}
 }

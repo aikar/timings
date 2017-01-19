@@ -23,6 +23,11 @@
 			display: none;
 		}
 	}
+	.advert {
+		@include small-screen {
+			display: none;
+		}
+	}
 
 	.responsive-ad {
 		width: 728px;

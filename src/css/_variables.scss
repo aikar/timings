@@ -18,32 +18,82 @@
  
 // Some functions
 @function choose-color($color,$dark,$light) {
-  @if (lightness($color) > 50) {
-    @return $dark; // Lighter backgorund, return dark color
-  } @else {
-    @return $light; // Darker background, return light color
-  }
+	@if (lightness($color) > 50) {
+		@return $dark; // Lighter backgorund, return dark color
+	} @else {
+		@return $light; // Darker background, return light color
+	}
 }
 
-// Some vars
-$theme-color: #c33825; // Red
-$theme-color: #d65400; // Orange
-$theme-color: #217fbc; // Blue
-$theme-color: #2b3d51; // Blue
+$theme-colors: (
+	blue1: (
+		base: #2b3d51,
+		accent: #217fbc,
+		background: #979798,
+		altbackground: #c6c6c7,
+		text: #000,
+		alttext: #000,
+	),
+	blue2: (
+		base: #217fbc,
+		accent: #2b3d51,
+		background: #979798,
+		altbackground: #c6c6c7,
+		text: #000,
+		alttext: #000,
+	),
+	blue1-darker: (
+		base: #1e3851,
+		accent: #1563bc,
+		background: #4d4d4e,
+		altbackground: #c6c6c7,
+		text: white,
+	),
+	dark: (
+		base: #595959,
+		accent: #2b3d51,
+		background: #979798,
+		altbackground: #c6c6c7,
+		text: #000,
+		alttext: #ccc
+	),
+	red: (
+		base: #c33825,
+		accent: #d65400,
+		background: #979798,
+		text: white,
+	),
+	orange: (
+		base: #d65400,
+		accent: red,
+		background: #979798,
+		text: black,
+	)
+) !global;
 
-
-$theme-color-dark: darken($theme-color,10);
-$theme-color-light: lighten($theme-color,10);
-$theme-accent: red;
-$theme-accent: #217fbc;
-
-$theme-background: #ecf0f1;
-$theme-background: #c9c9ca;
-
-$theme-color-text: choose-color($theme-color,#111,whiteSmoke);
-$theme-color-text-inverted: choose-color($theme-color,whiteSmoke,#111);
-
-
-.advert {
-	display:none;
+@function theme-color($theme, $type) {
+	$colors: map-get($theme-colors, $theme);
+	@return map-get($colors, $type);
 }
+@function theme-color-def($theme, $type, $default) {
+	$colors: map-get($theme-colors, $theme);
+	@if map_has_key($colors, $type) {
+		@return map-get($colors, $type);
+	} @else {
+		@return $default;
+	}
+}
+
+@mixin init-theme($theme-name) {
+	$theme-color: theme-color($theme-name, base) !global;
+	$theme-accent: theme-color($theme-name, accent) !global;
+	$theme-background: theme-color($theme-name, background) !global;
+	$theme-background-alt: theme-color-def($theme-name, altbackground, lighten($theme-color,20)) !global;
+
+	$theme-color-dark: darken($theme-color,15) !global;
+	$theme-color-light: lighten($theme-color,10) !global;
+
+	$theme-color-text: theme-color($theme-name, text) !global;
+	$theme-color-text-alt: theme-color-def($theme-name, alttext, darken($theme-color-text, 15)) !global;
+}
+

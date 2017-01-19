@@ -9,7 +9,7 @@
 :global {
 	.content {
 		padding: 10px;
-		background: white;
+		background: $theme-background-alt;
 		border: solid 1px silver;
 		border-top: none;
 	}
@@ -25,7 +25,7 @@
 			transform: translateY(-50%);
 			margin-left: 30px;
 			display: inline-block;
-			color: white !important;
+			color: $theme-color-text !important;
 			font-size: 30px;
 			.subtitle {
 				text-align: center;
@@ -47,7 +47,7 @@
 
 	.section {
 		padding: 10px;
-		background-color: white;
+		background-color: $theme-background-alt;
 		box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
 		.section-head {
 			display: block;

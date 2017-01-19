@@ -59,6 +59,12 @@ module.exports = function(isProduction, watch) {
 				"react",
 				"react-dom",
 			],
+			"timings-theme-blue1": "./src/css/themes/blue1.scss",
+			"timings-theme-blue1-darker": "./src/css/themes/blue1-darker.scss",
+			"timings-theme-blue2": "./src/css/themes/blue2.scss",
+			"timings-theme-dark": "./src/css/themes/dark.scss",
+			"timings-theme-orange": "./src/css/themes/orange.scss",
+			"timings-theme-red": "./src/css/themes/red.scss",
 			timings: ["./src/js/timings"]
 		},
 		watch: watch,
@@ -183,23 +189,33 @@ module.exports = function(isProduction, watch) {
 			new DefinePlugin({
 				'process.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'),
 			}),
-			new UglifyJsPlugin({
+			isProduction ? new UglifyJsPlugin({
 				mangle: true,
 				sourceMap: true,
-			}),
+			}) : null,
 			new AssetsPlugin({path: path.join(__dirname, "dist")}),
 			new CommonsChunkPlugin({
 				name: 'vendor',
-				async: false,
-				children: true,
 				minChunks: 3,
 				filename: "vendor.[chunkhash].js",
 			}),
 			new ExtractTextPlugin({
-				filename: "timings.[chunkhash].css",
+				filename: "[name].[chunkhash].css",
 				disable: false,
 				allChunks: true
 			}),
+			function() {
+				// Delete the empty .js files for themes
+				const compiler = this;
+				compiler.plugin("emit", (result, callback) => {
+					for (const id of Object.keys(result.assets)) {
+						if (id.match(/timings-theme.*\.js(\.map)?$/)) {
+							delete result.assets[id];
+						}
+					}
+					return callback();
+				});
+			}
 		],
 		// examples for chunks: https://github.com/webpack/webpack/tree/master/examples/multiple-entry-points
 		node: {

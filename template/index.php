@@ -22,7 +22,14 @@ $assets = json_decode(file_get_contents("dist/webpack-assets.json"), true);
 	<title>Aikar's Timings Viewer</title>
 	<meta name="description" content="Aikar's Timings Viewer - View Timings v2 reports from Paper and Sponge" />
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-	<link href="<?=htmlentities($assets['timings']['css'])?>" rel="stylesheet" />
+	<?php
+	$theme = 'dark';
+	$cookie = basename($_COOKIE['timings-theme']);
+	if (file_exists(ROOT_DIR . "/src/css/themes/$cookie.scss")) {
+		$theme = $cookie;
+	}
+	?>
+	<link href="<?=htmlentities($assets["timings-theme-{$theme}"]['css'])?>" rel="stylesheet" />
 	<meta name="robots" content="noindex,nofollow">
 </head>
 <?php
@@ -36,7 +43,7 @@ Template::getInstance()->loadData();
 			Timings <small>v</small>2
 			<div class="subtitle">Written by <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Aikar</a></div>
 		</div>
-		
+
 		<div id="header-left" class="section">
 			<div class="section-head">
 				<span class="section-title">Contribute or Donate?</span>
@@ -52,6 +59,20 @@ Template::getInstance()->loadData();
 			or <a href="https://www.spongepowered.org" title="Sponge Minecraft Server">Sponge</a>
 			[<a href="https://www.youtube.com/watch?v=T4J0A9l7bfQ" title="Timings v2 Tutorial">Video Tutorial</a>]
 		</div>
+
+		<div class="section themes">
+			Choose a theme!<br />
+			<?php foreach ($assets as $asset => $value) {
+				if (strpos($asset, 'timings-theme-') === 0) {
+					$theme = substr($asset, 14);
+					?>
+					<div class="theme-icon theme-<?= $theme ?>" data-theme="<?= $theme ?>"></div>
+					<?php
+				}
+			}
+			?>
+		</div>
+
 	</div>
 	<div id="body-wrap">
 		<div class="dev-warning"><strong>Hey!</strong> This site is still under heavy development.</div>

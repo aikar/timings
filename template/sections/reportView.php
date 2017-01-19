@@ -218,13 +218,13 @@ function pctViewMod($val, $mod = 1, $t1 = 25, $t2 = 15, $t3 = 5, $t4 = 1) {
 	$valnum = number_format($val, 2);
 	$val *= $mod;
 	if ($val > $t1) {
-		$valnum = "<span style='color:red'>$valnum</span>";
+		$valnum = "<span class='warn-high'>$valnum</span>";
 	} else if ($val > $t2) {
-		$valnum = "<span style='color:orange'>$valnum</span>";
+		$valnum = "<span class='warn-med'>$valnum</span>";
 	} else if ($val > $t3) {
-		$valnum = "<span style='color:yellow'>$valnum</span>";
+		$valnum = "<span class='warn-low'>$valnum</span>";
 	} else if ($val > $t4) {
-		$valnum = "<span style='color:#ccc'>$valnum</span>";
+		$valnum = "<span class='warn-none'>$valnum</span>";
 	}
 
 	return $valnum;
