@@ -162,7 +162,7 @@ function printRows($lag, $level) {
 		if ($count === 0 || (LAG_ONLY && $lagTicks === 0)) {
 			continue;
 		}
-		if ($_GET['filtername']) {
+		if (isset($_GET['filtername'])) {
 			$filter = $_GET['filtername'];
 			$name = cleanName($l->id);
 			if (stripos($name, $filter) === false) continue;

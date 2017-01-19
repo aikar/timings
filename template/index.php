@@ -24,9 +24,9 @@ $assets = json_decode(file_get_contents("dist/webpack-assets.json"), true);
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 	<?php
 	$theme = 'blue1';
-	$cookie = basename($_COOKIE['timings-theme']);
-	if (file_exists(ROOT_DIR . "/src/css/themes/$cookie.scss")) {
-		$theme = $cookie;
+	if (!empty($_COOKIE['timings-theme'])) {
+		$cookie = basename($_COOKIE['timings-theme']);
+		if (file_exists(ROOT_DIR . "/src/css/themes/$cookie.scss")) $theme = $cookie;
 	}
 	?>
 	<link href="<?=htmlentities($assets["timings-theme-{$theme}"]['css'])?>" rel="stylesheet" />
@@ -61,12 +61,16 @@ Template::getInstance()->loadData();
 		</div>
 
 		<div class="section themes">
-			Choose a theme!<br />
+			<div class="section-head">
+				<span class="section-title">Choose a style</span>
+			</div>
 			<?php foreach ($assets as $asset => $value) {
 				if (strpos($asset, 'timings-theme-') === 0) {
 					$theme = substr($asset, 14);
 					?>
-					<div class="theme-icon theme-<?= $theme ?>" data-theme="<?= $theme ?>"></div>
+					<div class="theme-icon theme-<?= $theme ?>" data-theme="<?= $theme ?>">
+						<span class="theme-base"></span><span class="theme-accent"></span>
+					</div>
 					<?php
 				}
 			}
