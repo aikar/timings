@@ -10,8 +10,9 @@
  *  @license MIT
  *
  */
-let webpack = require('webpack');
-let path = require('path');
+const webpack = require('webpack');
+const path = require('path');
+const fs = require('fs');
 const gutil = require("gulp-util");
 const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 const DefinePlugin = require('webpack/lib/DefinePlugin');
@@ -59,12 +60,6 @@ module.exports = function(isProduction, watch) {
 				"react",
 				"react-dom",
 			],
-			"timings-theme-blue1": "./src/css/themes/blue1.scss",
-			"timings-theme-blue1-darker": "./src/css/themes/blue1-darker.scss",
-			"timings-theme-blue2": "./src/css/themes/blue2.scss",
-			"timings-theme-dark": "./src/css/themes/dark.scss",
-			"timings-theme-orange": "./src/css/themes/orange.scss",
-			"timings-theme-red": "./src/css/themes/red.scss",
 			timings: ["./src/js/timings"]
 		},
 		watch: watch,
@@ -224,6 +219,12 @@ module.exports = function(isProduction, watch) {
 			tls: 'empty'
 		}
 	};
+	const themes = fs.readdirSync(path.join(__dirname, "src/css/themes/"));
+	for (const themeFile of themes) {
+		const theme = themeFile.match(/(.*)\.scss/)[1];
+		config.entry['timings-theme-' + theme] = "./src/css/themes/" + themeFile;
+	}
+
 	config.plugins = config.plugins.filter((plugin) => plugin); // remove nulls
 	Object.defineProperty(config, 'reporter', {
 		value: webpackOutput,
