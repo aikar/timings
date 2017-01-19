@@ -1,5 +1,6 @@
 import {initializeTimeSelector} from "./ui/timeSelector";
-import {initializeChart} from "./ui/chart";
+import {chart} from "./ui/chart";
+import * as data from "./data";
 
 export function initializeUI() {
 
@@ -12,7 +13,7 @@ export function initializeUI() {
 
 	initializeCollapseControls();
 	initializeTimeSelector();
-	initializeChart();
+	chart.initialize(data);
 }
 
 

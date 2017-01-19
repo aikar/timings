@@ -53,14 +53,18 @@ module.exports = function(isProduction, watch) {
 		context: __dirname,
 		entry: {
 			vendor: [
-				"babel-polyfill"
+				"babel-polyfill",
+				"jquery",
+				"chart.js",
+				"react",
+				"react-dom",
 			],
 			timings: ["./src/js/timings"]
 		},
 		watch: watch,
 		bail: isProduction,
 		cache: !isProduction,
-		devtool: isProduction ? 'cheap-module-source-map' : 'cheap-eval-source-map',
+		devtool: isProduction ? 'cheap-module-source-map' : 'cheap-module-eval-source-map',
 		output: {
 			path: path.join(__dirname, "dist"),
 			publicPath: "dist/", // relative path for github pages
