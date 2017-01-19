@@ -18,7 +18,6 @@ const DefinePlugin = require('webpack/lib/DefinePlugin');
 const ProvidePlugin = require('webpack/lib/ProvidePlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
-const OccurenceOrderPlugin = require('webpack/lib/optimize/OccurenceOrderPlugin');
 const EnvironmentPlugin = require('webpack/lib/EnvironmentPlugin');
 const AssetsPlugin = require('assets-webpack-plugin');
 const WebpackAutoCleanBuildPlugin = require("webpack-auto-clean-build-plugin");
