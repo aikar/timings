@@ -170,8 +170,11 @@ function printRows($lag, $level) {
 		printRecord($l);
 		$id = $l->id->id;
 		$h = $tpl->handlerData[$id];
+		if (!isset($processMap[$id])) {
+			$processMap[$id] = 0;
+		}
 
-		if (!empty($h->children) && ++$processMap[$id] == 1) {
+		if (!empty($h->children) && ++$processMap[$id] === 1) {
 			if (!NOFILTER) {
 				$children = array_filter($h->children, 'lagFilter');
 			} else {
