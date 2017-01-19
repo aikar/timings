@@ -43,7 +43,7 @@ class Timings {
 			$storage = new LegacyStorageService();
 		} else if (!empty($_GET['id'])) {
 			$id = $_GET['id'];
-		} else if (TIMINGS_ENV === 'dev') {
+		} else {
 			global $ini;
 			$id = $ini["dev_id"]; // DEV test
 		}
