@@ -23,6 +23,8 @@ const EnvironmentPlugin = require('webpack/lib/EnvironmentPlugin');
 const AssetsPlugin = require('assets-webpack-plugin');
 const WebpackAutoCleanBuildPlugin = require("webpack-auto-clean-build-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 const cssPattern = '_[name]_[local]-[hash:5]';
 module.exports = function(isProduction, watch) {
 	watch = watch || false;
@@ -47,8 +49,8 @@ module.exports = function(isProduction, watch) {
 			cb && cb();
 		}
 	}
+
 	const config = {
-		reporter: webpackOutput,
 		context: __dirname,
 		entry: {
 			vendor: [
@@ -58,7 +60,6 @@ module.exports = function(isProduction, watch) {
 		},
 		watch: watch,
 		bail: isProduction,
-		debug: !isProduction,
 		cache: !isProduction,
 		devtool: isProduction ? 'cheap-module-source-map' : 'cheap-eval-source-map',
 		output: {
@@ -69,56 +70,108 @@ module.exports = function(isProduction, watch) {
 			pathinfo: !isProduction,
 		},
 		resolve: {
-			extensions: ['', '.js', '.jsx']
+			extensions: ['.js', '.jsx']
 		},
 		recordsOutputPath: path.join(__dirname, ".cache", "records.json"),
 		module: {
-			loaders: [
+			rules: [
 				{
 					test: [/\.(js|jsx)$/],
 					exclude: /node_modules/,
-					loader: 'babel',
-
-					query: {
-						cacheDirectory: isProduction ? null : '.cache/babel',
-						"presets": [
-							["es2015", {"loose": true}],
-							"react",
-							"stage-0"
-						],
-						plugins: [
-							'transform-runtime',
-							[
-								"react-css-modules",
-								{
-									filetypes: {
-										".scss": "postcss-scss",
-									},
-									allowMultiple: true,
-									generateScopedName: cssPattern
-								}
-							]
-						],
-						babelrc: false,
+					use: {
+						loader: 'babel-loader',
+						options: {
+							cacheDirectory: isProduction ? null : '.cache/babel',
+							"presets": [
+								["es2015", {"loose": true, modules: false}],
+								"react",
+								"stage-0"
+							],
+							plugins: [
+								'transform-runtime',
+								[
+									"react-css-modules",
+									{
+										filetypes: {
+											".scss": "postcss-scss",
+										},
+										allowMultiple: true,
+										generateScopedName: cssPattern
+									}
+								]
+							],
+							babelrc: false,
+						}
 					}
 				},
-				{ test: /\.json$/,   loader: "json" },
-				{ test: /\.css$/,    loader: "style" },
+
+				//{ test: /\.css$/, use: ["style-loader"] },
 				{
 					test: /\.scss$/,
 					exclude: /(node_modules)/,
-					loader: 'style!css?modules&sourceMap&localIdentName=' + cssPattern + '&importLoaders=1!sass',
+					loader: ExtractTextPlugin.extract({
+						fallbackLoader: 'style-loader',
+						loader: [
+							{
+								loader: 'css-loader',
+								query: {
+									modules: true,
+									sourceMap: true,
+									localIdentName: cssPattern,
+									importLoaders: 1
+								}
+							},
+							'sass-loader'
+						]
+					})
 				},
-				{ test: /\.png$/,    loader: "url?prefix=img/&limit=5000" },
-				{ test: /\.jpg$/,    loader: "url?prefix=img/&limit=5000" },
-				{ test: /\.gif$/,    loader: "url?prefix=img/&limit=5000" },
-				{ test: /\.woff$/,   loader: "url?prefix=font/&limit=5000" },
-				{ test: /\.eot$/,    loader: "file?prefix=font/" },
-				{ test: /\.ttf$/,    loader: "file?prefix=font/" },
-				{ test: /\.svg$/,    loader: "file?prefix=font/" },
+				{
+					test: /\.(png|jpg|gif)$/, use: [{
+						loader: "url-loader",
+						options: {
+							prefix: "img/",
+							limit: 5000
+						}
+					}]
+				},
+				{
+					test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, use: [{
+						loader: "url-loader",
+						options: {
+							limit: 10000,
+							mimetype: "application/font-woff"
+						}
+					}],
+				},
+				{
+					test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, use: [{
+						loader: "url-loader",
+						options: {
+							limit: 10000,
+							mimetype: "application/octet-stream"
+						}
+					}]
+				},
+				{ test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, use: ["file-loader"] },
+				{
+					test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, use: [{
+						loader: "url-loader",
+						options: {
+							limit: 10000,
+							mimetype: "image/svg+xml"
+						}
+					}]
+				}
 			]
 		},
 		plugins: [
+			new webpack.LoaderOptionsPlugin({
+				minimize: isProduction,
+				debug: !isProduction,
+				options: {
+					context: __dirname
+				}
+			}),
 			new CleanWebpackPlugin([path.join(__dirname, "dist")], {
 				verbose: false,
 			}),
@@ -127,9 +180,10 @@ module.exports = function(isProduction, watch) {
 			new DefinePlugin({
 				'process.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'),
 			}),
-			new OccurenceOrderPlugin(),
-			new DedupePlugin(),
-			new UglifyJsPlugin(),
+			new UglifyJsPlugin({
+				mangle: true,
+				sourceMap: true,
+			}),
 			new AssetsPlugin({path: path.join(__dirname, "dist")}),
 			new CommonsChunkPlugin({
 				name: 'vendor',
@@ -137,7 +191,12 @@ module.exports = function(isProduction, watch) {
 				children: true,
 				minChunks: 3,
 				filename: "vendor.[chunkhash].js",
-			})
+			}),
+			new ExtractTextPlugin({
+				filename: "timings.[chunkhash].css",
+				disable: false,
+				allChunks: true
+			}),
 		],
 		// examples for chunks: https://github.com/webpack/webpack/tree/master/examples/multiple-entry-points
 		node: {
@@ -146,6 +205,11 @@ module.exports = function(isProduction, watch) {
 			tls: 'empty'
 		}
 	};
+	config.plugins = config.plugins.filter((plugin) => plugin); // remove nulls
+	Object.defineProperty(config, 'reporter', {
+		value: webpackOutput,
+		enumerable: false
+	});
 	return config;
 };
 const main = path.basename(require.main.filename);

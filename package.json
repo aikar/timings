@@ -24,6 +24,7 @@
     "css-loader": "^0.26.1",
     "css-mqpacker": "^5.0.1",
     "csswring": "^5.1.1",
+    "extract-text-webpack-plugin": "beta",
     "file-loader": "^0.9.0",
     "gulp": "^3.9.1",
     "gulp-bash-completion": "~1.1.0",
@@ -57,7 +58,7 @@
     "style-loader": "^0.13.1",
     "underscore.string": "~3.3.4",
     "url-loader": "^0.5.7",
-    "webpack": "^1.14.0",
+    "webpack": "beta",
     "webpack-auto-clean-build-plugin": "^1.0.2",
     "webpack-dev-server": "^1.16.2"
   },

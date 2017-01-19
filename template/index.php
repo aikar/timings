@@ -22,6 +22,7 @@ $assets = json_decode(file_get_contents("dist/webpack-assets.json"), true);
 	<title>Aikar's Timings Viewer</title>
 	<meta name="description" content="Aikar's Timings Viewer - View Timings v2 reports from Paper and Sponge" />
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+	<link href="<?=htmlentities($assets['timings']['css'])?>" rel="stylesheet" />
 	<meta name="robots" content="noindex,nofollow">
 </head>
 <?php
