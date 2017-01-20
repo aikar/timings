@@ -26,13 +26,14 @@ function initializeCollapseControls() {
 		$parent.find('> .row-wrap > .name').first().before("<div class='expand-control'>[+]</div> ");
 
 		var $control = $parent.find('> .row-wrap > .expand-control').first();
-		$parent.find('> .row-wrap').bind("click", toggleTimings.bind($this, $parent));
-		$control.bind("click", toggleTimings.bind($this, $parent));
+		$parent.find('> .row-wrap').click(toggleTimings.bind($this, $parent));
+		$control.click(toggleTimings.bind($this, $parent));
 	});
 }
 
 
-export function toggleTimings($parent) {
+export function toggleTimings($parent, e) {
+
 	var $c = $parent.find('> .row-wrap > .expand-control').first();
 	if ($parent.data('shown')) {
 		$parent.find('> .children').first().hide();
@@ -45,5 +46,6 @@ export function toggleTimings($parent) {
 		$parent.removeClass('show-children');
 		$c.html('[-]');
 	}
+	return false;
 }
 

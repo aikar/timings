@@ -139,9 +139,21 @@ body #content * {
 		overflow: hidden;
 		cursor: pointer;
 	}
+
+	.expand-control {
+		cursor: pointer;
+		display: inline-block;
+		color: $theme-accent;
+		padding: 0 6px;
+	}
 	.row-wrap:hover {
 		background: $theme-accent;
+		.expand-control {
+			color: $theme-color-text-special;
+		}
 	}
+
+
 }
 
 .full-timing-row .children {
@@ -150,12 +162,6 @@ body #content * {
 	width: 100%;
 }
 
-.expand-control {
-	cursor: pointer;
-	display: inline-block;
-	color: $theme-accent;
-	padding: 0 6px;
-}
 
 .invisible {
 	display: none !important;
