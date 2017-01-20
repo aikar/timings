@@ -68,7 +68,7 @@ function readIni(file) {
 
 // =====================
 function copyFile(source, target, cb) {
-	const cbCalled = false;
+	let cbCalled = false;
 
 	const rd = fs.createReadStream(source);
 	rd.on("error", done);
