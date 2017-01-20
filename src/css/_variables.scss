@@ -46,13 +46,14 @@ $theme-colors: (
 		text: #000,
 		text-special: white
 	),
-	blue1-darker: (
+	blue1-dark: (
 		base: #1e3851,
 		accent: #1563bc,
-		background: #4d4d4e,
-		altbackground: #c6c6c7,
-		text: #111,
-		text-special:white
+		background: black,
+		altbackground: #333,
+		text: white,
+		text-special: white,
+		alttext: white
 	),
 	dark: (
 		base: #404040,
