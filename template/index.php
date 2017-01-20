@@ -69,7 +69,8 @@ Template::getInstance()->loadData();
 					$theme = substr($asset, 14);
 					?>
 					<div class="theme-icon theme-<?= $theme ?>" data-theme="<?= $theme ?>">
-						<span class="theme-base"></span><span class="theme-accent"></span>
+						<div class="theme-bg"></div>
+						<div class="theme-base"></div>
 					</div>
 					<?php
 				}

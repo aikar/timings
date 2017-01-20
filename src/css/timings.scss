@@ -174,31 +174,33 @@ body #content * {
 	height: 92px;
 	.theme-icon {
 		margin: 5px;
-		width: 25px;
+		width: 40px;
 		height: 40px;
 		float: left;
 		cursor: pointer;
 		border:solid 1px white;
 		white-space:nowrap;
 		overflow:hidden;
-		.theme-base, .theme-accent {
+		.theme-base, .theme-bg {
 			width:100%;
 			display:block;
 		}
-		.theme-base {
+		.theme-bg {
 			height:70%;
 		}
-		.theme-accent {
+		.theme-base {
 			height:30%;
 		}
 	}
 	@each $theme, $colors in $theme-colors {
 		.theme-#{$theme} {
-			.theme-accent {
-				border-bottom: 20px solid map-get($colors, accent);
+			.theme-bg {
+				background: map-get($colors, altbackground);
+				border-right: 10px solid map-get($colors, accent);
 			}
 			.theme-base {
 				background: map-get($colors, base);
+				border-right: 10px solid map-get($colors, accent);
 			}
 		}
 	}
