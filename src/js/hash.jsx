@@ -11,7 +11,7 @@
  *
  */
 import {toggleTimings} from "./ui";
-
+window.keepScroll = false;
 export function checkHashLoc() {
 	let hash = location.hash;
 	if (!hash || hash.length < 2) {
@@ -36,7 +36,13 @@ export function checkHashLoc() {
 			break;
 		}
 	} while (el);
-	$('html, body').animate({
-		scrollTop: $(hash).offset().top-45
-	}, 500);
+	if (window.keepScroll !== false) {
+		document.body.scrollTop = window.keepScroll;
+		console.log("reset scroll", window.keepScroll)
+		window.keepScroll = false;
+	} else {
+		$('html, body').animate({
+			scrollTop: $(hash).offset().top - 45
+		}, 500);
+	}
 }
