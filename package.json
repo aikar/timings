@@ -60,7 +60,7 @@
     "underscore.string": "~3.3.4",
     "url-loader": "^0.5.7",
     "webpack": "beta",
-    "webpack-auto-clean-build-plugin": "^1.0.2",
+    "webpack-auto-clean-build-plugin": "^1.0.3",
     "webpack-dev-server": "^1.16.2"
   },
   "repository": {
