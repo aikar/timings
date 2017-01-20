@@ -28,7 +28,7 @@ if (!$section) $section = 'lagsummary';
 			<div class="tab-title <?=$section==="all"?' active':''?>">
 				<a href="<?=util::buildurl(['section'=>'all'])?>" class="tab ui-tabs-anchor">All Tree View</a>
 			</div>
-			<div class="tab-title <?=$section==="lagsummary"?' active':''?>">
+			<div class="tab-title <?=$section==="lagsummary"?' ui-tabs-active ui-state-active':''?>">
 				<a href="<?=util::buildurl(['section'=>'lagsummary'])?>" class="tab ui-tabs-anchor">Lag Summary View</a>
 			</div>
 			<div class="tab-title <?=$section==="summary"?' active':''?>">
