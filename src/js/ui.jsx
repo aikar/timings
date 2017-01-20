@@ -19,21 +19,25 @@ function initializeCollapseControls() {
 		const $this = $(this);
 		const $parent = $this.parent();
 		$parent.find('> .row-wrap > .name').first().before("<div class='expand-control'>[+]</div> ");
-		$parent.find('a').click(function(e) {
-			try {
-				history.replaceState({}, '', e.target.href);
-				e.preventDefault();
-				toggleTimings.call($this, $parent, e);
-			} catch(er) {
-				// your browser sucks, deal with flicker
-				window.keepScroll = document.body.scrollTop;
-			}
-		});
+
 
 		const $control = $parent.find('> .row-wrap > .expand-control').first();
 		$parent.find('> .row-wrap').click(toggleTimings.bind($this, $parent));
 		$control.click(toggleTimings.bind($this, $parent));
+		$parent.find('> a').first().click(clickhandler.bind(null, toggleTimings.bind($this, $parent)));
 	});
+	$('.full-timing-row > .timing-row > a').click(clickhandler.bind(null, null));
+	function clickhandler($cb, e) {
+		try {
+			history.replaceState({}, '', e.target.href);
+			e.preventDefault();
+			$cb && $cb();
+		} catch(er) {
+			// your browser sucks, deal with flicker
+			window.keepScroll = document.body.scrollTop;
+			console.error(er);
+		}
+	}
 }
 
 

@@ -172,6 +172,7 @@ class Template {
 		foreach ($handlerData as $id => $handler) {
 			$record = clone $selfRecord;
 			$thisSelfId = clone $selfId;
+			$thisSelfId->id = $handler->id->id . "-self";
 			$thisSelfId->name = "(SELF) " . $handler->id->name;
 			$thisSelfId->group = $handler->id->group;
 			$record->id = $thisSelfId;
