@@ -181,26 +181,33 @@ body #content * {
 		border:solid 1px white;
 		white-space:nowrap;
 		overflow:hidden;
-		.theme-base, .theme-bg {
+		.theme-base, .theme-bg, .theme-accent {
 			width:100%;
 			display:block;
 		}
 		.theme-bg {
-			height:70%;
+			height:65%;
+		}
+		.theme-accent {
+			height:10%;
 		}
 		.theme-base {
-			height:30%;
+			height:25%;
 		}
 	}
 	@each $theme, $colors in $theme-colors {
 		.theme-#{$theme} {
 			.theme-bg {
 				background: map-get($colors, altbackground);
-				border-right: 10px solid map-get($colors, accent);
+			}
+			.theme-accent {
+				background: map-get($colors, accent);
 			}
 			.theme-base {
 				background: map-get($colors, base);
-				border-right: 10px solid map-get($colors, accent);
+			}
+			.theme-bg, .theme-accent, .theme-base {
+				border-right: 5px solid lighten(map-get($colors, base),10);
 			}
 		}
 	}

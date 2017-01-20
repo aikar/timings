@@ -68,8 +68,9 @@ Template::getInstance()->loadData();
 				if (strpos($asset, 'timings-theme-') === 0) {
 					$theme = substr($asset, 14);
 					?>
-					<div class="theme-icon theme-<?= $theme ?>" data-theme="<?= $theme ?>">
+					<div title="<?=$theme?>" class="theme-icon theme-<?= $theme ?>" data-theme="<?= $theme ?>">
 						<div class="theme-bg"></div>
+						<div class="theme-accent"></div>
 						<div class="theme-base"></div>
 					</div>
 					<?php
