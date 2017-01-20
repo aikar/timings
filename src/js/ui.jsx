@@ -5,12 +5,7 @@ import * as data from "./data";
 export function initializeUI() {
 
 	$('.button').button();
-	$('#tab-bar').find('li').hover(function () {
-		$(this).addClass('ui-state-hover');
-	}, function () {
-		$(this).removeClass('ui-state-hover');
-	});
-
+	
 	initializeCollapseControls();
 	initializeTimeSelector();
 	chart.initialize(data);
