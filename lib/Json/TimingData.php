@@ -18,7 +18,8 @@ use Starlis\Timings\FromJsonParent;
  */
 class TimingData {
 	use FromJson;
-	public $mergedCount = 1;
+	public $mergedCount = 0;
+	public $mergedLagCount = 0;
 	/**
 	 * @index  0
 	 * @mapper TimingsMap::getHandlerIdentity
@@ -75,7 +76,10 @@ class TimingData {
 		$this->mergedCount++;
 		$this->count += $data->count;
 		$this->total += $data->total;
-		$this->lagCount += $data->lagCount;
-		$this->lagTotal += $data->lagTotal;
+		if ($data->lagCount) {
+			$this->mergedLagCount++;
+			$this->lagCount += $data->lagCount;
+			$this->lagTotal += $data->lagTotal;
+		}
 	}
 }

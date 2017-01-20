@@ -25,6 +25,11 @@ class TimingHandler extends TimingData {
 	 * @var TimingData[]
 	 */
 	public $children;
+	// Maintain stats on children to calculate self
+	public $childrenCount = 0;
+	public $childrenTotal = 0;
+	public $childrenLagCount = 0;
+	public $childrenLagTotal = 0;
 
 	/**
 	 * @param $data
@@ -40,9 +45,7 @@ class TimingHandler extends TimingData {
 			}
 
 		}
-		$data = TimingData::normalizeData($data, $parent);
-
-		return $data;
+		return TimingData::normalizeData($data, $parent);
 	}
 
 	public function __clone() {
@@ -55,6 +58,7 @@ class TimingHandler extends TimingData {
 		$this->addData($handler);
 		foreach ($handler->children as $child) {
 			$id = $child->id->id;
+
 			if (isset($this->children[$id])) {
 				$this->children[$id]->addData($child);
 			} else {

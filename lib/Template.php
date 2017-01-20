@@ -11,7 +11,9 @@
 namespace Starlis\Timings;
 
 use Starlis\Timings\Json\Region;
+use Starlis\Timings\Json\TimingData;
 use Starlis\Timings\Json\TimingHandler;
+use Starlis\Timings\Json\TimingIdentity;
 use Starlis\Timings\Json\TimingsMaster;
 
 class Template {
@@ -155,6 +157,7 @@ class Template {
 					if (!array_key_exists($id, $handlerData)) {
 						$handlerData[$id] = clone $handler;
 						$handlerData[$id]->mergedCount = 1;
+						$handlerData[$id]->mergedLagCount = $handler->lagCount ? 1 : 0;
 					} else {
 						$handlerData[$id]->addDataFromHandler($handler);
 					}
@@ -163,6 +166,27 @@ class Template {
 					}
 				}
 			}
+		}
+		$selfId = new TimingIdentity();
+		$selfRecord = new TimingData();
+		foreach ($handlerData as $id => $handler) {
+			$record = clone $selfRecord;
+			$thisSelfId = clone $selfId;
+			$thisSelfId->name = "(SELF) " . $handler->id->name;
+			$thisSelfId->group = $handler->id->group;
+			$record->id = $thisSelfId;
+			foreach ($handler->children as $child) {
+				$handler->childrenCount += $child->mergedCount;
+				$handler->childrenLagCount += $child->mergedLagCount;
+				$handler->childrenTotal += $child->total ?: 0;
+				$handler->childrenLagTotal += $child->lagTotal ?: 0;
+			}
+
+			$record->total = $handler->total - $handler->childrenTotal;
+			$record->lagTotal = $handler->lagTotal - $handler->childrenLagTotal;
+			$record->count = $handler->count - $handler->childrenCount;
+			$record->lagCount = $handler->lagCount - $handler->childrenLagCount;
+			$handler->children[$id] = $record;
 		}
 
 		if (DEBUGGING && util::array_get($_GET['showmaster'])) util::var_dump($masterHandler);
