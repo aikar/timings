@@ -6,60 +6,60 @@
  *
  * @license MIT
  ******************************************************************************/
-:global {
-	#history-selector {
-		#tps-graph {
-			width: 98%;
-			height: 200px;
-		}
-		padding: 10px;
+
+#history-selector {
+	#tps-graph {
+		width: 98%;
+		height: 200px;
+	}
+	padding: 10px;
+	text-align: center;
+
+	width: 69.5%;
+	float: right;
+
+	#time-selector {
+		height: 3px;
+		width: auto;
+
+		margin-left: 11px;
+		margin-right: 11px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+
 		text-align: center;
+		padding: 0;
+		background-color: silver;
+		position: relative;
 
-		width: 69.5%;
-		float: right;
+		.ui-slider-handle {
+			height: 15px;
+			width: 15px;
 
-		#time-selector {
-			height: 3px;
-			width: auto;
-
-			margin-left: 11px;
-			margin-right: 11px;
-			margin-top: 10px;
-			margin-bottom: 10px;
-
-			text-align: center;
-			padding: 0;
-			background-color: silver;
-			position: relative;
-
-			.ui-slider-handle {
-				height: 15px;
-				width: 15px;
-
-				background-color: $theme-accent;
-				display: inline-block;
-				margin-top: -7.5px;
-				border-radius: 50%;
-				position: absolute;
-				z-index: 2;
-				margin-left: -11px;
-			}
-			.ui-slider-range {
-				background-color: $theme-accent;
-				display: inline-block;
-				height: 3px;
-				position: absolute;
-				z-index: 1;
-			}
+			background-color: $theme-accent;
+			display: inline-block;
+			margin-top: -7.5px;
+			border-radius: 50%;
+			position: absolute;
+			z-index: 2;
+			margin-left: -11px;
 		}
-
-		canvas {
-			height: 220px !important;
+		.ui-slider-range {
+			background-color: $theme-accent;
+			display: inline-block;
+			height: 3px;
+			position: absolute;
+			z-index: 1;
 		}
 	}
 
-	.canvas-wrapper {
-		width: 100%;
-		margin: auto;
+	canvas {
+		height: 220px !important;
 	}
 }
+
+.canvas-wrapper {
+	width: 100%;
+	margin: auto;
+}
+

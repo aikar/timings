@@ -92,17 +92,7 @@ module.exports = function(isProduction, watch) {
 								"stage-0"
 							],
 							plugins: [
-								'transform-runtime',
-								[
-									"react-css-modules",
-									{
-										filetypes: {
-											".scss": "postcss-scss",
-										},
-										allowMultiple: true,
-										generateScopedName: cssPattern
-									}
-								]
+								'transform-runtime'
 							],
 							babelrc: false,
 						}
@@ -119,13 +109,17 @@ module.exports = function(isProduction, watch) {
 							{
 								loader: 'css-loader',
 								query: {
-									modules: true,
 									sourceMap: true,
 									localIdentName: cssPattern,
 									importLoaders: 1
 								}
 							},
-							'sass-loader'
+							{
+								loader: 'sass-loader',
+								query: {
+									sourceMap: true
+								}
+							}
 						]
 					})
 				},

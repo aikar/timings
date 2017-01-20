@@ -6,165 +6,164 @@
  *
  * @license MIT
  ******************************************************************************/
-:global {
-	.content {
-		padding: 10px;
-		background: $theme-background-alt;
-		border: solid 1px silver;
-		border-top: none;
-	}
-	#header {
-		width: 100%;
-		background-color: $theme-color;
-		height: 112px;
-		position: relative;
+.content {
+	padding: 10px;
+	background: $theme-background-alt;
+	border: solid 1px silver;
+	border-top: none;
+}
+#header {
+	width: 100%;
+	background-color: $theme-color;
+	height: 112px;
+	position: relative;
 
-		.site-title {
-			position: absolute;
-			top: 50%;
-			transform: translateY(-50%);
-			margin-left: 30px;
-			display: inline-block;
-			color: $theme-color-text-special !important;
-			font-size: 30px;
-			.subtitle {
-				text-align: center;
-				font-size: 16px;
-				a {
-					color: inherit;
-				}
-			}
-		}
-	}
-	#header-left {
-		float: right;
-		margin: 10px;
-	}
-
-	.row-double {
-		padding: 10px;
-	}
-
-	.section {
-		padding: 10px;
-		background-color: $theme-background-alt;
-		box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
-		.section-head {
-			display: block;
-
-			.section-title {
-				font-size: 15px;
-				font-weight: bold;
-				text-transform: uppercase;
-			}
-			.section-controls {
-				float: right;
-				a {
-					font-size: 14px;
-					margin-left: 3px;
-				}
-			}
-		}
-	}
-
-	a.normal {
-		color: inherit;
-	}
-
-	#tab-bar {
-		margin: 10px;
-		& li {
-			cursor: pointer;
-		}
-	}
-	.tabs {
-		background-color: $theme-color-light;
-		height: 47px;
-
-		.tab-title {
-
-			/* Floating the tab divs left removes the spacing */
-			float: left;
-			border-radius: 0;
-			margin: 0;
-			color: $theme-color-text-special;
-			display: inline-block;
-			padding-bottom: 10px;
-			padding-top: 10px;
-			padding-left: 15px;
-			padding-right: 15px;
-			text-transform: uppercase;
-			border-bottom: solid 3px transparent;
-			font-weight: bold;
-			&.active, &:hover {
-				border-bottom: solid 3px $theme-accent;
-				color: whiteSmoke;
-			}
+	.site-title {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		margin-left: 30px;
+		display: inline-block;
+		color: $theme-color-text-special !important;
+		font-size: 30px;
+		.subtitle {
+			text-align: center;
+			font-size: 16px;
 			a {
 				color: inherit;
 			}
 		}
 	}
-	a {
-		color: $theme-color-links;
-	}
-	a:hover {
-		color: $theme-color-text;
-	}
-	
-	/* Small screens */
-	@media (max-width: 1112px) {
-		#header {
-			height:auto;
-			padding-bottom:5px;
-			.site-title {
-				float:none;
-				top:initial;
-				transform:none;
-				width:100%;
-				margin:10px;
-				text-align:center;
-				position:initial;
-			}
-			.section {
-				&.themes {
-					float:none;
-					
-				}
-			}
+}
+#header-left {
+	float: right;
+	margin: 10px;
+}
+
+.row-double {
+	padding: 10px;
+}
+
+.section {
+	padding: 10px;
+	background-color: $theme-background-alt;
+	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+	.section-head {
+		display: block;
+
+		.section-title {
+			font-size: 15px;
+			font-weight: bold;
+			text-transform: uppercase;
 		}
-		#header-left {
-			float:none;
-			margin:0;
-		}
-		#body-wrap {
-			.row-double {
-				#history-selector, #server-info {
-					width:100%;
-					display:block;
-					float:none;
-				}
-				#server-info {
-					margin-top:10px;
-					height:auto;
-				}
-			}
-			#tab-bar .tabs {
-				height:auto;
-				.tab-title {
-					float:none;
-				}
-			}
-		}
-		#footer {
-			height:auto;
-			line-height:initial;
-			padding:20px;
-			#footer-left, #footer-right {
-				width:100%;
-				display:block;
-				text-align:center;
+		.section-controls {
+			float: right;
+			a {
+				font-size: 14px;
+				margin-left: 3px;
 			}
 		}
 	}
 }
+
+a.normal {
+	color: inherit;
+}
+
+#tab-bar {
+	margin: 10px;
+	& li {
+		cursor: pointer;
+	}
+}
+.tabs {
+	background-color: $theme-color-light;
+	height: 47px;
+
+	.tab-title {
+
+		/* Floating the tab divs left removes the spacing */
+		float: left;
+		border-radius: 0;
+		margin: 0;
+		color: $theme-color-text-special;
+		display: inline-block;
+		padding-bottom: 10px;
+		padding-top: 10px;
+		padding-left: 15px;
+		padding-right: 15px;
+		text-transform: uppercase;
+		border-bottom: solid 3px transparent;
+		font-weight: bold;
+		&.active, &:hover {
+			border-bottom: solid 3px $theme-accent;
+			color: whiteSmoke;
+		}
+		a {
+			color: inherit;
+		}
+	}
+}
+a {
+	color: $theme-color-links;
+}
+a:hover {
+	color: $theme-color-text;
+}
+
+/* Small screens */
+@media (max-width: 1112px) {
+	#header {
+		height:auto;
+		padding-bottom:5px;
+		.site-title {
+			float:none;
+			top:initial;
+			transform:none;
+			width:100%;
+			margin:10px;
+			text-align:center;
+			position:initial;
+		}
+		.section {
+			&.themes {
+				float:none;
+
+			}
+		}
+	}
+	#header-left {
+		float:none;
+		margin:0;
+	}
+	#body-wrap {
+		.row-double {
+			#history-selector, #server-info {
+				width:100%;
+				display:block;
+				float:none;
+			}
+			#server-info {
+				margin-top:10px;
+				height:auto;
+			}
+		}
+		#tab-bar .tabs {
+			height:auto;
+			.tab-title {
+				float:none;
+			}
+		}
+	}
+	#footer {
+		height:auto;
+		line-height:initial;
+		padding:20px;
+		#footer-left, #footer-right {
+			width:100%;
+			display:block;
+			text-align:center;
+		}
+	}
+}
+

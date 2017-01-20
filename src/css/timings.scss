@@ -20,194 +20,192 @@
 @import "minecraft";
 @import "serverinfo";
 
-:global {
+body {
+	height: 100%;
+	background: $theme-background;
+	//color: #c7c7c7;
+	color: $theme-color-text;
+	font-size: 1em;
+}
 
-	body {
-		height: 100%;
-		background: $theme-background;
-		//color: #c7c7c7;
-		color: $theme-color-text;
-		font-size: 1em;
-	}
+pre, textarea {
+	word-wrap: normal;
+	font-family: $monospace;
+	tab-size: 4;
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	overflow: visible;
+	font-size: .7em;
+}
 
-	pre, textarea {
-		word-wrap: normal;
-		font-family: $monospace;
-		tab-size: 4;
-		-moz-tab-size: 4;
-		-o-tab-size: 4;
-		overflow: visible;
-		font-size: .7em;
-	}
+.hidden {
+	display: none;
+}
 
-	.hidden {
-		display: none;
-	}
+hr {
+	margin: 0;
+	clear: both;
+}
 
-	hr {
-		margin: 0;
-		clear: both;
-	}
+#content {
+	/* padding: 20px 15px; */
+}
+.dev-warning {
+	padding: 5px;
+	text-align: center;
+	background-color: $theme-color-light;
+	color: $theme-color-text-special;
+}
 
-	#content {
-		/* padding: 20px 15px; */
-	}
-	.dev-warning {
-		padding: 5px;
-		text-align: center;
-		background-color: $theme-color-light;
-		color: $theme-color-text-special;
-	}
+/*<a href='#$id'>#</a><span class='name'>$name</span> - count(<span class='count'>$count</span>) -
+		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>) -
+		avg(<span class='avgMs'>{$avg}ms</span> - <span class='tickAvgMs'>{$tickAvg}ms</span>)*/
+body #content * {
+	font-size: 1em;
+}
+.timing-row {
 
-	/*<a href='#$id'>#</a><span class='name'>$name</span> - count(<span class='count'>$count</span>) -
-			total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>) -
-			avg(<span class='avgMs'>{$avg}ms</span> - <span class='tickAvgMs'>{$tickAvg}ms</span>)*/
-	body #content * {
-		font-size: 1em;
-	}
-	.timing-row {
-
-		display: table-cell;
-		width: 100%;
-		.name {
-			display: inline-block;
-			color: $theme-color-text-alt;
-			max-width: 500px;
-			@include less-than-xlarge-screen {
-				max-width: 325px;
-			}
-
-		}
-
-		.name, .expand-control, > a {
-			float: left;
-		}
-		.row-info {
-			float: right;
-		}
-		.row-info-avg {
-			min-width: 350px;
-			text-align: right;
-		}
-
-		.row-info-total {
-			margin: auto 20px;
-		}
-
-		.row-info, .row-info-total, .row-info-avg {
-			display: inline-block;
-			max-width: 850px;
-			@include small-screen {
-				display: block;
-				text-align: left;
-				min-width: inherit;
-				width: 100%;
-				margin: auto;
-			}
-		}
-		.count, .totalPct, .totalTime, .avgMs, .tickAvgMs {
-			color: gray;
-		}
-	}
-
-	.full-timing-row {
-		width: 100%;
-
-		.full-child {
-			width: 100%;
-			display: block !important;
-		}
-		.indent {
-			padding-left: 15px;
-			border-left: 1.5px solid;
-			display: table-cell;
-		}
-		.depth0 {
-			border-left-color: #0CB9E8;
-		}
-		.depth1 {
-			border-left-color: #0DFF69;
-		}
-		.depth2 {
-			border-left-color: #0D8CFF;
-		}
-		.depth3 {
-			border-left-color: #00FFF1;
-		}
-		.depth4 {
-			border-left-color: #3ca24b;
-		}
-		.row-wrap {
-			overflow: hidden;
-			cursor: pointer;
-		}
-		.row-wrap:hover {
-			background: #555;
-		}
-	}
-
-	.full-timing-row .children {
-		display: none;
-		clear: both;
-		width: 100%;
-	}
-
-	.expand-control {
-		cursor: pointer;
+	display: table-cell;
+	width: 100%;
+	.name {
 		display: inline-block;
-		color: lightblue;
-		padding: 0 6px;
+		color: $theme-color-text-alt;
+		max-width: 500px;
+		@include less-than-xlarge-screen {
+			max-width: 325px;
+		}
+
 	}
 
-	.invisible {
-		display: none !important;
+	.name, .expand-control, > a {
+		float: left;
 	}
-	.themes {
-		padding: 10px;
-		overflow: hidden;
+	.row-info {
 		float: right;
-		margin: 10px;
-		height: 92px;
-		.theme-icon {
-			margin: 5px;
-			width: 25px;
-			height: 40px;
-			float: left;
-			cursor: pointer;
-			border:solid 1px white;
-			white-space:nowrap;
-			overflow:hidden;
-			.theme-base, .theme-accent {
-				width:100%;
-				display:block;
-			}
-			.theme-base {
-				height:70%;
-			}
-			.theme-accent {
-				height:30%;
-			}
-		}
-		@each $theme, $colors in $theme-colors {
-			.theme-#{$theme} {
-				.theme-accent {
-					border-bottom: 20px solid map-get($colors, accent);
-				}
-				.theme-base {
-					background: map-get($colors, base);
-				}
-			}
-		}
-
+	}
+	.row-info-avg {
+		min-width: 350px;
+		text-align: right;
 	}
 
-	.warn-high {
-		color: red;
+	.row-info-total {
+		margin: auto 20px;
 	}
-	.warn-medium {
-		color: #ff7820;
+
+	.row-info, .row-info-total, .row-info-avg {
+		display: inline-block;
+		max-width: 850px;
+		@include small-screen {
+			display: block;
+			text-align: left;
+			min-width: inherit;
+			width: 100%;
+			margin: auto;
+		}
 	}
-	.warn-low {
-		color: #ffbf2e;
+	.count, .totalPct, .totalTime, .avgMs, .tickAvgMs {
+		color: gray;
 	}
 }
+
+.full-timing-row {
+	width: 100%;
+
+	.full-child {
+		width: 100%;
+		display: block !important;
+	}
+	.indent {
+		padding-left: 15px;
+		border-left: 1.5px solid;
+		display: table-cell;
+	}
+	.depth0 {
+		border-left-color: #0CB9E8;
+	}
+	.depth1 {
+		border-left-color: #0DFF69;
+	}
+	.depth2 {
+		border-left-color: #0D8CFF;
+	}
+	.depth3 {
+		border-left-color: #00FFF1;
+	}
+	.depth4 {
+		border-left-color: #3ca24b;
+	}
+	.row-wrap {
+		overflow: hidden;
+		cursor: pointer;
+	}
+	.row-wrap:hover {
+		background: #555;
+	}
+}
+
+.full-timing-row .children {
+	display: none;
+	clear: both;
+	width: 100%;
+}
+
+.expand-control {
+	cursor: pointer;
+	display: inline-block;
+	color: lightblue;
+	padding: 0 6px;
+}
+
+.invisible {
+	display: none !important;
+}
+.themes {
+	padding: 10px;
+	overflow: hidden;
+	float: right;
+	margin: 10px;
+	height: 92px;
+	.theme-icon {
+		margin: 5px;
+		width: 25px;
+		height: 40px;
+		float: left;
+		cursor: pointer;
+		border:solid 1px white;
+		white-space:nowrap;
+		overflow:hidden;
+		.theme-base, .theme-accent {
+			width:100%;
+			display:block;
+		}
+		.theme-base {
+			height:70%;
+		}
+		.theme-accent {
+			height:30%;
+		}
+	}
+	@each $theme, $colors in $theme-colors {
+		.theme-#{$theme} {
+			.theme-accent {
+				border-bottom: 20px solid map-get($colors, accent);
+			}
+			.theme-base {
+				background: map-get($colors, base);
+			}
+		}
+	}
+
+}
+
+.warn-high {
+	color: red;
+}
+.warn-medium {
+	color: #ff7820;
+}
+.warn-low {
+	color: #ffbf2e;
+}
+

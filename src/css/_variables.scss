@@ -122,3 +122,28 @@ $theme-colors: (
 	$theme-color-light: lighten($theme-color,10) !global;
 }
 
+// DEFAULT STUBS - These are just for IDE to recognize they will exists - values dont matter
+
+// Header, Footer and tab colours
+$theme-color: theme-color(blue1, base) !default;
+
+// Link colours, tab accents
+$theme-accent: theme-color(blue1, accent) !default;
+$theme-color-links: theme-color(blue1, accent) !default;
+
+// Page background
+$theme-background: theme-color(blue1, background) !default;
+
+// Section backgrounds
+$theme-background-alt: theme-color-def(blue1, altbackground, lighten($theme-color,20)) !default;
+
+// Section text colour & stats colours
+$theme-color-text: theme-color(blue1, text) !default;
+$theme-color-text-alt: theme-color-def(blue1, alttext, darken($theme-color-text, 15)) !default;
+
+// Header, Footer and tab text colour
+$theme-color-text-special: theme-color(blue1, text-special) !default;
+
+// Colour calculations based off the base colour.
+$theme-color-dark: darken($theme-color,15) !default;
+$theme-color-light: lighten($theme-color,10) !default;

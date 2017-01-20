@@ -6,32 +6,32 @@
  *
  * @license MIT
  ******************************************************************************/
-:global {
-	html, body, #body-wrap, #wrapper {
-		min-height: 100%;
-	}
 
-	.push, #footer {
-		height: 70px;
-	}
+html, body, #body-wrap, #wrapper {
+	min-height: 100%;
+}
 
-	#footer {
-		clear: both;
-		color: $theme-color-text-special;
-		background: $theme-color;
-		opacity: 0.9;
-		padding-left: 20px;
-		padding-right: 20px;
-		line-height: 70px;
-	}
+.push, #footer {
+	height: 70px;
+}
 
-	#footer span {
-		line-height: 30px;
-		padding: 0 5px;
-		@include small-screen {
-			a {
-				display: none;
-			}
+#footer {
+	clear: both;
+	color: $theme-color-text-special;
+	background: $theme-color;
+	opacity: 0.9;
+	padding-left: 20px;
+	padding-right: 20px;
+	line-height: 70px;
+}
+
+#footer span {
+	line-height: 30px;
+	padding: 0 5px;
+	@include small-screen {
+		a {
+			display: none;
 		}
 	}
 }
+
