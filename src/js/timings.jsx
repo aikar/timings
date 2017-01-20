@@ -16,6 +16,7 @@ import * as data from './data';
 import * as ads from "./ads";
 import * as ui from "./ui";
 import * as hash from "./hash";
+import "./jquery.query";
 
 $(document).ready(function () {
 	data.initializeData();
