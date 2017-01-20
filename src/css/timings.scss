@@ -104,7 +104,7 @@ body #content * {
 		}
 	}
 	.count, .totalPct, .totalTime, .avgMs, .tickAvgMs {
-		color: gray;
+		color: $theme-color-text-alt;
 	}
 }
 
@@ -121,19 +121,19 @@ body #content * {
 		display: table-cell;
 	}
 	.depth0 {
-		border-left-color: #0CB9E8;
+		border-left-color: lighten($theme-accent, 30);
 	}
 	.depth1 {
-		border-left-color: #0DFF69;
+		border-left-color: lighten($theme-background, 20);
 	}
 	.depth2 {
-		border-left-color: #0D8CFF;
+		border-left-color: lighten($theme-accent, 5);
 	}
 	.depth3 {
-		border-left-color: #00FFF1;
+		border-left-color: darken($theme-background, 30);
 	}
 	.depth4 {
-		border-left-color: #3ca24b;
+		border-left-color: darken($theme-accent, 20);
 	}
 	.row-wrap {
 		overflow: hidden;
