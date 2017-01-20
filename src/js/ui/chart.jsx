@@ -24,7 +24,7 @@ class TimingsChart {
 	//noinspection JSMethodCanBeStatic
 	initialize(data) {
 		this.chartOptions = {
-			animation: true,
+			animation: false,
 			legendTemplate: "",
 			showScale: false,
 			pointHitDetectionRadius: 2,
