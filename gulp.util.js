@@ -7,16 +7,25 @@
  *
  * @license MIT
  */
-var _ = global._ = require('lodash');
-var fs = global.fs = require('fs');
-var path = global.path = require('path');
-var cp = global.cp = require('child_process');
-var ini = require('ini');
-_.mixin(require("underscore.string").exports());
-var merge = require('ordered-merge-stream');
-var insert = require('gulp-insert');
-var gulp = require('gulp');
+const fs = require('fs');
+const path = require('path');
+const ini = require('ini');
+const merge = require('ordered-merge-stream');
+const insert = require('gulp-insert');
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const cp = require("child_process");
 
+
+// =====================
+function exec(arg) {
+	const result = cp.execSync(arg).toString();
+	result.split("\n").forEach(function (line) {
+		line = line.trim();
+		if (!line) return;
+		gutil.log('[' + arg + '] ' + line);
+	});
+}
 module.exports = {
 	exec: exec,
 	scheduleTask: scheduleTask,
@@ -33,18 +42,10 @@ module.exports = {
 function wrapJS() {
 	return insert.wrap('(function($) {', "\n})(jQuery);");
 }
-// =====================
-var exec = function (arg) {
-	var result = require('execSync').exec(arg);
-	_.forEach(result.stdout.split("\n"), function (line) {
-		line = line.trim();
-		if (!line) return;
-		gutil.log('[' + arg + '] ' + line);
-	});
-};
+
 
 // =====================
-var scheduledTasks = {};
+const scheduledTasks = {};
 function scheduleTask(task, time) {
 	if (scheduledTasks[task]) {
 		clearTimeout(scheduledTasks[task]);
@@ -67,12 +68,12 @@ function readIni(file) {
 
 // =====================
 function copyFile(source, target, cb) {
-	var cbCalled = false;
+	const cbCalled = false;
 
-	var rd = fs.createReadStream(source);
+	const rd = fs.createReadStream(source);
 	rd.on("error", done);
 
-	var wr = fs.createWriteStream(target);
+	const wr = fs.createWriteStream(target);
 	wr.on("error", done);
 	wr.on("close", function (ex) {
 		done();

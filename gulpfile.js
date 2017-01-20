@@ -10,6 +10,7 @@
 "use strict";
 const gulp = require('gulp');
 require('gulp-bash-completion')(gulp);
+const $u = require('./gulp.util');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
 
