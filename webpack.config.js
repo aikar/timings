@@ -114,6 +114,7 @@ module.exports = function(isProduction, watch) {
 									importLoaders: 1
 								}
 							},
+							'postcss-loader',
 							{
 								loader: 'sass-loader',
 								query: {
