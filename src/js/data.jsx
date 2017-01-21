@@ -28,30 +28,49 @@ export let data = window.timingsData || {
 	};
 export const scales = {
 	"Entities": 10000,
-	"Tile Entities": 25000,
+	"Tile Entities": 20000,
 	"Chunks": 3000,
 	"Players": 100,
-	"TPS": 20
+	"TPS": 25
 };
-
+export const scalesCap = {
+	"Entities": 15000,
+	"Tile Entities": 30000,
+	"Chunks": 5000,
+	"Players": 300,
+	"TPS": 25
+};
+export const scaleMap = {
+	"Entities": {},
+	"Tile Entities": {},
+	"Chunks": {},
+	"Players": {},
+	"TPS": {}
+};
 export function initializeData() {
 	data.stamps.forEach(function (k) {
 		const d = new Date(k * 1000);
 		chart.labels.push(d.toLocaleString());
 	});
 	data.tpsData.forEach(function (tps, i) {
-		data.tpsData[i] = (tps / scales.TPS) * data.maxTime
+		data.tpsData[i] = scale("TPS", tps);
 	});
 	data.plaData.forEach(function (count, i) {
-		data.plaData[i] = (count / scales.Players) * data.maxTime
+		data.plaData[i] = scale("Players", count);
 	});
 	data.tentData.forEach(function (count, i) {
-		data.tentData[i] = (count / scales["Tile Entities"]) * data.maxTime
+		data.tentData[i] = scale("Tile Entities", count);
 	});
 	data.entData.forEach(function (count, i) {
-		data.entData[i] = (count / scales.Entities) * data.maxTime
+		data.entData[i] = scale("Entities", count);
 	});
 	data.chunkData.forEach(function (count, i) {
-		data.chunkData[i] = (count / scales.Chunks) * data.maxTime
+		data.chunkData[i] = scale("Chunks", count)
 	});
+
+	function scale(key, count) {
+		const res = (Math.min(scalesCap[key], count) / scales[key]) * data.maxTime;
+		scaleMap[key][res] = count;
+		return res;
+	}
 }

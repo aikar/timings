@@ -25,6 +25,5 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="library" name="adsbygoogle" level="application" />
   </component>
 </module>

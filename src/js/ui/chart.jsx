@@ -12,7 +12,7 @@
  */
 import {htorgba} from './../util';
 import {round} from "lodash/math";
-import Chart from "chart.js";
+import Chart from "chart.js/Chart.js";
 
 export let labels = [];
 
@@ -39,7 +39,13 @@ class TimingsChart {
 				if (v.datasetLabel == "LAG") {
 					return round((v.value / data.data.maxTime) * 100) + "% TPS Loss";
 				} else {
-					return (round(v.value / data.data.maxTime * data.scales[v.datasetLabel] * 100) / 100) + " " + v.datasetLabel;
+					let number = data.scaleMap[v.datasetLabel][v.value];
+					if (v.datasetLabel === "TPS") {
+						number = round(number*100) / 100;
+					} else {
+						number = round(number);
+					}
+					return number + " " + v.datasetLabel;
 				}
 			}
 		};
