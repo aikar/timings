@@ -26,7 +26,7 @@ $(document).ready(function () {
 		setCookie('timings-theme', theme, 999);
 		window.location.reload();
 	});
-	if (!timingsData || !timingsData.length) {
+	if (!timingsData || (Array.isArray(timingsData) && !timingsData.length)) {
 		return;
 	}
 	ui.initializeUI();

@@ -24,7 +24,6 @@ function initializeCollapseControls() {
 		const $control = $parent.find('> .row-wrap > .expand-control').first();
 		$parent.find('> .row-wrap').click(toggleTimings.bind($this, $parent));
 		$control.click(toggleTimings.bind($this, $parent));
-		console.log($parent);
 		$parent.find('> a').first().click(clickhandler.bind(null, toggleTimings.bind($this, $parent)));
 	});
 	$('.full-timing-row > .timing-row > a').click(clickhandler.bind(null, null));
