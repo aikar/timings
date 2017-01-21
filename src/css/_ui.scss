@@ -88,13 +88,11 @@ a.normal {
 		margin: 0;
 		color: $theme-color-text-special;
 		display: inline-block;
-		padding-bottom: 10px;
-		padding-top: 10px;
-		padding-left: 15px;
-		padding-right: 15px;
+		padding: 10px 15px;
 		text-transform: uppercase;
 		border-bottom: solid 3px transparent;
 		font-weight: bold;
+		cursor: pointer;
 		&.active, &:hover {
 			border-bottom: solid 3px $theme-accent;
 			color: whiteSmoke;
