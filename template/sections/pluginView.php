@@ -16,18 +16,21 @@ use Starlis\Timings\util;
  */
 $timingsData = TimingsMaster::getInstance();
 
-echo '<pre>';
-echo "Timings cost: $cost - " . ($cost * $totalTimings) . " - Pct: "
- . round(((($cost * $totalTimings) / ($timingsData->sampletime * 1000000000 / 100))), 2);
-echo "%</pre>\n";
-
 echo '<div class="plugin-view">';
 echo '<h5>Installed Plugins:</h5>'."\n";
 
 $plugins = $timingsData->plugins;
-
+?>
+<div class="full-timing-row">
+	<div class="indent depth1 full-depth1"></div>
+	<div class="timing-row">
+<?php
 printRows($plugins);
-echo '</div>';
+?>
+</div>
+</div>
+</div>
+<?php
 
 /**
  * @param $depth
@@ -50,26 +53,30 @@ $processMap = [];
 
 function printRows($plugins) {
 	foreach ($plugins as $plugin) {
-		openRow(0, $plugin->name);
+		openRow(1, $plugin->name);
 		?>
-		<span class='name'><?=htmlentities($plugin->name)?>  <sup class='plugin-version'>v<?=htmlentities($plugin->version)?> </sup></span><br>
+		<div class='row-wrap'>
+			<div class='name'>
+				<span><?=htmlentities($plugin->name)?>  <sup class='plugin-version'>v<?=htmlentities($plugin->version)?> </sup></span>
+			</div><br>
+		</div>
 		<div class="children">
 			<?php
 			if (!empty($plugin->authors)) {
-				openRow(1, $plugin->name . "_authors");
+				openRow(2, $plugin->name . "_authors");
 			?>
 			<span class='name'>Author(s)</span>: <?=htmlentities($plugin->authors)?><br>
 			<?php
 			closeRow();
 		}
-		if (!empty($plugin->description)) {
-			openRow(1, $plugin->name . "_description");
+		if (!empty($plugin->description) && $plugin->description !== 'null') {
+			openRow(2, $plugin->name . "_description");
 			?>
 				<span class='name'>Description</span>: <?=htmlentities($plugin->description)?><br>
 			<?php
 			closeRow();
 		}
-		//openRow(1, $plugin->name . "_cost");
+		//openRow(2, $plugin->name . "_cost");
 		//closeRow();
 		?>
 		</div>

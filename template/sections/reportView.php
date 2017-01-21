@@ -43,10 +43,10 @@ usort($lag, 'lagSort');
 printRows($lag, 1);
 
 $cost = $timingsData->system->timingcost * 1.1;
-echo '<pre>';
-echo "Timings cost: $cost - " . ($cost * $totalTimings) . " - Pct: "
-	. round(((($cost * $totalTimings) / ($timingsData->sampletime * 1000000000 / 100))), 2) . "%\n\n";
-echo '</pre>';
+//echo '<pre>';
+//echo "Timings cost: $cost - " . ($cost * $totalTimings) . " - Pct: "
+//	. round(((($cost * $totalTimings) / ($timingsData->sampletime * 1000000000 / 100))), 2) . "%\n\n";
+//echo '</pre>';
 
 function printRecord($l) {
 	global $propCount, $propTotal;
