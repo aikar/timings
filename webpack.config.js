@@ -68,9 +68,9 @@ module.exports = function(isProduction, watch) {
 		devtool: isProduction ? 'cheap-module-source-map' : 'cheap-module-eval-source-map',
 		output: {
 			path: path.join(__dirname, "dist"),
-			publicPath: "dist/", // relative path for github pages
-			filename: "[name].[chunkhash].js",
-			chunkFilename: "chunk.[id].[chunkhash].js",
+			publicPath: "dist/",
+			filename: "[name].[hash].js",
+			chunkFilename: "chunk.[id].[hash].js",
 			pathinfo: !isProduction,
 		},
 		resolve: {
@@ -187,10 +187,10 @@ module.exports = function(isProduction, watch) {
 			new CommonsChunkPlugin({
 				name: 'vendor',
 				minChunks: 3,
-				filename: "vendor.[chunkhash].js",
+				filename: "vendor.[hash].js",
 			}),
 			new ExtractTextPlugin({
-				filename: "[name].[chunkhash].css",
+				filename: "[name].[hash].css",
 				disable: false,
 				allChunks: true
 			}),
