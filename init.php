@@ -46,7 +46,7 @@ require_once __DIR__ . "/lib/util.php";
 if (!empty($ini['custom_security'])) {
 	// should error if misconfigured
 	/** @noinspection PhpIncludeInspection */
-	require_once __DIR__ . "/" . $ini['custom_security'];
+	require_once $ini['custom_security'];
 }
 libxml_disable_entity_loader(true);
 define('TMP_PATH', $ini['tmp_path']);
