@@ -28,7 +28,7 @@ git branch || exit
 echo
 echo "$(c 32)Current branch:$(ce)"
 echo
-git log -n 1 $1 | cat -
+git log -n 1 | cat -
 
 echo
 echo "$(c 32)Current production:$(ce)"
@@ -45,7 +45,7 @@ fi
 
 echo "$(c 33)Resetting production branch to here..$(ce)"
 (
-	git branch -f production $1 || exit 1
+	git branch -f production || exit 1
 	git push origin production -f || exit 1
 ) || (
 	echo "$(c 1 31)  Failed to push up to github$(ce)"
@@ -57,40 +57,28 @@ echo "$(c 33)Branched and pushed up to github$(ce)..$(ce)"
 	cd .. || exit 1
 	mkdir -p prod_backups || exit 1
 	cp -r production prod_backups/$backup || exit 1
+	echo "$(c 33)Backed up locally to$(ce) prod_backups/$backup"
+	ln -sfn prod_backups/$backup prod
 ) || (
 	echo "$(c 1 31)  Failed to backup$(ce)"
 	exit 1
 ) || exit
-echo "$(c 33)Backed up locally$(ce).."
-(
-	echo "Point prod/ to prod_backup/$backup during compile"
-	cd ../
-	ln -sfn prod_backups/$backup prod
-	cd production
-	git fetch origin || exit 1
-	echo "backing up previous head for production branch"
-	git checkout production || exit 1
-	git branch -f production_backup || exit 1
-	echo "Resetting to latest production"
-	git reset --hard origin/production || exit 1
 
+(
 	git checkout production || exit 1
-	git submodule update --init || exit 1
-	echo "Updating Dependencies"
+	echo "$(c 33)Updating Dependencies$(ce)"
 	yarn install || exit 1
-	echo "Building"
+	echo "$(c 33)Building$(ce)"
 	node_modules/.bin/gulp build:release || exit 1
-	echo "Done! Let's launch it."
+	echo "$(c 33)Done! Let's launch it.$(ce)"
+	rm -rf ../production || exit 1
+	echo "$(c 33)Copying$(ce)"
+	cp -r . ../production || exit 1
 	cd ../
-	ln -sfn production prod
+	echo "$(c 33)Restoring Symlink to new production$(ce)"
+	ln -sfn production prod || exit 1
 ) || (
-	cd ..
-	echo "Moving to failed"
-	mkdir failed
-	mv $prod failed/$backup
-	echo "Copying backup"
-	cp -r prod_backups/$backup $prod || exit 1
-	echo "$(c 1 31)  Something went wrong on rollout, restored backup"
+	echo "$(c 1 31)   Building failed! Leaving symlink at$(ce) prod_backups/$backup"
 	exit 1
 ) || exit 1
 echo "$(c 32)==== Production rollout complete ====$(ce)"
