@@ -18,9 +18,6 @@ export let labels = [];
 
 class TimingsChart {
 	constructor(dom) {
-		if (!timingsData || !timingsData.length) {
-			return;
-		}
 		if (dom) {
 			this.dom = dom.getContext('2d');
 		}
@@ -28,6 +25,9 @@ class TimingsChart {
 
 	//noinspection JSMethodCanBeStatic
 	initialize(data) {
+		if (!timingsData) {
+			return;
+		}
 		this.chartOptions = {
 			animation: false,
 			legendTemplate: "",

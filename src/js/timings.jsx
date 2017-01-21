@@ -27,6 +27,7 @@ $(document).ready(function () {
 		window.location.reload();
 	});
 	if (!timingsData || (Array.isArray(timingsData) && !timingsData.length)) {
+		window.timingsData = null;
 		return;
 	}
 	ui.initializeUI();
