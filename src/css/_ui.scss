@@ -93,7 +93,7 @@ a.normal {
 		border-bottom: solid 3px transparent;
 		font-weight: bold;
 		cursor: pointer;
-		&.active, &:hover {
+		.active, &.active, &:hover {
 			border-bottom: solid 3px $theme-accent;
 			color: whiteSmoke;
 		}
