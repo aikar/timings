@@ -19,15 +19,15 @@ const mqpacker = require('css-mqpacker');
 
 module.exports = (ctx) => {
 	const isProduction = ctx.environment === 'production';
-	return {
-
-		plugins: [
-			cssimport(),
-			cssnext({
-				compress: isProduction,
-				messages: !isProduction
-			}),
-			cssnano({
+	let plugins = [
+		cssimport(),
+		cssnext({
+			compress: isProduction,
+			messages: !isProduction
+		}),
+	];
+	if (isProduction) {
+		plugins.push(cssnano({
 				discardComments: {
 					removeAll: true
 				},
@@ -35,8 +35,10 @@ module.exports = (ctx) => {
 				styleCache: path.resolve('.cache/postcss'),
 
 				sourcemap: true
-			}),
-			mqpacker()
-		]
+			}));
+		plugins.push(mqpacker());
+	}
+	return {
+		plugins: plugins
 	};
 };
