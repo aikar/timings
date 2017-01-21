@@ -13,12 +13,6 @@
 @import "base/base";
 @import "neat/neat";
 @import "helpers";
-@import "footer";
-@import "ads";
-@import "timeselector";
-@import "ui";
-@import "minecraft";
-@import "serverinfo";
 
 body {
 	height: 100%;
@@ -60,7 +54,7 @@ hr {
 /*<a href='#$id'>#</a><span class='name'>$name</span> - count(<span class='count'>$count</span>) -
 		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>) -
 		avg(<span class='avgMs'>{$avg}ms</span> - <span class='tickAvgMs'>{$tickAvg}ms</span>)*/
-body #content * {
+body {
 	font-size: 1em;
 }
 .timing-row {
@@ -224,3 +218,11 @@ body #content * {
 	color: #ffbf2e;
 }
 
+
+@import "footer";
+@import "ads";
+@import "timeselector";
+@import "ui";
+@import "minecraft";
+@import "serverinfo";
+@import "plugin-view";
