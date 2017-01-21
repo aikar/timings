@@ -74,6 +74,7 @@ echo "$(c 33)Branched and pushed up to github$(ce)..$(ce)"
 	rm -rf ../production || exit 1
 	echo "$(c 33)Copying$(ce)"
 	cp -r . ../production || exit 1
+	rm -f ../production/.git # remove .git reference so its not linked to dev
 	git checkout master
 	cd ../
 	echo "$(c 33)Restoring Symlink to new production$(ce)"
