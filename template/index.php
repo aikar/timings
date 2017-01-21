@@ -23,7 +23,7 @@ $assets = json_decode(file_get_contents("dist/webpack-assets.json"), true);
 	<meta name="description" content="Aikar's Timings Viewer - View Timings v2 reports from Paper and Sponge" />
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 	<?php
-	$theme = 'blue1';
+	$theme = 'blue1-dark';
 	if (!empty($_COOKIE['timings-theme'])) {
 		$cookie = basename($_COOKIE['timings-theme']);
 		if (file_exists(ROOT_DIR . "/src/css/themes/$cookie.scss")) $theme = $cookie;
