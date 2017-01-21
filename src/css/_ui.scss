@@ -88,7 +88,7 @@ a.normal {
 		margin: 0;
 		color: $theme-color-text-special;
 		display: inline-block;
-		padding: 10px 15px;
+		padding: 0;
 		text-transform: uppercase;
 		border-bottom: solid 3px transparent;
 		font-weight: bold;
@@ -98,7 +98,9 @@ a.normal {
 			color: whiteSmoke;
 		}
 		a {
+			padding: 10px 15px;
 			color: inherit;
+			display: block;
 		}
 	}
 }
