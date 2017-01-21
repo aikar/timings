@@ -18,7 +18,12 @@ export let labels = [];
 
 class TimingsChart {
 	constructor(dom) {
-		this.dom = dom.getContext('2d');
+		if (!timingsData || !timingsData.length) {
+			return;
+		}
+		if (dom) {
+			this.dom = dom.getContext('2d');
+		}
 	}
 
 	//noinspection JSMethodCanBeStatic

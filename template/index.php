@@ -34,7 +34,8 @@ $assets = json_decode(file_get_contents("dist/webpack-assets.json"), true);
 </head>
 <?php
 flush();
-Template::getInstance()->loadData();
+global $timingsDataLoaded;
+$timingsDataLoaded = Template::getInstance()->loadData();
 ?>
 <body>
 <div id="wrapper">
@@ -82,12 +83,14 @@ Template::getInstance()->loadData();
 	</div>
 	<div id="body-wrap">
 		<div class="dev-warning"><strong>Hey!</strong> This site is still under heavy development.</div>
-		
+
+		<?php if ($timingsDataLoaded): ?>
 		<div class="row-double">
+
 			<?php require_once __DIR__ . "/time_selector.php"; ?>
 			<?php require_once __DIR__ . "/server-info.php"; ?>
 		</div>
-		
+		<?php endif; ?>
 		<?php require_once __DIR__ . "/content.php"; ?>
 		<div id="bottom-ad">
 			<?php ad_banner_bottom(); ?>

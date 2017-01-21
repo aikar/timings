@@ -41,7 +41,9 @@ class Template {
 	public static function loadData() {
 		global $ini;
 		$timings = Timings::getInstance();
-		$timings->loadData();
+		if (!$timings->loadData()) {
+			return false;
+		}
 
 		$data = TimingsMaster::getInstance();
 
@@ -207,6 +209,7 @@ class Template {
 		$tpl->lagData = $lagData;
 		$tpl->tpsData = $tpsData;
 		$tpl->masterHandler = $masterHandler;
+		return true;
 	}
 
 	public function getData() {

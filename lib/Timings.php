@@ -62,16 +62,25 @@ class Timings {
 		if ($id) {
 			$data = Cache::getObject($id);
 			if (!$data || ((int) util::array_get($_GET['nocache']) === 1 && DEBUGGING)) {
-
-				$seed = $id .microtime();
-
 				$data = $this->storage->get($id);
-				$data = TimingsMaster::createObject(json_decode($data));
+				if (!$data) {
+					return null;
+				}
+				$data = json_decode($data);
+				if (!$data) {
+					return null;
+				}
+				$data = TimingsMaster::createObject($data);
 				Cache::putObject($id, $data);
+			}
+			if ($data && (!$data->version || !$data->start || !$data->end)) {
+				return null;
 			}
 			$this->data = $data;
 			$GLOBALS['timingsData'] = $data;
+			return $data;
 		}
+		return null;
 	}
 
 	public function showRaw() {

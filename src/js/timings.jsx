@@ -20,15 +20,19 @@ import "./jquery.query";
 
 $(document).ready(function () {
 	data.initializeData();
-	ui.initializeUI();
 	ads.initializeAds();
-	hash.checkHashLoc();
-	$(window).on('hashchange', hash.checkHashLoc);
 	$('.themes .theme-icon').click(function() {
 		const theme = $(this).data('theme');
 		setCookie('timings-theme', theme, 999);
 		window.location.reload();
-	})
+	});
+	if (!timingsData || !timingsData.length) {
+		return;
+	}
+	ui.initializeUI();
+	hash.checkHashLoc();
+	$(window).on('hashchange', hash.checkHashLoc);
+
 });
 
 function setCookie(cname, cvalue, exdays) {

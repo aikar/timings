@@ -48,23 +48,31 @@ if (!$section) $section = 'lagsummary';
 
 		<section aria-hidden="false" class="content active" id="tabs-lag">
 	<?php
-	switch ($section) {
-		case "chunks":
-			require_once __DIR__ . "/sections/chunksView.php";
-			break;
-		case "config":
-			require_once __DIR__ . "/sections/configView.php";
-			break;
-		case "summary": case "lagsummary":
-			require_once __DIR__ . "/sections/summaryView.php";
-			break;
-		case "plugins":
-			require_once __DIR__ . "/sections/pluginView.php";
-			break;
-		case "lag":
-		case "all":
-		default:
-			require_once __DIR__ . "/sections/reportView.php";
+	global $timingsDataLoaded;
+	if (!$timingsDataLoaded) {
+		?>
+			<div>Oops! It looks like the Timings you were trying to load does not exists anymore! Timings are only stored for 30 days after access.</div>
+			<?php
+	} else {
+		switch ($section) {
+			case "chunks":
+				require_once __DIR__ . "/sections/chunksView.php";
+				break;
+			case "config":
+				require_once __DIR__ . "/sections/configView.php";
+				break;
+			case "summary":
+			case "lagsummary":
+				require_once __DIR__ . "/sections/summaryView.php";
+				break;
+			case "plugins":
+				require_once __DIR__ . "/sections/pluginView.php";
+				break;
+			case "lag":
+			case "all":
+			default:
+				require_once __DIR__ . "/sections/reportView.php";
+		}
 	}
 	?>
 		</section>
