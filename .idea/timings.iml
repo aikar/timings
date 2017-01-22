@@ -28,5 +28,6 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="react" level="project" />
   </component>
 </module>
