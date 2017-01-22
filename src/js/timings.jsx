@@ -17,15 +17,17 @@ import * as ads from "./ads";
 import * as ui from "./ui";
 import * as hash from "./hash";
 import "./jquery.query";
+import React from "react";
+import ReactDOM from "react-dom";
+import Header from "./ui/Header";
+import Footer from "./ui/Footer";
 
-$(document).ready(function () {
+ReactDOM.render(<Header />, document.getElementById("header"));
+ReactDOM.render(<Footer />, document.getElementById("footer"));
+
+(function() {
 	data.initializeData();
 	ads.initializeAds();
-	$('.themes .theme-icon').click(function() {
-		const theme = $(this).data('theme');
-		setCookie('timings-theme', theme, 999);
-		window.location.reload();
-	});
 	if (!timingsData || (Array.isArray(timingsData) && !timingsData.length)) {
 		window.timingsData = null;
 		return;
@@ -33,12 +35,4 @@ $(document).ready(function () {
 	ui.initializeUI();
 	hash.checkHashLoc();
 	$(window).on('hashchange', hash.checkHashLoc);
-
-});
-
-function setCookie(cname, cvalue, exdays) {
-	var d = new Date();
-	d.setTime(d.getTime() + (exdays*24*60*60*1000));
-	var expires = "expires="+ d.toUTCString();
-	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
+})();

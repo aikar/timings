@@ -26,6 +26,9 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const cssPattern = '_[name]_[local]-[hash:5]';
+const themes = fs.readdirSync(path.join(__dirname, "src/css/themes/")).map((themeFile) => {
+	return themeFile.match(/(.*)\.scss/)[1];
+});
 module.exports = function(isProduction, watch) {
 	watch = watch || false;
 	process.env.NODE_ENV = isProduction ? "production" : "development";
@@ -178,6 +181,7 @@ module.exports = function(isProduction, watch) {
 			new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 20 }),
 			new DefinePlugin({
 				'process.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'),
+				'process.env.TIMINGS_THEMES': JSON.stringify(themes),
 			}),
 			isProduction ? new UglifyJsPlugin({
 				mangle: true,
@@ -214,10 +218,9 @@ module.exports = function(isProduction, watch) {
 			tls: 'empty'
 		}
 	};
-	const themes = fs.readdirSync(path.join(__dirname, "src/css/themes/"));
-	for (const themeFile of themes) {
-		const theme = themeFile.match(/(.*)\.scss/)[1];
-		config.entry['timings-theme-' + theme] = "./src/css/themes/" + themeFile;
+
+	for (const theme of themes) {
+		config.entry['timings-theme-' + theme] = "./src/css/themes/" + theme + ".scss";
 	}
 
 	config.plugins = config.plugins.filter((plugin) => plugin); // remove nulls

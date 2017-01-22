@@ -38,49 +38,9 @@ global $timingsDataLoaded;
 $timingsDataLoaded = Template::getInstance()->loadData();
 ?>
 <body>
+<header id="header"></header>
 <div id="wrapper">
-	<div id="header">
-		<div class="site-title">
-			Timings <small>v</small>2
-			<div class="subtitle">Written by <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Aikar</a></div>
-		</div>
 
-		<div id="header-left" class="section">
-			<div class="section-head">
-				<span class="section-title">Contribute or Donate?</span>
-				<span class="section-controls">
-					<a class="normal" href="http://github.com/aikar/timings"><i class="fa fa-github"></i> Source</a>
-					<a class="normal" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=payments%40starlis%2ecom&lc=US&item_name=Aikar%20Timings&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHostedGuest"><i class="fa fa-paypal"></i> Donate</a>
-				</span>
-			</div>
-			&copy; <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Aikar</a>
-			<span>This system has taken years to develop. If it has helped you, consider donating :)</span>
-			<br>
-			Requires <a href="http://paper.emc.gs" title="Paper Minecraft Server">Paper</a>
-			or <a href="https://www.spongepowered.org" title="Sponge Minecraft Server">Sponge</a>
-			[<a href="https://www.youtube.com/watch?v=T4J0A9l7bfQ" title="Timings v2 Tutorial">Video Tutorial</a>]
-		</div>
-
-		<div class="section themes">
-			<div class="section-head">
-				<span class="section-title">Choose a style</span>
-			</div>
-			<?php foreach ($assets as $asset => $value) {
-				if (strpos($asset, 'timings-theme-') === 0) {
-					$theme = substr($asset, 14);
-					?>
-					<div title="<?=$theme?>" class="theme-icon theme-<?= $theme ?>" data-theme="<?= $theme ?>">
-						<div class="theme-bg"></div>
-						<div class="theme-accent"></div>
-						<div class="theme-base"></div>
-					</div>
-					<?php
-				}
-			}
-			?>
-		</div>
-
-	</div>
 	<div id="body-wrap">
 		<div class="dev-warning"><strong>Hey!</strong> This site is still under heavy development.</div>
 
@@ -100,11 +60,8 @@ $timingsDataLoaded = Template::getInstance()->loadData();
 	<div class="push"></div>
 </div>
 
-<div id="footer">
-    <span id="footer-left">&copy; 2013-<?=date('Y')?> Starlis LLC <a href="http://github.com/aikar/timings" title="Source">[source]</a> &mdash; <a
-		    href="http://aikar.co/spigot/" title="About / Donate">[about / donate]</a></span>
-	<span id="footer-right">Theme by Thomas Edwards</span>
-</div>
+<footer id="footer"></footer>
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="<?=htmlentities($assets['vendor']['js'])?>"></script>
 <?php flush(); ?>
