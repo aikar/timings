@@ -29,14 +29,14 @@ export default class ServerInfo extends React.PureComponent {
 				<table><tbody>
 					<tr>
 						<td className="fieldName">Uptime</td>
-						<td className="fieldValue">{round(info.uptime  / 60 / 60 / 1000, 2)}hr</td>
+						<td className="fieldValue">{round(info.system.runtime  / 60 / 60 / 1000, 2)}hr</td>
 
 						<td className="fieldName">Max Players</td>
 						<td className="fieldValue">{info.maxplayers}</td>
 					</tr>
 					<tr>
 						<td className="fieldName">Max Memory</td>
-						<td className="fieldValue">{info.system.maxmmem / 1024 / 1024}MB</td>
+						<td className="fieldValue">{info.system.maxmem / 1024 / 1024}MB</td>
 
 						<td className="fieldName">Online Mode</td>
 						<td className="fieldValue">{info.onlinemode === true ? "Enabled" : "Disabled"}</td>

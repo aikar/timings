@@ -24,7 +24,6 @@ export default class TimingsChart {
 
 	//noinspection JSMethodCanBeStatic
 	initialize(data) {
-		console.log(data);
 		if (!timingsData || !data) {
 			return;
 		}
