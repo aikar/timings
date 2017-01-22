@@ -29,6 +29,7 @@ $assets = json_decode(file_get_contents("dist/webpack-assets.json"), true);
 		if (file_exists(ROOT_DIR . "/src/css/themes/$cookie.scss")) $theme = $cookie;
 	}
 	?>
+	<script>TIMINGS_THEME=<?=json_encode($theme)?></script>
 	<link href="<?=htmlentities($assets["timings-theme-{$theme}"]['css'])?>" rel="stylesheet" />
 	<meta name="robots" content="noindex,nofollow">
 </head>
@@ -45,11 +46,7 @@ $timingsDataLoaded = Template::getInstance()->loadData();
 		<div class="dev-warning"><strong>Hey!</strong> This site is still under heavy development.</div>
 
 		<?php if ($timingsDataLoaded): ?>
-		<div class="row-double">
-
-			<?php require_once __DIR__ . "/time_selector.php"; ?>
-			<?php require_once __DIR__ . "/server-info.php"; ?>
-		</div>
+		<div id="content-top"></div>
 		<?php endif; ?>
 		<?php require_once __DIR__ . "/content.php"; ?>
 		<div id="bottom-ad">

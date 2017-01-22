@@ -21,9 +21,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Header from "./ui/Header";
 import Footer from "./ui/Footer";
+import ContentTop from "./ui/ContentTop";
 
-ReactDOM.render(<Header />, document.getElementById("header"));
-ReactDOM.render(<Footer />, document.getElementById("footer"));
 
 (function() {
 	data.initializeData();
@@ -36,3 +35,7 @@ ReactDOM.render(<Footer />, document.getElementById("footer"));
 	hash.checkHashLoc();
 	$(window).on('hashchange', hash.checkHashLoc);
 })();
+
+ReactDOM.render(<Header />, document.getElementById("header"));
+ReactDOM.render(<ContentTop />, document.getElementById("content-top"));
+ReactDOM.render(<Footer />, document.getElementById("footer"));

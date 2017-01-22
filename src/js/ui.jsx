@@ -1,14 +1,9 @@
 import {initializeTimeSelector} from "./ui/timeSelector";
-import {chart} from "./ui/chart";
-import * as data from "./data";
 
 export function initializeUI() {
-
 	$('.button').button();
-	
 	initializeCollapseControls();
 	initializeTimeSelector();
-	chart.initialize(data);
 }
 
 

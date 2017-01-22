@@ -14,9 +14,8 @@ import {htorgba} from './../util';
 import {round} from "lodash/math";
 import Chart from "chart.js/Chart.js";
 
-export let labels = [];
 
-class TimingsChart {
+export default class TimingsChart {
 	constructor(dom) {
 		if (dom) {
 			this.dom = dom.getContext('2d');
@@ -25,7 +24,8 @@ class TimingsChart {
 
 	//noinspection JSMethodCanBeStatic
 	initialize(data) {
-		if (!timingsData) {
+		console.log(data);
+		if (!timingsData || !data) {
 			return;
 		}
 		this.chartOptions = {
@@ -50,7 +50,7 @@ class TimingsChart {
 			}
 		};
 		this.chartData = {
-			labels: labels,
+			labels: data.data.labels,
 			datasets: [
 				{
 					data: [data.data.maxTime],
@@ -112,5 +112,4 @@ class TimingsChart {
 		this.chart = new Chart(this.dom).Line(this.chartData, this.chartOptions);
 	}
 }
-export const chart = new TimingsChart(document.querySelector('#tps-graph'));
 

@@ -194,8 +194,33 @@ class Template {
 
 		if (DEBUGGING && util::array_get($_GET['showmaster'])) util::var_dump($masterHandler);
 
+
+		$system = $data->system;
+		$motd = $data->motd;
+		if (is_array($motd)) {
+			$motd = implode("\n", $motd);
+		}
+		$version = $data->version;
+		// Support a bug in Sponge that serialized an optional
+		if (!empty($version['value'])) {
+			$version = $version['value'];
+		}
+		if ($version === '$version') {
+			$version = "Sponge IDE Dev";
+		}
+
+		$serverInfo = [];
+		$serverInfo['icon'] = $data->icon;
+		$serverInfo['name'] = $data->server;
+		$serverInfo['version'] = $version;
+		$serverInfo['maxplayers'] = $data->maxplayers;
+		$serverInfo['onlinemode'] = $data->onlinemode === true;
+		$serverInfo['system'] = $system;
+		$serverInfo['motd'] = util::mccolor($motd);
+
 		$tpl->handlerData = $handlerData;
 		$tpl->areaMap = $areaMap;
+		$tpl->js['serverInfo'] = $serverInfo;
 		$tpl->js['stamps'] = $timestamps;
 		$tpl->js['maxTime'] = $max;
 		$tpl->js['chunkData'] = $chunkData;

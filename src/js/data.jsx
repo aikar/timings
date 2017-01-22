@@ -11,7 +11,6 @@
  *  @license MIT
  *
  */
-import * as chart from './ui/chart';
 
 export let data = window.timingsData || {
 		ranges: [],
@@ -47,10 +46,11 @@ export const scaleMap = {
 	"Players": {},
 	"TPS": {}
 };
+data.labels = [];
 export function initializeData() {
 	data.stamps.forEach(function (k) {
 		const d = new Date(k * 1000);
-		chart.labels.push(d.toLocaleString());
+		data.labels.push(d.toLocaleString());
 	});
 	data.tpsData.forEach(function (tps, i) {
 		data.tpsData[i] = scale("TPS", tps);
