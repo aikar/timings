@@ -20,8 +20,8 @@ import "./jquery.query";
 import React from "react";
 import ReactDOM from "react-dom";
 import ContentWrapper from "./ui/ContentWrapper";
-import entries from "object.entries";
-entries.shim();
+import es7shim from "es7-shim";
+es7shim.shim();
 
 (function() {
 	ReactDOM.render(<ContentWrapper />, document.getElementById("wrapper"));
