@@ -1,13 +1,26 @@
-Aikar's Minecraft Timings Viewer
+Aikar's Minecraft Timings Viewer v2
 =======
 
-This is the system behind <http://timings.aikar.co/> that processes timing reports.
-This code base is primarily targeting Timings v2, currently released for PaperSpigot and SpongeForge.
-
-It is unknown when it will be added to Spigot, so we suggest moving to PaperSpigot! [Learn More and Get PaperSpigot here](https://paper.readthedocs.org/en/paper-1.8/)
+This is the system behind <https://timings.aikar.co/> that processes Timing reports.
+Timings v2 requires one of the following server softwares:
+  - PaperSpigot 1.8.9
+  - Paper 1.9+
+  - Sponge (All)
+  - Neptune
+  - Nukkit
+ 
+CraftBukkit/Spigot Support is vey unlikely, but it is strongly recommended to use Paper anyways! [Learn More and Get Paper here](https://paper.emc.gs)
 
 If you can think of something to improve the system please feel free to PR it.
- 
+
+Technologies: JavaScript and UI
+======
+We are using JSX and React for front end development.
+
+PHP is used to post process the JSON file into a more readable format and API processing, 
+but i'm open to converting that to JS and removing the PHP from the project.
+
+If you're up for that big of a project, please coordinate with me on IRC first and keep me in the loop on progress.
 
 Contributing
 ======
@@ -16,8 +29,8 @@ The main thing holding up Timings v2 in Spigot is this Web UI for it! I don't ha
 
 Current Active Contributors:
   - Aikar - Project Owner
-  - DemonWav
   - willies952002
+  - Fudgie (UI)
 
 Want to contribute? Join #aikar Spigot IRC ([join here](https://irc.spi.gt/iris/?channels=#aikar)), 
 and let me know what your interested in working on so we don't have people working on the same thing.
@@ -26,7 +39,7 @@ We're currently in the middle of migrating the JS code to Dart. So hold off befo
 
 Setting Up Environment
 =====
-You need A webserver such as Apache or Nginx, and PHP 5.6.
+You need A webserver such as Apache or Nginx, and PHP 5.6 or PHP 7.
 Apache is preferred incase .htaccess is needed.
 
 Check out repo, copy config.ini to config.dev.ini and edit to your needs.
@@ -43,25 +56,13 @@ An initial debug data file is included in the project that will automatically lo
 
 You may create config.dev.ini to override config options like so:
 
->trusted_ip="10.0.1.100"  
->custom_security="../security/security.php"  
+>trusted_ip="10.0.1.100"    
 >dev_id=ae6cfe033ca541f39a0fc52c3b51b2e1
 
-Current Priorities
-=====
-
-Updating the web UI to include plugin data, per-timings (v1 style) data, config viewing, "chunk/region" reports, is a top priority.
-
-Also anything to make the web UI LOOK better is needed. Current idea is to use Polymer UI components.
-
-JavaScript and UI
-======
-We are using JSX and React (Well, will be using React) for front end development.
-Original plans for Dart were scrapped.
 
 Timings File Format
 ======
-The timings v2 file format is not designed for public use. It is highly condensed and meant to be specially known how to parse it.
+The Timings v2 file format is not designed for public use. It is highly condensed and meant to be specially known how to parse it.
 
 While the overall structure of the file is now done, we are still planning future additions to the data dump.
 
@@ -72,7 +73,11 @@ This file format is proprietary and may change without notice.
 
 License
 ======
-The project is licensed under MIT as I'm a "I don't care" type of person usually, but I'd really prefer if clones did not start up for no good reason.
+Minecraft Timings (c) Daniel Ennis (Aikar) 2014-present.
+
+Minecraft Timings is licensed [MIT](https://tldrlegal.com/license/mit-license). See [LICENSE](LICENSE)
+
+I'd really prefer if clones did not start up for no good reason.
 
 Remember: [when to fork](http://jamesdixon.wordpress.com/forking-protocol-why-when-and-how-to-fork-an-open-source-project/).
 
