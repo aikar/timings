@@ -13,11 +13,21 @@
 
 import React from "react";
 import TimingsChart from "./TimingsChart";
-import * as data from "../data";
+import data from "../data";
 
 export default class HistorySelector extends React.PureComponent {
-	
+	constructor(props, ctx) {
+		super(props, ctx);
+		this.state = {
+			dataReady: false
+		};
+		data.onReady(() => this.setState({dataReady: true}));
+	}
+
 	render() {
+		if (!this.state.dataReady) {
+			return <div />;
+		}
 		return (
 			<div id="history-selector" className="section">
 				<div className="section-head">

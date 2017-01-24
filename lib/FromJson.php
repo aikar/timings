@@ -33,6 +33,8 @@ trait FromJson {
 		} else {
 			$obj = new self();
 		}
+		$obj->_className = basename(str_replace('\\', '/', get_class($obj)));
+
 
 		$classDoc = $ref->getDocComment();
 		if ($classDoc && preg_match('/@mapper\s+(.+?)\s/', $classDoc, $matches)) {

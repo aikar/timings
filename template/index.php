@@ -33,39 +33,14 @@ $assets = json_decode(file_get_contents("dist/webpack-assets.json"), true);
 	<link href="<?=htmlentities($assets["timings-theme-{$theme}"]['css'])?>" rel="stylesheet" />
 	<meta name="robots" content="noindex,nofollow">
 </head>
-<?php
-flush();
-global $timingsDataLoaded;
-$timingsDataLoaded = Template::getInstance()->loadData();
-?>
 <body>
 <header id="header"></header>
-<div id="wrapper">
-
-	<div id="body-wrap">
-		<div class="dev-warning"><strong>Hey!</strong> This site is still under heavy development.</div>
-
-		<?php if ($timingsDataLoaded): ?>
-		<div id="content-top"></div>
-		<?php endif; ?>
-		<?php require_once __DIR__ . "/content.php"; ?>
-		<div id="bottom-ad">
-			<?php ad_banner_bottom(); ?>
-		</div>
-		<?php require_once __DIR__ . "/info_popups.php"; ?>
-	</div>
-	<div class="push"></div>
-</div>
-
+<div id="wrapper"></div>
 <footer id="footer"></footer>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="<?=htmlentities($assets['vendor']['js'])?>"></script>
-<?php flush(); ?>
-<script type="text/javascript">
-	window.timingsData =<?=Template::getInstance()->getData();?>;
-</script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+<script src="<?=htmlentities($assets['vendor']['js'])?>"></script>
 <script src="<?=htmlentities($assets['timings']['js'])?>"></script>
 </body>
 </html>

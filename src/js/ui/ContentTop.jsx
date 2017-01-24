@@ -16,14 +16,9 @@ import React from "react";
 import ServerInfo from "./ServerInfo";
 import HistorySelector from "./HistorySelector";
 
-export default class ContentTop extends React.PureComponent {
-
-	render() {
-		return (
-			<div className="row-double">
-				<HistorySelector/>
-				<ServerInfo/>
-			</div>
-		);
-	}
+export default function ContentTop() {
+	return <div id="content-top" className="row-double">
+		<HistorySelector/>
+		<ServerInfo/>
+	</div>;
 }

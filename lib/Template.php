@@ -234,7 +234,7 @@ class Template {
 		$tpl->lagData = $lagData;
 		$tpl->tpsData = $tpsData;
 		$tpl->masterHandler = $masterHandler;
-		return true;
+		return $tpl;
 	}
 
 	public function getData() {
