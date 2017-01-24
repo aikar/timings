@@ -24,8 +24,8 @@ If you're up for that big of a project, please coordinate with me on IRC first a
 
 Contributing
 ======
-
-The main thing holding up Timings v2 in Spigot is this Web UI for it! I don't have time to focus on it, so any help to get it close to usable for general public would be appreciated!
+The biggest thing holding this project back is the need for help! 
+We would absolutely love any help on this project that you can give!
 
 Current Active Contributors:
   - Aikar - Project Owner
@@ -35,7 +35,6 @@ Current Active Contributors:
 Want to contribute? Join #aikar Spigot IRC ([join here](https://irc.spi.gt/iris/?channels=#aikar)), 
 and let me know what your interested in working on so we don't have people working on the same thing.
 
-We're currently in the middle of migrating the JS code to Dart. So hold off before working on any JS code.
 
 Setting Up Environment
 =====
