@@ -10,5 +10,5 @@
  */
 namespace Starlis\Timings;
 
-require_once "init.php";
+require_once __DIR__ . "/init.php";
 Timings::bootstrap();

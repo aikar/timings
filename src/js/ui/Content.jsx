@@ -12,7 +12,6 @@
  */
 
 import React from "react";
-import Advertisement from "./Advertisement";
 import TabbedContent from "./TabbedContent";
 import TabbedPanel from "./TabbedPanel";
 
@@ -26,29 +25,34 @@ export default class Content extends React.Component {
 		return <div id="content">
 			<div id="tab-bar" className="ui-tabs ui-widget ui-widget-content ui-corner-all">
 				<TabbedContent
-					tabs{{
+					tabs={{
 						"lag": "Lag Tree View",
 						"all": "All Tree View",
 						"lagsummary": "Lag Summary View",
 						"allsummary": "All Summary View",
+						"config": "All Summary View",
+						"plugins": "Plugins",
 					}}
 				>
 					<TabbedPanel tabId="lag">
-
+						Lag Tree
 					</TabbedPanel>
 					<TabbedPanel tabId="all">
-
+						All Tree
 					</TabbedPanel>
 					<TabbedPanel tabId="lagsummary">
-
+						Lag Summary
 					</TabbedPanel>
 					<TabbedPanel tabId="allsummary">
-
+						All Summary
 					</TabbedPanel>
-
+					<TabbedPanel tabId="config">
+						Config
+					</TabbedPanel>
+					<TabbedPanel tabId="plugins">
+						Plugins
+					</TabbedPanel>
 				</TabbedContent>
-
-
 			</div>
 		</div>;
 	}

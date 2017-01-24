@@ -45,4 +45,60 @@ export default class HistorySelector extends React.PureComponent {
 			</div>
 		)
 	}
+
+	static initializeTimeSelector() {
+		let start = data.start;
+		let end = data.end;
+		let values = data.ranges;
+
+		const times = [];
+		for (let t of values) {
+			if (times.indexOf(t) == -1) {
+				times.push(t);
+			}
+		}
+
+		const $timeSelector = $('#time-selector');
+		$timeSelector.slider({
+			min: 0,
+			max: times.length - 1,
+			values: [times.indexOf(start), times.indexOf(end)],
+			range: true,
+			slide: function (event, ui) {
+				start = times[ui.values[0]];
+				end = times[ui.values[1]];
+				updateRanges(start, end);
+			}
+		});
+		$timeSelector.on('slidestart', clearRedirectTimer);
+		$timeSelector.on('slidechange', redirectToNewTimeRange);
+
+		updateRanges(start, end);
+
+		let redirectTimer = 0;
+
+		function clearRedirectTimer() {
+			if (redirectTimer) {
+				clearTimeout(redirectTimer);
+				redirectTimer = 0;
+			}
+		}
+
+		function redirectToNewTimeRange() {
+			clearRedirectTimer();
+			redirectTimer = setTimeout(function () {
+				// TODO: Re-process data with new range
+				//window.location = $.query.set("start", start).set("end", end).toString();
+			}, 1500);
+		}
+
+		function updateRanges(start, end) {
+			const startDate = new Date(start * 1000);
+			const endDate = new Date(end * 1000);
+
+			$('#start-time').text(startDate.toLocaleString());
+			$('#end-time').text(endDate.toLocaleString());
+		}
+	}
+
 }

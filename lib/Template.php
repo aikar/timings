@@ -19,7 +19,7 @@ use Starlis\Timings\Json\TimingsMaster;
 class Template {
 	use Singleton;
 	public $history;
-	public $js = array();
+	public $data = array();
 	public $tpsData;
 	public $lagData;
 	public $areaMap;
@@ -63,14 +63,16 @@ class Template {
 		//$ranges = array_unique($ranges);
 		//sort($ranges);
 
-		$last = count($ranges) - 1;
 
-		$tpl->js['ranges'] = $ranges;
-		$defStart = (int) ($timings->id === $ini['dev_id'] && !empty($ini['dev_def_start']) ? $ini['dev_def_start'] : $ranges[0]);
-		$defEnd = (int) ($timings->id === $ini['dev_id'] && !empty($ini['dev_def_end']) ? $ini['dev_def_end'] : $ranges[$last]);
+		//$last = count($ranges) - 1;
+		//$start = (int) $ranges[0];
+		//$end = (int) $ranges[$last];
 
-		$tpl->js['start'] = $start = (int) (!empty($_GET['start']) ?  $_GET['start'] : $defStart);
-		$tpl->js['end'] = $end = (int) (!empty($_GET['end']) ? $_GET['end'] : $defEnd);
+		//$defStart = (int) ($timings->id === $ini['dev_id'] && !empty($ini['dev_def_start']) ? $ini['dev_def_start'] : $ranges[0]);
+		//$defEnd = (int) ($timings->id === $ini['dev_id'] && !empty($ini['dev_def_end']) ? $ini['dev_def_end'] : $ranges[$last]);
+
+		//$tpl->js['start'] = $start = (int) (!empty($_GET['start']) ?  $_GET['start'] : $defStart);
+		//$tpl->js['end'] = $end = (int) (!empty($_GET['end']) ? $_GET['end'] : $defEnd);
 
 
 		/**
@@ -153,7 +155,7 @@ class Template {
 				$tentData[] = $mp->ticks->tileEntityTicks / $mp->ticks->timedTicks;
 			}
 
-			if ($history->start >= $start && $history->end <= $end) {
+			//if ($history->start >= $start && $history->end <= $end) {
 				foreach ($history->handlers as $handler) {
 					$id = $handler->id->id;
 					if (!array_key_exists($id, $handlerData)) {
@@ -167,7 +169,7 @@ class Template {
 						$masterHandler = $handlerData[$id];
 					}
 				}
-			}
+			//}
 		}
 		$selfId = new TimingIdentity();
 		$selfRecord = new TimingData();
@@ -192,9 +194,6 @@ class Template {
 			$handler->children[$id] = $record;
 		}
 
-		if (DEBUGGING && util::array_get($_GET['showmaster'])) util::var_dump($masterHandler);
-
-
 		$system = $data->system;
 		$motd = $data->motd;
 		if (is_array($motd)) {
@@ -218,26 +217,25 @@ class Template {
 		$serverInfo['system'] = $system;
 		$serverInfo['motd'] = util::mccolor($motd);
 
-		$tpl->handlerData = $handlerData;
-		$tpl->areaMap = $areaMap;
-		$tpl->js['serverInfo'] = $serverInfo;
-		$tpl->js['stamps'] = $timestamps;
-		$tpl->js['maxTime'] = $max;
-		$tpl->js['chunkData'] = $chunkData;
-		$tpl->js['entData'] = $entData;
-		$tpl->js['aentData'] = $aentData;
-		$tpl->js['tentData'] = $tentData;
-		$tpl->js['plaData'] = $playerData;
-		$tpl->js['lagData'] = $lagData;
-		$tpl->js['tpsData'] = $tpsData;
-		$tpl->js['id'] = $timings->id;
-		$tpl->lagData = $lagData;
-		$tpl->tpsData = $tpsData;
-		$tpl->masterHandler = $masterHandler;
+		$tpl->data['handlerData'] = $handlerData;
+		$tpl->data['ranges'] = $ranges;
+		$tpl->data['areaMap'] = $areaMap;
+		$tpl->data['serverInfo'] = $serverInfo;
+		$tpl->data['stamps'] = $timestamps;
+		$tpl->data['maxTime'] = $max;
+		$tpl->data['chunkData'] = $chunkData;
+		$tpl->data['entData'] = $entData;
+		$tpl->data['aentData'] = $aentData;
+		$tpl->data['tentData'] = $tentData;
+		$tpl->data['plaData'] = $playerData;
+		$tpl->data['lagData'] = $lagData;
+		$tpl->data['tpsData'] = $tpsData;
+		$tpl->data['id'] = $timings->id;
+		//$tpl->masterHandler = $masterHandler;
 		return $tpl;
 	}
 
 	public function getData() {
-		return json_encode($this->js);
+		return json_encode($this->data);
 	}
 } 

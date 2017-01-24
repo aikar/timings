@@ -23,8 +23,11 @@ export default class TimingsChart {
 	}
 
 	//noinspection JSMethodCanBeStatic
+	/**
+	 * @param data
+	 */
 	initialize(data) {
-		if (!timingsData || !data) {
+		if (!data) {
 			return;
 		}
 		this.chartOptions = {
@@ -35,24 +38,31 @@ export default class TimingsChart {
 			responsive: true,
 			maintainAspectRatio: true,
 			multiTooltipTemplate: function (v) {
-				if (v.datasetLabel == "LAG") {
-					return round((v.value / data.data.maxTime) * 100) + "% TPS Loss";
-				} else {
-					let number = data.scaleMap[v.datasetLabel][v.value];
-					if (v.datasetLabel === "TPS") {
-						number = round(number*100) / 100;
+				if (!v.datasetLabel) {
+					return "";
+				}
+				try {
+					if (v.datasetLabel == "LAG") {
+						return round((v.value / data.maxTime) * 100) + "% TPS Loss";
 					} else {
-						number = round(number);
+						let number = data.scaleMap[v.datasetLabel][v.value];
+						if (v.datasetLabel === "TPS") {
+							number = round(number * 100) / 100;
+						} else {
+							number = round(number);
+						}
+						return number + " " + v.datasetLabel;
 					}
-					return number + " " + v.datasetLabel;
+				} catch (e) {
+					console.log(e.message, v.datasetLabel, data.scaleMap);
 				}
 			}
 		};
 		this.chartData = {
-			labels: data.data.labels,
+			labels: data.labels,
 			datasets: [
 				{
-					data: [data.data.maxTime],
+					data: [data.maxTime],
 					PointDotRadius: 0,
 					pointStrokeWidth: 0
 				},
@@ -66,7 +76,7 @@ export default class TimingsChart {
 					pointStrokeColor: "#fff",
 					pointHighlightFill: "#fff",
 					pointHighlightStroke: "rgba(220,220,220,1)",
-					data: data.data.tpsData
+					data: data.tpsData
 				}, {
 					label: "LAG",
 					//fillColor: htorgba("8d0707",0.8),
@@ -76,35 +86,35 @@ export default class TimingsChart {
 					pointStrokeColor: "#ff5533",
 					pointHighlightFill: "#ff5533",
 					pointHighlightStroke: "rgba(151,187,205,1)",
-					data: data.data.lagData
+					data: data.lagData
 				},
 				{
 					label: "Players",
 					fillColor: "rgba(0,0,0,0)",
 					pointColor: "#4F80FF",
 					pointStrokeColor: "#DBF76A",
-					data: data.data.plaData
+					data: data.plaData
 				},
 				{
 					label: "Tile Entities",
 					fillColor: "rgba(0,0,0,0)",
 					pointColor: "#DBF76A",
 					pointStrokeColor: "#DBF76A",
-					data: data.data.tentData
+					data: data.tentData
 				},
 				{
 					label: "Entities",
 					fillColor: "rgba(0,0,0,0)",
 					pointColor: "#84E2FF",
 					pointStrokeColor: "#84E2FF",
-					data: data.data.entData
+					data: data.entData
 				},
 				{
 					label: "Chunks",
 					fillColor: "rgba(0,0,0,0)",
 					pointColor: "#9324B5",
 					pointStrokeColor: "#9324B5",
-					data: data.data.chunkData
+					data: data.chunkData
 				}
 			]
 		};

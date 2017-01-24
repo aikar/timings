@@ -1,9 +1,9 @@
-import {initializeTimeSelector} from "./ui/timeSelector";
+import HistorySelector from "./ui/HistorySelector";
 
 export function initializeUI() {
 	$('.button').button();
 	initializeCollapseControls();
-	initializeTimeSelector();
+	HistorySelector.initializeTimeSelector();
 }
 
 

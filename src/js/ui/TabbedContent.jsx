@@ -35,7 +35,7 @@ export default class TabbedContent extends React.Component {
 	render() {
 		return <div className="tabs ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
 			<div id="tab-panel">
-				{this.props.tabs.entries().map(([key, val]) => (
+				{Object.entries(this.props.tabs).map(([key, val]) => (
 					<Tab key={key} tabId={key}>{val}</Tab>
 				))}
 			</div>

@@ -31,18 +31,18 @@ class Timings {
 		Template::render();
 	}
 
-	public function prepareData() {
+	public function prepareData($tryLegacy = true) {
 		/**
 		 * @var StorageService $storage
 		 */
 		$storage = new CacheStorage();
 		$id = null;
 
-		if (!empty($_GET['url'])) {
+		if ($tryLegacy && !empty($_GET['url'])) {
 			$id = $_GET['url'];
 			$storage = new LegacyStorageService();
-		} else if (!empty($_GET['id'])) {
-			$id = $_GET['id'];
+		} else if (!empty($_REQUEST['id'])) {
+			$id = $_REQUEST['id'];
 		} else {
 			global $ini;
 			$id = $ini["dev_id"]; // DEV test
@@ -51,7 +51,7 @@ class Timings {
 		$this->id = $id;
 		$this->storage = $storage;
 
-		if ($storage instanceof LegacyStorageService) {
+		if ($tryLegacy && $storage instanceof LegacyStorageService) {
 			LegacyHandler::load(trim($storage->get($id)));
 			exit;
 		}
@@ -76,8 +76,6 @@ class Timings {
 			if ($data && (!$data->version || !$data->start || !$data->end)) {
 				return null;
 			}
-			$this->data = $data;
-			$GLOBALS['timingsData'] = $data;
 			return $data;
 		}
 		return null;

@@ -24,7 +24,7 @@ export default function Advertisement(props) {
 		"data-ad-slot": adMap[props.adId]
 	};
 	const adClass = (props.adId === "link" ? "ad_links" : "responsive-ad");
-	return (<ins className={"adsbygoogle " + adClass} style="display:inline-block;" {...attr} />);
+	return (<ins className={"adsbygoogle " + adClass} style={{display:"inline-block"}} {...attr} />);
 }
 
 export function initializeAds() {

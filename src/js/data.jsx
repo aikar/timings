@@ -47,7 +47,7 @@ const scalesCap = data.scalesCap = {
 	"Players": 300,
 	"TPS": 25
 };
-const scaleMap = {
+const scaleMap = data.scaleMap = {
 	"Entities": {},
 	"Tile Entities": {},
 	"Chunks": {},
@@ -56,27 +56,51 @@ const scaleMap = {
 };
 data.labels = [];
 data.loadData = function loadData() {
-	const id = $.query.get('id');
+	const id = $.query.get('id') || "";
 
-	xhr('data.php?id')
-	data.stamps.forEach(function (k) {
-		const d = new Date(k * 1000);
-		data.labels.push(d.toLocaleString());
-	});
-	data.tpsData.forEach(function (tps, i) {
-		data.tpsData[i] = scale("TPS", tps);
-	});
-	data.plaData.forEach(function (count, i) {
-		data.plaData[i] = scale("Players", count);
-	});
-	data.tentData.forEach(function (count, i) {
-		data.tentData[i] = scale("Tile Entities", count);
-	});
-	data.entData.forEach(function (count, i) {
-		data.entData[i] = scale("Entities", count);
-	});
-	data.chunkData.forEach(function (count, i) {
-		data.chunkData[i] = scale("Chunks", count)
+	xhr('data.php', {
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({id}),
+		responseType: "text",
+		method: "post",
+
+	}, (err, res, body) => {
+
+		if (err || res.statusCode !== 200) {
+			dataFailure();
+			return;
+		}
+		body = JSON.parse(body);
+		if (!body) {
+			dataFailure();
+			return;
+		}
+		for (const [key, value] of Object.entries(body)) {
+			data[key] = value;
+		}
+
+		data.stamps.forEach(function (k) {
+			const d = new Date(k * 1000);
+			data.labels.push(d.toLocaleString());
+		});
+		data.tpsData.forEach(function (tps, i) {
+			data.tpsData[i] = scale("TPS", tps);
+		});
+		data.plaData.forEach(function (count, i) {
+			data.plaData[i] = scale("Players", count);
+		});
+		data.tentData.forEach(function (count, i) {
+			data.tentData[i] = scale("Tile Entities", count);
+		});
+		data.entData.forEach(function (count, i) {
+			data.entData[i] = scale("Entities", count);
+		});
+		data.chunkData.forEach(function (count, i) {
+			data.chunkData[i] = scale("Chunks", count)
+		});
+		dataSuccess();
 	});
 
 	function scale(key, count) {
@@ -109,5 +133,14 @@ data.isDataReady = function isDataReady() {
 	return true;
 };
 
+function dataFailure() {
+	dataHasFailed = true;
+	dataFailedCB.forEach((cb) => cb());
+}
+
+function dataSuccess() {
+	dataReady = true;
+	dataReadyCB.forEach((cb) => cb(data));
+}
 
 export default data;
