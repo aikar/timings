@@ -12,12 +12,12 @@
  */
 
 import React from "react";
-import TabbedContent from "./TabbedContent";
+import TabContainer from "./TabContainer";
 
 export default class TabbedPanel extends React.Component {
 
 	static contextTypes = {
-		tabPanel: React.PropTypes.instanceOf(TabbedContent)
+		tabContainer: React.PropTypes.instanceOf(TabContainer)
 	};
 
 	constructor(props, ctx) {
@@ -26,7 +26,10 @@ export default class TabbedPanel extends React.Component {
 
 	render() {
 		const tabId = this.props.tabId;
-		const isActive = this.context.tabPanel.state.activeTab === tabId;
+		const isActive = this.context.tabContainer.isActive(tabId);
+		if (!isActive) {
+			return null;
+		}
 
 		const attrs = {
 			"aria-hidden": "false",

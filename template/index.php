@@ -34,9 +34,8 @@ $assets = json_decode(file_get_contents("dist/webpack-assets.json"), true);
 	<meta name="robots" content="noindex,nofollow">
 </head>
 <body>
-<header id="header"></header>
+
 <div id="wrapper"></div>
-<footer id="footer"></footer>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>

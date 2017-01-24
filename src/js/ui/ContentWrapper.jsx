@@ -12,13 +12,15 @@
  */
 import React from "react";
 
-
+import Header from "./Header";
+import Footer from "./Footer";
 import Advertisement from "./Advertisement";
 import Content from "./Content";
 import ContentTop from "./ContentTop";
 
 export default function ContentWrapper() {
 	return <div>
+		<Header />
 		<div id="body-wrap">
 			{/*<div className="dev-warning"><strong>Hey!</strong> This site is still under heavy development.</div>*/}
 
@@ -34,6 +36,7 @@ export default function ContentWrapper() {
 				<Advertisement adId="bottom" />
 			</div>
 		</div>
-		<div className="push"></div>
+		<div className="push" style={{clear: "left"}}></div>
+		<Footer/>
 	</div>;
 }

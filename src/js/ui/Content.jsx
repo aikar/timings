@@ -12,7 +12,7 @@
  */
 
 import React from "react";
-import TabbedContent from "./TabbedContent";
+import TabContainer from "./TabContainer";
 import TabbedPanel from "./TabbedPanel";
 
 export default class Content extends React.Component {
@@ -24,7 +24,8 @@ export default class Content extends React.Component {
 	render() {
 		return <div id="content">
 			<div id="tab-bar" className="ui-tabs ui-widget ui-widget-content ui-corner-all">
-				<TabbedContent
+				<TabContainer
+					activeTab="lag"
 					tabs={{
 						"lag": "Lag Tree View",
 						"all": "All Tree View",
@@ -52,7 +53,7 @@ export default class Content extends React.Component {
 					<TabbedPanel tabId="plugins">
 						Plugins
 					</TabbedPanel>
-				</TabbedContent>
+				</TabContainer>
 			</div>
 		</div>;
 	}
