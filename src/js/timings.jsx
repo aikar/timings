@@ -13,21 +13,24 @@
 "use strict";
 
 import data from './data';
-import {initializeAds} from "./ui/Advertisement";
-import * as ui from "./ui";
-import * as hash from "./hash";
+
+import UI from "./UI";
+import checkHash from "./hash";
 import "./jquery.query";
 import React from "react";
 import ReactDOM from "react-dom";
+import {initializeAds} from "./ui/Advertisement";
 import ContentWrapper from "./ui/ContentWrapper";
-import es7shim from "es7-shim";
-es7shim.shim();
+import * as phpjs from "phpjs";
+phpjs.registerGlobals();
+window.phpjs = phpjs;
+window.reportType = 'lag';
 
 (function() {
 	ReactDOM.render(<ContentWrapper />, document.getElementById("wrapper"));
-	ui.initializeUI();
+	UI.initializeUI();
 	data.loadData();
-	data.onReady(() => $(window).on('hashchange', hash.checkHashLoc));
+	data.onReady(() => $(window).on('hashchange', checkHash));
 	initializeAds();
 })();
 

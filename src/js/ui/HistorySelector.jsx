@@ -70,25 +70,23 @@ export default class HistorySelector extends React.PureComponent {
 				updateRanges(start, end);
 			}
 		});
-		$timeSelector.on('slidestart', clearRedirectTimer);
-		$timeSelector.on('slidechange', redirectToNewTimeRange);
+		$timeSelector.on('slidestart', clearDataReload);
+		$timeSelector.on('slidechange', loadNewData);
 
 		updateRanges(start, end);
 
-		let redirectTimer = 0;
-
-		function clearRedirectTimer() {
-			if (redirectTimer) {
-				clearTimeout(redirectTimer);
-				redirectTimer = 0;
+		let dataReloadTimer = 0;
+		function clearDataReload() {
+			if (dataReloadTimer) {
+				clearTimeout(dataReloadTimer);
+				dataReloadTimer = 0;
 			}
 		}
 
-		function redirectToNewTimeRange() {
-			clearRedirectTimer();
-			redirectTimer = setTimeout(function () {
+		function loadNewData() {
+			clearDataReload();
+			dataReloadTimer = setTimeout(function () {
 				// TODO: Re-process data with new range
-				//window.location = $.query.set("start", start).set("end", end).toString();
 			}, 1500);
 		}
 

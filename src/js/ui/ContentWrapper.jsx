@@ -22,7 +22,7 @@ export default function ContentWrapper() {
 	return <div>
 		<Header />
 		<div id="body-wrap">
-			{/*<div className="dev-warning"><strong>Hey!</strong> This site is still under heavy development.</div>*/}
+			<div className="dev-warning"><strong>Please do not ask for help with timings in #spigot</strong></div>
 
 			<ContentTop/>
 

@@ -13,6 +13,10 @@
  */
 
 import xhr from "xhr";
+//noinspection ES6UnusedImports
+import TimingsMaster from "./data/TimingsMaster";
+//noinspection ES6UnusedImports
+import TimingHandler from "./data/TimingHandler";
 
 let dataReady = false;
 let dataHasFailed = false;
@@ -33,6 +37,14 @@ const data = {
 		entData:[],
 		chunkData:[],
 	};
+/**
+ * @type {TimingsMaster}
+ */
+data.timingsMaster = null;
+/**
+ * @type {TimingHandler}
+ */
+data.masterHandler = null;
 const scales = data.scales = {
 	"Entities": 10000,
 	"Tile Entities": 20000,

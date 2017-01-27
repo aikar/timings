@@ -18,10 +18,7 @@ export default class Footer extends React.PureComponent {
 	render() {
 		return (
 		<div id="footer">
-			<span id="footer-left">&copy; 2013-{new Date().getYear()} Starlis LLC
-				<a href="http://github.com/aikar/timings" title="Source">[source]</a>
-				&mdash;
-				<a href="https://aikar.co/" title="About / Donate">[about / donate]</a>
+			<span id="footer-left">&copy; 2013-{new Date().getFullYear()} Starlis LLC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;
 			</span>
 			<span id="footer-right">Theme by Thomas Edwards</span>
 		</div>

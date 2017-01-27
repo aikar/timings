@@ -11,9 +11,9 @@
  *
  */
 
-import JsonTemplate from "./JsonTemplate";
+import TimingData from "./TimingData";
 
-export default class TimingHandler extends JsonTemplate {
+export default class TimingHandler extends TimingData {
 
 	/**
 	 * @type TimingData[]

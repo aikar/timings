@@ -10,9 +10,9 @@
  *  @license MIT
  *
  */
-import {toggleTimings} from "./ui";
+import UI from "./UI";
 window.keepScroll = false;
-export function checkHashLoc() {
+export default function checkHash() {
 	let hash = location.hash;
 	if (!hash || hash.length < 2) {
 		return;
@@ -22,7 +22,7 @@ export function checkHashLoc() {
 	if (!el || !el.length) {
 		return;
 	}
-	toggleTimings(el);
+	UI.toggleTimings(el);
 
 	do {
 		for (let i = 0; i < 3; i++) {
@@ -31,7 +31,7 @@ export function checkHashLoc() {
 			}
 		}
 		if (el && el.find('> .row-wrap > .expand-control').length) {
-			toggleTimings(el);
+			UI.toggleTimings(el);
 		} else {
 			break;
 		}
