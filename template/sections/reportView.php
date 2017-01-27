@@ -174,7 +174,7 @@ function printRows($lag, $level) {
 			$processMap[$id] = 0;
 		}
 
-		if (!empty($h->children) && ++$processMap[$id] === 1) {
+		if (++$processMap[$id] === 1 && !empty($h->children)) {
 			if (!NOFILTER) {
 				$children = array_filter($h->children, 'lagFilter');
 			} else {
@@ -192,8 +192,9 @@ function printRows($lag, $level) {
 				printRows($children, $level + 1);
 				echo '</div>';
 			}
-			--$processMap[$id];
+
 		}
+		--$processMap[$id];
 		closeRow();
 	}
 }
