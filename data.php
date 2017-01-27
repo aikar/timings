@@ -17,13 +17,15 @@ require_once __DIR__ . "/init.php";
 header("Content-Type: application/json");
 
 $timings = Timings::getInstance();
-$template = Template::getInstance();
+$template = DataLoader::getInstance();
 $timings->prepareData(false);
 /** @noinspection NotOptimalIfConditionsInspection */
-if (!Template::loadData() || empty($template->data)) {
+if (!DataLoader::loadData() || empty($template->data)) {
 	header($_SERVER['SERVER_PROTOCOL'] . " 404 Not Found", true, 404);
 	echo json_encode(null);
 	exit;
 }
 
-echo json_encode($template->data);
+
+//util::var_dump($template->data['timingsMaster']);
+echo json_encode($template->data, JSON_UNESCAPED_SLASHES);

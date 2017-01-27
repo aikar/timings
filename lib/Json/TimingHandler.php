@@ -68,7 +68,7 @@ class TimingHandler extends TimingData {
 	}
 
 	public function init() {
-		$this->id->setHandler($this);
+		//$this->id->setHandler($this);
 	}
 
 

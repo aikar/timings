@@ -15,14 +15,14 @@
 
 use Starlis\Timings\Json\TimingHandler;
 use Starlis\Timings\Json\TimingsMaster;
-use Starlis\Timings\Template;
+use Starlis\Timings\DataLoader;
 use Starlis\Timings\util;
 
 /**
  * @var TimingsMaster $timingsData
  */
 $timingsData = TimingsMaster::getInstance();
-$template = Template::getInstance();
+$template = DataLoader::getInstance();
 
 $sortChunk = function($c1, $c2) use($template, $timingsData) {
     $c1c = $c1['tec'] + $c1['ec'];

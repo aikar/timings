@@ -28,7 +28,7 @@ class Timings {
 		if (!empty($_GET['raw'])) {
 			$timings->showRaw();
 		}
-		Template::render();
+		DataLoader::render();
 	}
 
 	public function prepareData($tryLegacy = true) {

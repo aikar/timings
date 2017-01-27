@@ -100,6 +100,7 @@ module.exports = function(isProduction, watch) {
 								'lodash',
 								'transform-runtime'
 							],
+							sourceMap: true,
 							babelrc: false,
 						}
 					}

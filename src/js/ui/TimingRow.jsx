@@ -15,9 +15,8 @@ import React from "react";
 import TimingHandler from "../data/TimingHandler";
 import data from "../data";
 import flow from "lodash/flow";
-import _sortBy from "lodash/fp/sortBy";
-import _map from "lodash/fp/map";
-import _filter from "lodash/fp/filter";
+import _fp from "lodash/fp";
+
 export default class TimingRow extends React.Component {
 
 	static currentlyShowing = {};
@@ -66,9 +65,9 @@ export default class TimingRow extends React.Component {
 			const sorter = sortChildren.bind(null, propTotal);
 
 			children = flow(
-				_filter(filter),
-				_sortBy(sorter),
-				_map((child) => {
+				_fp.filter(filter),
+				_fp.sortBy(sorter),
+				_fp.map((child) => {
 					child.children = data.handlerData[id].children;
 					return <TimingRow key={child.id} handler={child} />
 				})

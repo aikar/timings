@@ -59,7 +59,6 @@ class World {
 			$region->chunkCount = 1;
 		}
 		$regions[$regionId] = $region;
-		$region->world = $world;
 
 		return $regionId;
 	}

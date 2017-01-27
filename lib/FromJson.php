@@ -52,8 +52,12 @@ trait FromJson {
 
 		foreach ($props as $prop) {
 			$name = $prop->getName();
+			if (!$name) {
+				var_dump($props);
+				exit;
+			}
 			$comment = $prop->getDocComment();
-			$parent = new FromJsonParent($name, $comment, $obj, $parentObj, null);
+			$parent = new FromJsonParent($name, $comment, $obj, $parentObj);
 
 			$isExpectingArray = false;
 			if ($comment && preg_match('/@var .+?\[.*?\]/', $comment, $matches)) {
@@ -78,10 +82,10 @@ trait FromJson {
 				$data = self::executeCb($index, [$obj, $rootData, $parentObj]);
 			}
 
-			if ($data || $isExpectingArray) {
+			if (!is_null($data) || $isExpectingArray) {
 				if ($isExpectingArray) {
 					$result = [];
-					if ($data && !is_scalar($data)) {
+					if (($data) && !is_scalar($data)) {
 						$data = is_object($data) ? get_object_vars($data) : $data;
 
 						// THREAD THIS

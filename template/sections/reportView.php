@@ -1,14 +1,14 @@
 <?php
 use Starlis\Timings\Json\TimingHandler;
 use Starlis\Timings\Json\TimingsMaster;
-use Starlis\Timings\Template;
+use Starlis\Timings\DataLoader;
 use Starlis\Timings\util;
 
 /**
  * @var TimingsMaster $timingsData
  */
 $timingsData = TimingsMaster::getInstance();
-$tpl = Template::getInstance();
+$tpl = DataLoader::getInstance();
 
 global $totalTime;
 $totalTime = 0;
@@ -50,7 +50,7 @@ $cost = $timingsData->system->timingcost * 1.1;
 
 function printRecord($l) {
 	global $propCount, $propTotal;
-	$tpl = Template::getInstance();
+	$tpl = DataLoader::getInstance();
 	$totalTicks = $tpl->masterHandler->{$propCount};
 	if (!$totalTicks) {
 		util::var_dump($tpl->masterHandler);
@@ -154,7 +154,7 @@ function condensePackage($v) {
 $processMap = [];
 function printRows($lag, $level) {
 	global $processMap;
-	$tpl = Template::getInstance();
+	$tpl = DataLoader::getInstance();
 	foreach ($lag as $l) {
 
 		if (($l->total < 500000 || (LAG_ONLY && $l->lagTotal < 500000)) && !NOFILTER) {
@@ -182,7 +182,7 @@ function printRows($lag, $level) {
 			}
 			if (!empty($children)) {
 				$children = array_map(function($v) {
-					$tpl = Template::getInstance();
+					$tpl = DataLoader::getInstance();
 					$h = $tpl->handlerData[$v->id->id];
 					$v->children = $h->children;
 					return $v;

@@ -8,7 +8,7 @@
 
 use Starlis\Timings\Json\TimingHandler;
 use Starlis\Timings\Json\TimingsMaster;
-use Starlis\Timings\Template;
+use Starlis\Timings\DataLoader;
 use Starlis\Timings\util;
 
 /**

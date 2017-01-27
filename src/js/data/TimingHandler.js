@@ -12,6 +12,7 @@
  */
 
 import TimingData from "./TimingData";
+import clone from "clone";
 
 export default class TimingHandler extends TimingData {
 
@@ -24,4 +25,22 @@ export default class TimingHandler extends TimingData {
 	childrenTotal = 0;
 	childrenLagCount = 0;
 	childrenLagTotal = 0;
+
+
+	/**
+	 *
+	 * @param {TimingHandler} handler
+	 */
+	addDataFromHandler(handler) {
+		this.addData(handler);
+		for (const child of handler.children) {
+			const id = child.id.id;
+
+			if (this.children[id]) {
+				this.children[id].addData(child);
+			} else {
+				this.children[id] = clone(child);
+			}
+		}
+	}
 }

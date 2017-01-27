@@ -24,11 +24,6 @@ class Region {
 	 */
 	public $regionId;
 
-	/**
-	 * @var World
-	 */
-	public $world;
-
 	public $chunkCount;
 	public $areaLocX;
 	public $areaLocZ;

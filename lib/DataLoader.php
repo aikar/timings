@@ -16,7 +16,7 @@ use Starlis\Timings\Json\TimingHandler;
 use Starlis\Timings\Json\TimingIdentity;
 use Starlis\Timings\Json\TimingsMaster;
 
-class Template {
+class DataLoader {
 	use Singleton;
 	public $history;
 	public $data = array();
@@ -47,7 +47,7 @@ class Template {
 
 		$data = TimingsMaster::getInstance();
 
-		$tpl = self::getInstance();
+		$self = self::getInstance();
 
 		$ranges = [];
 
@@ -71,14 +71,23 @@ class Template {
 		//$defStart = (int) ($timings->id === $ini['dev_id'] && !empty($ini['dev_def_start']) ? $ini['dev_def_start'] : $ranges[0]);
 		//$defEnd = (int) ($timings->id === $ini['dev_id'] && !empty($ini['dev_def_end']) ? $ini['dev_def_end'] : $ranges[$last]);
 
-		//$tpl->js['start'] = $start = (int) (!empty($_GET['start']) ?  $_GET['start'] : $defStart);
-		//$tpl->js['end'] = $end = (int) (!empty($_GET['end']) ? $_GET['end'] : $defEnd);
+		//$start = (int) (!empty($_GET['start']) ?  $_GET['start'] : $defStart);
+		//$end = (int) (!empty($_GET['end']) ? $_GET['end'] : $defEnd);
+
+		if (!empty($_POST['history'])) {
+			$needFrames = explode(",", $_POST['history']);
+			$self->data['history'] = new \stdClass();
+			foreach ($data->data as $id => $history) {
+				$id = $id ?: 0;
+				if (!in_array($id, $needFrames, false)) {
+					continue;
+				}
+				$self->data['history']->{$id} = $history->handlers;
+			}
+			return true;
+		}
 
 
-		/**
-		 * @var TimingHandler[] $handlerData
-		 */
-		$handlerData = [];
 		$lagData = [];
 		$tpsData = [];
 		$tentData = [];
@@ -87,7 +96,6 @@ class Template {
 		$chunkData = [];
 		$playerData = [];
 		$timestamps = [];
-		$masterHandler = null;
 
 		$max = 0;
 		$areaMap = [];
@@ -154,44 +162,6 @@ class Template {
 				$aentData[] = $mp->ticks->activatedEntityTicks / $mp->ticks->timedTicks;
 				$tentData[] = $mp->ticks->tileEntityTicks / $mp->ticks->timedTicks;
 			}
-
-			//if ($history->start >= $start && $history->end <= $end) {
-				foreach ($history->handlers as $handler) {
-					$id = $handler->id->id;
-					if (!array_key_exists($id, $handlerData)) {
-						$handlerData[$id] = clone $handler;
-						$handlerData[$id]->mergedCount = 1;
-						$handlerData[$id]->mergedLagCount = $handler->lagCount ? 1 : 0;
-					} else {
-						$handlerData[$id]->addDataFromHandler($handler);
-					}
-					if ($handler->id->name === "Full Server Tick" && $masterHandler === null) {
-						$masterHandler = $handlerData[$id];
-					}
-				}
-			//}
-		}
-		$selfId = new TimingIdentity();
-		$selfRecord = new TimingData();
-		foreach ($handlerData as $id => $handler) {
-			$record = clone $selfRecord;
-			$thisSelfId = clone $selfId;
-			$thisSelfId->id = $handler->id->id . "-self";
-			$thisSelfId->name = "(SELF) " . $handler->id->name;
-			$thisSelfId->group = $handler->id->group;
-			$record->id = $thisSelfId;
-			foreach ($handler->children as $child) {
-				$handler->childrenCount += $child->mergedCount;
-				$handler->childrenLagCount += $child->mergedLagCount;
-				$handler->childrenTotal += $child->total ?: 0;
-				$handler->childrenLagTotal += $child->lagTotal ?: 0;
-			}
-
-			$record->total = $handler->total - $handler->childrenTotal;
-			$record->lagTotal = $handler->lagTotal - $handler->childrenLagTotal;
-			$record->count = $handler->count - $handler->childrenCount;
-			$record->lagCount = $handler->lagCount - $handler->childrenLagCount;
-			$handler->children[$id] = $record;
 		}
 
 		$system = $data->system;
@@ -217,22 +187,27 @@ class Template {
 		$serverInfo['system'] = $system;
 		$serverInfo['motd'] = util::mccolor($motd);
 
-		$tpl->data['handlerData'] = $handlerData;
-		$tpl->data['ranges'] = $ranges;
-		$tpl->data['areaMap'] = $areaMap;
-		$tpl->data['serverInfo'] = $serverInfo;
-		$tpl->data['stamps'] = $timestamps;
-		$tpl->data['maxTime'] = $max;
-		$tpl->data['chunkData'] = $chunkData;
-		$tpl->data['entData'] = $entData;
-		$tpl->data['aentData'] = $aentData;
-		$tpl->data['tentData'] = $tentData;
-		$tpl->data['plaData'] = $playerData;
-		$tpl->data['lagData'] = $lagData;
-		$tpl->data['tpsData'] = $tpsData;
-		$tpl->data['id'] = $timings->id;
-		//$tpl->masterHandler = $masterHandler;
-		return $tpl;
+		$self->data['start'] = $start;
+		$self->data['end'] = $end;
+
+		$self->data['ranges'] = $ranges;
+		$self->data['areaMap'] = $areaMap;
+		$self->data['serverInfo'] = $serverInfo;
+		$self->data['stamps'] = $timestamps;
+		$self->data['maxTime'] = $max;
+		$self->data['chunkData'] = $chunkData;
+		$self->data['entData'] = $entData;
+		$self->data['aentData'] = $aentData;
+		$self->data['tentData'] = $tentData;
+		$self->data['plaData'] = $playerData;
+		$self->data['lagData'] = $lagData;
+		$self->data['tpsData'] = $tpsData;
+		$self->data['id'] = $timings->id;
+		foreach ($data->data as $th) {
+			unset($th->handlers);
+		}
+		$self->data['timingsMaster'] = $data;
+		return $self;
 	}
 
 	public function getData() {

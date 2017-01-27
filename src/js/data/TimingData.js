@@ -37,4 +37,14 @@ export default class TimingData extends JsonTemplate {
 	 */
 	lagTotal;
 
+	addData(data) {
+		this.mergedCount++;
+		this.count += data.count;
+		this.total += data.total;
+		if (data.lagCount) {
+			this.mergedLagCount++;
+			this.lagCount += data.lagCount;
+			this.lagTotal += data.lagTotal;
+		}
+	}
 }
