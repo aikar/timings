@@ -11,7 +11,6 @@ const fs = require('fs');
 const path = require('path');
 const ini = require('ini');
 const merge = require('ordered-merge-stream');
-const insert = require('gulp-insert');
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const cp = require("child_process");
@@ -34,15 +33,7 @@ module.exports = {
 	copyFile: copyFile,
 	ini: ini,
 	merge: merge,
-	wrapJS: wrapJS,
 };
-
-
-// =====================
-function wrapJS() {
-	return insert.wrap('(function($) {', "\n})(jQuery);");
-}
-
 
 // =====================
 const scheduledTasks = {};
