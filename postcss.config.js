@@ -12,7 +12,6 @@
  */
 
 const path = require('path');
-const cssimport = require('postcss-import');
 const cssnext = require('postcss-cssnext');
 const cssnano = require('cssnano');
 const mqpacker = require('css-mqpacker');
@@ -20,7 +19,6 @@ const mqpacker = require('css-mqpacker');
 module.exports = (ctx) => {
 	const isProduction = ctx.environment === 'production';
 	let plugins = [
-		cssimport(),
 		cssnext({
 			compress: isProduction,
 			messages: !isProduction

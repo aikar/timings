@@ -58,6 +58,7 @@ module.exports = function(isProduction, watch) {
 		entry: {
 			vendor: [
 				"babel-polyfill",
+				"es7-shim",
 				"jquery",
 				"chart.js",
 				"react",
@@ -107,11 +108,12 @@ module.exports = function(isProduction, watch) {
 					test: /\.scss$/,
 					exclude: /(node_modules)/,
 					loader: ExtractTextPlugin.extract({
-						fallbackLoader: 'style-loader',
+						fallbackLoader: 'style-loader?sourceMap',
 						loader: [
 							{
 								loader: 'css-loader',
 								query: {
+									imports: false,
 									sourceMap: true,
 									localIdentName: cssPattern,
 									importLoaders: 1
