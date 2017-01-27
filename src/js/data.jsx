@@ -45,6 +45,11 @@ data.timingsMaster = null;
  * @type {TimingHandler}
  */
 data.masterHandler = null;
+/**
+ * @type {Object<number,TimingHandler>}
+ */
+data.handlerData = {};
+
 const scales = data.scales = {
 	"Entities": 10000,
 	"Tile Entities": 20000,

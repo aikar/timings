@@ -22,6 +22,8 @@ import ReactDOM from "react-dom";
 import {initializeAds} from "./ui/Advertisement";
 import ContentWrapper from "./ui/ContentWrapper";
 import * as phpjs from "phpjs";
+import TimingRow from "./ui/TimingRow"
+
 phpjs.registerGlobals();
 window.phpjs = phpjs;
 window.reportType = 'lag';

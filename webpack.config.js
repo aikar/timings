@@ -24,6 +24,7 @@ const AssetsPlugin = require('assets-webpack-plugin');
 const WebpackAutoCleanBuildPlugin = require("webpack-auto-clean-build-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const cssPattern = '_[name]_[local]-[hash:5]';
 const themes = fs.readdirSync(path.join(__dirname, "src/css/themes/")).map((themeFile) => {
@@ -96,6 +97,7 @@ module.exports = function(isProduction, watch) {
 								"stage-0"
 							],
 							plugins: [
+								'lodash',
 								'transform-runtime'
 							],
 							babelrc: false,
@@ -176,6 +178,7 @@ module.exports = function(isProduction, watch) {
 					context: __dirname
 				}
 			}),
+			//new LodashModuleReplacementPlugin(), //  not sure on this one yet.
 			new CleanWebpackPlugin([path.join(__dirname, "dist")], {
 				verbose: false,
 			}),

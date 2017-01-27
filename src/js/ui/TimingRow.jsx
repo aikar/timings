@@ -14,9 +14,13 @@
 import React from "react";
 import TimingHandler from "../data/TimingHandler";
 import data from "../data";
-
+import flow from "lodash/flow";
+import _sortBy from "lodash/fp/sortBy";
+import _map from "lodash/fp/map";
+import _filter from "lodash/fp/filter";
 export default class TimingRow extends React.Component {
 
+	static currentlyShowing = {};
 	static childContextTypes = TimingRow.childContextTypes = TimingRow.context = {
 		timingRowDepth: React.PropTypes.number.isRequired
 	};
@@ -43,51 +47,42 @@ export default class TimingRow extends React.Component {
 		};
 	}
 
+	componentWillUnmount() {
+		const handler = this.props.handler;
+		delete TimingRow.currentlyShowing[handler.id.id];
+	}
 	render() {
-		const id = `${this.props.handler.id}_${this.rowId}`;
+		const handler = this.props.handler;
+		const id = handler.id.id;
+		const rowId = `${id}_${this.rowId}`;
 		const depth = this.context.timingRowDepth % 5;
-		/*
-		// TODO: Process Map for depth control?
-		 if (!isset($processMap[$id])) {
-		 $processMap[$id] = 0;
-		 }
 
-		 if (++$processMap[$id] === 1) {
-		 
-		 }
-		 --$processMap[$id];
-		 */
-		/*
-// TODO: Filter and sort children
- if (!NOFILTER) {
- $children = array_filter($h->children, 'lagFilter');
- } else {
- $children = $h->children;
- }
- if (!empty($children)) {
- $children = array_map(function($v) {
- $tpl = Template::getInstance();
- $h = $tpl->handlerData[$v->id->id];
- $v->children = $h->children;
- return $v;
- }, $children);
- usort($children, 'lagSort');
- echo '<div class="children">';
- printRows($children, $level + 1);
- echo '</div>';
- }
- */
+
+		let children = null;
+		if (!TimingRow.currentlyShowing[id] && this.state.showChildren) {
+			const propTotal = prop('total');
+			const propCount = prop('count');
+			const filter = lagFilter.bind(null, propTotal, propCount);
+			const sorter = sortChildren.bind(null, propTotal);
+
+			children = flow(
+				_filter(filter),
+				_sortBy(sorter),
+				_map((child) => {
+					child.children = data.handlerData[id].children;
+					return <TimingRow key={child.id} handler={child} />
+				})
+			)(handler.children);
+		}
+		TimingRow.currentlyShowing[id] = 1;
+
 		return (
 			<div className='full-timing-row'>
 				<div className={`indent depth${depth} full-depth${depth}`}></div>
-				<div id={`${id}`} className='timing-row'><a href={`#${id}`}>#</a>
+				<div id={`${rowId}`} className='timing-row'><a href={`#${rowId}`}>#</a>
 					<TimingRecordData handler={this.handler} />
 					<div className="children">
-						{
-							this.state.showChildren ? this.props.handler.children.map((child) => (
-								<TimingRow key={child.id} handler={child} />
-							)) : null
-						}
+						{children}
 					</div>
 				</div>
 			</div>
@@ -183,15 +178,15 @@ function prop(type) {
 	}
 }
 
-function lagFilter(handler) {
-	handler['avg'] = 0;
-	const count = handler[prop('count')];
-	const total = handler[prop('total')];
+function lagFilter(propTotal, propCount, handler) {
+	let avg = 0;
+	const count = handler[propCount];
+	const total = handler[propTotal];
 	if (count > 0) {
-		handler['avg'] = (total / count) * handler.mergedCount;
+		avg = (total / count) * handler.mergedCount;
 	}
 
-	return total > 5;
+	return total > 5; // TODO: avg?
 }
 
 const $replacements = [
@@ -217,12 +212,12 @@ function condensePackage($v) {
 
 /**
  *
+ * @param {string} keyToCheck
  * @param {TimingHandler} h1
  * @param {TimingHandler} h2
  * @returns {number}
  */
-function sortChildren(h1, h2) {
-	const keyToCheck = prop('total');
+function sortChildren(keyToCheck, h1, h2) {
 	return h1[keyToCheck] > h2[keyToCheck] ? -1 : 1;
 }
 function pctView($val, $t1 = 25, $t2 = 15, $t3 = 5, $t4 = 1) {
