@@ -20,7 +20,7 @@
         "require-dev": {
             "satooshi/php-coveralls": "dev-master"
         },
-        "time": "2015-02-02 17:56:14",
+        "time": "2015-02-02T17:56:14+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -45,6 +45,55 @@
             "helpers",
             "php",
             "utility"
+        ]
+    },
+    {
+        "name": "davedevelopment/stiphle",
+        "version": "0.9",
+        "version_normalized": "0.9.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/davedevelopment/stiphle.git",
+            "reference": "ac380c263416a2e7bb8a13dc15ca41bbb6609610"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/davedevelopment/stiphle/zipball/ac380c263416a2e7bb8a13dc15ca41bbb6609610",
+            "reference": "ac380c263416a2e7bb8a13dc15ca41bbb6609610",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.1"
+        },
+        "suggest": {
+            "doctrine/cache": "~1.0"
+        },
+        "time": "2013-07-03T09:27:06+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Stiphle": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Dave Marshall",
+                "email": "dave.marshall@atstsolutions.co.uk",
+                "homepage": "http://davedevelopment.co.uk"
+            }
+        ],
+        "description": "Simple rate limiting/throttling for php",
+        "homepage": "http://github.com/davedevelopment/stiphle",
+        "keywords": [
+            "rate limit",
+            "rate limiting",
+            "throttle",
+            "throttling"
         ]
     }
 ]

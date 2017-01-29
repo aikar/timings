@@ -9,7 +9,8 @@
 		}
 	],
 	"require": {
-		"brandonwamboldt/utilphp": "^1.1"
+		"brandonwamboldt/utilphp": "^1.1",
+		"davedevelopment/stiphle": "^0.9.0"
 	},
 	"autoload": {
 		"psr-4": {
