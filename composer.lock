@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cc3dee1aa24a822dabb918b9392b0c7b",
-    "content-hash": "04a9c234ced23ba023c09f32f904908d",
+    "content-hash": "0d95ba682cc909f34e5454eb67c07e66",
     "packages": [
         {
             "name": "brandonwamboldt/utilphp",
@@ -51,7 +50,54 @@
                 "php",
                 "utility"
             ],
-            "time": "2015-02-02 17:56:14"
+            "time": "2015-02-02T17:56:14+00:00"
+        },
+        {
+            "name": "davedevelopment/stiphle",
+            "version": "0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/davedevelopment/stiphle.git",
+                "reference": "ac380c263416a2e7bb8a13dc15ca41bbb6609610"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/davedevelopment/stiphle/zipball/ac380c263416a2e7bb8a13dc15ca41bbb6609610",
+                "reference": "ac380c263416a2e7bb8a13dc15ca41bbb6609610",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.1"
+            },
+            "suggest": {
+                "doctrine/cache": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Stiphle": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dave Marshall",
+                    "email": "dave.marshall@atstsolutions.co.uk",
+                    "homepage": "http://davedevelopment.co.uk"
+                }
+            ],
+            "description": "Simple rate limiting/throttling for php",
+            "homepage": "http://github.com/davedevelopment/stiphle",
+            "keywords": [
+                "rate limit",
+                "rate limiting",
+                "throttle",
+                "throttling"
+            ],
+            "time": "2013-07-03T09:27:06+00:00"
         }
     ],
     "packages-dev": [],
