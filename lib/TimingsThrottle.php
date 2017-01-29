@@ -15,7 +15,7 @@
 namespace Starlis\Timings;
 
 
-use Stiphle\Storage\Apc;
+use Stiphle\Storage\Apcu;
 use Stiphle\Throttle\LeakyBucket;
 
 class TimingsThrottle extends LeakyBucket {
@@ -26,7 +26,7 @@ class TimingsThrottle extends LeakyBucket {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->storage = new Apc();
+		$this->storage = new Apcu();
 	}
 
 	public function throttle($key, $limit, $milliseconds) {
