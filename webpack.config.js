@@ -70,7 +70,7 @@ module.exports = function(isProduction, watch) {
 		watch: watch,
 		bail: isProduction,
 		cache: !isProduction,
-		devtool: isProduction ? 'cheap-module-source-map' : 'cheap-module-eval-source-map',
+		devtool: isProduction ? 'source-map' : 'cheap-module-source-map',
 		output: {
 			path: path.join(__dirname, "dist"),
 			publicPath: "dist/",
