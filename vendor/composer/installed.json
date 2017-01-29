@@ -49,28 +49,33 @@
     },
     {
         "name": "davedevelopment/stiphle",
-        "version": "0.9",
-        "version_normalized": "0.9.0.0",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/davedevelopment/stiphle.git",
-            "reference": "ac380c263416a2e7bb8a13dc15ca41bbb6609610"
+            "reference": "c714ba50275e41b6c77cb90c06cedd1c24e61fc3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/davedevelopment/stiphle/zipball/ac380c263416a2e7bb8a13dc15ca41bbb6609610",
-            "reference": "ac380c263416a2e7bb8a13dc15ca41bbb6609610",
+            "url": "https://api.github.com/repos/davedevelopment/stiphle/zipball/c714ba50275e41b6c77cb90c06cedd1c24e61fc3",
+            "reference": "c714ba50275e41b6c77cb90c06cedd1c24e61fc3",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.1"
         },
-        "suggest": {
-            "doctrine/cache": "~1.0"
+        "require-dev": {
+            "phpunit/phpunit": "^5.5",
+            "predis/predis": "^1.1"
         },
-        "time": "2013-07-03T09:27:06+00:00",
+        "suggest": {
+            "doctrine/cache": "~1.0",
+            "predis/predis": "~1.1"
+        },
+        "time": "2017-01-11T07:18:09+00:00",
         "type": "library",
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-0": {
                 "Stiphle": "src/"

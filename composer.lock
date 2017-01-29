@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0d95ba682cc909f34e5454eb67c07e66",
+    "content-hash": "f278e454ded1f54cdae499d70fcdaac7",
     "packages": [
         {
             "name": "brandonwamboldt/utilphp",
@@ -54,23 +54,28 @@
         },
         {
             "name": "davedevelopment/stiphle",
-            "version": "0.9",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/davedevelopment/stiphle.git",
-                "reference": "ac380c263416a2e7bb8a13dc15ca41bbb6609610"
+                "reference": "c714ba50275e41b6c77cb90c06cedd1c24e61fc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/davedevelopment/stiphle/zipball/ac380c263416a2e7bb8a13dc15ca41bbb6609610",
-                "reference": "ac380c263416a2e7bb8a13dc15ca41bbb6609610",
+                "url": "https://api.github.com/repos/davedevelopment/stiphle/zipball/c714ba50275e41b6c77cb90c06cedd1c24e61fc3",
+                "reference": "c714ba50275e41b6c77cb90c06cedd1c24e61fc3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.1"
             },
+            "require-dev": {
+                "phpunit/phpunit": "^5.5",
+                "predis/predis": "^1.1"
+            },
             "suggest": {
-                "doctrine/cache": "~1.0"
+                "doctrine/cache": "~1.0",
+                "predis/predis": "~1.1"
             },
             "type": "library",
             "autoload": {
@@ -97,13 +102,15 @@
                 "throttle",
                 "throttling"
             ],
-            "time": "2013-07-03T09:27:06+00:00"
+            "time": "2017-01-11 07:18:09"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "davedevelopment/stiphle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
