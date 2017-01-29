@@ -25,6 +25,7 @@ import TimingsSystemData from "./TimingsSystemData";
 import World from "./World";
 import JsonTemplate from "./JsonTemplate";
 
+let decodedInstances = 0;
 const CLASS_MAP = {
 	1: MinuteReport,
 	2: Plugin,
@@ -59,7 +60,7 @@ export default class JsonObject {
 	static async newObject(data) {
 		const classMapQueue = [];
 		const obj = await createObject(data);
-		await obj._initializeData(data, classMapQueue);
+		initializeData(obj, data, classMapQueue);
 		await processQueue(classMapQueue);
 		return obj;
 	}
@@ -67,20 +68,52 @@ export default class JsonObject {
 
 async function processQueue(classMapQueue) {
 	let item;
-	let i = 0;
 	while (item = classMapQueue.pop()) {
 		const thisIdx = item.idx;
 		const thisData = item.val[thisIdx];
-		const newObj = createObject(thisData);
-		item.val[thisIdx] = await newObj._initializeData(thisData, classMapQueue);
+		item.val[thisIdx] = createObject(thisData);
+		initializeData(item.val[thisIdx], thisData, classMapQueue);
 
-		if (i++ % 300 === 0 && classMapQueue.length) {
+		if (decodedInstances++ > 500 && classMapQueue.length) {
 			await timeout(10);
+			decodedInstances = 0;
 		}
 	}
 }
 
-
+/**
+ * @param {JsonTemplate} obj
+ * @returns {JsonTemplate}
+ */
+async function decodeObj(obj) {
+	if (typeof obj._rawData !== 'undefined') {
+		const queue = [];
+		initializeData(obj, obj._rawData, queue);
+		await processQueue(queue);
+	}
+	return obj;
+}
+/**
+ * @param {object} obj
+ * @param {object} data
+ * @param {object[]} mapQueue
+ */
+function initializeData(obj, data, mapQueue) {
+	for (const [key, val] of Object.entries(data)) {
+		obj[key] = val;
+		if (Array.isArray(val)) {
+			for (let i = 0; i < val.length; i++) {
+				if (typeof val[i][':cls'] !== 'undefined') {
+					mapQueue.push({idx: i, val});
+				}
+			}
+		} else if (typeof val === 'object') {
+			if (typeof val[':cls'] !== 'undefined') {
+				mapQueue.push({idx: key, val: obj})
+			}
+		}
+	}
+}
 /**
  * @param data
  * @returns {Promise.<JsonTemplate>}
@@ -96,6 +129,19 @@ async function createObject(data) {
 		const tpl = new objCls;
 		if (!(tpl instanceof JsonTemplate)) {
 			throw new Error(objCls.name + " is not instanceof JsonTemplate");
+		}
+		delete tpl['decode'];
+		delete tpl[':cls'];
+		Object.defineProperty(tpl, 'decode', {
+			enumerable: false,
+			value: decodeObj.bind(tpl, tpl)
+		});
+		if (tpl._deferDecoding) {
+			delete tpl['_deferDecoding'];
+			Object.defineProperty(tpl, '_rawData', {
+				enumerable: false,
+				value: data
+			});
 		}
 		return tpl;
 	}

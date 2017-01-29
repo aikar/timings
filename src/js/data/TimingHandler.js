@@ -16,6 +16,8 @@ import clone from "clone";
 
 export default class TimingHandler extends TimingData {
 
+	_deferDecoding = true;
+
 	/**
 	 * @type TimingData[]
 	 */
