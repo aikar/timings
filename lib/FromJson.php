@@ -15,7 +15,23 @@ namespace Starlis\Timings;
  *
  * @see https://gist.github.com/aikar/52d2ef0870483696f059 for usage
  */
+
 trait FromJson {
+	static private $classMap = [
+		1 => "Starlis\\Timings\\MinuteReport",
+		2 => "Starlis\\Timings\\Plugin",
+		3 => "Starlis\\Timings\\Region",
+		4 => "Starlis\\Timings\\TicksRecord",
+		5 => "Starlis\\Timings\\TimingData",
+		6 => "Starlis\\Timings\\TimingHandler",
+		7 => "Starlis\\Timings\\TimingHistory",
+		8 => "Starlis\\Timings\\TimingIdentity",
+		9 => "Starlis\\Timings\\TimingsMap",
+		10 => "Starlis\\Timings\\TimingsMaster",
+		11 => "Starlis\\Timings\\TimingsSystemData",
+		12 => "Starlis\\Timings\\World",
+	];
+
 	/**
 	 * @param                $rootData
 	 * @param FromJsonParent $parentObj
@@ -33,8 +49,10 @@ trait FromJson {
 		} else {
 			$obj = new self();
 		}
-		$obj->_className = basename(str_replace('\\', '/', get_class($obj)));
-
+		$className = get_class($obj);
+		if (!empty(self::$classMap[$className])) {
+			$obj->{":cls"} = self::$classMap[$className];
+		}
 
 		$classDoc = $ref->getDocComment();
 		if ($classDoc && preg_match('/@mapper\s+(.+?)\s/', $classDoc, $matches)) {
@@ -52,10 +70,6 @@ trait FromJson {
 
 		foreach ($props as $prop) {
 			$name = $prop->getName();
-			if (!$name) {
-				var_dump($props);
-				exit;
-			}
 			$comment = $prop->getDocComment();
 			$parent = new FromJsonParent($name, $comment, $obj, $parentObj);
 
