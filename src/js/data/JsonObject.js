@@ -66,6 +66,11 @@ export default class JsonObject {
 	}
 }
 
+/**
+ *
+ * @param {DeferredDecode[]} classMapQueue
+ * @returns {Promise.<void>}
+ */
 async function processQueue(classMapQueue) {
 	let item;
 	while (item = classMapQueue.pop()) {
@@ -75,7 +80,7 @@ async function processQueue(classMapQueue) {
 		initializeData(item.val[thisIdx], thisData, classMapQueue);
 
 		if (decodedInstances++ > 500 && classMapQueue.length) {
-			await timeout(10);
+			await waitFor(10);
 			decodedInstances = 0;
 		}
 	}
@@ -90,13 +95,25 @@ async function decodeObj(obj) {
 		const queue = [];
 		initializeData(obj, obj._rawData, queue);
 		await processQueue(queue);
+		delete obj['_rawData'];
 	}
 	return obj;
+}
+
+/**
+ * @param {JsonTemplate} obj
+ * @returns {object}
+ */
+function rawData(obj) {
+	if (typeof obj._rawData !== 'undefined' && obj._rawData) {
+		return obj._rawData;
+	}
+	return null;
 }
 /**
  * @param {object} obj
  * @param {object} data
- * @param {object[]} mapQueue
+ * @param {DeferredDecode[]} mapQueue
  */
 function initializeData(obj, data, mapQueue) {
 	for (const [key, val] of Object.entries(data)) {
@@ -130,25 +147,34 @@ async function createObject(data) {
 		if (!(tpl instanceof JsonTemplate)) {
 			throw new Error(objCls.name + " is not instanceof JsonTemplate");
 		}
+		const deferDecoding = tpl._deferDecoding;
+
 		delete tpl['decode'];
+		delete tpl['rawData'];
 		delete tpl[':cls'];
+		delete tpl['_deferDecoding'];
+
 		Object.defineProperty(tpl, 'decode', {
 			enumerable: false,
 			value: decodeObj.bind(tpl, tpl)
 		});
-		if (tpl._deferDecoding) {
-			delete tpl['_deferDecoding'];
+		Object.defineProperty(tpl, 'rawData', {
+			enumerable: false,
+			value: rawData.bind(tpl, tpl)
+		});
+		if (deferDecoding) {
 			Object.defineProperty(tpl, '_rawData', {
 				enumerable: false,
 				value: data
 			});
 		}
+
+
 		return tpl;
 	}
 	throw new Error("Unknown class ID:", id, data);
 }
 
-function timeout(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
-}
-
+/**
+ * @typedef {{idx: *, val: *}} DeferredDecode
+ */
