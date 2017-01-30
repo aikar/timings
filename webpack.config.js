@@ -97,8 +97,7 @@ module.exports = function(isProduction, watch) {
 								"stage-0"
 							],
 							plugins: [
-								'lodash',
-								'transform-runtime'
+								'lodash'
 							],
 							sourceMap: true,
 							babelrc: false,
