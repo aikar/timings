@@ -21,6 +21,7 @@ import TimingHandler from "./data/TimingHandler";
 import query from './query';
 import clone from "clone";
 import {min} from "lodash/math";
+import JsonObject from "./data/JsonObject";
 
 let dataReady = false;
 let dataHasFailed = false;
@@ -86,10 +87,13 @@ data.loadData = async function loadData() {
 			data[key] = value;
 		}
 
-		console.log(body);
+
+
 
 		data.history = data.timingsMaster.data;
-		await loadTimingData();
+		const promise = loadTimingData(); // start the request and then do other stuff
+		data.timingsMaster = await JsonObject.newObject(data.timingsMaster); // process into object while its downloading
+		console.log(data.timingsMaster);
 
 
 
@@ -111,12 +115,11 @@ data.loadData = async function loadData() {
 		});
 
 		// TODO: Chunk data is NaN
-
 		data.chunkData.forEach(function (count, i) {
 			data.chunkData[i] = scale("Chunks", count)
 		});
 
-		//await loadTimingData();
+		await promise; // wait for main data to finish
 		dataSuccess();
 		console.log("DONE");
 
@@ -136,7 +139,7 @@ async function loadTimingData() {
 		});
 
 		for (const [key, history] of Object.entries(body.history)) {
-			data.history[key].handlers = history;
+			data.history[key].handlers = await JsonObject.newObject(history);
 			//parseHistory(history);
 		}
 		console.log(data.history);

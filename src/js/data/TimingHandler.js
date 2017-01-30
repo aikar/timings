@@ -17,7 +17,7 @@ import clone from "clone";
 export default class TimingHandler extends TimingData {
 	constructor() {
 		super();
-		this._deferDecoding = true;
+		//this._deferDecoding = true; // TODO: defer this later when we move to client parsing
 	}
 
 	/**

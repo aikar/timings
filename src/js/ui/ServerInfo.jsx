@@ -28,7 +28,7 @@ export default class ServerInfo extends React.PureComponent {
 		if (!this.state.dataReady) {
 			return <div />;
 		}
-		const info = data.serverInfo;
+		const info = data.timingsMaster;
 		return (
 			<div id="server-info" className="section">
 

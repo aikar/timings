@@ -18,18 +18,18 @@ namespace Starlis\Timings;
 
 trait FromJson {
 	static private $classMap = [
-		1 => "Starlis\\Timings\\MinuteReport",
-		2 => "Starlis\\Timings\\Plugin",
-		3 => "Starlis\\Timings\\Region",
-		4 => "Starlis\\Timings\\TicksRecord",
-		5 => "Starlis\\Timings\\TimingData",
-		6 => "Starlis\\Timings\\TimingHandler",
-		7 => "Starlis\\Timings\\TimingHistory",
-		8 => "Starlis\\Timings\\TimingIdentity",
-		9 => "Starlis\\Timings\\TimingsMap",
-		10 => "Starlis\\Timings\\TimingsMaster",
-		11 => "Starlis\\Timings\\TimingsSystemData",
-		12 => "Starlis\\Timings\\World",
+		Json\MinuteReport::class => 1,
+		Json\Plugin::class => 2,
+		Json\Region::class => 3,
+		Json\TicksRecord::class => 4,
+		Json\TimingData::class => 5,
+		Json\TimingHandler::class => 6,
+		Json\TimingHistory::class => 7,
+		Json\TimingIdentity::class => 8,
+		Json\TimingsMap::class => 9,
+		Json\TimingsMaster::class => 10,
+		Json\TimingsSystemData::class => 11,
+		Json\World::class => 12,
 	];
 
 	/**
