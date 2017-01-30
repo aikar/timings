@@ -18,6 +18,7 @@ import qs from "qs";
 import TimingsMaster from "./data/TimingsMaster";
 //noinspection ES6UnusedImports
 import TimingHandler from "./data/TimingHandler";
+import query from './query';
 import clone from "clone";
 import {min} from "lodash/math";
 
@@ -76,35 +77,21 @@ const scaleMap = data.scaleMap = {
 	"TPS": {}
 };
 data.labels = [];
-data.loadData = function loadData() {
-	const id = $.query.get('id') || "";
+data.loadData = async function loadData() {
+	try {
+		// TODO: lscache root data
+		const [body] = await getData();
 
-	xhr('data.php', {
-		headers: {
-			"Content-Type": "application/x-www-form-urlencoded",
-		},
-		body: qs.stringify({id}),
-		responseType: "text",
-		method: "post",
-
-	}, (err, res, body) => {
-
-		if (err || res.statusCode !== 200) {
-			dataFailure();
-			return;
-		}
-		body = JSON.parse(body);
-		if (!body) {
-			dataFailure();
-			return;
-		}
 		for (const [key, value] of Object.entries(body)) {
 			data[key] = value;
 		}
 
-		data.history = data.timingsMaster.data;
+		console.log(body);
 
-		console.log(data);
+		data.history = data.timingsMaster.data;
+		await loadTimingData();
+
+
 
 		data.stamps.forEach(function (k) {
 			const d = new Date(k * 1000);
@@ -123,55 +110,30 @@ data.loadData = function loadData() {
 			data.entData[i] = scale("Entities", count);
 		});
 
-
-
-
-
 		// TODO: Chunk data is NaN
 
 		data.chunkData.forEach(function (count, i) {
 			data.chunkData[i] = scale("Chunks", count)
 		});
 
-		loadTimingData(id, (err) => {
-			console.log("DONE", err);
-			dataSuccess();
-		});
+		//await loadTimingData();
+		dataSuccess();
+		console.log("DONE");
 
-	});
-
-	function scale(key, count) {
-		const res = (min(scalesCap[key], count) / scales[key]) * data.maxTime;
-		scaleMap[key][res] = count;
-		return res;
+	} catch (e) {
+		console.error(e);
 	}
 };
 
-
-
-function loadTimingData(id, cb) {
-	xhr('data.php', {
-		headers: {
-			"Content-Type": "application/x-www-form-urlencoded",
-		},
-		body: qs.stringify({
-			id,
-			history: data.history.filter((h) => !h.data).map((h) => h.id).join(","),
-		}),
-		responseType: "text",
-		method: "post",
-
-	}, (err, res, body) => {
-
-		if (err || res.statusCode !== 200) {
-			dataFailure();
-			return;
-		}
-		body = JSON.parse(body);
-		if (!body) {
-			dataFailure();
-			return;
-		}
+async function loadTimingData() {
+	try {
+		// TODO: lscache history segments
+		const [body] = await getData({
+			history: data.history
+				.filter((h) => !h.data)
+				.map((h) => h.id)
+				.join(",")
+		});
 
 		for (const [key, history] of Object.entries(body.history)) {
 			data.history[key].handlers = history;
@@ -180,8 +142,11 @@ function loadTimingData(id, cb) {
 		console.log(data.history);
 		data.masterHandler = data.handlerData[1];
 		typeof cb === 'function' && cb(err);
-	});
+	} catch(e) {
+		console.error(e);
+	}
 }
+
 /**
  *
  * @param {TimingHandler[]} handlers
@@ -226,6 +191,27 @@ function buildSelfData() {
 	}
 }
 
+async function getData(options={}) {
+	options.id = query.get('id') || "";
+
+	return new Promise((resolve, reject) => xhr('data.php', {
+		headers: {
+			"Accept": "application/json",
+			"Content-Type": "application/x-www-form-urlencoded",
+		},
+		body: qs.stringify(options),
+		responseType: "text",
+		method: "post",
+	}, (err, res, body) => {
+		if (err || res.statusCode !== 200 || !body) {
+			dataFailure();
+			reject([err || res.statusText || "Status Code: " + res.statusCode, res]);
+		} else {
+			resolve([JSON.parse(body), res]);
+		}
+	}));
+}
+
 data.onFailure = function onFailure(cb) {
 	if (dataHasFailed) {
 		cb();
@@ -248,6 +234,12 @@ data.isDataReady = function isDataReady() {
 	}
 	return true;
 };
+
+function scale(key, count) {
+	const res = (min(scalesCap[key], count) / scales[key]) * data.maxTime;
+	scaleMap[key][res] = count;
+	return res;
+}
 
 function dataFailure() {
 	dataHasFailed = true;

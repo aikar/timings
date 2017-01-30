@@ -16,7 +16,6 @@ import data from './data';
 
 import UI from "./UI";
 import checkHash from "./hash";
-import "./jquery.query";
 import React from "react";
 import ReactDOM from "react-dom";
 import {initializeAds} from "./ui/Advertisement";

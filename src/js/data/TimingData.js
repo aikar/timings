@@ -14,6 +14,7 @@
 import JsonTemplate from "./JsonTemplate";
 
 export default class TimingData extends JsonTemplate {
+
 	mergedCount = 0;
 	mergedLagCount = 0;
 	/**

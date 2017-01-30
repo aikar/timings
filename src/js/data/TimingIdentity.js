@@ -16,7 +16,7 @@ import JsonTemplate from "./JsonTemplate";
 export default class TimingIdentity extends JsonTemplate {
 
 	/**
-	 * @type int
+	 * @type {int,string}
 	 */
 	id;
 	/**
@@ -31,5 +31,5 @@ export default class TimingIdentity extends JsonTemplate {
 	/**
 	 * @type TimingHandler
 	 */
-	_handler;
+	//_handler;
 }

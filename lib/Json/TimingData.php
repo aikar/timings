@@ -18,12 +18,8 @@ use Starlis\Timings\FromJsonParent;
  */
 class TimingData {
 	use FromJson;
-	public $mergedCount = 0;
-	public $mergedLagCount = 0;
 	/**
 	 * @index  0
-	 * @mapper TimingsMap::getHandlerIdentity
-	 * @var TimingIdentity
 	 */
 	public $id;
 	/**
@@ -55,7 +51,7 @@ class TimingData {
 	 * @return mixed
 	 */
 	public static function mapIdKey($key, $value, FromJsonParent $parent) {
-		return $value->id->id;
+		return $value->id;
 	}
 
 	/**

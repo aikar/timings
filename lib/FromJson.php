@@ -102,7 +102,6 @@ trait FromJson {
 					if (($data) && !is_scalar($data)) {
 						$data = is_object($data) ? get_object_vars($data) : $data;
 
-						// THREAD THIS
 						foreach ($data as $key => $entry) {
 							$arrParent = new FromJsonParent($key, $comment, $result, $parent);
 							$thisData = self::getData($entry, $arrParent);

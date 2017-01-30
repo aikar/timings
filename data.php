@@ -14,7 +14,9 @@
 namespace Starlis\Timings;
 
 require_once __DIR__ . "/init.php";
-header("Content-Type: application/json");
+if ($_SERVER['HTTP_ACCEPT'] === 'application/json') {
+	header("Content-Type: application/json");
+}
 
 $timings = Timings::getInstance();
 $template = DataLoader::getInstance();
@@ -28,4 +30,8 @@ if (!DataLoader::loadData() || empty($template->data)) {
 
 
 //util::var_dump($template->data['timingsMaster']);
-echo json_encode($template->data, JSON_UNESCAPED_SLASHES);
+$options = JSON_UNESCAPED_SLASHES;
+if (DEBUGGING && $_SERVER['HTTP_ACCEPT'] !== 'application/json') {
+	$options |= JSON_PRETTY_PRINT;
+}
+echo json_encode($template->data, $options);

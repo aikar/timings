@@ -46,6 +46,10 @@ class DataLoader {
 		}
 
 		$data = TimingsMaster::getInstance();
+		if (DEBUGGING && isset($_GET['test'])) {
+			echo json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+			exit;
+		}
 
 		$self = self::getInstance();
 
@@ -164,7 +168,6 @@ class DataLoader {
 			}
 		}
 
-		$system = $data->system;
 		$motd = $data->motd;
 		if (is_array($motd)) {
 			$motd = implode("\n", $motd);
@@ -177,22 +180,13 @@ class DataLoader {
 		if ($version === '$version') {
 			$version = "Sponge IDE Dev";
 		}
+		$data->version = $version;
 
-		$serverInfo = [];
-		$serverInfo['icon'] = $data->icon;
-		$serverInfo['name'] = $data->server;
-		$serverInfo['version'] = $version;
-		$serverInfo['maxplayers'] = $data->maxplayers;
-		$serverInfo['onlinemode'] = $data->onlinemode === true;
-		$serverInfo['system'] = $system;
-		$serverInfo['motd'] = util::mccolor($motd);
 
-		$self->data['start'] = $start;
-		$self->data['end'] = $end;
-
+		$data->onlinemode = $data->onlinemode === true;
+		$data->motd = util::mccolor($motd);
 		$self->data['ranges'] = $ranges;
 		$self->data['areaMap'] = $areaMap;
-		$self->data['serverInfo'] = $serverInfo;
 		$self->data['stamps'] = $timestamps;
 		$self->data['maxTime'] = $max;
 		$self->data['chunkData'] = $chunkData;

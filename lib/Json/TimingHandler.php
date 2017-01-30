@@ -20,16 +20,10 @@ class TimingHandler extends TimingData {
 	use FromJson;
 
 	/**
-	 * @keymapper TimingData::mapIdKey
 	 * @index     5
 	 * @var TimingData[]
 	 */
 	public $children;
-	// Maintain stats on children to calculate self
-	public $childrenCount = 0;
-	public $childrenTotal = 0;
-	public $childrenLagCount = 0;
-	public $childrenLagTotal = 0;
 
 	/**
 	 * @param $data
@@ -57,7 +51,7 @@ class TimingHandler extends TimingData {
 	public function addDataFromHandler(TimingHandler $handler) {
 		$this->addData($handler);
 		foreach ($handler->children as $child) {
-			$id = $child->id->id;
+			$id = $child->id;
 
 			if (isset($this->children[$id])) {
 				$this->children[$id]->addData($child);
@@ -68,7 +62,6 @@ class TimingHandler extends TimingData {
 	}
 
 	public function init() {
-		//$this->id->setHandler($this);
 	}
 
 

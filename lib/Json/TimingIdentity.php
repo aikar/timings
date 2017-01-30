@@ -16,17 +16,11 @@ class TimingIdentity {
 	use FromJson;
 
 	/**
-	 * @index @key
-	 * @var int
-	 */
-	public $id;
-	/**
 	 * @index 1
 	 * @var string
 	 */
 	public $name;
 	/**
-	 * @mapper TimingsMap::getGroupName
 	 * @index  0
 	 * @var string
 	 */
@@ -35,11 +29,4 @@ class TimingIdentity {
 	public function __toString() {
 		return $this->group . "::" . $this->name;
 	}
-
-	/**
-	 * @param TimingHandler $handler
-	 */
-	public function setHandler(TimingHandler $handler) {
-		$this->handler = $handler;
-	}
-} 
+}

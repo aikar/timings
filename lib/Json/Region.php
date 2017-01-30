@@ -14,7 +14,6 @@ use Starlis\Timings\FromJson;
 use Starlis\Timings\FromJsonParent;
 use Starlis\Timings\util;
 
-// TODO: rename to region
 class Region {
 	use FromJson;
 
