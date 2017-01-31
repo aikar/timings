@@ -2,13 +2,13 @@
   <library name="react" type="javaScript">
     <properties>
       <sourceFilesUrls>
-        <item url="file://$PROJECT_DIR$/.idea/libraries/react.d.ts" />
         <item url="file://$PROJECT_DIR$/.idea/libraries/react-dom.d.ts" />
+        <item url="file://$PROJECT_DIR$/.idea/libraries/react.d.ts" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/.idea/libraries/react.d.ts" />
       <root url="file://$PROJECT_DIR$/.idea/libraries/react-dom.d.ts" />
+      <root url="file://$PROJECT_DIR$/.idea/libraries/react.d.ts" />
     </CLASSES>
     <SOURCES />
   </library>

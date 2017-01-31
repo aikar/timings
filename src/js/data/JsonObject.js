@@ -195,7 +195,7 @@ function createObject(data) {
 		 * @type JsonTemplate
 		 */
 		const tpl = new objCls;
-		delete tpl[':cls'];
+		delete data[':cls'];
 
 		return tpl;
 	}

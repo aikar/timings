@@ -20,8 +20,9 @@ import TimingsMaster from "./data/TimingsMaster";
 import TimingHandler from "./data/TimingHandler";
 import query from './query';
 import clone from "clone";
-import {min} from "lodash/math";
 import JsonObject from "./data/JsonObject";
+import _ from "lodash";
+
 
 let dataReady = false;
 let dataHasFailed = false;
@@ -30,6 +31,7 @@ let dataFailedCB = [];
 
 
 const data = {
+	first: 0,
 	history: {},
 	ranges: [],
 	start: 1,
@@ -58,6 +60,7 @@ data.handlerData = {};
 
 const scales = data.scales = {
 	"Entities": 10000,
+	"Active Entities": 10000,
 	"Tile Entities": 20000,
 	"Chunks": 3000,
 	"Players": 100,
@@ -65,6 +68,7 @@ const scales = data.scales = {
 };
 const scalesCap = data.scalesCap = {
 	"Entities": 15000,
+	"Active Entities": 15000,
 	"Tile Entities": 30000,
 	"Chunks": 5000,
 	"Players": 300,
@@ -72,6 +76,7 @@ const scalesCap = data.scalesCap = {
 };
 const scaleMap = data.scaleMap = {
 	"Entities": {},
+	"Active Entities": {},
 	"Tile Entities": {},
 	"Chunks": {},
 	"Players": {},
@@ -86,40 +91,36 @@ data.loadData = async function loadData() {
 		for (const [key, value] of Object.entries(body)) {
 			data[key] = value;
 		}
-
-
-
-
-		data.history = data.timingsMaster.data;
-		const promise = loadTimingData(); // start the request and then do other stuff
 		data.timingsMaster = await JsonObject.newObject(data.timingsMaster); // process into object while its downloading
-		console.log(data.timingsMaster);
+		data.history = data.timingsMaster.data;
+		// repair motd if needed
+		if (Array.isArray(data.timingsMaster.motd)) {
+			data.timingsMaster.motd = data.timingsMaster.motd.join("\n");
+		}
+		let $version = data.timingsMaster.version;
+		// Support a bug in Sponge that serialized an optional
+		if (!empty($version['value'])) {
+			$version = $version['value'];
+		}
+		if ($version === '$version') {
+			$version = "Sponge IDE Dev";
+		}
+		data.timingsMaster.version = $version;
 
+		let $ranges = [];
+		let $first = -1;
+		for (const /*TimingHistory*/$history of data.timingsMaster.data) {
+			$ranges.push($history.start);
+			$ranges.push($history.end);
+			if ($first === -1 || $first > $history.start) {
+				$first = $history.start;
+			}
+		}
+		data.first = $first;
+		data.ranges = _.uniq($ranges);
+		loadChartData();
 
-
-		data.stamps.forEach(function (k) {
-			const d = new Date(k * 1000);
-			data.labels.push(d.toLocaleString());
-		});
-		data.tpsData.forEach(function (tps, i) {
-			data.tpsData[i] = scale("TPS", tps);
-		});
-		data.plaData.forEach(function (count, i) {
-			data.plaData[i] = scale("Players", count);
-		});
-		data.tentData.forEach(function (count, i) {
-			data.tentData[i] = scale("Tile Entities", count);
-		});
-		data.entData.forEach(function (count, i) {
-			data.entData[i] = scale("Entities", count);
-		});
-
-		// TODO: Chunk data is NaN
-		data.chunkData.forEach(function (count, i) {
-			data.chunkData[i] = scale("Chunks", count)
-		});
-
-		await promise; // wait for main data to finish
+		await loadTimingData();
 		dataSuccess();
 		console.log("DONE");
 
@@ -127,6 +128,55 @@ data.loadData = async function loadData() {
 		console.error(e);
 	}
 };
+function loadChartData() {
+
+	const $first = data.first;
+	data.lagData = [];
+	data.tpsData = [];
+	data.tentData = [];
+	data.entData = [];
+	data.aentData = [];
+	data.chunkData = [];
+	data.plaData = [];
+	data.stamps = [];
+
+	data.maxTime = 0;
+	let chunkCount = 0;
+	for (const /*TimingHistory*/history of data.timingsMaster.data) {
+		for (const /*World*/world of Object.values(history.worldData)) {
+			for (const /*Region*/region of Object.values(world.regions)) {
+				chunkCount += region.chunkCount;
+			}
+		}
+		const firstMP = history.minuteReports[0];
+
+		for (let $i = firstMP.time; $i - $first < 65; $i += 60) {
+			const $clone = clone(firstMP);
+			$clone.time = $first;
+			history.minuteReports.unshift($clone);
+		}
+
+		for(const /*MinuteReport*/mp of history.minuteReports) {
+			data.maxTime = max(mp.fullServerTick.total, data.maxTime);
+		}
+		for(const /*MinuteReport*/mp of history.minuteReports) {
+			if (!mp.ticks.timedTicks) {
+				continue;
+			}
+
+			data.stamps.push(mp.time);
+			data.labels.push(new Date(mp.time * 1000).toLocaleString());
+			data.tpsData.push(scale("TPS", mp.tps > 19.85 ? 20 : mp.tps));
+			data.lagData.push(mp.fullServerTick.lagTotal);
+			data.chunkData.push(scale("Chunks", chunkCount));
+			data.entData.push(scale("Entities", mp.ticks.entityTicks / mp.ticks.timedTicks));
+			data.plaData.push(scale("Players", mp.ticks.playerTicks / mp.ticks.timedTicks));
+			data.aentData.push(scale("Active Entities", mp.ticks.activatedEntityTicks / mp.ticks.timedTicks));
+			data.tentData.push(scale("Tile Entities", mp.ticks.tileEntityTicks / mp.ticks.timedTicks));
+		}
+	}
+	console.log(data);
+}
 
 async function loadTimingData() {
 	try {
@@ -142,9 +192,7 @@ async function loadTimingData() {
 			data.history[key].handlers = await JsonObject.newObject(history);
 			//parseHistory(history);
 		}
-		console.log(data.history);
 		data.masterHandler = data.handlerData[1];
-		typeof cb === 'function' && cb(err);
 	} catch(e) {
 		console.error(e);
 	}
@@ -239,7 +287,8 @@ data.isDataReady = function isDataReady() {
 };
 
 function scale(key, count) {
-	const res = (min(scalesCap[key], count) / scales[key]) * data.maxTime;
+	//noinspection ES6ModulesDependencies,NodeModulesDependencies
+	const res = (Math.min(scalesCap[key], count) / scales[key]) * data.maxTime;
 	scaleMap[key][res] = count;
 	return res;
 }
@@ -255,3 +304,42 @@ function dataSuccess() {
 }
 
 export default data;
+
+
+// TODO: Chunks
+function chunkstuff() {
+	const $areaMap = [];
+	for (const /*TimingHistory*/$history of data.timingsMaster.data) {
+		for (const /*World*/$world of $history.worldData) {
+			for (const /*Region*/$region of $world.regions) {
+				const $worldName = $world.worldName;
+				const $areaId = $region.regionId;
+				if (!$areaMap[$worldName]) {
+					$areaMap[$worldName] = [];
+				}
+
+				if (!$areaMap[$worldName][$areaId]) {
+					$areaMap[$worldName][$areaId] = {
+						"count": 0,
+						"world": $world.worldName,
+						"x": $region.areaLocX,
+						"z": $region.areaLocZ,
+						"e": [],
+						"ec": 0,
+						"te": [],
+						"tec": 0,
+					};
+				}
+				$areaMap[$worldName][$areaId]['count'] += $region.chunkCount;
+				for (const [$id, $count] of Object.entries($region.tileEntities)) {
+					$areaMap[$worldName][$areaId]['te'][$id] += $count;
+					$areaMap[$worldName][$areaId]['tec'] += $count;
+				}
+				for (const [$id, $count] of Object.entries($region.entities)) {
+					$areaMap[$worldName][$areaId]['e'][$id] += $count;
+					$areaMap[$worldName][$areaId]['ec'] += $count;
+				}
+			}
+		}
+	}
+}

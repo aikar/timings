@@ -14,6 +14,7 @@
 import React from "react";
 import {round} from "lodash/math";
 import data from "../data";
+import replaceColorCodes from "../mccolors";
 
 export default class ServerInfo extends React.PureComponent {
 
@@ -33,13 +34,14 @@ export default class ServerInfo extends React.PureComponent {
 			<div id="server-info" className="section">
 
 				<div className="server-title">
-					<img className="server-icon" src={"image.php?id=" + info.icon} width="48" height="48" />
+					<img className="server-icon" src={"image.php?id=" + info.icon} width="48" height="48"/>
 					<span className="server-name">{info.name}</span>
 				</div>
-				<table><tbody>
+				<table>
+					<tbody>
 					<tr>
 						<td className="fieldName">Uptime</td>
-						<td className="fieldValue">{round(info.system.runtime  / 60 / 60 / 1000, 2)}hr</td>
+						<td className="fieldValue">{round(info.system.runtime / 60 / 60 / 1000, 2)}hr</td>
 
 						<td className="fieldName">Max Players</td>
 						<td className="fieldValue">{info.maxplayers}</td>
@@ -54,13 +56,14 @@ export default class ServerInfo extends React.PureComponent {
 
 					<tr>
 						<td className="fieldName">MOTD</td>
-						<td className="fieldValue" colSpan="3">{info.motd.split("\n")}</td>
+						<td className="fieldValue" colSpan="3" dangerouslySetInnerHTML={{__html: replaceColorCodes(info.motd)}}/>
 					</tr>
 					<tr>
 						<td className="fieldName">Version</td>
 						<td className="fieldValue" colSpan="3">{info.version}</td>
 					</tr>
-				</tbody></table>
+					</tbody>
+				</table>
 			</div>
 
 		)

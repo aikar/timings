@@ -28,6 +28,7 @@ export default class TimingsChart {
 	 */
 	initialize(data) {
 		if (!data) {
+			console.error("NO DATA");
 			return;
 		}
 		this.chartOptions = {
