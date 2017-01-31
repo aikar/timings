@@ -22,6 +22,8 @@ import query from './query';
 import clone from "clone";
 import JsonObject from "./data/JsonObject";
 import _ from "lodash";
+import TimingData from "./data/TimingData";
+import TimingIdentity from "./data/TimingIdentity";
 
 
 let dataReady = false;
@@ -119,11 +121,7 @@ data.loadData = async function loadData() {
 		data.first = $first;
 		data.ranges = _.uniq($ranges);
 		loadChartData();
-
-		await loadTimingData();
 		dataSuccess();
-		console.log("DONE");
-
 	} catch (e) {
 		console.error(e);
 	}
@@ -175,7 +173,6 @@ function loadChartData() {
 			data.tentData.push(scale("Tile Entities", mp.ticks.tileEntityTicks / mp.ticks.timedTicks));
 		}
 	}
-	console.log(data);
 }
 
 async function loadTimingData() {
@@ -188,10 +185,14 @@ async function loadTimingData() {
 				.join(",")
 		});
 
+
 		for (const [key, history] of Object.entries(body.history)) {
 			data.history[key].handlers = await JsonObject.newObject(history);
-			//parseHistory(history);
+
+			parseHistory(data.history[key].handlers);
 		}
+
+		//buildSelfData();
 		data.masterHandler = data.handlerData[1];
 	} catch(e) {
 		console.error(e);
@@ -204,17 +205,14 @@ async function loadTimingData() {
  */
 function parseHistory(handlers) {
 	const handlerData = data.handlerData;
-	for (const handler of handlers) {
-		const id = handler.id.id;
+	for (const /*TimingHandler*/handler of handlers) {
+		const id = handler.id;
 		if (!handlerData[id]) {
 			handlerData[id] = clone(handler);
 			handlerData[id].mergedCount = 1;
 			handlerData[id].mergedLagCount = handler.lagCount ? 1 : 0;
 		} else {
 			handlerData[id].addDataFromHandler(handler);
-		}
-		if (handler.id.name === "Full Server Tick" && data.masterHandler === null) {
-			data.masterHandler = handlerData[id];
 		}
 	}
 }
@@ -223,11 +221,11 @@ function buildSelfData() {
 	for (const [id, handler] of Object.entries(data.handlerData)) {
 		const record = new TimingData();
 		const identity = new TimingIdentity();
-		identity.id = handler.id.id + "-self";
-		identity.name = "(SELF) " + handler.id.name;
+		identity.id = handler.id + "-self";
+		identity.name = "(SELF) " + data.getIdentity(handler.id).name;
 		identity.group = handler.id.group;
-		record.id = identity;
-		for (const child of handler.children) {
+		record.id = handler.id;
+		for (const child of Object.values(handler.children)) {
 			handler.childrenCount += child.mergedCount;
 			handler.childrenLagCount += child.mergedLagCount;
 			handler.childrenTotal += child.total || 0;
@@ -303,8 +301,6 @@ function dataSuccess() {
 	dataReadyCB.forEach((cb) => cb(data));
 }
 
-export default data;
-
 
 // TODO: Chunks
 function chunkstuff() {
@@ -343,3 +339,42 @@ function chunkstuff() {
 		}
 	}
 }
+
+/**
+ * @param {int} id
+ * @returns {TimingIdentity}
+ */
+data.getIdentity = function (id)  {
+	return data.timingsMaster.idmap.handlerMap[id];
+};
+
+data.provideTo = function(comp) {
+	if (!comp.isReactComponent) {
+		throw new Error("Must be a react component");
+	}
+	if (!comp.state) {
+		comp.state = {};
+	}
+	comp.state.timingHistoryReady = false;
+	let hasUnmounted = false;
+	const prevUnmount = comp.componentWillUnmount;
+	comp.componentWillUnmount = function () {
+		hasUnmounted = true;
+		if (prevUnmount) {
+			prevUnmount.call(comp);
+		}
+	};
+
+	data.onReady(async () => {
+		await loadTimingData();
+		if (!hasUnmounted) {
+			comp.setState({timingHistoryReady: new Date()});
+		}
+	});
+};
+
+
+
+
+
+export default data;

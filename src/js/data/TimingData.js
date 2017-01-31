@@ -18,28 +18,32 @@ export default class TimingData extends JsonTemplate {
 	mergedCount = 0;
 	mergedLagCount = 0;
 	/**
-	 * @type TimingIdentity
+	 * @type int
 	 */
 	id;
 	/**
 	 * @type int
 	 */
-	count;
+	count = 0;
 	/**
 	 * @type int
 	 */
-	total;
+	total = 0;
 	/**
 	 * @type int
 	 */
-	lagCount;
+	lagCount = 0;
 	/**
 	 * @type int
 	 */
-	lagTotal;
+	lagTotal = 0;
 
 	addData(data) {
 		this.mergedCount++;
+		if (!(data instanceof TimingData)) {
+			console.error(data);
+		}
+
 		this.count += data.count;
 		this.total += data.total;
 		if (data.lagCount) {

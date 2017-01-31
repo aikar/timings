@@ -16,12 +16,12 @@ import JsonTemplate from "./JsonTemplate";
 export default class TimingsMap extends JsonTemplate {
 
 	/**
-	 * @type string[]
+	 * @type {object<number,string>}
 	 */
 	groupMap;
 
 	/**
-	 * @type TimingIdentity[]
+	 * @type {object<number,TimingIdentity>}
 	 */
 	handlerMap;
 

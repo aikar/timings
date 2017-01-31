@@ -14,6 +14,11 @@
 import React from "react";
 import TabContainer from "./TabContainer";
 import TabbedPanel from "./TabbedPanel";
+import RegionsView from "./RegionsView";
+import PluginsView from "./PluginsView";
+import ConfigView from "./ConfigView";
+import TreeView from "./TreeView";
+import SummaryView from "./SummaryView";
 
 export default class Content extends React.Component {
 	constructor(props, ctx) {
@@ -31,27 +36,28 @@ export default class Content extends React.Component {
 						"all": "All Tree View",
 						"lagsummary": "Lag Summary View",
 						"allsummary": "All Summary View",
-						"config": "All Summary View",
+						"regions": "Regions",
+						"config": "Config",
 						"plugins": "Plugins",
 					}}
 				>
 					<TabbedPanel tabId="lag">
-						Lag Tree
+						<TreeView reportType="lag" />
 					</TabbedPanel>
 					<TabbedPanel tabId="all">
-						All Tree
+						<TreeView reportType="all" />
 					</TabbedPanel>
 					<TabbedPanel tabId="lagsummary">
-						Lag Summary
+						<SummaryView reportType="lag" />
 					</TabbedPanel>
 					<TabbedPanel tabId="allsummary">
-						All Summary
+						<SummaryView reportType="all" />
 					</TabbedPanel>
 					<TabbedPanel tabId="config">
-						Config
+						<ConfigView />
 					</TabbedPanel>
 					<TabbedPanel tabId="plugins">
-						Plugins
+						<PluginsView />
 					</TabbedPanel>
 				</TabContainer>
 			</div>

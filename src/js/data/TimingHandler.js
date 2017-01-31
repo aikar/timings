@@ -21,29 +21,40 @@ export default class TimingHandler extends TimingData {
 	}
 
 	/**
-	 * @type TimingData[]
+	 * @type {object<int, TimingData>}
 	 */
-	children;
+	children = {};
 	// Maintain stats on children to calculate self
 	childrenCount = 0;
 	childrenTotal = 0;
 	childrenLagCount = 0;
 	childrenLagTotal = 0;
 
+	init() {
+		super.init();
+		const children = this.children;
+		this.children = {};
+		for (const child of Object.values(children)) {
+			this.children[child.id] = child;
+		}
+	}
 
 	/**
 	 *
 	 * @param {TimingHandler} handler
 	 */
 	addDataFromHandler(handler) {
+		if (handler.id !== this.id) {
+			throw new Error("WTF!");
+		}
 		this.addData(handler);
-		for (const child of handler.children) {
-			const id = child.id.id;
+		for (const child of Object.values(handler.children)) {
+			const id = child.id;
 
 			if (this.children[id]) {
 				this.children[id].addData(child);
 			} else {
-				this.children[id] = clone(child);
+				this.children[id] = clone(child, false);
 			}
 		}
 	}

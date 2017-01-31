@@ -70,7 +70,7 @@ module.exports = function(isProduction, watch) {
 		watch: watch,
 		bail: isProduction,
 		cache: !isProduction,
-		devtool: isProduction ? 'source-map' : 'cheap-module-source-map',
+		devtool: isProduction ? 'source-map' : 'source-map',
 		output: {
 			path: path.join(__dirname, "dist"),
 			publicPath: "dist/",
@@ -92,7 +92,7 @@ module.exports = function(isProduction, watch) {
 						options: {
 							cacheDirectory: isProduction ? null : '.cache/babel',
 							"presets": [
-								["es2015", {"loose": true, modules: false}],
+								["es2015", {loose: true, modules: false}],
 								"react",
 								"stage-0"
 							],
@@ -175,7 +175,8 @@ module.exports = function(isProduction, watch) {
 				minimize: isProduction,
 				debug: !isProduction,
 				options: {
-					context: __dirname
+					context: __dirname,
+					sourceMap: true,
 				}
 			}),
 			//new LodashModuleReplacementPlugin(), //  not sure on this one yet.

@@ -17,6 +17,7 @@ export default class JsonTemplate {
 
 	async decode() { /* abstract - will be injected from JsonObject */}
 	rawData() { /* abstract - will be injected from JsonObject */}
+	init() { };
 
 	constructor() {}
 }

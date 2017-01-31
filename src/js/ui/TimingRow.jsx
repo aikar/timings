@@ -16,20 +16,25 @@ import TimingHandler from "../data/TimingHandler";
 import data from "../data";
 import flow from "lodash/flow";
 import _fp from "lodash/fp";
+import {round} from "lodash/math";
 
 export default class TimingRow extends React.Component {
 
 	static currentlyShowing = {};
-	static childContextTypes = TimingRow.childContextTypes = TimingRow.context = {
-		timingRowDepth: React.PropTypes.number.isRequired
-	};
 
 	static propTypes = TimingRow.props = {
+		timingParent: React.PropTypes.object,
+		timingRowDepth: React.PropTypes.number,
 		/**
 		 * @type TimingHandler
 		 */
 		handler: React.PropTypes.instanceOf(TimingHandler).isRequired
 	};
+
+	static defaultProps = {
+		timingRowDepth: 0,
+	};
+
 	static rowIdPool = 0;
 
 	constructor(props, ctx) {
@@ -40,46 +45,60 @@ export default class TimingRow extends React.Component {
 		};
 	}
 
-	getChildContext() {
-		return {
-			timingRowDepth: this.context.timingRowDepth + 1
-		};
-	}
-
 	componentWillUnmount() {
 		const handler = this.props.handler;
-		delete TimingRow.currentlyShowing[handler.id.id];
+		delete TimingRow.currentlyShowing[handler.id];
 	}
 	render() {
 		const handler = this.props.handler;
-		const id = handler.id.id;
+		if (!handler) {
+			return null;
+		}
+		const id = handler.id;
 		const rowId = `${id}_${this.rowId}`;
-		const depth = this.context.timingRowDepth % 5;
+		const depth = this.props.timingRowDepth % 5;
 
 
 		let children = null;
-		if (!TimingRow.currentlyShowing[id] && this.state.showChildren) {
+		if (handler.id === 1 || (/*!TimingRow.currentlyShowing[id] && */this.state.showChildren)) {
 			const propTotal = prop('total');
 			const propCount = prop('count');
-			const filter = lagFilter.bind(null, propTotal, propCount);
+
+			const filter = lagFilter.bind(handler.children, propTotal, propCount);
 			const sorter = sortChildren.bind(null, propTotal);
 
 			children = flow(
 				_fp.filter(filter),
 				_fp.sortBy(sorter),
 				_fp.map((child) => {
-					child.children = data.handlerData[id].children;
-					return <TimingRow key={child.id} handler={child} />
+					const childHandle = new TimingHandler();
+					childHandle.id = child.id;
+					childHandle.addData(child);
+					childHandle.children = data.handlerData[child.id].children;
+					return <TimingRow
+						key={child.id}
+						handler={childHandle}
+						timingParent={handler}
+						timingRowDepth={this.props.timingRowDepth + 1}
+					/>
 				})
 			)(handler.children);
 		}
 		TimingRow.currentlyShowing[id] = 1;
 
+		const toggleChildren = () => {
+			console.log("show children", this);
+			this.setState({showChildren: !this.state.showChildren});
+		};
 		return (
 			<div className='full-timing-row'>
-				<div className={`indent depth${depth} full-depth${depth}`}></div>
-				<div id={`${rowId}`} className='timing-row'><a href={`#${rowId}`}>#</a>
-					<TimingRecordData handler={this.handler} />
+				<div className={`indent depth${depth} full-depth${depth}`} onClick={() => toggleChildren()}></div>
+				<div id={`${rowId}`} className='timing-row'>
+					<a href={`#${rowId}`} onClick={() => toggleChildren()}>#</a>
+					<TimingRecordData
+						handler={handler}
+						timingRowDepth={this.props.timingRowDepth}
+						onClick={() => toggleChildren()} />
 					<div className="children">
 						{children}
 					</div>
@@ -93,6 +112,7 @@ export default class TimingRow extends React.Component {
 class TimingRecordData extends React.Component {
 
 	static propTypes = TimingRecordData.props = {
+		timingRowDepth: React.PropTypes.number,
 		/**
 		 * @type TimingHandler
 		 */
@@ -104,6 +124,8 @@ class TimingRecordData extends React.Component {
 	}
 	render() {
 		const handler = this.props.handler;
+		const identity = data.getIdentity(handler.id);
+
 		const propTotal = prop('total');
 		const propCount = prop('count');
 
@@ -114,13 +136,11 @@ class TimingRecordData extends React.Component {
 		const totalTicks = masterHandler[propCount];
 		const totalTime = masterHandler[propTotal];
 
-
-
 		let total =  handler[propTotal];
-
 		const count =  handler[propCount];
+
 		if (count === 0) {
-			return;
+			return null;
 		}
 
 		let avg = round((total / count) / 1000000, 4);
@@ -129,7 +149,7 @@ class TimingRecordData extends React.Component {
 
 		let totalPct = round((total / totalTime) * 100, 2);
 		let pctOfTick, tickAvgMod;
-		if (handler.name === "Full Server Tick") { // always 100%
+		if (identity.name === "Full Server Tick") { // always 100%
 			totalPct = pctView(totalPct, 200, 200, 200, 200);
 			pctOfTick = pctView(tickAvg / 50 * 100, 90, 80, 75, 70);
 		} else {
@@ -145,12 +165,13 @@ class TimingRecordData extends React.Component {
 		}
 		const avgCountTick = number_format(count / totalTicks, 2);
 
+//		console.log(avg,  tickAvg,  totalPct,  pctOfTick, avgCountTick, count, total)
 		return (
 			<div className='row-wrap'>
-				<div className='name'>{cleanName(handler.id)}</div>
+				<div className='name' title={identity.name}>{cleanName(identity.name)}</div>
 				<div className='row-info'>
 
-					<div className='row-info-total'>count(<span className='count'>count</span>)
+					<div className='row-info-total'>count(<span className='count'>{count}</span>)
 						total(<span className='totalPct'>{totalPct}%</span>
 						<span className='totalTime'>{round(total / 1000000000, 3)}s</span>,
 						<span className='pctOfTick'>{pctOfTick}% of tick</span>)
@@ -178,6 +199,10 @@ function prop(type) {
 }
 
 function lagFilter(propTotal, propCount, handler) {
+	if (!handler) {
+		return false;
+	}
+
 	let avg = 0;
 	const count = handler[propCount];
 	const total = handler[propTotal];
@@ -188,24 +213,24 @@ function lagFilter(propTotal, propCount, handler) {
 	return total > 5; // TODO: avg?
 }
 
-const $replacements = [
+const replacements = [
 	[/net\.minecraft\.server\.v[^.]+\./, 'nms.'],
 	[/org\.bukkit\.craftbukkit\.v[^.]+\./, 'obc.'],
 ];
-function cleanName($name) {
-	const $orig = $name;
-	for(const $pattern of $replacements) {
-		$name = $name.replace($pattern[0], $pattern[1]);
+function cleanName(name) {
+	const orig = name;
+	for(const pattern of replacements) {
+		name = name.replace(pattern[0], pattern[1]);
 	}
-	$name = $name.replace(/Event: ([a-zA-Z0-9.]+) /, condensePackage);
-	return <span title={$orig}>{$name}</span>;
+	name = name.replace(/Event: ([a-zA-Z0-9.]+) /, condensePackage);
+	return <span title={orig}>{name}</span>;
 }
-function condensePackage($v) {
-	let $name = explode('.', $v[1]);
-	const $last = array_pop($name);
-	$name = array_map(function($v) { return $v[0]; }, $name);
-	$name.push($last);
-	return 'Event: ' .implode('.', $name) + ' ';
+function condensePackage(pkg) {
+	let name = pkg.substring(7).split(/\./);
+	const last = name.pop();
+	name = name.map((v) => v[0]);
+	name.push(last);
+	return 'Event: ' + name.join(".") + ' ';
 }
 
 
@@ -217,25 +242,28 @@ function condensePackage($v) {
  * @returns {number}
  */
 function sortChildren(keyToCheck, h1, h2) {
+	if (!h1 || !h2) {
+		return -1;
+	}
 	return h1[keyToCheck] > h2[keyToCheck] ? -1 : 1;
 }
-function pctView($val, $t1 = 25, $t2 = 15, $t3 = 5, $t4 = 1) {
-	return pctViewMod($val, 1, $t1, $t2, $t3, $t4);
+function pctView(val, t1 = 25, t2 = 15, t3 = 5, t4 = 1) {
+	return pctViewMod(val, 1, t1, t2, t3, t4);
 }
-function pctViewMod($val, $mod = 1, $t1 = 25, $t2 = 15, $t3 = 5, $t4 = 1) {
-	let $valnum = number_format($val, 2);
-	$val *= $mod;
-	if ($val > $t1) {
-		$valnum = <span className='warn-high'>$valnum</span>;
-	} else if ($val > $t2) {
-		$valnum = <span className='warn-med'>$valnum</span>;
-	} else if ($val > $t3) {
-		$valnum = <span className='warn-low'>$valnum</span>;
-	} else if ($val > $t4) {
-		$valnum = <span className='warn-none'>$valnum</span>;
+function pctViewMod(val, mod = 1, t1 = 25, t2 = 15, t3 = 5, t4 = 1) {
+	let valNum = number_format(val, 2);
+	val *= mod;
+	if (val > t1) {
+		valNum = <span className='warn-high'>$valnum</span>;
+	} else if (val > t2) {
+		valNum = <span className='warn-med'>$valnum</span>;
+	} else if (val > t3) {
+		valNum = <span className='warn-low'>$valnum</span>;
+	} else if (val > t4) {
+		valNum = <span className='warn-none'>$valnum</span>;
 	}
 
-	return $valnum;
+	return valNum;
 }
 
 

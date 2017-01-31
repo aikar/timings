@@ -84,6 +84,10 @@ export default class JsonObject {
 async function processQueue(queue) {
 	let item;
 	while (item = queue.pop()) {
+		if (typeof item === 'function') {
+			item();
+			continue;
+		}
 		const thisIdx = item.idx;
 		if (!item.val) {
 			console.error(item);
@@ -106,14 +110,11 @@ async function processQueue(queue) {
 
 /**
  * @param {JsonTemplate} tpl
- * @param {object} data
  * @returns {JsonTemplate}
  */
-async function decodeObj(tpl, data) {
-	for (const [key, val] of Object.entries(data)) {
-		tpl[key] = val;
-	}
+async function decodeObj(tpl) {
 	const queue = [];
+	queue.push(() => tpl.init());
 	queueDecodes(tpl, queue);
 	await processQueue(queue);
 	delete tpl['decode'];
@@ -143,15 +144,17 @@ function initializeData(tpl, data, queue) {
 		value: () => data
 	});
 
+	for (const [key, val] of Object.entries(data)) {
+		tpl[key] = val;
+	}
+
 	if (deferDecoding) {
 		Object.defineProperty(tpl, 'decode', {
 			enumerable: false,
-			value: decodeObj.bind(tpl, tpl, data)
+			value: decodeObj.bind(tpl, tpl)
 		});
 	} else {
-		for (const [key, val] of Object.entries(data)) {
-			tpl[key] = val;
-		}
+		queue.push(() => tpl.init());
 		queueDecodes(tpl, queue);
 		Object.defineProperty(tpl, 'decode', {
 			enumerable: false,
@@ -204,5 +207,5 @@ function createObject(data) {
 }
 
 /**
- * @typedef {{idx: *, val: *}} QueuedDecode
+ * @typedef {function,{idx: *, val: *}} QueuedDecode
  */
