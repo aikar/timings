@@ -27,7 +27,7 @@ export default class Header extends React.PureComponent {
 						<span className="section-title">Contribute or Donate? </span>
 						<span className="section-controls">
 					<a className="normal" href="http://github.com/aikar/timings"><i className="fa fa-github" /> Source</a>
-							&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;
 					<a className="normal" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=payments%40starlis%2ecom&lc=US&item_name=Aikar%20Timings&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHostedGuest"><i className="fa fa-paypal"/> Donate</a>
 				</span>
 					</div>

@@ -36,8 +36,8 @@ const data = {
 	first: 0,
 	history: {},
 	ranges: [],
-	start: 1,
-	end: 1,
+	start: 0,
+	end: 3,
 	maxTime: 1,
 	stamps:[],
 	lagData:[],
@@ -111,11 +111,11 @@ data.loadData = async function loadData() {
 
 		let $ranges = [];
 		let $first = -1;
-		for (const /*TimingHistory*/$history of data.timingsMaster.data) {
-			$ranges.push($history.start);
-			$ranges.push($history.end);
-			if ($first === -1 || $first > $history.start) {
-				$first = $history.start;
+		for (const /*TimingHistory*/history of data.timingsMaster.data) {
+			$ranges.push(history.start);
+			$ranges.push(history.end);
+			if ($first === -1 || $first > history.start) {
+				$first = history.start;
 			}
 		}
 		data.first = $first;
@@ -149,7 +149,7 @@ function loadChartData() {
 		const firstMP = history.minuteReports[0];
 
 		for (let $i = firstMP.time; $i - $first < 65; $i += 60) {
-			const $clone = clone(firstMP);
+			const $clone = clone(firstMP, false);
 			$clone.time = $first;
 			history.minuteReports.unshift($clone);
 		}
@@ -176,55 +176,50 @@ function loadChartData() {
 }
 
 async function loadTimingData() {
-	try {
-		// TODO: lscache history segments
-		const [body] = await getData({
-			history: data.history
-				.filter((h) => !h.data)
-				.map((h) => h.id)
-				.join(",")
-		});
+	// TODO: lscache history segments
+	const [body] = await getData({
+		history: data.history
+			.filter((h) => !h.data && h.id >= data.start && h.id <= data.end)
+			.map((h) => h.id)
+			.join(",")
+	});
 
 
-		for (const [key, history] of Object.entries(body.history)) {
-			data.history[key].handlers = await JsonObject.newObject(history);
-
-			parseHistory(data.history[key].handlers);
-		}
-
-		//buildSelfData();
-		data.masterHandler = data.handlerData[1];
-	} catch(e) {
-		console.error(e);
+	for (const [key, history] of Object.entries(body.history)) {
+		data.history[key].handlers = await JsonObject.newObject(history);
 	}
+	buildTimingData();
+	data.masterHandler = data.handlerData[1];
+	console.log(data.handlerData);
 }
 
-/**
- *
- * @param {TimingHandler[]} handlers
- */
-function parseHistory(handlers) {
+function buildTimingData() {
+	data.handlerData = {}; // Reset handler data
 	const handlerData = data.handlerData;
-	for (const /*TimingHandler*/handler of handlers) {
-		const id = handler.id;
-		if (!handlerData[id]) {
-			handlerData[id] = clone(handler);
-			handlerData[id].mergedCount = 1;
-			handlerData[id].mergedLagCount = handler.lagCount ? 1 : 0;
-		} else {
-			handlerData[id].addDataFromHandler(handler);
+	for (let i = data.start; i <= data.end; i++ ) {
+		/**
+		 * @type TimingHandler[]
+		 */
+		const handlers = data.history[i].handlers;
+		for (const /*TimingHandler*/handler of handlers) {
+			const id = handler.id;
+			if (!handlerData[id]) {
+				handlerData[id] = clone(handler, false);
+				handlerData[id].mergedCount = 1;
+				handlerData[id].mergedLagCount = handler.lagCount ? 1 : 0;
+			} else {
+				handlerData[id].addDataFromHandler(handler);
+			}
 		}
 	}
+	buildSelfData();
 }
 
 function buildSelfData() {
 	for (const [id, handler] of Object.entries(data.handlerData)) {
 		const record = new TimingData();
-		const identity = new TimingIdentity();
-		identity.id = handler.id + "-self";
-		identity.name = "(SELF) " + data.getIdentity(handler.id).name;
-		identity.group = handler.id.group;
 		record.id = handler.id;
+		record.isSelf = true;
 		for (const child of Object.values(handler.children)) {
 			handler.childrenCount += child.mergedCount;
 			handler.childrenLagCount += child.mergedLagCount;
@@ -243,14 +238,13 @@ function buildSelfData() {
 async function getData(options={}) {
 	options.id = query.get('id') || "";
 
-	return new Promise((resolve, reject) => xhr('data.php', {
+	return new Promise((resolve, reject) => xhr('data.php?' + qs.stringify(options), {
 		headers: {
 			"Accept": "application/json",
 			"Content-Type": "application/x-www-form-urlencoded",
 		},
-		body: qs.stringify(options),
 		responseType: "text",
-		method: "post",
+		method: "GET",
 	}, (err, res, body) => {
 		if (err || res.statusCode !== 200 || !body) {
 			dataFailure();
@@ -270,7 +264,7 @@ data.onFailure = function onFailure(cb) {
 };
 data.onReady = function onReady(cb) {
 	if (dataReady) {
-		db(data);
+		cb(data);
 	} else {
 		dataReadyCB.push(cb);
 	}

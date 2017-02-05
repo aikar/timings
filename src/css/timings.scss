@@ -17,7 +17,6 @@
 body {
 	height: 100%;
 	background: $theme-background;
-	//color: #c7c7c7;
 	color: $theme-color-text;
 	font-size: 1em;
 }
@@ -26,8 +25,6 @@ pre, textarea {
 	word-wrap: normal;
 	font-family: $monospace;
 	tab-size: 4;
-	-moz-tab-size: 4;
-	-o-tab-size: 4;
 	overflow: visible;
 	font-size: .7em;
 }
@@ -51,12 +48,6 @@ hr {
 	color: $theme-color-text-special;
 }
 
-/*<a href='#$id'>#</a><span class='name'>$name</span> - count(<span class='count'>$count</span>) -
-		total(<span class='totalPct'>$totalPct%</span> <span class='totalTime'>{$total}s</span>) -
-		avg(<span class='avgMs'>{$avg}ms</span> - <span class='tickAvgMs'>{$tickAvg}ms</span>)*/
-body {
-	font-size: 1em;
-}
 .timing-row {
 
 	display: table-cell;
@@ -68,9 +59,11 @@ body {
 		@include less-than-xlarge-screen {
 			max-width: 325px;
 		}
-
 	}
 
+	.timing-row > a {
+		padding: 0 6px 0 0;
+	}
 	.name, .expand-control, > a {
 		float: left;
 	}
@@ -138,7 +131,7 @@ body {
 		cursor: pointer;
 		display: inline-block;
 		color: $theme-accent;
-		padding: 0 6px;
+		padding: 0 6px 0 0;
 	}
 	.row-wrap:hover {
 		background: $theme-accent;
@@ -146,19 +139,12 @@ body {
 			color: $theme-color-text-special;
 		}
 	}
-
-
+	.children {
+		clear: both;
+		width: 100%;
+	}
 }
 
-.full-timing-row .children {
-	clear: both;
-	width: 100%;
-}
-
-
-.invisible {
-	display: none !important;
-}
 .themes {
 	padding: 10px;
 	overflow: hidden;

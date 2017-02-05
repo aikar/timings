@@ -32,7 +32,7 @@ export default class TimingRow extends React.Component {
 	};
 
 	static defaultProps = {
-		timingRowDepth: 0,
+		timingRowDepth: 1,
 	};
 
 	static rowIdPool = 0;
@@ -55,25 +55,27 @@ export default class TimingRow extends React.Component {
 			return null;
 		}
 		const id = handler.id;
-		const rowId = `${id}_${this.rowId}`;
+		const rowId = this.props.timingParent ? `${this.props.timingParent.id}_${handler.id}` : handler.id;
 		const depth = this.props.timingRowDepth % 5;
 
 
 		let children = null;
-		if (handler.id === 1 || (/*!TimingRow.currentlyShowing[id] && */this.state.showChildren)) {
+		const childCount = Object.keys(handler.children).length;
+		if ((id === 1 || (this.state.showChildren)) && !handler.isSelf && childCount > 1) {
 			const propTotal = prop('total');
 			const propCount = prop('count');
 
 			const filter = lagFilter.bind(handler.children, propTotal, propCount);
-			const sorter = sortChildren.bind(null, propTotal);
-
 			children = flow(
 				_fp.filter(filter),
-				_fp.sortBy(sorter),
+				_fp.sortBy(propTotal),
 				_fp.map((child) => {
 					const childHandle = new TimingHandler();
 					childHandle.id = child.id;
 					childHandle.addData(child);
+					if (child.isSelf) {
+						childHandle.isSelf = true;
+					}
 					childHandle.children = data.handlerData[child.id].children;
 					return <TimingRow
 						key={child.id}
@@ -82,19 +84,26 @@ export default class TimingRow extends React.Component {
 						timingRowDepth={this.props.timingRowDepth + 1}
 					/>
 				})
-			)(handler.children);
+			)(handler.children).reverse();
 		}
-		TimingRow.currentlyShowing[id] = 1;
+
+		let childControl = (childCount < 2|| handler.isSelf || id === 1) ? null
+			: (
+				!children ?
+					<div className='expand-control'>[+]</div>
+					:
+					<div className='expand-control'>[-]</div>
+			);
 
 		const toggleChildren = () => {
-			console.log("show children", this);
 			this.setState({showChildren: !this.state.showChildren});
 		};
 		return (
 			<div className='full-timing-row'>
 				<div className={`indent depth${depth} full-depth${depth}`} onClick={() => toggleChildren()}></div>
 				<div id={`${rowId}`} className='timing-row'>
-					<a href={`#${rowId}`} onClick={() => toggleChildren()}>#</a>
+					{id !== 1 ? <a href={`#${rowId}`} onClick={() => toggleChildren()}>#</a> : null}
+					{childControl}
 					<TimingRecordData
 						handler={handler}
 						timingRowDepth={this.props.timingRowDepth}
@@ -117,6 +126,7 @@ class TimingRecordData extends React.Component {
 		 * @type TimingHandler
 		 */
 		handler: React.PropTypes.instanceOf(TimingHandler).isRequired,
+		onClick: React.PropTypes.func
 	};
 
 	constructor(props, ctx) {
@@ -145,11 +155,14 @@ class TimingRecordData extends React.Component {
 
 		let avg = round((total / count) / 1000000, 4);
 		let tickAvg = round(avg * (count / totalTicks), 4);
-
-
 		let totalPct = round((total / totalTime) * 100, 2);
+
 		let pctOfTick, tickAvgMod;
-		if (identity.name === "Full Server Tick") { // always 100%
+		let name = data.timingsMaster.idmap.groupMap[identity.group] + "::" + identity.name;
+		if (handler.isSelf) {
+			name += " (SELF)";
+		}
+		if (name === "Minecraft::Full Server Tick") { // always 100%
 			totalPct = pctView(totalPct, 200, 200, 200, 200);
 			pctOfTick = pctView(tickAvg / 50 * 100, 90, 80, 75, 70);
 		} else {
@@ -165,20 +178,19 @@ class TimingRecordData extends React.Component {
 		}
 		const avgCountTick = number_format(count / totalTicks, 2);
 
-//		console.log(avg,  tickAvg,  totalPct,  pctOfTick, avgCountTick, count, total)
 		return (
-			<div className='row-wrap'>
-				<div className='name' title={identity.name}>{cleanName(identity.name)}</div>
+			<div className='row-wrap' onClick={this.props.onClick}>
+				<div className='name' title={name}>{cleanName(name)}</div>
 				<div className='row-info'>
 
-					<div className='row-info-total'>count(<span className='count'>{count}</span>)
-						total(<span className='totalPct'>{totalPct}%</span>
-						<span className='totalTime'>{round(total / 1000000000, 3)}s</span>,
+					<div className='row-info-total'>count(<span className='count'>{count}</span>)&nbsp;
+						total(<span className='totalPct'>{totalPct}%</span>&nbsp;
+						<span className='totalTime'>{round(total / 1000000000, 3)}s</span>,&nbsp;
 						<span className='pctOfTick'>{pctOfTick}% of tick</span>)
 					</div>
 
 					<div className='row-info-avg'>
-						avg(<span className='avgMs'>{pctView(avg)}ms</span> per -
+						avg(<span className='avgMs'>{pctView(avg)}ms</span> per -&nbsp;
 						<span className='tickAvgMs'>{pctView(tickAvg)}ms/{avgCountTick} per tick</span>)
 					</div>
 
@@ -192,9 +204,9 @@ class TimingRecordData extends React.Component {
 
 function prop(type) {
 	if (reportType === 'lag') {
-		return type === 'count' ? 'lagCount' : 'count';
+		return type === 'total' ? 'lagTotal' : 'lagCount';
 	} else {
-		return type === 'count' ? 'lagTotal' : 'total';
+		return type === 'total' ? 'total' : 'count';
 	}
 }
 
@@ -233,20 +245,6 @@ function condensePackage(pkg) {
 	return 'Event: ' + name.join(".") + ' ';
 }
 
-
-/**
- *
- * @param {string} keyToCheck
- * @param {TimingHandler} h1
- * @param {TimingHandler} h2
- * @returns {number}
- */
-function sortChildren(keyToCheck, h1, h2) {
-	if (!h1 || !h2) {
-		return -1;
-	}
-	return h1[keyToCheck] > h2[keyToCheck] ? -1 : 1;
-}
 function pctView(val, t1 = 25, t2 = 15, t3 = 5, t4 = 1) {
 	return pctViewMod(val, 1, t1, t2, t3, t4);
 }
@@ -254,13 +252,13 @@ function pctViewMod(val, mod = 1, t1 = 25, t2 = 15, t3 = 5, t4 = 1) {
 	let valNum = number_format(val, 2);
 	val *= mod;
 	if (val > t1) {
-		valNum = <span className='warn-high'>$valnum</span>;
+		valNum = <span className='warn-high'>{valNum}</span>;
 	} else if (val > t2) {
-		valNum = <span className='warn-med'>$valnum</span>;
+		valNum = <span className='warn-med'>{valNum}</span>;
 	} else if (val > t3) {
-		valNum = <span className='warn-low'>$valnum</span>;
+		valNum = <span className='warn-low'>{valNum}</span>;
 	} else if (val > t4) {
-		valNum = <span className='warn-none'>$valnum</span>;
+		valNum = <span className='warn-none'>{valNum}</span>;
 	}
 
 	return valNum;

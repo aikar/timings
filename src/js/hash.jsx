@@ -13,6 +13,9 @@
 import UI from "./UI";
 window.keepScroll = false;
 export default function checkHash() {
+	if (true) {
+		return; // TODO: new logic
+	}
 	let hash = location.hash;
 	if (!hash || hash.length < 2) {
 		return;

@@ -13,7 +13,6 @@
 
 export default class JsonTemplate {
 	_rawData;
-	_deferDecoding = false;
 
 	async decode() { /* abstract - will be injected from JsonObject */}
 	rawData() { /* abstract - will be injected from JsonObject */}

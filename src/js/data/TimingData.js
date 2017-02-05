@@ -40,9 +40,6 @@ export default class TimingData extends JsonTemplate {
 
 	addData(data) {
 		this.mergedCount++;
-		if (!(data instanceof TimingData)) {
-			console.error(data);
-		}
 
 		this.count += data.count;
 		this.total += data.total;
