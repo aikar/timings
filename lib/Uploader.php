@@ -44,7 +44,7 @@ class Uploader {
 		Log::info("Uploaded $uncompressedSize bytes as $key to $cacheFile");
 		Cache::put($key, $data);
 		header("Location: " . BASE_URL_VIEW . "/?id=$key");
-		self::output("Compressed Size: $compressedSize\nUncompressed Size: $uncompressedSize\nRaw Upload: " . BASE_URL_VIEW . "/?id=$key&raw=1");
+		//self::output("Compressed Size: $compressedSize\nUncompressed Size: $uncompressedSize\nRaw Upload: " . BASE_URL_VIEW . "/?id=$key&raw=1");
 	}
 
 	public static function getServerIcon($base64) {
