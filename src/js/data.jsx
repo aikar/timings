@@ -24,7 +24,7 @@ import JsonObject from "./data/JsonObject";
 import _ from "lodash";
 import TimingData from "./data/TimingData";
 import TimingIdentity from "./data/TimingIdentity";
-
+import lscache from "lscache";
 
 let dataReady = false;
 let dataHasFailed = false;
@@ -177,20 +177,22 @@ function loadChartData() {
 
 async function loadTimingData() {
 	// TODO: lscache history segments
-	const [body] = await getData({
-		history: data.history
-			.filter((h) => !h.data && h.id >= data.start && h.id <= data.end)
-			.map((h) => h.id)
-			.join(",")
-	});
+	const neededIds = data.history
+		.filter((h) => !h.handlers && h.id >= data.start && h.id <= data.end)
+		.map((h) => h.id);
 
+	if (neededIds.length) {
+		const [body] = await getData({
+			history: neededIds.join(",")
+		});
 
-	for (const [key, history] of Object.entries(body.history)) {
-		data.history[key].handlers = await JsonObject.newObject(history);
+		for (const [key, history] of Object.entries(body.history)) {
+			data.history[key].handlers = await JsonObject.newObject(history);
+		}
 	}
 	buildTimingData();
 	data.masterHandler = data.handlerData[1];
-	console.log(data.handlerData);
+	//console.log(data.timingsMaster);
 }
 
 function buildTimingData() {
@@ -235,24 +237,26 @@ function buildSelfData() {
 	}
 }
 
-async function getData(options={}) {
+function getData(options={}) {
 	options.id = query.get('id') || "";
 
-	return new Promise((resolve, reject) => xhr('data.php?' + qs.stringify(options), {
-		headers: {
-			"Accept": "application/json",
-			"Content-Type": "application/x-www-form-urlencoded",
-		},
-		responseType: "text",
-		method: "GET",
-	}, (err, res, body) => {
-		if (err || res.statusCode !== 200 || !body) {
-			dataFailure();
-			reject([err || res.statusText || "Status Code: " + res.statusCode, res]);
-		} else {
-			resolve([JSON.parse(body), res]);
-		}
-	}));
+	return new Promise((resolve, reject) => {
+		xhr('data.php?' + qs.stringify(options), {
+			headers: {
+				"Accept": "application/json",
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+			responseType: "text",
+			method: "GET",
+		}, (err, res, body) => {
+			if (err || res.statusCode !== 200 || !body) {
+				dataFailure();
+				reject([err || res.statusText || "Status Code: " + res.statusCode, res]);
+			} else {
+				resolve([JSON.parse(body), res]);
+			}
+		})
+	});
 }
 
 data.onFailure = function onFailure(cb) {

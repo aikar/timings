@@ -39,6 +39,7 @@
     "json-loader": "^0.5.4",
     "lodash": "^4.17.4",
     "lodash-webpack-plugin": "^0.11.0",
+    "lscache": "^1.0.7",
     "minimatch": "3.0.2",
     "mkdirp": "^0.5.1",
     "node-sass": "^4.3.0",
