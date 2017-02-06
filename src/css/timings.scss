@@ -154,20 +154,23 @@ section {
 		border-left: 1.5px solid;
 		display: table-cell;
 	}
+	.depthnone {
+		border-left: 0;
+	}
 	.depth0 {
 		border-left-color: lighten($theme-accent, 30);
 	}
 	.depth1 {
-		border-left-color: lighten($theme-background, 20);
+		border-left-color: darken($theme-accent, 20);
 	}
 	.depth2 {
 		border-left-color: lighten($theme-accent, 5);
 	}
 	.depth3 {
-		border-left-color: darken($theme-background, 30);
+		border-left-color: darken($theme-accent, 5);
 	}
 	.depth4 {
-		border-left-color: darken($theme-accent, 20);
+		border-left-color: lighten($theme-accent, 15);
 	}
 	.row-wrap {
 		overflow: hidden;

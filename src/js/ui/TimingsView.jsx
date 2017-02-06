@@ -31,7 +31,7 @@ export default class TimingsView extends React.Component {
 		super(props, ctx);
 		window.reportType = props.reportType;
 		this.state = {
-			limit: 20
+			limit: 40
 		};
 		data.provideTo(this);
 	}
@@ -74,9 +74,9 @@ export default class TimingsView extends React.Component {
 					     onClick={() => updateType("all")}>All</div>
 				</div>
 				{children.map((handler) => {
-					return <TimingRow key={handler.id} handler={handler} />
+					return <TimingRow timingRowDepth={0} key={handler.id} handler={handler} />
 				})}
-				<div id="show-more" onClick={()=> this.setState({limit: this.state.limit + 10})}>Show More</div>
+				<div id="show-more" onClick={()=> this.setState({limit: this.state.limit + 20})}>Show More</div>
 			</div>
 
 		);

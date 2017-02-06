@@ -57,7 +57,7 @@ export default class TimingRow extends React.Component {
 		}
 		const id = handler.id;
 		const rowId = this.props.timingParent ? `${this.props.timingParent.id}_${handler.id}` : handler.id;
-		const depth = this.props.timingRowDepth % 5;
+		const depth = (this.props.timingRowDepth > 0 && this.props.timingRowDepth % 5) || "none";
 
 
 		let children = null;
@@ -88,7 +88,7 @@ export default class TimingRow extends React.Component {
 			)(handler.children).reverse();
 		}
 
-		let childControl = (childCount < 2|| handler.isSelf || id === 1) ? null
+		let childControl = (childCount < 2|| handler.isSelf) ? null
 			: (
 				!children ?
 					<i className='expand-control fa fa-caret-right' onClick={() => toggleChildren()}/>
