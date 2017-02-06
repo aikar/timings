@@ -37,6 +37,9 @@ hr {
 	margin: 0;
 	clear: both;
 }
+section {
+	position: relative;
+}
 #top-ad {
 	text-align: center;
 }
@@ -50,7 +53,48 @@ hr {
 	background-color: $theme-color-light;
 	color: $theme-color-text-special;
 }
+#show-more {
 
+	padding: 20px;
+	max-width: 200px;
+	margin: 20px auto auto;
+	text-align: center;
+	cursor: pointer;
+	border: 3px solid $theme-accent;
+	background: darken($theme-background-alt, 10);
+}
+#show-more:hover {
+	background: $theme-background-alt;
+}
+#type-toggle {
+	position: absolute;
+	right: 0;
+	top: -47px;
+	height: 47px;
+	border: 2px solid $theme-accent;
+	width: 120px;
+	.lag, .all {
+		height: 45px;
+		text-align: center;
+		width: 50%;
+		float: left;
+		display: block;
+		padding: 8px 14px;
+		cursor: pointer;
+		font-weight: 500;
+
+		//background: darken($theme-background-alt, 5);
+		background: $theme-color-light;
+	}
+	.lag {
+		border-right: 2px solid $theme-accent;
+	}
+	.active {
+		background: darken($theme-background-alt, 10);
+
+	}
+	overflow: hidden;
+}
 .timing-row {
 
 	display: table-cell;
@@ -64,7 +108,7 @@ hr {
 		}
 	}
 
-	.timing-row > a {
+	> a {
 		padding: 0 6px 0 0;
 	}
 	.name, .expand-control, > a {

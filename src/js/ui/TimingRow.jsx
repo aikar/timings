@@ -25,6 +25,7 @@ export default class TimingRow extends React.Component {
 	static propTypes = TimingRow.props = {
 		timingParent: React.PropTypes.object,
 		timingRowDepth: React.PropTypes.number,
+		showChildren: React.PropTypes.bool,
 		/**
 		 * @type TimingHandler
 		 */
@@ -41,7 +42,7 @@ export default class TimingRow extends React.Component {
 		super(props, ctx);
 		this.rowId = TimingRow.rowIdPool++;
 		this.state = {
-			showChildren: false
+			showChildren: this.props.showChildren || false
 		};
 	}
 
@@ -61,7 +62,7 @@ export default class TimingRow extends React.Component {
 
 		let children = null;
 		const childCount = Object.keys(handler.children).length;
-		if ((id === 1 || (this.state.showChildren)) && !handler.isSelf && childCount > 1) {
+		if (this.state.showChildren && !handler.isSelf && childCount > 1) {
 			const propTotal = prop('total');
 			const propCount = prop('count');
 
@@ -90,9 +91,9 @@ export default class TimingRow extends React.Component {
 		let childControl = (childCount < 2|| handler.isSelf || id === 1) ? null
 			: (
 				!children ?
-					<div className='expand-control'>[+]</div>
+					<i className='expand-control fa fa-caret-right' onClick={() => toggleChildren()}/>
 					:
-					<div className='expand-control'>[-]</div>
+					<i className='expand-control fa fa-caret-down' onClick={() => toggleChildren()}/>
 			);
 
 		const toggleChildren = () => {
@@ -102,7 +103,7 @@ export default class TimingRow extends React.Component {
 			<div className='full-timing-row'>
 				<div className={`indent depth${depth} full-depth${depth}`} onClick={() => toggleChildren()}></div>
 				<div id={`${rowId}`} className='timing-row'>
-					{id !== 1 ? <a href={`#${rowId}`} onClick={() => toggleChildren()}>#</a> : null}
+					{/*{id !== 1 ? <a href={`#${rowId}`} onClick={() => toggleChildren()}>#</a> : null}*/}
 					{childControl}
 					<TimingRecordData
 						handler={handler}
@@ -200,69 +201,6 @@ class TimingRecordData extends React.Component {
 	}
 }
 
-
-
-function prop(type) {
-	if (reportType === 'lag') {
-		return type === 'total' ? 'lagTotal' : 'lagCount';
-	} else {
-		return type === 'total' ? 'total' : 'count';
-	}
-}
-
-function lagFilter(propTotal, propCount, handler) {
-	if (!handler) {
-		return false;
-	}
-
-	let avg = 0;
-	const count = handler[propCount];
-	const total = handler[propTotal];
-	if (count > 0) {
-		avg = (total / count) * handler.mergedCount;
-	}
-
-	return total > 5; // TODO: avg?
-}
-
-const replacements = [
-	[/net\.minecraft\.server\.v[^.]+\./, 'nms.'],
-	[/org\.bukkit\.craftbukkit\.v[^.]+\./, 'obc.'],
-];
-function cleanName(name) {
-	const orig = name;
-	for(const pattern of replacements) {
-		name = name.replace(pattern[0], pattern[1]);
-	}
-	name = name.replace(/Event: ([a-zA-Z0-9.]+) /, condensePackage);
-	return <span title={orig}>{name}</span>;
-}
-function condensePackage(pkg) {
-	let name = pkg.substring(7).split(/\./);
-	const last = name.pop();
-	name = name.map((v) => v[0]);
-	name.push(last);
-	return 'Event: ' + name.join(".") + ' ';
-}
-
-function pctView(val, t1 = 25, t2 = 15, t3 = 5, t4 = 1) {
-	return pctViewMod(val, 1, t1, t2, t3, t4);
-}
-function pctViewMod(val, mod = 1, t1 = 25, t2 = 15, t3 = 5, t4 = 1) {
-	let valNum = number_format(val, 2);
-	val *= mod;
-	if (val > t1) {
-		valNum = <span className='warn-high'>{valNum}</span>;
-	} else if (val > t2) {
-		valNum = <span className='warn-med'>{valNum}</span>;
-	} else if (val > t3) {
-		valNum = <span className='warn-low'>{valNum}</span>;
-	} else if (val > t4) {
-		valNum = <span className='warn-none'>{valNum}</span>;
-	}
-
-	return valNum;
-}
 
 
 

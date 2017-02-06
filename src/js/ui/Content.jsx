@@ -17,8 +17,7 @@ import TabbedPanel from "./TabbedPanel";
 import RegionsView from "./RegionsView";
 import PluginsView from "./PluginsView";
 import ConfigView from "./ConfigView";
-import TreeView from "./TreeView";
-import SummaryView from "./SummaryView";
+import TimingsView from "./TimingsView";
 
 export default class Content extends React.Component {
 	constructor(props, ctx) {
@@ -30,31 +29,22 @@ export default class Content extends React.Component {
 		return <div id="content">
 			<div id="tab-bar" className="ui-tabs ui-widget ui-widget-content ui-corner-all">
 				<TabContainer
-					activeTab="lag"
+					activeTab="timings"
 					tabs={{
-						"lag": "Lag Tree View",
-						"all": "All Tree View",
-						"lagsummary": "Lag Summary View",
-						"allsummary": "All Summary View",
+						"timings": "Timings",
 						"regions": "Regions",
 						"config": "Config",
 						"plugins": "Plugins",
 					}}
 				>
-					<TabbedPanel tabId="lag">
-						<TreeView reportType="lag" />
-					</TabbedPanel>
-					<TabbedPanel tabId="all">
-						<TreeView reportType="all" />
-					</TabbedPanel>
-					<TabbedPanel tabId="lagsummary">
-						<SummaryView reportType="lag" />
-					</TabbedPanel>
-					<TabbedPanel tabId="allsummary">
-						<SummaryView reportType="all" />
+					<TabbedPanel tabId="timings">
+						<TimingsView reportType="lag" />
 					</TabbedPanel>
 					<TabbedPanel tabId="config">
 						<ConfigView />
+					</TabbedPanel>
+					<TabbedPanel tabId="regions">
+						<RegionsView />
 					</TabbedPanel>
 					<TabbedPanel tabId="plugins">
 						<PluginsView />

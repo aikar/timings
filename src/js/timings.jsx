@@ -20,18 +20,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {initializeAds} from "./ui/Advertisement";
 import ContentWrapper from "./ui/ContentWrapper";
-import * as phpjs from "phpjs";
-import TimingRow from "./ui/TimingRow"
-
-
-function waitFor(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-phpjs.registerGlobals();
-window.waitFor = waitFor;
-window.phpjs = phpjs;
-window.reportType = 'lag';
+import "./globals";
 
 (function() {
 	ReactDOM.render(<ContentWrapper />, document.getElementById("wrapper"));
