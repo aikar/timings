@@ -11,8 +11,15 @@
 namespace Starlis\Timings;
 
 require_once __DIR__ . "/ads.php";
-$assets = json_decode(file_get_contents("dist/webpack-assets.json"), true);
 
+$assets = "dist/webpack-assets.json";
+$stamp = filemtime($assets);
+$assets = json_decode(file_get_contents($assets), true);
+foreach ($assets as $k => $asset) {
+	foreach ($asset as $id => $f) {
+		$assets[$k][$id] = "$f?$stamp";
+	}
+}
 ?>
 <!DOCTYPE html>
 <html>

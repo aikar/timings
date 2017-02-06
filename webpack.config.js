@@ -48,7 +48,9 @@ module.exports = function(isProduction, watch) {
 				chunkModules: false,
 			});
 			for (const line of statLog.split("\n")) {
-				gutil.log("[webpack]", line);
+				if (!/\.(css|js)\.map/.test(line)) {
+					gutil.log("[webpack]", line);
+				}
 			}
 			cb && cb();
 		}
@@ -74,8 +76,8 @@ module.exports = function(isProduction, watch) {
 		output: {
 			path: path.join(__dirname, "dist"),
 			publicPath: "dist/",
-			filename: "[name].[hash].js",
-			chunkFilename: "chunk.[id].[hash].js",
+			filename: "[name].js",
+			chunkFilename: "chunk.[id].js",
 			pathinfo: !isProduction,
 		},
 		resolve: {
@@ -110,8 +112,8 @@ module.exports = function(isProduction, watch) {
 					test: /\.scss$/,
 					exclude: /(node_modules)/,
 					loader: ExtractTextPlugin.extract({
-						fallbackLoader: 'style-loader?sourceMap',
-						loader: [
+						fallback: 'style-loader?sourceMap',
+						use: [
 							{
 								loader: 'css-loader',
 								query: {
@@ -180,10 +182,10 @@ module.exports = function(isProduction, watch) {
 				}
 			}),
 			//new LodashModuleReplacementPlugin(), //  not sure on this one yet.
-			new CleanWebpackPlugin([path.join(__dirname, "dist")], {
+			/*new CleanWebpackPlugin([path.join(__dirname, "dist")], {
 				verbose: false,
 			}),
-			new WebpackAutoCleanBuildPlugin(),
+			new WebpackAutoCleanBuildPlugin(),*/
 			new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 20 }),
 			new DefinePlugin({
 				'process.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'),
@@ -197,12 +199,13 @@ module.exports = function(isProduction, watch) {
 			new CommonsChunkPlugin({
 				name: 'vendor',
 				minChunks: 3,
-				filename: "vendor.[hash].js",
+				filename: "vendor.js",
 			}),
 			new ExtractTextPlugin({
-				filename: "[name].[hash].css",
+				//id: "foo",
+				filename: "[name].css",
 				disable: false,
-				allChunks: true
+				allChunks: false
 			}),
 			function() {
 				// Delete the empty .js files for themes
