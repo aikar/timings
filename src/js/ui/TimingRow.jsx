@@ -57,7 +57,7 @@ export default class TimingRow extends React.Component {
 		}
 		const id = handler.id;
 		const rowId = this.props.timingParent ? `${this.props.timingParent.id}_${handler.id}` : handler.id;
-		const depth = (this.props.timingRowDepth > 0 && this.props.timingRowDepth % 5) || "none";
+		const depth = (this.props.timingRowDepth > 0 ? this.props.timingRowDepth % 5 : "none");
 
 
 		let children = null;
@@ -66,6 +66,7 @@ export default class TimingRow extends React.Component {
 			const propTotal = prop('total');
 			const propCount = prop('count');
 
+			//noinspection ES6ModulesDependencies,NodeModulesDependencies
 			const filter = lagFilter.bind(handler.children, propTotal, propCount);
 			children = flow(
 				_fp.filter(filter),
@@ -91,9 +92,9 @@ export default class TimingRow extends React.Component {
 		let childControl = (childCount < 2|| handler.isSelf) ? null
 			: (
 				!children ?
-					<i className='expand-control fa fa-caret-right' onClick={() => toggleChildren()}/>
+					<i className='expand-control fa fa-fw fa-caret-right' onClick={() => toggleChildren()}/>
 					:
-					<i className='expand-control fa fa-caret-down' onClick={() => toggleChildren()}/>
+					<i className='expand-control fa fa-fw fa-caret-down' onClick={() => toggleChildren()}/>
 			);
 
 		const toggleChildren = () => {

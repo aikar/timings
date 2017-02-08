@@ -11,7 +11,6 @@
  *
  */
 
-
 import React from "react";
 const adMap = {
 	bottom: 2697476978,
@@ -23,19 +22,14 @@ export default function Advertisement(props) {
 		"data-ad-client": "ca-pub-9196273905174409",
 		"data-ad-slot": adMap[props.adId]
 	};
+	(window.adsbygoogle = window.adsbygoogle || []).push({});
+	setTimeout(() => {
+		const adEl = document.createElement('script');
+		adEl.setAttribute('async', "async");
+		adEl.setAttribute('type', 'text/javascript');
+		adEl.setAttribute('src', "//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js");
+		document.body.appendChild(adEl);
+	}, 500);
 	const adClass = (props.adId === "link" ? "ad_links" : "responsive-ad");
 	return (<ins className={"adsbygoogle " + adClass} style={{display:"inline-block"}} {...attr} />);
-}
-
-export function initializeAds() {
-	setTimeout(() => {
-		const adCount = $('.adsbygoogle').length;
-		if (adCount) {
-			$('<script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>').appendTo("body");
-
-			for (let i = 0; i < adCount; i++) {
-				(window.adsbygoogle = window.adsbygoogle || []).push({});
-			}
-		}
-	}, 1000);
 }

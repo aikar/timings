@@ -62,7 +62,7 @@ module.exports = function(isProduction, watch) {
 			vendor: [
 				"babel-polyfill",
 				"es7-shim",
-				"jquery",
+				//"jquery",
 				"chart.js",
 				"react",
 				"react-dom",
@@ -107,7 +107,7 @@ module.exports = function(isProduction, watch) {
 					}
 				},
 
-				//{ test: /\.css$/, use: ["style-loader"] },
+				{ test: /\.css$/, use: ExtractTextPlugin.extract({fallback: "style-loader", use: ["css-loader", "postcss-loader"]})},
 				{
 					test: /\.scss$/,
 					exclude: /(node_modules)/,
@@ -202,10 +202,8 @@ module.exports = function(isProduction, watch) {
 				filename: "vendor.js",
 			}),
 			new ExtractTextPlugin({
-				//id: "foo",
 				filename: "[name].css",
-				disable: false,
-				allChunks: false
+				allChunks: true
 			}),
 			function() {
 				// Delete the empty .js files for themes

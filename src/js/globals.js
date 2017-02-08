@@ -23,7 +23,7 @@ window.prop = function prop(type) {
 	}
 };
 
-window.lagFilter = function lagFilter(propTotal, propCount, handler) {
+function lagFilter(propTotal, propCount, handler) {
 	if (!handler) {
 		return false;
 	}
@@ -36,7 +36,8 @@ window.lagFilter = function lagFilter(propTotal, propCount, handler) {
 	}
 
 	return total > 5; // TODO: avg?
-};
+}
+window.lagFilter = lagFilter;
 
 const replacements = [
 	[/net\.minecraft\.server\.v[^.]+\./, 'nms.'],

@@ -102,9 +102,15 @@ section {
 	.name {
 		display: inline-block;
 		color: $theme-color-text-alt;
-		max-width: 500px;
+		max-width: 600px;
 		@include less-than-xlarge-screen {
-			max-width: 325px;
+			max-width: 430px;
+		}
+		@include less-than-large-screen {
+			max-width: 350px;
+		}
+		@include small-screen {
+			max-width: 300px;
 		}
 	}
 
@@ -181,7 +187,7 @@ section {
 		cursor: pointer;
 		display: inline-block;
 		color: $theme-accent;
-		padding: 0 6px 0 0;
+		padding: 3px 6px 0 0;
 	}
 	.row-wrap:hover {
 		background: $theme-accent;

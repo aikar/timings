@@ -36,16 +36,12 @@ foreach ($assets as $k => $asset) {
 		if (file_exists(ROOT_DIR . "/src/css/themes/$cookie.scss")) $theme = $cookie;
 	}
 	?>
-	<script>TIMINGS_THEME=<?=json_encode($theme)?></script>
+	<script type="text/javascript">TIMINGS_THEME=<?=json_encode($theme);?>;</script>
 	<link href="<?=htmlentities($assets["timings-theme-{$theme}"]['css'])?>" rel="stylesheet" />
 	<meta name="robots" content="noindex,nofollow">
 </head>
 <body>
-
 <div id="wrapper"></div>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 <script src="<?=htmlentities($assets['vendor']['js'])?>"></script>
 <script src="<?=htmlentities($assets['timings']['js'])?>"></script>
 </body>

@@ -175,13 +175,18 @@ function loadChartData() {
 	}
 }
 
+let requestId = 0;
 async function loadTimingData() {
 	// TODO: lscache history segments
 	const neededIds = data.history
 		.filter((h) => !h.handlers && h.id >= data.start && h.id <= data.end)
 		.map((h) => h.id);
-
+	requestId++;
 	if (neededIds.length) {
+		const thisRequest = requestId;
+		for (const id of neededIds) {
+			data.history[id].handlers = 1; // temp to block new requests for that ID
+		}
 		const [body] = await getData({
 			history: neededIds.join(",")
 		});
@@ -189,10 +194,12 @@ async function loadTimingData() {
 		for (const [key, history] of Object.entries(body.history)) {
 			data.history[key].handlers = await JsonObject.newObject(history);
 		}
+		if (requestId !== thisRequest) {
+			return; // A new request came in
+		}
 	}
 	buildTimingData();
 	data.masterHandler = data.handlerData[1];
-	//console.log(data.timingsMaster);
 }
 
 function buildTimingData() {
@@ -203,6 +210,10 @@ function buildTimingData() {
 		 * @type TimingHandler[]
 		 */
 		const handlers = data.history[i].handlers;
+		//noinspection JSValidateTypes
+		if (handlers === 1) {
+			continue;
+		}
 		for (const /*TimingHandler*/handler of handlers) {
 			const id = handler.id;
 			if (!handlerData[id]) {
@@ -216,6 +227,13 @@ function buildTimingData() {
 	}
 	buildSelfData();
 }
+
+data.refresh = function () {
+	(async () => {
+		await loadTimingData();
+		dataSuccess();
+	})();
+};
 
 function buildSelfData() {
 	for (const [id, handler] of Object.entries(data.handlerData)) {

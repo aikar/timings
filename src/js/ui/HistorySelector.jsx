@@ -10,11 +10,14 @@
  *  @license MIT
  *  
  */
-
+require('rc-slider/dist/rc-slider.css');
 import React from "react";
 import TimingsChart from "./TimingsChart";
+import Slider from "rc-slider"
 import data from "../data";
+import moment from "moment";
 
+const Range = Slider.Range;
 export default class HistorySelector extends React.PureComponent {
 	constructor(props, ctx) {
 		super(props, ctx);
@@ -28,6 +31,7 @@ export default class HistorySelector extends React.PureComponent {
 		if (!this.state.dataReady) {
 			return <div />;
 		}
+
 		return (
 			<div id="history-selector" className="section">
 				<div className="section-head">
@@ -40,63 +44,40 @@ export default class HistorySelector extends React.PureComponent {
 					id="tps-graph"
 					width="98%" height="200" />
 				</div>
-				<div id="time-selector"></div>
-				<span id="start-time" /> - <span id="end-time" />
+				<TimeSelector />
 			</div>
 		)
 	}
-
-	static initializeTimeSelector() {
-		let start = data.start;
-		let end = data.end;
-		let values = data.ranges;
-
-		const times = [];
-		for (let t of values) {
-			if (times.indexOf(t) == -1) {
-				times.push(t);
-			}
+}
+class TimeSelector extends React.Component {
+	constructor(props, ctx) {
+		super(props, ctx);
+		this.onHistoryChange = this.onHistoryChange.bind(this);
+	}
+	onHistoryChange(val) {
+		data.start = val[0];
+		data.end = val[1];
+		if (this.timer) {
+			clearTimeout(this.timer);
 		}
-
-		const $timeSelector = $('#time-selector');
-		$timeSelector.slider({
-			min: 0,
-			max: times.length - 1,
-			values: [times.indexOf(start), times.indexOf(end)],
-			range: true,
-			slide: function (event, ui) {
-				start = times[ui.values[0]];
-				end = times[ui.values[1]];
-				updateRanges(start, end);
-			}
-		});
-		$timeSelector.on('slidestart', clearDataReload);
-		$timeSelector.on('slidechange', loadNewData);
-
-		updateRanges(start, end);
-
-		let dataReloadTimer = 0;
-		function clearDataReload() {
-			if (dataReloadTimer) {
-				clearTimeout(dataReloadTimer);
-				dataReloadTimer = 0;
-			}
-		}
-
-		function loadNewData() {
-			clearDataReload();
-			dataReloadTimer = setTimeout(function () {
-				// TODO: Re-process data with new range
-			}, 1500);
-		}
-
-		function updateRanges(start, end) {
-			const startDate = new Date(start * 1000);
-			const endDate = new Date(end * 1000);
-
-			$('#start-time').text(startDate.toLocaleString());
-			$('#end-time').text(endDate.toLocaleString());
-		}
+		this.setState({updated: new Date()});
+		data.refresh();
 	}
 
+	render() {
+		const master = data.timingsMaster.data;
+		return <div>
+			<div id="time-selector">
+				<Range step={1} pushable={0} dots included={true}
+				       allowCross={true} min={0} max={master.length-1}
+				       defaultValue={[data.start,  data.end]}
+				       onAfterChange={this.onHistoryChange}
+				/>
+			</div>
+			<span id="start-time">{date(master[data.start].start)}</span> - <span id="end-time">{date(master[data.end].end)}</span>
+		</div>
+	}
+}
+function date(time) {
+	return moment(time * 1000).format('lll');
 }
