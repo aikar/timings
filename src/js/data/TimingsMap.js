@@ -24,6 +24,10 @@ export default class TimingsMap extends JsonTemplate {
 	 * @type {object<number,TimingIdentity>}
 	 */
 	handlerMap;
+	/**
+	 * @type {object<string,TimingIdentity>}
+	 */
+	handlerNameMap;
 
 	/**
 	 * @type string[]
@@ -40,4 +44,11 @@ export default class TimingsMap extends JsonTemplate {
 	 */
 	entityTypeMap;
 
+	init() {
+		this.handlerNameMap = {};
+		for (const [id, identity] of Object.entries(this.handlerMap)) {
+			identity.id = id;
+			this.handlerNameMap[this.groupMap[identity.group] + "::" + identity.name] = identity;
+		}
+	}
 }

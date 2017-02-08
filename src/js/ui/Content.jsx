@@ -18,7 +18,7 @@ import RegionsView from "./RegionsView";
 import PluginsView from "./PluginsView";
 import ConfigView from "./ConfigView";
 import TimingsView from "./TimingsView";
-import {StickyContainer, Sticky} from "react-sticky";
+import {StickyContainer} from "react-sticky";
 
 export default class Content extends React.Component {
 	constructor(props, ctx) {

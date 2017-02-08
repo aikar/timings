@@ -226,6 +226,7 @@ function buildTimingData() {
 	}
 	data.masterHandler = data.handlerData[1];
 	data.changeOptions();
+	buildStats();
 	buildSelfData();
 
 }
@@ -237,14 +238,19 @@ data.refresh = function () {
 	})();
 };
 
-data.changeOptions = function (sort, type) {
+data.changeOptions = function (sort, type, refresh) {
 	window.sortType = sort || sortType;
 	window.reportType = type || reportType;
 	data.propTotal = prop('total');
 	data.propCount = prop('count');
 	data.totalTicks = data.masterHandler[data.propCount];
 	data.totalTime = data.masterHandler[data.propTotal];
-	buildStats();
+
+	if (refresh) {
+		buildTimingData();
+		dataSuccess();
+	}
+
 };
 
 function buildSelfData() {
@@ -315,16 +321,14 @@ function getData(options={}) {
 data.onFailure = function onFailure(cb) {
 	if (dataHasFailed) {
 		cb();
-	} else {
-		dataFailedCB.push(cb);
 	}
+	dataFailedCB.push(cb);
 };
 data.onReady = function onReady(cb) {
 	if (dataReady) {
 		cb(data);
-	} else {
-		dataReadyCB.push(cb);
 	}
+	dataReadyCB.push(cb);
 };
 
 data.isDataReady = function isDataReady() {
@@ -410,6 +414,7 @@ data.provideTo = function(comp) {
 	let hasUnmounted = false;
 	const prevUnmount = comp.componentWillUnmount;
 	comp.componentWillUnmount = function () {
+		comp.componentWillUnmount = prevUnmount;
 		hasUnmounted = true;
 		if (prevUnmount) {
 			prevUnmount.call(comp);

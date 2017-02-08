@@ -37,16 +37,6 @@ export default class TimingsView extends React.Component {
 		data.provideTo(this);
 	}
 
-
-	updateType(type) {
-		data.changeOptions(null, type);
-		this.setState({reportType: type});
-	};
-	updateSort(sort) {
-		data.changeOptions(sort, null);
-		this.setState({sortType: sort});
-	};
-
 	render() {
 		if (!this.state.timingHistoryReady) {
 			return null;
@@ -64,24 +54,6 @@ export default class TimingsView extends React.Component {
 		)(children).reverse().slice(0, this.state.limit);
 		return (
 			<div>
-				<div id="controls">
-
-					<div id="sort-toggle">
-						<div className={cx("totalPct", {active: sortType === "totalPct"})}
-						     onClick={() => this.updateSort("totalPct")}>Total</div>
-						<div className={cx("avg", {active: sortType === "avg"})}
-						     onClick={() => this.updateSort("avg")}>Avg</div>
-						<div className={cx("avgCountTick", {active: sortType === "avgCountTick"})}
-						     onClick={() => this.updateSort("avgCountTick")}>Count</div>
-					</div>
-					<div id="type-toggle">
-						<div className={cx("lag", {active: reportType === "lag"})}
-						     onClick={() => this.updateType("lag")}>Lag</div>
-						<div className={cx("all", {active: reportType === "all"})}
-						     onClick={() => this.updateType("all")}>All</div>
-					</div>
-				</div>
-
 				{children.map((handler) => {
 					return <TimingRow timingRowDepth={0} key={handler.id} handler={handler} />
 				})}

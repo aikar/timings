@@ -25,7 +25,7 @@ foreach ($assets as $k => $asset) {
 <html>
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<title>Aikar's Timings Viewer</title>
 	<meta name="description" content="Aikar's Timings Viewer - View Timings v2 reports from Paper and Sponge" />
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">

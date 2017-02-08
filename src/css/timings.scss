@@ -69,8 +69,8 @@ section {
 #controls {
 
 	float: right;
-	margin-top: -57px;
-	margin-right: -10px;
+	margin-top: -47px;
+	margin-right: 0;
 	height: 47px;
 	#type-toggle, #sort-toggle {
 		height: 47px;
@@ -102,12 +102,6 @@ section {
 	}
 	overflow: hidden;
 
-}
-.sticky #controls {
-	position: fixed;
-	z-index: 3000;
-	top: 56px;
-	right: 20px;
 }
 .timing-row {
 
