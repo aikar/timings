@@ -70,7 +70,7 @@ class PluginRow extends React.Component {
 		const handler = this.props.handler;
 		return (
 			<div className="plugin-row">
-				<h5>{pl.name} <span className="plugin-version">(v{pl.version})</span></h5>
+				<h5><a href={pl.website ? pl.website : "#"}>{pl.name}</a> <span className="plugin-version">(v{pl.version})</span></h5>
 				<span><strong>Authors:</strong> {pl.authors}</span><br />
 				<span>{pl.description && pl.description !== "null" ? pl.description : null}</span>
 				{handler ? <TimingRow timingRowDepth={0} handler={handler} /> : null}
