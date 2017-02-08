@@ -99,27 +99,27 @@ data.loadData = async function loadData() {
 		if (Array.isArray(data.timingsMaster.motd)) {
 			data.timingsMaster.motd = data.timingsMaster.motd.join("\n");
 		}
-		let $version = data.timingsMaster.version;
+		let version = data.timingsMaster.version;
 		// Support a bug in Sponge that serialized an optional
-		if (!empty($version['value'])) {
-			$version = $version['value'];
+		if (!empty(version['value'])) {
+			version = version['value'];
 		}
-		if ($version === '$version') {
-			$version = "Sponge IDE Dev";
+		if (version === '$version') {
+			version = "Sponge IDE Dev";
 		}
-		data.timingsMaster.version = $version;
+		data.timingsMaster.version = version;
 
-		let $ranges = [];
-		let $first = -1;
+		let ranges = [];
+		let first = -1;
 		for (const /*TimingHistory*/history of data.timingsMaster.data) {
-			$ranges.push(history.start);
-			$ranges.push(history.end);
-			if ($first === -1 || $first > history.start) {
-				$first = history.start;
+			ranges.push(history.start);
+			ranges.push(history.end);
+			if (first === -1 || first > history.start) {
+				first = history.start;
 			}
 		}
-		data.first = $first;
-		data.ranges = _.uniq($ranges);
+		data.first = first;
+		data.ranges = _.uniq(ranges);
 		loadChartData();
 		dataSuccess();
 	} catch (e) {
@@ -199,7 +199,6 @@ async function loadTimingData() {
 		}
 	}
 	buildTimingData();
-	data.masterHandler = data.handlerData[1];
 }
 
 function buildTimingData() {
@@ -225,7 +224,10 @@ function buildTimingData() {
 			}
 		}
 	}
+	data.masterHandler = data.handlerData[1];
+	data.changeOptions();
 	buildSelfData();
+
 }
 
 data.refresh = function () {
@@ -235,25 +237,58 @@ data.refresh = function () {
 	})();
 };
 
+data.changeOptions = function (sort, type) {
+	window.sortType = sort || sortType;
+	window.reportType = type || reportType;
+	data.propTotal = prop('total');
+	data.propCount = prop('count');
+	data.totalTicks = data.masterHandler[data.propCount];
+	data.totalTime = data.masterHandler[data.propTotal];
+	buildStats();
+};
+
 function buildSelfData() {
 	for (const [id, handler] of Object.entries(data.handlerData)) {
 		const record = new TimingData();
 		record.id = handler.id;
 		record.isSelf = true;
 		for (const child of Object.values(handler.children)) {
-			handler.childrenCount += child.mergedCount;
+			handler.childrenCount    += child.mergedCount;
 			handler.childrenLagCount += child.mergedLagCount;
-			handler.childrenTotal += child.total || 0;
+			handler.childrenTotal    += child.total || 0;
 			handler.childrenLagTotal += child.lagTotal || 0;
 		}
 
-		record.total = handler.total - handler.childrenTotal;
+		record.total    = handler.total - handler.childrenTotal;
 		record.lagTotal = handler.lagTotal - handler.childrenLagTotal;
-		record.count = handler.count - handler.childrenCount;
+		record.count    = handler.count - handler.childrenCount;
 		record.lagCount = handler.lagCount - handler.childrenLagCount;
 		handler.children[id] = record;
 	}
 }
+
+function buildStats() {
+	for (const handler of Object.values(data.handlerData)) {
+		for (const child of Object.values(handler.children)) {
+			data.calculateStats(child);
+		}
+		data.calculateStats(handler);
+	}
+
+}
+data.calculateStats = function calculateStats(handler) {
+	const total = handler[data.propTotal];
+	const count = handler[data.propCount];
+
+	if (count === 0) {
+		return;
+	}
+
+	handler.avg = (total / count);
+	handler.tickAvg = (handler.avg / 1000000) * (count / data.totalTicks);
+	handler.totalPct = (total / data.totalTime) * 100;
+	handler.avgCountTick = count / data.totalTicks;
+};
 
 function getData(options={}) {
 	options.id = query.get('id') || "";

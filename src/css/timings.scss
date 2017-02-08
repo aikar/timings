@@ -66,40 +66,55 @@ section {
 #show-more:hover {
 	background: $theme-background-alt;
 }
-#type-toggle {
-	position: absolute;
-	right: 0;
-	top: -47px;
+#controls {
+
+	float: right;
+	margin-top: -57px;
+	margin-right: -10px;
 	height: 47px;
-	border: 2px solid $theme-accent;
-	width: 120px;
-	.lag, .all {
-		height: 45px;
-		text-align: center;
-		width: 50%;
+	#type-toggle, #sort-toggle {
+		height: 47px;
 		float: left;
-		display: block;
-		padding: 8px 14px;
-		cursor: pointer;
-		font-weight: 500;
+		overflow: hidden;
+		margin: 0 0 0 3px;
+		border: 2px solid $theme-accent;
+		> div {
+			height: 45px;
+			text-align: center;
+			min-width: 60px;
+			float: left;
+			display: block;
+			padding: 8px 14px;
+			cursor: pointer;
+			font-weight: 500;
 
-		//background: darken($theme-background-alt, 5);
-		background: $theme-color-light;
-	}
-	.lag {
-		border-right: 2px solid $theme-accent;
-	}
-	.active {
-		background: darken($theme-background-alt, 10);
+			//background: darken($theme-background-alt, 5);
+			background: $theme-color-light;
+		}
 
+		.totalPct, .avg, .lag {
+			border-right: 2px solid $theme-accent;
+		}
+		.active {
+			background: darken($theme-background-alt, 10);
+
+		}
 	}
 	overflow: hidden;
+
+}
+.sticky #controls {
+	position: fixed;
+	z-index: 3000;
+	top: 56px;
+	right: 20px;
 }
 .timing-row {
 
 	display: table-cell;
 	width: 100%;
 	.name {
+		word-wrap: break-word;
 		display: inline-block;
 		color: $theme-color-text-alt;
 		max-width: 600px;

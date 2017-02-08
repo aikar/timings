@@ -66,15 +66,15 @@ export default class TimingRow extends React.Component {
 			const propTotal = prop('total');
 			const propCount = prop('count');
 
-			//noinspection ES6ModulesDependencies,NodeModulesDependencies
-			const filter = lagFilter.bind(handler.children, propTotal, propCount);
+			const filter = lagFilter(propTotal, propCount);
 			children = flow(
 				_fp.filter(filter),
-				_fp.sortBy(propTotal),
+				_fp.sortBy(sortType),
 				_fp.map((child) => {
 					const childHandle = new TimingHandler();
 					childHandle.id = child.id;
 					childHandle.addData(child);
+					data.calculateStats(childHandle);
 					if (child.isSelf) {
 						childHandle.isSelf = true;
 					}
@@ -141,23 +141,16 @@ class TimingRecordData extends React.Component {
 		const propTotal = prop('total');
 		const propCount = prop('count');
 
-		/**
-		 * @type TimingHandler
-		 */
-		const masterHandler = data.masterHandler;
-		const totalTicks = masterHandler[propCount];
-		const totalTime = masterHandler[propTotal];
-
-		let total =  handler[propTotal];
+		const total =  handler[propTotal];
 		const count =  handler[propCount];
 
 		if (count === 0) {
 			return null;
 		}
 
-		let avg = round((total / count) / 1000000, 4);
-		let tickAvg = round(avg * (count / totalTicks), 4);
-		let totalPct = round((total / totalTime) * 100, 2);
+		let avg = round(handler.avg / 1000000, 4);
+		let tickAvg = round(handler.tickAvg, 4);
+		let totalPct = round(handler.totalPct, 2);
 
 		let pctOfTick, tickAvgMod;
 		let name = data.timingsMaster.idmap.groupMap[identity.group] + "::" + identity.name;
@@ -178,7 +171,7 @@ class TimingRecordData extends React.Component {
 
 			pctOfTick = pctView(tickAvg / 50 * 100, 50, 30, 20, 10);
 		}
-		const avgCountTick = number_format(count / totalTicks, 2);
+		const avgCountTick = number_format(handler.avgCountTick, 2);
 
 		return (
 			<div className='row-wrap' onClick={this.props.onClick}>

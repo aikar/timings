@@ -16,7 +16,8 @@ import data from "../data";
 import TimingRow from "./TimingRow";
 import flow from "lodash/flow";
 import _fp from "lodash/fp";
-
+import cx from "classnames";
+import {StickyContainer, Sticky} from "react-sticky";
 export default class TimingsView extends React.Component {
 	static propTypes = TimingsView.props = {
 		children: React.PropTypes.any,
@@ -36,6 +37,16 @@ export default class TimingsView extends React.Component {
 		data.provideTo(this);
 	}
 
+
+	updateType(type) {
+		data.changeOptions(null, type);
+		this.setState({reportType: type});
+	};
+	updateSort(sort) {
+		data.changeOptions(sort, null);
+		this.setState({sortType: sort});
+	};
+
 	render() {
 		if (!this.state.timingHistoryReady) {
 			return null;
@@ -45,34 +56,32 @@ export default class TimingsView extends React.Component {
 		const propTotal = prop('total');
 		const propCount = prop('count');
 
-		const filter = lagFilter.bind(null, propTotal, propCount);
+		const filter = lagFilter(propTotal, propCount);
 
 		children = flow(
 			_fp.filter(filter),
-			_fp.sortBy(propTotal)
+			_fp.sortBy(sortType)
 		)(children).reverse().slice(0, this.state.limit);
-
-
-		const updateType = (type) => {
-			window.reportType = type;
-			this.setState({reportType: type});
-		};
-		let allClass = "all";
-		let lagClass = "lag";
-		if (reportType === "lag") {
-			lagClass += " active";
-		} else {
-			allClass += " active";
-		}
-
 		return (
 			<div>
-				<div id="type-toggle">
-					<div className={lagClass}
-					     onClick={() => updateType("lag")}>Lag</div>
-					<div className={allClass}
-					     onClick={() => updateType("all")}>All</div>
+				<div id="controls">
+
+					<div id="sort-toggle">
+						<div className={cx("totalPct", {active: sortType === "totalPct"})}
+						     onClick={() => this.updateSort("totalPct")}>Total</div>
+						<div className={cx("avg", {active: sortType === "avg"})}
+						     onClick={() => this.updateSort("avg")}>Avg</div>
+						<div className={cx("avgCountTick", {active: sortType === "avgCountTick"})}
+						     onClick={() => this.updateSort("avgCountTick")}>Count</div>
+					</div>
+					<div id="type-toggle">
+						<div className={cx("lag", {active: reportType === "lag"})}
+						     onClick={() => this.updateType("lag")}>Lag</div>
+						<div className={cx("all", {active: reportType === "all"})}
+						     onClick={() => this.updateType("all")}>All</div>
+					</div>
 				</div>
+
 				{children.map((handler) => {
 					return <TimingRow timingRowDepth={0} key={handler.id} handler={handler} />
 				})}

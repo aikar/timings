@@ -23,21 +23,22 @@ window.prop = function prop(type) {
 	}
 };
 
-function lagFilter(propTotal, propCount, handler) {
-	if (!handler) {
-		return false;
-	}
+window.lagFilter = function lagFilter(propTotal, propCount) {
+	return (handler) => {
+		if (!handler) {
+			return false;
+		}
 
-	let avg = 0;
-	const count = handler[propCount];
-	const total = handler[propTotal];
-	if (count > 0) {
-		avg = (total / count) * handler.mergedCount;
-	}
+		let avg = 0;
+		const count = handler[propCount];
+		const total = handler[propTotal];
+		if (count > 0) {
+			avg = (total / count) * handler.mergedCount;
+		}
 
-	return total > 5; // TODO: avg?
-}
-window.lagFilter = lagFilter;
+		return total > 5; // TODO: avg?
+	}
+};
 
 const replacements = [
 	[/net\.minecraft\.server\.v[^.]+\./, 'nms.'],
@@ -86,3 +87,4 @@ window.waitFor = function waitFor(ms) {
 phpjs.registerGlobals();
 window.phpjs = phpjs;
 window.reportType = 'lag';
+window.sortType = 'totalPct';

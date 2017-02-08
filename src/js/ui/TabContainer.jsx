@@ -12,7 +12,7 @@
  */
 
 import React from "react";
-
+import {StickyContainer, Sticky} from "react-sticky";
 export default class TabContainer extends React.Component {
 
 	static childContextTypes = {
@@ -42,11 +42,13 @@ export default class TabContainer extends React.Component {
 
 	render() {
 		return <div>
-			<div id="tab-panel" className="tabs ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-				{Object.entries(this.props.tabs).map(([key, val]) => (
-					<Tab key={key} tabId={key}>{val}</Tab>
-				))}
-			</div>
+			<Sticky stickyStyle={{zIndex: 2000}} onStickyStateChange={(x) => (x ? document.body.classList.add('sticky') : document.body.classList.remove('sticky'))}>
+				<div id="tab-panel" className="tabs ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+					{Object.entries(this.props.tabs).map(([key, val]) => (
+						<Tab key={key} tabId={key}>{val}</Tab>
+					))}
+				</div>
+			</Sticky>
 			{this.props.children}
 		</div>;
 	}
