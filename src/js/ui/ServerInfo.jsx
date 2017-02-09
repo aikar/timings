@@ -30,6 +30,7 @@ export default class ServerInfo extends React.PureComponent {
 			return <div />;
 		}
 		const info = data.timingsMaster;
+		const motd = info.motd && info.motd !== "null" && replaceColorCodes(phpjs.htmlentities(info.motd));
 		return (
 			<div id="server-info" className="section">
 
@@ -53,11 +54,11 @@ export default class ServerInfo extends React.PureComponent {
 						<td className="fieldName">Online Mode</td>
 						<td className="fieldValue">{info.onlinemode === true ? "Enabled" : "Disabled"}</td>
 					</tr>
-
+					{motd ?
 					<tr>
 						<td className="fieldName">MOTD</td>
-						<td className="fieldValue" colSpan="3" dangerouslySetInnerHTML={{__html: replaceColorCodes(info.motd)}}/>
-					</tr>
+						<td className="fieldValue" colSpan="3" dangerouslySetInnerHTML={{__html: motd}}/>
+					</tr> : null}
 					<tr>
 						<td className="fieldName">Version</td>
 						<td className="fieldValue" colSpan="3">{info.version}</td>

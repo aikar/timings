@@ -73,7 +73,7 @@ class PluginRow extends React.Component {
 		}
 		return (
 			<div className="plugin-row">
-				<h5><a href={website ? website : ""}>{pl.name}</a> <span className="plugin-version">(v{pl.version})</span></h5>
+				<h5><a href={website ? website : "#"}>{pl.name}</a> <span className="plugin-version">(v{pl.version})</span></h5>
 				<span><strong>Authors:</strong> {pl.authors}</span><br />
 				<span>{pl.description && pl.description !== "null" ? pl.description : null}</span>
 				{handler ? <div className="plugin-timing-row"><TimingRow timingRowDepth={0} handler={handler} /></div> : null}
