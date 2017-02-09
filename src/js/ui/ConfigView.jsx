@@ -13,6 +13,7 @@
 
 import React from "react";
 import data from "../data";
+import FA from "./FA";
 
 export default class ConfigView extends React.Component {
 	static propTypes = ConfigView.props = {
@@ -27,6 +28,9 @@ export default class ConfigView extends React.Component {
 	}
 
 	render() {
+		if (!this.state.timingHistoryReady) {
+			return null;
+		}
 		const test = {
 			foo: "bar",
 			baz: {
@@ -61,6 +65,7 @@ class TreeNode extends React.Component {
 	}
 
 	render() {
+
 		const val = this.props.value;
 		const key = this.props.keyname;
 
@@ -69,32 +74,30 @@ class TreeNode extends React.Component {
 		};
 
 		const style = {
-			width: '100%',
-			clear: 'left',
-			overflow: 'hidden',
+			marginLeft: this.props.depth ? 25 : 10,
 		};
 		if (Array.isArray(val)) {
 			return <div style={style}>
-				<span className="key">{key}:</span>
-				<span>[{val.map((v, i) => <TreeNode key={i} depth={this.props.depth+1} value={v} />)}]</span>
+				<span className="key">{key}:&nbsp;</span>
+				<span>[{val.map((v, i) => <TreeNode key={i} depth={this.props.depth} value={v} />)}]</span>
 			</div>;
 		} else if (typeof val === 'object') {
 			return <div style={style}>
-				<span style={{float: 'left'}}>{key}: </span>
+				<span className="key" onClick={() => toggleChildren()}>{key}: </span>
 				{!this.state.expand ?
-					<i className='expand-control fa fa-fw fa-caret-right' onClick={() => toggleChildren()}/>
-					:
-					<div style={{float: 'left'}}>
-						<i className='expand-control fa fa-fw fa-caret-down' onClick={() => toggleChildren()}/>
-					{'{'}
+					<FA class='expand-control' icon='caret-right' onClick={() => toggleChildren()} />
+					:<span>
+						<FA class='expand-control' icon='caret-down' onClick={() => toggleChildren()} />{' {'}
+						<div>
 						{Object.entries(val).map(([k, v]) => (<div key={k}>
 								<TreeNode depth={this.props.depth + 1} keyname={k} value={v}/>
 							</div>
 						))}
-					{'}'}</div>
+						</div>
+					{'}'}
+					</span>
 				}
-			</div>
-
+			</div>;
 		} else {
 			return <div style={style}>{key? <span className="key">{key}:&nbsp;</span> : null}<span>{String(val)}</span></div>
 		}

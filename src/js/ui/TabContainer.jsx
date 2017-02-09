@@ -25,7 +25,7 @@ export default class TabContainer extends React.Component {
 	constructor(props, ctx) {
 		super(props, ctx);
 		this.state = {
-			activeTab: this.props.activeTab // TODO: Hash lookup/query string?
+			activeTab: (location.hash && location.hash.substring(1)) || this.props.activeTab // TODO: Hash lookup/query string?
 		};
 	}
 
@@ -40,6 +40,7 @@ export default class TabContainer extends React.Component {
 	}
 
 	setTab(tabId) {
+		location.hash = tabId;
 		this.setState({activeTab: tabId});
 	}
 
@@ -85,7 +86,7 @@ class TimingsControls extends React.Component {
 		</div>;
 	}
 }
-class Tab extends React.PureComponent {
+class Tab extends React.Component {
 
 	static contextTypes = {
 		tabContainer: React.PropTypes.instanceOf(TabContainer)

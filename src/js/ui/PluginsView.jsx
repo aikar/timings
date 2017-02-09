@@ -17,7 +17,6 @@ import TimingRow from "./TimingRow";
 import flow from "lodash/flow";
 import _fp from "lodash/fp";
 import _ from "lodash";
-import cx from "classnames";
 import Plugin from "../data/Plugin";
 
 export default class PluginsView extends React.Component {
@@ -73,7 +72,7 @@ class PluginRow extends React.Component {
 				<h5><a href={pl.website ? pl.website : "#"}>{pl.name}</a> <span className="plugin-version">(v{pl.version})</span></h5>
 				<span><strong>Authors:</strong> {pl.authors}</span><br />
 				<span>{pl.description && pl.description !== "null" ? pl.description : null}</span>
-				{handler ? <TimingRow timingRowDepth={0} handler={handler} /> : null}
+				{handler ? <div className="plugin-timing-row"><TimingRow timingRowDepth={0} handler={handler} /></div> : null}
 			</div>
 		)
 	}

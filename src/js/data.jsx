@@ -94,6 +94,10 @@ data.loadData = async function loadData() {
 			data[key] = value;
 		}
 		data.timingsMaster = await JsonObject.newObject(data.timingsMaster); // process into object while its downloading
+		if (data.end > data.timingsMaster.data.length) {
+			data.end = data.timingsMaster.data.length;
+		}
+
 		data.history = data.timingsMaster.data;
 		// repair motd if needed
 		if (Array.isArray(data.timingsMaster.motd)) {

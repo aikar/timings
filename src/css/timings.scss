@@ -269,6 +269,9 @@ section {
 }
 
 #tabs-config {
+	.key, .expand-control {
+		cursor: pointer;
+	}
 	overflow: hidden;
 }
 
