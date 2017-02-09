@@ -40,7 +40,7 @@ export default class PluginsView extends React.Component {
 		)(Object.values(data.timingsMaster.plugins).map((plugin) => {
 			const handlerId = data.timingsMaster.idmap.handlerNameMap[`${plugin.name}::Combined Total`];
 			const handler = handlerId && data.handlerData[handlerId.id];
-			return {plugin, handler};
+			return {plugin, handler: handler && handler[data.propTotal] ? handler : null};
 		}));
 		let results = _.partition(plugins, (p) => p.handler);
 		results[0] = results[0].reverse();
