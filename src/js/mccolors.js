@@ -74,7 +74,7 @@ function applyCode(string, codes) {
 			obfuscated = true;
 		}
 	}
-	if(!obfuscated) elem.innerHTML = string;
+	if(!obfuscated) elem.innerHTML = phpjs.htmlentities(string);
 	return elem;
 }
 function parseStyle(string) {
