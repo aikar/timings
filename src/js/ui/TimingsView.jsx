@@ -20,16 +20,10 @@ import _fp from "lodash/fp";
 export default class TimingsView extends React.Component {
 	static propTypes = TimingsView.props = {
 		children: React.PropTypes.any,
-		reportType: React.PropTypes.string
-	};
-
-	static defaultProps = {
-		reportType: "lag"
 	};
 
 	constructor(props, ctx) {
 		super(props, ctx);
-		window.reportType = props.reportType;
 		this.state = {
 			limit: 40
 		};

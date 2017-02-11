@@ -32,6 +32,7 @@ export default class TimingHandler extends TimingData {
 
 	init() {
 		super.init();
+		this.id = parseInt(this.id);
 		const children = this.children;
 		this.children = {};
 		for (const child of Object.values(children)) {

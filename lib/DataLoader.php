@@ -38,7 +38,7 @@ class DataLoader {
 
 		$self = self::getInstance();
 
-		if (!empty($_GET['history'])) {
+		if (isset($_GET['history'])) {
 			$needFrames = explode(",", $_GET['history']);
 			$self->data['history'] = new \stdClass();
 			foreach ($data->data as $id => $history) {

@@ -14,16 +14,11 @@
 
 import xhr from "xhr";
 import qs from "qs";
-//noinspection ES6UnusedImports
-import TimingsMaster from "./data/TimingsMaster";
-//noinspection ES6UnusedImports
-import TimingHandler from "./data/TimingHandler";
 import query from './query';
 import clone from "clone";
 import JsonObject from "./data/JsonObject";
 import _ from "lodash";
 import TimingData from "./data/TimingData";
-import TimingIdentity from "./data/TimingIdentity";
 import lscache from "lscache";
 
 let dataReady = false;
@@ -138,7 +133,7 @@ data.loadData = async function loadData() {
 };
 function loadChartData() {
 
-	const $first = data.first;
+	const first = data.first;
 	data.lagData = [];
 	data.tpsData = [];
 	data.tentData = [];
@@ -157,11 +152,13 @@ function loadChartData() {
 			}
 		}
 		const firstMP = history.minuteReports[0];
-
-		for (let $i = firstMP.time; $i - $first < 65; $i += 60) {
-			const $clone = clone(firstMP, false);
-			$clone.time = $first;
-			history.minuteReports.unshift($clone);
+		// I don't remember why we are doing this, but it obviously was to fix some
+		// bug that i can't remember. It doesn't hurt, so just leave it here, unless
+		// we really want to waste time debugging this more.
+		for (let i = firstMP.time; i - first < 65; i += 60) {
+			const copy = clone(firstMP, false);
+			copy.time = first;
+			history.minuteReports.unshift(copy);
 		}
 
 		for(const /*MinuteReport*/mp of history.minuteReports) {
@@ -190,7 +187,7 @@ async function loadTimingData() {
 	// TODO: lscache history segments
 	const neededIds = data.history
 		.filter((h) => !h.handlers && h.id >= data.start && h.id <= data.end)
-		.map((h) => h.id);
+		.map(   (h) => h.id);
 	requestId++;
 	if (neededIds.length) {
 		const thisRequest = requestId;
@@ -212,8 +209,8 @@ async function loadTimingData() {
 }
 
 function buildTimingData() {
-	data.handlerData = {}; // Reset handler data
-	const handlerData = data.handlerData;
+	data.handlerData    = {}; // Reset handler data
+	const handlerData   = data.handlerData;
 	for (let i = data.start; i <= data.end; i++ ) {
 		/**
 		 * @type TimingHandler[]
@@ -227,8 +224,8 @@ function buildTimingData() {
 			const id = handler.id;
 			if (!handlerData[id]) {
 				handlerData[id] = clone(handler, false);
-				handlerData[id].mergedCount = 1;
-				handlerData[id].mergedLagCount = handler.lagCount ? 1 : 0;
+				//handlerData[id].mergedCount = 1;
+				//handlerData[id].mergedLagCount = handler.lagCount ? 1 : 0;
 			} else {
 				handlerData[id].addDataFromHandler(handler);
 			}
@@ -236,8 +233,8 @@ function buildTimingData() {
 	}
 	data.masterHandler = data.handlerData[1];
 	data.changeOptions();
-	buildStats();
 	buildSelfData();
+	buildStats();
 
 }
 
@@ -249,12 +246,12 @@ data.refresh = function () {
 };
 
 data.changeOptions = function (sort, type, refresh) {
-	window.sortType = sort || sortType;
-	window.reportType = type || reportType;
-	data.propTotal = prop('total');
-	data.propCount = prop('count');
-	data.totalTicks = data.masterHandler[data.propCount];
-	data.totalTime = data.masterHandler[data.propTotal];
+	window.sortType     = sort || sortType;
+	window.reportType   = type || reportType;
+	data.propTotal      = prop('total');
+	data.propCount      = prop('count');
+	data.totalTicks     = data.masterHandler[data.propCount];
+	data.totalTime      = data.masterHandler[data.propTotal];
 
 	if (refresh) {
 		buildTimingData();
@@ -262,7 +259,16 @@ data.changeOptions = function (sort, type, refresh) {
 	}
 
 };
+
+const matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
 data.setFilter = function (filterVal) {
+	if (filterVal) {
+		if (filterVal.startsWith("!!")) {
+			filterVal = filterVal.replace(matchOperatorsRe, '\\$&');
+		} else {
+			filterVal = filterVal.substring(2);
+		}
+	}
 	data.nameFilter = (filterVal && new RegExp(filterVal.replace(/ /, '.*'), 'ig')) || "";
 	dataSuccess();
 };
@@ -273,17 +279,17 @@ function buildSelfData() {
 		record.id = handler.id;
 		record.isSelf = true;
 		for (const child of Object.values(handler.children)) {
-			handler.childrenCount    += child.mergedCount;
-			handler.childrenLagCount += child.mergedLagCount;
+			//handler.childrenCount    += child.mergedCount;
+			//handler.childrenLagCount += child.mergedLagCount;
 			handler.childrenTotal    += child.total || 0;
 			handler.childrenLagTotal += child.lagTotal || 0;
 		}
 
-		record.total    = handler.total - handler.childrenTotal;
-		record.lagTotal = handler.lagTotal - handler.childrenLagTotal;
-		record.count    = handler.count - handler.childrenCount;
-		record.lagCount = handler.lagCount - handler.childrenLagCount;
-		handler.children[id] = record;
+		record.total            = handler.total     - handler.childrenTotal;
+		record.lagTotal         = handler.lagTotal  - handler.childrenLagTotal;
+		record.count            = handler.count     - handler.childrenCount;
+		record.lagCount         = handler.lagCount  - handler.childrenLagCount;
+		handler.children[id]    = record;
 	}
 }
 
@@ -304,10 +310,10 @@ data.calculateStats = function calculateStats(handler) {
 		return;
 	}
 
-	handler.avg = (total / count);
-	handler.tickAvg = (handler.avg / 1000000) * (count / data.totalTicks);
-	handler.totalPct = (total / data.totalTime) * 100;
-	handler.avgCountTick = count / data.totalTicks;
+	handler.avg             = (total / count);
+	handler.tickAvg         = (handler.avg / 1000000) * (count / data.totalTicks);
+	handler.totalPct        = (total / data.totalTime) * 100;
+	handler.avgCountTick    = count / data.totalTicks;
 };
 
 function getData(options={}) {
@@ -316,11 +322,11 @@ function getData(options={}) {
 	return new Promise((resolve, reject) => {
 		xhr('data.php?' + qs.stringify(options), {
 			headers: {
-				"Accept": "application/json",
-				"Content-Type": "application/x-www-form-urlencoded",
+				"Accept"        : "application/json",
+				"Content-Type"  : "application/x-www-form-urlencoded",
 			},
-			responseType: "text",
-			method: "GET",
+			responseType        : "text",
+			method              : "GET",
 		}, (err, res, body) => {
 			if (err || res.statusCode !== 200 || !body) {
 				dataFailure();
@@ -368,45 +374,6 @@ function dataFailure() {
 function dataSuccess() {
 	dataReady = true;
 	dataReadyCB.forEach((cb) => cb(data));
-}
-
-
-// TODO: Chunks
-function chunkstuff() {
-	const $areaMap = [];
-	for (const /*TimingHistory*/$history of data.timingsMaster.data) {
-		for (const /*World*/$world of $history.worldData) {
-			for (const /*Region*/$region of $world.regions) {
-				const $worldName = $world.worldName;
-				const $areaId = $region.regionId;
-				if (!$areaMap[$worldName]) {
-					$areaMap[$worldName] = [];
-				}
-
-				if (!$areaMap[$worldName][$areaId]) {
-					$areaMap[$worldName][$areaId] = {
-						"count": 0,
-						"world": $world.worldName,
-						"x": $region.areaLocX,
-						"z": $region.areaLocZ,
-						"e": [],
-						"ec": 0,
-						"te": [],
-						"tec": 0,
-					};
-				}
-				$areaMap[$worldName][$areaId]['count'] += $region.chunkCount;
-				for (const [$id, $count] of Object.entries($region.tileEntities)) {
-					$areaMap[$worldName][$areaId]['te'][$id] += $count;
-					$areaMap[$worldName][$areaId]['tec'] += $count;
-				}
-				for (const [$id, $count] of Object.entries($region.entities)) {
-					$areaMap[$worldName][$areaId]['e'][$id] += $count;
-					$areaMap[$worldName][$areaId]['ec'] += $count;
-				}
-			}
-		}
-	}
 }
 
 /**
