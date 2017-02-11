@@ -30,7 +30,7 @@ export default class ServerInfo extends React.PureComponent {
 			return <div />;
 		}
 		const info = data.timingsMaster;
-		const motd = info.motd && info.motd !== "null" && replaceColorCodes(phpjs.htmlentities(info.motd));
+		const motd = info.motd && info.motd !== "null" && replaceColorCodes(phpjs.strip_tags(info.motd));
 		return (
 			<div id="server-info" className="section">
 
