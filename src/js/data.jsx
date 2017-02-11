@@ -42,6 +42,7 @@ const data = {
 	entData:[],
 	chunkData:[],
 };
+data.isLoading = 0;
 
 /**
  * @type {RegExp}
@@ -320,6 +321,8 @@ function getData(options={}) {
 	options.id = query.get('id') || "";
 
 	return new Promise((resolve, reject) => {
+		data.isLoading++;
+		if (data.loadingIndicator) data.loadingIndicator.setState({loading: data.isLoading});
 		xhr('data.php?' + qs.stringify(options), {
 			headers: {
 				"Accept"        : "application/json",
@@ -328,6 +331,8 @@ function getData(options={}) {
 			responseType        : "text",
 			method              : "GET",
 		}, (err, res, body) => {
+			data.isLoading--;
+			if (data.loadingIndicator) data.loadingIndicator.setState({loading: data.isLoading});
 			if (err || res.statusCode !== 200 || !body) {
 				dataFailure();
 				reject([err || res.statusText || "Status Code: " + res.statusCode, res]);

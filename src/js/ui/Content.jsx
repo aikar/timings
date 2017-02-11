@@ -34,8 +34,9 @@ export default class Content extends React.Component {
 	}
 
 	render() {
+		data.loadingIndicator = null;
 		if (!this.state.dataReady) {
-			return <Loading />;
+			return <Loading ref={(load) => data.loadingIndicator = load} isReady={false} />;
 		}
 		return <div id="content">
 			<div id="tab-bar" className="ui-tabs ui-widget ui-widget-content ui-corner-all">
@@ -49,6 +50,7 @@ export default class Content extends React.Component {
 					}}
 					stickyChildren={<TimingsControls />}
 				>
+					<Loading ref={(load) => data.loadingIndicator = load} isReady={this.state.dataReady} />
 					<TabbedPanel tabId="timings">
 						<TimingsView reportType="lag" />
 					</TabbedPanel>

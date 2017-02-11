@@ -44,8 +44,8 @@ section {
 	text-align: center;
 }
 
-#content {
-	/* padding: 20px 15px; */
+#content, #tab-bar {
+	min-height: 300px;
 }
 .dev-warning {
 	padding: 5px;
@@ -53,6 +53,21 @@ section {
 	background-color: $theme-color-light;
 	color: $theme-color-text-special;
 }
+#loading-indicator-overlay {
+	background: rgba(0, 0, 0, .5);
+	z-index: 2000;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	> div {
+		position: absolute;
+		left: 40%;
+		top: 130px;
+	}
+}
+
 .sk-three-bounce > div {
 	background-color: $theme-accent;
 	margin: 15px;

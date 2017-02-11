@@ -22,7 +22,7 @@ export default class Header extends React.PureComponent {
 					<div className="subtitle">Written by <a href='http://ref.emc.gs/?gas=timingsphp' rel="nofollow">Aikar</a> </div>
 				</div>
 
-				<div id="header-left" className="section">
+				<div id="header-right" className="section">
 					<div className="section-head">
 						<span className="section-title">Contribute or Donate? </span>
 						<span className="section-controls">

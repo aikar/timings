@@ -17,7 +17,8 @@ import Spinner from "react-spinkit";
 
 export default class Loading extends React.Component {
 	static propTypes = Loading.props = {
-		children: React.PropTypes.any
+		children: React.PropTypes.any,
+		isReady: React.PropTypes.bool,
 	};
 
 	static defaultProps = {};
@@ -27,6 +28,14 @@ export default class Loading extends React.Component {
 	}
 
 	render() {
+		if (this.props.isReady) {
+			if (!data.isLoading) {
+				return null;
+			}
+			return <div id="loading-indicator-overlay">
+				<Spinner noFadeIn spinnerName="three-bounce" />
+			</div>;
+		}
 		return (
 			<div id="content">
 				<div id="tab-bar" className="ui-tabs ui-widget ui-widget-content ui-corner-all">
@@ -40,7 +49,7 @@ export default class Loading extends React.Component {
 						<br /><br />
 						<h3>Timings is currently loading</h3>
 						<br /><br /><br />
-						<Spinner spinnerName="three-bounce" />
+						<Spinner noFadeIn spinnerName="three-bounce" />
 						<br /><br /><br /><br /><br />
 					</section>
 				</div>
