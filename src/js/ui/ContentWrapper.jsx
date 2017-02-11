@@ -17,26 +17,31 @@ import Footer from "./Footer";
 import Advertisement from "./Advertisement";
 import Content from "./Content";
 import ContentTop from "./ContentTop";
+import ErrorDisplay from "./ErrorDisplay";
 
-export default function ContentWrapper() {
-	return <div>
-		<Header />
-		<div id="body-wrap">
-			<div className="dev-warning"><strong>Please do not ask for help with timings in #spigot</strong></div>
+export default class ContentWrapper extends React.Component {
+	render() {
+		return <div>
+			<Header />
+			<div id="body-wrap">
+				<div className="dev-warning"><strong>Please do not ask for help with timings in #spigot</strong></div>
 
-			<ContentTop/>
 
-			<div id="top-ad">
-				<Advertisement adId="top" />
+				<ContentTop/>
+
+				<div id="top-ad">
+					<Advertisement adId="top" />
+				</div>
+
+				<ErrorDisplay />
+				<Content/>
+
+				<div id="bottom-ad">
+					<Advertisement adId="bottom" />
+				</div>
 			</div>
-
-			<Content/>
-
-			<div id="bottom-ad">
-				<Advertisement adId="bottom" />
-			</div>
-		</div>
-		<div className="push" style={{clear: "left"}}></div>
-		<Footer/>
-	</div>;
+			<div className="push" style={{clear: "left"}}></div>
+			<Footer/>
+		</div>;
+	}
 }

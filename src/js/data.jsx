@@ -47,6 +47,12 @@ const data = {
 	entData:[],
 	chunkData:[],
 };
+
+/**
+ * @type {RegExp}
+ */
+data.nameFilter = "";
+
 /**
  * @type {TimingsMaster}
  */
@@ -255,6 +261,10 @@ data.changeOptions = function (sort, type, refresh) {
 		dataSuccess();
 	}
 
+};
+data.setFilter = function (filterVal) {
+	data.nameFilter = (filterVal && new RegExp(filterVal.replace(/ /, '.*'), 'ig')) || "";
+	dataSuccess();
 };
 
 function buildSelfData() {

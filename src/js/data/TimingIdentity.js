@@ -26,7 +26,15 @@ export default class TimingIdentity extends JsonTemplate {
 	/**
 	 * @type string
 	 */
+	fullName;
+	/**
+	 * @type int
+	 */
 	group;
+	/**
+	 * @type string
+	 */
+	groupName;
 
 	/**
 	 * @type TimingHandler

@@ -72,7 +72,7 @@ section {
 	margin-top: -47px;
 	margin-right: 0;
 	height: 47px;
-	#type-toggle, #sort-toggle {
+	#filter, #type-toggle, #sort-toggle {
 		height: 47px;
 		float: left;
 		overflow: hidden;
@@ -99,6 +99,9 @@ section {
 			background: darken($theme-background-alt, 10);
 
 		}
+	}
+	#filter {
+		width: 225px;
 	}
 	overflow: hidden;
 

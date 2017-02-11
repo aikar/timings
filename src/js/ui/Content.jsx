@@ -18,17 +18,25 @@ import RegionsView from "./RegionsView";
 import PluginsView from "./PluginsView";
 import ConfigView from "./ConfigView";
 import TimingsView from "./TimingsView";
-import {StickyContainer} from "react-sticky";
+import TimingsControls from "./TimingsControls";
+import data from "../data";
 
 export default class Content extends React.Component {
 	constructor(props, ctx) {
 		super(props, ctx);
-
+		this.state = {
+			dataReady: false
+		};
+		data.onReady(() => {
+			this.setState({dataReady: true});
+		})
 	}
 	// <div>Oops! It looks like the Timings you were trying to load does not exists anymore! Timings are only stored for 30 days after access.</div>
 	render() {
-		return <StickyContainer>
-			<div id="content">
+		if (!this.state.dataReady) {
+			return null;
+		}
+		return <div id="content">
 			<div id="tab-bar" className="ui-tabs ui-widget ui-widget-content ui-corner-all">
 				<TabContainer
 					activeTab="timings"
@@ -38,6 +46,7 @@ export default class Content extends React.Component {
 						"config": "Config",
 						"plugins": "Plugins",
 					}}
+					stickyChildren={<TimingsControls />}
 				>
 					<TabbedPanel tabId="timings">
 						<TimingsView reportType="lag" />
@@ -53,7 +62,6 @@ export default class Content extends React.Component {
 					</TabbedPanel>
 				</TabContainer>
 			</div>
-		</div>
-		</StickyContainer>;
+		</div>;
 	}
 }

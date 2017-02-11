@@ -14,6 +14,9 @@
  */
 import React from "react";
 import * as phpjs from "phpjs";
+import data from "./data";
+
+window.data = data;
 
 window.prop = function prop(type) {
 	if (reportType === 'lag') {
@@ -23,7 +26,7 @@ window.prop = function prop(type) {
 	}
 };
 
-window.lagFilter = function lagFilter(propTotal, propCount) {
+window.lagFilter = function lagFilter(propTotal, propCount, useNameFilter) {
 	return (handler) => {
 		if (!handler) {
 			return false;
@@ -32,11 +35,17 @@ window.lagFilter = function lagFilter(propTotal, propCount) {
 		let avg = 0;
 		const count = handler[propCount];
 		const total = handler[propTotal];
-		if (count > 0) {
+		/*if (count > 0) {
 			avg = (total / count) * handler.mergedCount;
+		}*/
+		if (total < 5) {
+			return false;
 		}
-
-		return total > 5; // TODO: avg?
+		if (!useNameFilter || !data.nameFilter) {
+			return true;
+		}
+		const id = data.getIdentity(handler.id);
+		return id && data.nameFilter.test(id.fullName);
 	}
 };
 

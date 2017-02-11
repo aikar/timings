@@ -46,7 +46,7 @@ export default class TimingsView extends React.Component {
 		const propTotal = prop('total');
 		const propCount = prop('count');
 
-		const filter = lagFilter(propTotal, propCount);
+		const filter = lagFilter(propTotal, propCount, true);
 
 		children = flow(
 			_fp.filter(filter),

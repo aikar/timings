@@ -48,7 +48,9 @@ export default class TimingsMap extends JsonTemplate {
 		this.handlerNameMap = {};
 		for (const [id, identity] of Object.entries(this.handlerMap)) {
 			identity.id = id;
-			this.handlerNameMap[this.groupMap[identity.group] + "::" + identity.name] = identity;
+			identity.groupName = this.groupMap[identity.group];
+			identity.fullName = identity.groupName + "::" + identity.name;
+			this.handlerNameMap[identity.fullName] = identity;
 		}
 	}
 }
