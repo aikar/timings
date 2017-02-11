@@ -16,8 +16,7 @@ import data from "../data";
 import TimingRow from "./TimingRow";
 import flow from "lodash/flow";
 import _fp from "lodash/fp";
-import cx from "classnames";
-import {StickyContainer, Sticky} from "react-sticky";
+
 export default class TimingsView extends React.Component {
 	static propTypes = TimingsView.props = {
 		children: React.PropTypes.any,
@@ -51,15 +50,17 @@ export default class TimingsView extends React.Component {
 		children = flow(
 			_fp.filter(filter),
 			_fp.sortBy(sortType)
-		)(children).reverse().slice(0, this.state.limit);
+		)(children).reverse();
+		const count = children.length;
+
+		children = children.slice(0, this.state.limit);
 		return (
 			<div>
 				{children.map((handler) => {
 					return <TimingRow timingRowDepth={0} key={handler.id} handler={handler} />
 				})}
-				<div id="show-more" onClick={()=> this.setState({limit: this.state.limit + 20})}>Show More</div>
+				{count > this.state.limit ? <div id="show-more" onClick={()=> this.setState({limit: this.state.limit + 20})}>Show More</div> : null}
 			</div>
-
 		);
 	}
 }

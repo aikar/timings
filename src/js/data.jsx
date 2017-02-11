@@ -101,7 +101,7 @@ data.loadData = async function loadData() {
 		}
 		data.timingsMaster = await JsonObject.newObject(data.timingsMaster); // process into object while its downloading
 		if (data.end > data.timingsMaster.data.length) {
-			data.end = data.timingsMaster.data.length;
+			data.end = data.timingsMaster.data.length-1;
 		}
 
 		data.history = data.timingsMaster.data;

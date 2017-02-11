@@ -70,7 +70,7 @@ class TimeSelector extends React.Component {
 			<div id="time-selector">
 				<Range step={1} pushable={0} dots included={true}
 				       allowCross={true} min={0} max={master.length-1}
-				       defaultValue={[data.start,  data.end]}
+				       defaultValue={[data.start, data.end]}
 				       onAfterChange={this.onHistoryChange}
 				/>
 			</div>
