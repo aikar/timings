@@ -12,10 +12,11 @@
  */
 
 import React from "react";
-import data from "../data";
+import Spinner from "react-spinkit";
 
-export default class ErrorDisplay extends React.Component {
-	static propTypes = ErrorDisplay.props = {
+
+export default class Loading extends React.Component {
+	static propTypes = Loading.props = {
 		children: React.PropTypes.any
 	};
 
@@ -23,19 +24,9 @@ export default class ErrorDisplay extends React.Component {
 
 	constructor(props, ctx) {
 		super(props, ctx);
-
-		this.state = {
-			error: false
-		};
-		data.onFailure(() => {
-			this.setState({error: true});
-		});
 	}
 
 	render() {
-		if (!this.state.error) {
-			return null;
-		}
 		return (
 			<div id="content">
 				<div id="tab-bar" className="ui-tabs ui-widget ui-widget-content ui-corner-all">
@@ -43,15 +34,13 @@ export default class ErrorDisplay extends React.Component {
 						<div className="tab-title active" style={{width: "100%"}}>
 							<a className="tab ui-tabs-anchor" style={{width: "100%"}}>&nbsp;</a>
 						</div>
+
 					</div>
 					<section className={"content active"} style={{textAlign: "center"}}>
 						<br /><br />
-						<h1>Oops - Could not load Timings Report</h1>
+						<h3>Timings is currently loading</h3>
 						<br /><br /><br />
-						It looks like the Timings you were trying to load does not exists anymore!
-						<br/><br/>
-						Timings are only stored for 30 days after access, but this this looking to be increased.
-						If this is a recent timings, then please recheck the URL given in your console.
+						<Spinner spinnerName="three-bounce" />
 						<br /><br /><br /><br /><br />
 					</section>
 				</div>

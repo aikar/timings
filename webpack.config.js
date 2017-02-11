@@ -107,7 +107,7 @@ module.exports = function(isProduction, watch) {
 					}
 				},
 
-				{ test: /\.css$/, use: ExtractTextPlugin.extract({fallback: "style-loader", use: ["css-loader", "postcss-loader"]})},
+				{ test: /\.css$/, use: ExtractTextPlugin.extract({fallback: "style-loader", use: ["raw-loader"]})},
 				{
 					test: /\.scss$/,
 					exclude: /(node_modules)/,

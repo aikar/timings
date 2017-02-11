@@ -37,6 +37,7 @@ foreach ($assets as $k => $asset) {
 	}
 	?>
 	<script type="text/javascript">TIMINGS_THEME=<?=json_encode($theme);?>;</script>
+	<link href="<?=htmlentities($assets["timings"]['css'])?>" rel="stylesheet" />
 	<link href="<?=htmlentities($assets["timings-theme-{$theme}"]['css'])?>" rel="stylesheet" />
 	<meta name="robots" content="noindex,nofollow">
 </head>

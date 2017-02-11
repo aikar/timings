@@ -20,6 +20,7 @@ import ConfigView from "./ConfigView";
 import TimingsView from "./TimingsView";
 import TimingsControls from "./TimingsControls";
 import data from "../data";
+import Loading from "./Loading";
 
 export default class Content extends React.Component {
 	constructor(props, ctx) {
@@ -31,10 +32,10 @@ export default class Content extends React.Component {
 			this.setState({dataReady: true});
 		})
 	}
-	// <div>Oops! It looks like the Timings you were trying to load does not exists anymore! Timings are only stored for 30 days after access.</div>
+
 	render() {
 		if (!this.state.dataReady) {
-			return null;
+			return <Loading />;
 		}
 		return <div id="content">
 			<div id="tab-bar" className="ui-tabs ui-widget ui-widget-content ui-corner-all">
