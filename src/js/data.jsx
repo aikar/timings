@@ -275,13 +275,13 @@ data.changeOptions = function (sort, type, refresh) {
 const matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
 data.setFilter = function (filterVal) {
 	if (filterVal) {
-		if (filterVal.startsWith("!!")) {
+		if (!filterVal.startsWith("!!")) {
 			filterVal = filterVal.replace(matchOperatorsRe, '\\$&');
 		} else {
 			filterVal = filterVal.substring(2);
 		}
 	}
-	data.nameFilter = (filterVal && new RegExp(filterVal.replace(/ /, '.*'), 'ig')) || "";
+	data.nameFilter = (filterVal && new RegExp(filterVal, 'ig')) || "";
 	dataSuccess();
 };
 

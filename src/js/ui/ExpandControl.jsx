@@ -18,6 +18,7 @@ export default class ExpandControl extends React.Component {
 	static propTypes = ExpandControl.props = {
 		children: React.PropTypes.func.isRequired,
 		expanded: React.PropTypes.bool,
+		prefix: React.PropTypes.element,
 	};
 
 	static defaultProps = {
@@ -36,14 +37,16 @@ export default class ExpandControl extends React.Component {
 	};
 
 	render() {
-		return (<span>
-			{!this.state.expand ?
-				<FA class='expand-control' icon='caret-right' onClick={this.toggle} />
-				:<span>
+		return (<span className="expandable">
+			<span className="expand-prefix" onClick={this.toggle}>{this.props.prefix || null}</span>
+			<span className="expand-arrows">
+				{!this.state.expand ?
+					<FA class='expand-control' icon='caret-right' onClick={this.toggle} />
+					:
 					<FA class='expand-control' icon='caret-down' onClick={this.toggle} />
-					{this.props.children()}
-				</span>
-			}
+				}
+			</span>
+			{this.state.expand ? <div className="expand-content">{this.props.children()}</div> : null}
 		</span>);
 	}
 }

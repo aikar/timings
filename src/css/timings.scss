@@ -187,7 +187,18 @@ section {
 		color: $theme-color-text-alt;
 	}
 }
-
+.expandable {
+	display: block;
+	clear: left;
+	overflow: hidden;
+}
+.expand-prefix, .expand-arrows {
+	cursor: pointer;
+	float: left;
+}
+.expand-content {
+	clear: left;
+}
 .full-timing-row {
 	width: 100%;
 
@@ -222,6 +233,7 @@ section {
 		overflow: hidden;
 		cursor: pointer;
 	}
+
 
 	.expand-control {
 		cursor: pointer;
@@ -300,9 +312,6 @@ section {
 }
 
 #tabs-config {
-	.key, .expand-control {
-		cursor: pointer;
-	}
 	overflow: hidden;
 }
 

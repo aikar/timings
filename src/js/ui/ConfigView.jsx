@@ -13,7 +13,6 @@
 
 import React from "react";
 import data from "../data";
-import FA from "./FA";
 import ExpandControl from "./ExpandControl";
 
 export default class ConfigView extends React.Component {
@@ -32,12 +31,6 @@ export default class ConfigView extends React.Component {
 		if (!this.state.timingHistoryReady) {
 			return null;
 		}
-		const test = {
-			foo: "bar",
-			baz: {
-				duck: [42, 53]
-			}
-		};
 
 		return (
 			<div>{Object.entries(data.timingsMaster.config).map(([type, config]) => (
@@ -60,19 +53,11 @@ class TreeNode extends React.Component {
 
 	constructor(props, ctx) {
 		super(props, ctx);
-		this.state = {
-			expand: props.expand || false
-		};
 	}
 
 	render() {
-
 		const val = this.props.value;
 		const key = this.props.keyname;
-
-		const toggleChildren = () => {
-			this.setState({expand: !this.state.expand});
-		};
 
 		const style = {
 			marginLeft: this.props.depth ? 25 : 10,
@@ -84,8 +69,7 @@ class TreeNode extends React.Component {
 			</div>;
 		} else if (typeof val === 'object') {
 			return <div style={style}>
-				<span className="key" onClick={() => toggleChildren()}>{key}: </span>
-				<ExpandControl>{() => (<span>
+				<ExpandControl prefix={<span className="key">{key}: </span>}>{() => (<span>
 					{' {'}<div>
 					{Object.entries(val).map(([k, v]) => (<div key={k}>
 							<TreeNode depth={this.props.depth + 1} keyname={k} value={v}/>

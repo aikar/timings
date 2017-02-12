@@ -75,10 +75,9 @@ export default class RegionsView extends React.Component {
 			They are a representation of number of times seen within this selected history window.<br />
 			They will be much higher than seen in game. It is intended
 			to help you identify where the most TE/E's are.<br/>A region can cover 512 blocks around the coordinates.<br /><br />
-			{Object.entries(areaMap).map(([world, chunks]) => (<div key={world} style={{clear: "left"}}>
-				<h3 style={{float: "left"}}>{world}</h3>
-				<WorldView world={world} chunks={sortBy(Object.entries(chunks), sortRegions)} />
-			</div>))}
+			{Object.entries(areaMap).map(([world, chunks]) => (
+				<WorldView key={world} world={world} chunks={sortBy(Object.entries(chunks), sortRegions)} />
+			))}
 		</div>);
 	}
 }
@@ -98,21 +97,22 @@ class WorldView extends React.Component {
 		}
 	}
 	render() {
-		return <ExpandControl>{() => (<div className="world-item">{this.props.chunks.map(([areaId, region]) => {
-			const breakdown = sortBy(Object.entries(Object.assign(region.te, region.e)), sortCounts);
-
-			return <div className="region-details" key={areaId}>
-				<strong>{region.x},{region.z}</strong> (Area Seen {region.count} times)<br/>
-				<strong>Totals</strong>: {region.ec} Entities - {region.tec} Tile Entities - Summary:
-				<ExpandControl>{() => (
-					<div className="chunk-row full-timing-row">
-						{breakdown.map(([type, count]) => (
-							<span key={type} className='indent full-child'><strong>{type}</strong>: {count}</span>
-						))}
-					</div>)}
-				</ExpandControl>
-			</div>
-		})}
-		</div>)}</ExpandControl>;
+		return <ExpandControl prefix={<h3>{this.props.world}</h3>}>{
+			() => (<div className="world-item">{this.props.chunks.map(([areaId, region]) => (
+				<div className="region-details" key={areaId}>
+					<strong>{region.x},{region.z}</strong> (Area Seen {region.count} times)<br/>
+					<ExpandControl prefix={<span>
+						<strong>Totals</strong>: {region.ec} Entities - {region.tec}
+						Tile Entities - Summary:
+					</span>}>{() => (
+						<div className="chunk-row full-timing-row">
+							{sortBy(Object.entries(Object.assign(region.te, region.e)), sortCounts).map(([type, count]) => (
+								<span key={type} className='indent full-child'><strong>{type}</strong>: {count}</span>
+							))}
+						</div>)}
+					</ExpandControl>
+				</div>))}
+			</div>)}
+		</ExpandControl>;
 	}
 }
