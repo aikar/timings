@@ -31,7 +31,6 @@ export default class TimingsChart {
 			console.error("NO DATA");
 			return;
 		}
-		console.log(data);
 		this.chartOptions = {
 			animation: false,
 			legendTemplate: "",

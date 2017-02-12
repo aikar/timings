@@ -58,15 +58,16 @@
 .rc-slider-rail {
 	position: absolute;
 	width: 100%;
-	background-color: $theme-color-light;
-	height: 8px;
+	background-color: $theme-color;
+	height: 4px;
+	margin-top: 2px;
 }
 .rc-slider-track {
 	position: absolute;
 	left: 0;
 	height: 8px;
 	border-radius: 6px;
-	background-color: $theme-color;
+	background-color: $theme-color-light;
 }
 .rc-slider-handle {
 	position: absolute;
@@ -76,11 +77,12 @@
 	height: 18px;
 	cursor: pointer;
 	border-radius: 50%;
-	border: solid 2px lighten($theme-accent, 20);
+	border: solid 1px darken($theme-accent, 10);
 	background-color: $theme-accent;
 }
 .rc-slider-handle:hover {
-	border-color: $theme-accent;
+	border: solid 1px darken($theme-accent, 10);
+	background-color: darken($theme-accent, 10);
 }
 .rc-slider-handle-active:active {
 	border-color: $theme-color;
@@ -129,6 +131,7 @@
 	margin-left: -4px;
 }
 .rc-slider-dot-active {
+	background-color: $theme-accent;
 	border-color: $theme-accent;
 }
 .rc-slider-disabled {
