@@ -25,9 +25,15 @@ export default class Loading extends React.Component {
 
 	constructor(props, ctx) {
 		super(props, ctx);
+		data.onFailure(() => {
+			this.setState({failure: new Date()});
+		})
 	}
 
 	render() {
+		if (data.hasFailed) {
+			return null;
+		}
 		if (this.props.isReady) {
 			if (!data.isLoading) {
 				return null;

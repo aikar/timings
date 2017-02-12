@@ -31,6 +31,7 @@ export default class TimingsChart {
 			console.error("NO DATA");
 			return;
 		}
+		console.log(data);
 		this.chartOptions = {
 			animation: false,
 			legendTemplate: "",
@@ -43,7 +44,7 @@ export default class TimingsChart {
 					return "";
 				}
 				try {
-					if (v.datasetLabel == "LAG") {
+					if (v.datasetLabel === "LAG") {
 						return round((v.value / data.maxTime) * 100) + "% TPS Loss";
 					} else {
 						let number = data.scaleMap[v.datasetLabel][v.value];

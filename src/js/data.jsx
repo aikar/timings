@@ -21,8 +21,6 @@ import _ from "lodash";
 import TimingData from "./data/TimingData";
 import lscache from "lscache";
 
-let dataReady = false;
-let dataHasFailed = false;
 let dataReadyCB = [];
 let dataFailedCB = [];
 
@@ -42,6 +40,8 @@ const data = {
 	entData:[],
 	chunkData:[],
 };
+data.hasFailed = false;
+data.isReady = false;
 data.isLoading = 0;
 
 /**
@@ -127,6 +127,7 @@ data.loadData = async function loadData() {
 		data.first = first;
 		data.ranges = _.uniq(ranges);
 		loadChartData();
+		await loadTimingData();
 		dataSuccess();
 	} catch (e) {
 		console.error(e);
@@ -165,7 +166,9 @@ function loadChartData() {
 		for(const /*MinuteReport*/mp of history.minuteReports) {
 			data.maxTime = max(mp.fullServerTick.total, data.maxTime);
 		}
-		for(const /*MinuteReport*/mp of history.minuteReports) {
+	}
+	for (const /*TimingHistory*/history of data.timingsMaster.data) {
+		for (const /*MinuteReport*/mp of history.minuteReports) {
 			if (!mp.ticks.timedTicks) {
 				continue;
 			}
@@ -182,6 +185,14 @@ function loadChartData() {
 		}
 	}
 }
+
+function scale(key, count) {
+	//noinspection ES6ModulesDependencies,NodeModulesDependencies
+	const res = (Math.min(scalesCap[key], count) / scales[key]) * data.maxTime;
+	scaleMap[key][res] = count;
+	return res;
+}
+
 
 let requestId = 0;
 async function loadTimingData() {
@@ -344,14 +355,14 @@ function getData(options={}) {
 }
 
 data.onFailure = function onFailure(cb) {
-	if (dataHasFailed) {
-		cb();
+	if (data.hasFailed) {
+		process.nextTick(() => cb());
 	}
 	dataFailedCB.push(cb);
 };
 data.onReady = function onReady(cb) {
-	if (dataReady) {
-		cb(data);
+	if (data.isReady) {
+		process.nextTick(() => cb(data));
 	}
 	dataReadyCB.push(cb);
 };
@@ -364,20 +375,13 @@ data.isDataReady = function isDataReady() {
 	return true;
 };
 
-function scale(key, count) {
-	//noinspection ES6ModulesDependencies,NodeModulesDependencies
-	const res = (Math.min(scalesCap[key], count) / scales[key]) * data.maxTime;
-	scaleMap[key][res] = count;
-	return res;
-}
-
 function dataFailure() {
-	dataHasFailed = true;
+	data.hasFailed = true;
 	dataFailedCB.forEach((cb) => cb());
 }
 
 function dataSuccess() {
-	dataReady = true;
+	data.isReady = true;
 	dataReadyCB.forEach((cb) => cb(data));
 }
 
@@ -406,9 +410,12 @@ data.provideTo = function(comp) {
 			prevUnmount.call(comp);
 		}
 	};
-
+	data.onFailure(async () => {
+		if (!hasUnmounted) {
+			comp.setState({timingHistoryFailure: new Date()});
+		}
+	});
 	data.onReady(async () => {
-		await loadTimingData();
 		if (!hasUnmounted) {
 			comp.setState({timingHistoryReady: new Date()});
 		}

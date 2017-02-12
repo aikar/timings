@@ -12,6 +12,16 @@
 	border: solid 1px silver;
 	border-top: none;
 }
+#content-top {
+	display:flex;
+	justify-content: space-between;
+}
+#server-info, #history-selector {
+	margin: 5px;
+}
+#server-info {
+	min-width: 400px
+}
 #header {
 	width: 100%;
 	background-color: $theme-color;
@@ -145,17 +155,27 @@ a:hover {
 		float:none;
 		text-align: center;
 	}
+	#content-top {
+		display: block;
+	}
 	#body-wrap {
 		.row-double {
+			padding: 0;
 			#history-selector, #server-info {
+				margin: 0;
 				width:100%;
 				display:block;
 				float:none;
 			}
-			#server-info {
-				margin-top:10px;
-				height:auto;
-			}
+		}
+		#top-ad {
+			margin: 10px auto;
+		}
+		#bottom-ad {
+			margin-top: 30px !important;
+		}
+		#tab-bar {
+			margin: 0;
 		}
 		#tab-bar .tabs {
 			height:auto;

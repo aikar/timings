@@ -30,7 +30,7 @@ export default class ServerInfo extends React.PureComponent {
 			return <div />;
 		}
 		const info = data.timingsMaster;
-		const motd = info.motd && info.motd !== "null" && replaceColorCodes(info.motd);
+		const motd = info.motd && info.motd !== "null" && replaceColorCodes(info.motd.replace("\n", ":|:NL:|:"));
 		return (
 			<div id="server-info" className="section">
 
@@ -57,7 +57,7 @@ export default class ServerInfo extends React.PureComponent {
 					{motd ?
 					<tr>
 						<td className="fieldName">MOTD</td>
-						<td className="fieldValue" colSpan="3" dangerouslySetInnerHTML={{__html: motd}}/>
+						<td className="fieldValue" colSpan="3" dangerouslySetInnerHTML={{__html: motd && motd.replace(":|:NL:|:", "<br/>")}}/>
 					</tr> : null}
 					<tr>
 						<td className="fieldName">Version</td>
