@@ -56,7 +56,7 @@ echo "$(c 33)Branched and pushed up to github$(ce)..$(ce)"
 (
 	cd .. || exit 1
 	mkdir -p prod_backups || exit 1
-	cp -r production prod_backups/$backup || exit 1
+	cp -a production prod_backups/$backup || exit 1
 	echo "$(c 33)Backed up locally to$(ce) prod_backups/$backup"
 	ln -sfn prod_backups/$backup prod
 ) || (
@@ -73,7 +73,7 @@ echo "$(c 33)Branched and pushed up to github$(ce)..$(ce)"
 	echo "$(c 33)Done! Let's launch it.$(ce)"
 	rm -rf ../production || exit 1
 	echo "$(c 33)Copying$(ce)"
-	cp -r . ../production || exit 1
+	cp -a . ../production || exit 1
 	echo "$(c 33)Restoring production configuration$(ce)"
 	cp ../prod_backups/$backup/config.dev.ini ../production/ || exit 1
 	rm -f ../production/.git # remove .git reference so its not linked to dev
