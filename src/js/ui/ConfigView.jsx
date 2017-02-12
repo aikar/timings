@@ -14,6 +14,7 @@
 import React from "react";
 import data from "../data";
 import FA from "./FA";
+import ExpandControl from "./ExpandControl";
 
 export default class ConfigView extends React.Component {
 	static propTypes = ConfigView.props = {
@@ -84,19 +85,14 @@ class TreeNode extends React.Component {
 		} else if (typeof val === 'object') {
 			return <div style={style}>
 				<span className="key" onClick={() => toggleChildren()}>{key}: </span>
-				{!this.state.expand ?
-					<FA class='expand-control' icon='caret-right' onClick={() => toggleChildren()} />
-					:<span>
-						<FA class='expand-control' icon='caret-down' onClick={() => toggleChildren()} />{' {'}
-						<div>
-						{Object.entries(val).map(([k, v]) => (<div key={k}>
-								<TreeNode depth={this.props.depth + 1} keyname={k} value={v}/>
-							</div>
-						))}
+				<ExpandControl>{() => (<span>
+					{' {'}<div>
+					{Object.entries(val).map(([k, v]) => (<div key={k}>
+							<TreeNode depth={this.props.depth + 1} keyname={k} value={v}/>
 						</div>
-					{'}'}
-					</span>
-				}
+					))}
+					</div>{'}'}
+				</span>)}</ExpandControl>
 			</div>;
 		} else {
 			return <div style={style}>{key? <span className="key">{key}:&nbsp;</span> : null}<span>{String(val)}</span></div>

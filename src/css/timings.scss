@@ -67,7 +67,14 @@ section {
 		top: 130px;
 	}
 }
-
+.region-details {
+	clear: left;
+	padding-left: 20px;
+	padding-top: 10px;
+}
+.world-item {
+	clear: left;
+}
 .sk-three-bounce > div {
 	background-color: $theme-accent;
 	margin: 15px;

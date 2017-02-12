@@ -13,7 +13,7 @@
 
 import React from "react";
 import sortBy from "lodash/sortBy";
-import * as phpjs from "phpjs";
+import ExpandControl from "./ExpandControl";
 
 export default class RegionsView extends React.Component {
 	static propTypes = RegionsView.props = {
@@ -69,34 +69,16 @@ export default class RegionsView extends React.Component {
 			}
 		}
 
-		const worlds = [];
-		for (const [world, chunks] of Object.entries(areaMap)) {
-			let chunksSorted = sortBy(Object.entries(chunks), sortRegions);
-			worlds.push(<div key={world}>
-				<h3>{world}</h3>
-				{chunksSorted.map(([areaId, region]) => {
-					const breakdown = sortBy(Object.entries(Object.assign(region.te, region.e)), sortCounts);
-
-					return <div key={areaId}>
-						{world}:{region.x},{region.z}<br />
-						Totals: {region.ec} Entities - {region.tec} Tile Entities<br />
-						Area Seen: {region.count} times<br/><br/>
-						<div className="chunk-row full-timing-row">
-							{breakdown.map(([type, count]) => (
-								<span key={type} className='indent full-child'>{type}: {count}</span>
-							))}
-						</div>
-					</div>
-				})}
-			</div>)
-		}
-
 		return (<div>
-			<br /><h2>NOTICE: Counts are NOT EXACT!!!</h2>These are summaries by region.<br />
-			They are a representation of number of times seen within this selected history window.
+			<br /><h3>NOTICE: These are not chunks, counts are NOT EXACT!!!</h3>
+			These are summaries by region.
+			They are a representation of number of times seen within this selected history window.<br />
 			They will be much higher than seen in game. It is intended
 			to help you identify where the most TE/E's are.<br/>A region can cover 512 blocks around the coordinates.<br /><br />
-			{worlds}
+			{Object.entries(areaMap).map(([world, chunks]) => (<div key={world} style={{clear: "left"}}>
+				<h3 style={{float: "left"}}>{world}</h3>
+				<WorldView world={world} chunks={sortBy(Object.entries(chunks), sortRegions)} />
+			</div>))}
 		</div>);
 	}
 }
@@ -106,4 +88,31 @@ function sortRegions([areaId, region]) {
 }
 function sortCounts([id, count]) {
 	return count;
+}
+
+class WorldView extends React.Component {
+	constructor(props, ctx) {
+		super(props, ctx);
+		this.state = {
+			expanded: false
+		}
+	}
+	render() {
+		return <ExpandControl>{() => (<div className="world-item">{this.props.chunks.map(([areaId, region]) => {
+			const breakdown = sortBy(Object.entries(Object.assign(region.te, region.e)), sortCounts);
+
+			return <div className="region-details" key={areaId}>
+				<strong>{region.x},{region.z}</strong> (Area Seen {region.count} times)<br/>
+				<strong>Totals</strong>: {region.ec} Entities - {region.tec} Tile Entities - Summary:
+				<ExpandControl>{() => (
+					<div className="chunk-row full-timing-row">
+						{breakdown.map(([type, count]) => (
+							<span key={type} className='indent full-child'><strong>{type}</strong>: {count}</span>
+						))}
+					</div>)}
+				</ExpandControl>
+			</div>
+		})}
+		</div>)}</ExpandControl>;
+	}
 }
