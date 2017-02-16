@@ -103,6 +103,7 @@ class WorldView extends React.Component {
 					<strong>{region.x},{region.z}</strong> (Area Seen {region.count} times)<br/>
 					<ExpandControl prefix={<span>
 						<strong>Totals</strong>: {region.ec} Entities - {region.tec}
+						{'&mdash;'}
 						Tile Entities - Summary:
 					</span>}>{() => (
 						<div className="chunk-row full-timing-row">

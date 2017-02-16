@@ -20,10 +20,6 @@ class DataLoader {
 	use Singleton;
 	public $data = array();
 
-	public static function render() {
-		require __DIR__ ."/../template/index.php";
-	}
-
 	public static function loadData() {
 		$timings = Timings::getInstance();
 		if (!$timings->loadData()) {

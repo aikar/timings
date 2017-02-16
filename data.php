@@ -20,7 +20,7 @@ if ($_SERVER['HTTP_ACCEPT'] === 'application/json') {
 
 $timings = Timings::getInstance();
 $template = DataLoader::getInstance();
-$timings->prepareData(false);
+$timings->prepareData();
 /** @noinspection NotOptimalIfConditionsInspection */
 if (!DataLoader::loadData() || empty($template->data)) {
 	header($_SERVER['SERVER_PROTOCOL'] . " 404 Not Found", true, 404);

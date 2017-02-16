@@ -28,19 +28,32 @@ class Timings {
 		if (!empty($_GET['raw'])) {
 			$timings->showRaw();
 		}
-		DataLoader::render();
 	}
 
-	public function prepareData($tryLegacy = true) {
+	public function prepareData() {
 		/**
 		 * @var StorageService $storage
 		 */
 		$storage = new CacheStorage();
 		$id = null;
 
-		if ($tryLegacy && !empty($_GET['url'])) {
-			$id = $_GET['url'];
-			$storage = new LegacyStorageService();
+		if (!empty($_GET['url'])) { ?>
+			🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮<br/>
+			🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮<br/>
+			Timings v1 is no longer supported here, as Spigot forcefully moved it away from my server, so almost
+			no one is even hitting this URL anymore, so it doesn't make sense for me to keep supporting it.
+			<br />
+			I strongly recommend you to not use Spigot, as Timings v1 contains many bugs and lacking lots of info.
+			Timings v2 is a huge upgrade and contains exponentially more information.
+			<br/><br/>
+			You may switch to a faster and better server by downloading <a href='https://paper.emc.gs'>Paper</a>.
+			It is a drop in replacement for Spigot, and all of your plugins should still work.<br/><br/>
+
+			Plus, we have Tacos.<br/>
+			🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮<br/>
+			🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮<br/>
+			<?php
+			exit;
 		} else if (!empty($_REQUEST['id'])) {
 			$id = $_REQUEST['id'];
 		} else {
@@ -51,10 +64,6 @@ class Timings {
 		$this->id = $id;
 		$this->storage = $storage;
 
-		if ($tryLegacy && $storage instanceof LegacyStorageService) {
-			LegacyHandler::load(trim($storage->get($id)));
-			exit;
-		}
 	}
 
 	public function loadData() {

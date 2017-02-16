@@ -26,3 +26,4 @@ build/
 **/packages/
 node_modules
 npm-debug.log
+timings_test.gz
