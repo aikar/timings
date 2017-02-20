@@ -8,6 +8,7 @@
  *
  * @license MIT
  */
+
 namespace Starlis\Timings;
 
 use Starlis\Timings\Json\TimingsMaster;
@@ -42,7 +43,7 @@ class Timings {
 			🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮🌮<br/>
 			Timings v1 is no longer supported here, as Spigot forcefully moved it away from my server, so almost
 			no one is even hitting this URL anymore, so it doesn't make sense for me to keep supporting it.
-			<br />
+			<br/>
 			I strongly recommend you to not use Spigot, as Timings v1 contains many bugs and lacking lots of info.
 			Timings v2 is a huge upgrade and contains exponentially more information.
 			<br/><br/>
@@ -70,7 +71,7 @@ class Timings {
 		$id = $this->id;
 		if ($id) {
 			$data = Cache::getObject($id);
-			if (!$data || ((int) util::array_get($_GET['nocache']) === 1 && DEBUGGING)) {
+			if (!$data || ((int)util::array_get($_GET['nocache']) === 1 && DEBUGGING)) {
 				$data = $this->storage->get($id);
 				if (!$data) {
 					return null;

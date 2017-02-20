@@ -8,6 +8,7 @@
  *
  * @license MIT
  */
+
 namespace Starlis\Timings;
 
 class Uploader {
@@ -68,10 +69,12 @@ class Uploader {
 
 		return null;
 	}
+
 	public static function output($str) {
 		echo $str;
 		exit;
 	}
+
 	public static function error($str) {
 		if ($str === "Unauthorized") {
 			header("HTTP/1.1 401 Unauthorized", 401);

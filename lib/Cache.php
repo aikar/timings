@@ -8,7 +8,7 @@
  *  http://aikar.co
  *  http://starlis.com
  *
- *  @license MIT
+ * @license MIT
  *
  */
 

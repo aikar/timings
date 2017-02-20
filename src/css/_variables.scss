@@ -8,17 +8,16 @@
  * @license MIT
  */
 
- 
- /* Muted Colour Pallette - Grouped by colour
-  * I've denoted the darker shades with (D) and lighter shades with (L)
-  *
-  * #000000 - WET ASPHALT (L)
-  * #000000 - Midnight Blue (D)
-  *
-  * A useful colour palette can be found here:
-  * https://flatuicolors.com/
- */
- 
+/* Muted Colour Pallette - Grouped by colour
+ * I've denoted the darker shades with (D) and lighter shades with (L)
+ *
+ * #000000 - WET ASPHALT (L)
+ * #000000 - Midnight Blue (D)
+ *
+ * A useful colour palette can be found here:
+ * https://flatuicolors.com/
+*/
+
 // Some functions
 @function choose-color($color,$dark,$light) {
 	@if (lightness($color) > 50) {
@@ -29,65 +28,66 @@
 }
 
 $theme-colors: (
-	blue1: (
-		base: #2b3d51,
-		accent: #217fbc,
-		background: #979798,
-		altbackground: #c6c6c7,
-		text: #000,
-		alttext: #000,
-		text-special: white
-	),
-	blue2: (
-		base: #217fbc,
-		accent: #2b3d51,
-		background: #979798,
-		altbackground: #c6c6c7,
-		text: #000,
-		text-special: white
-	),
-	blue1-dark: (
-		base: #1e3851,
-		accent: #1563bc,
-		background: black,
-		altbackground: #333,
-		text: white,
-		text-special: white,
-		alttext: white
-	),
-	dark: (
-		base: #404040,
-		accent: #a1a1a1,
-		background: #111,
-		altbackground: #222222,
-		text: #ebebeb,
-		text-special: white,
-		alttext: #efefef
-	),
-	red: (
-		base: #90180b,
-		accent: #d65548,
-		background: black,
-		altbackground: #333,
-		text: white,
-		text-special: white,
-		alttext: white
-	),
-	orange: (
-		base: #c58000,
-		accent: #e67e22,
-		background: gray,
-		altbackground: #ecf0f1,
-		text: #111,
-		text-special: white,
-		alttext: #111
-	)
+		blue1: (
+				base: #2b3d51,
+				accent: #217fbc,
+				background: #979798,
+				altbackground: #c6c6c7,
+				text: #000,
+				alttext: #000,
+				text-special: white
+		),
+		blue2: (
+				base: #217fbc,
+				accent: #2b3d51,
+				background: #979798,
+				altbackground: #c6c6c7,
+				text: #000,
+				text-special: white
+		),
+		blue1-dark: (
+				base: #1e3851,
+				accent: #1563bc,
+				background: black,
+				altbackground: #333,
+				text: white,
+				text-special: white,
+				alttext: white
+		),
+		dark: (
+				base: #404040,
+				accent: #a1a1a1,
+				background: #111,
+				altbackground: #222222,
+				text: #ebebeb,
+				text-special: white,
+				alttext: #efefef
+		),
+		red: (
+				base: #90180b,
+				accent: #d65548,
+				background: black,
+				altbackground: #333,
+				text: white,
+				text-special: white,
+				alttext: white
+		),
+		orange: (
+				base: #c58000,
+				accent: #e67e22,
+				background: gray,
+				altbackground: #ecf0f1,
+				text: #111,
+				text-special: white,
+				alttext: #111
+		)
 ) !global;
 
 @function theme-color($theme, $type) {
 	$colors: map-get($theme-colors, $theme);
 	@return map-get($colors, $type);
 }
+
 @function theme-color-def($theme, $type, $default) {
 	$colors: map-get($theme-colors, $theme);
 	@if map_has_key($colors, $type) {
@@ -100,27 +100,27 @@ $theme-colors: (
 @mixin init-theme($theme-name) {
 	// Header, Footer and tab colours
 	$theme-color: theme-color($theme-name, base) !global;
-	
+
 	// Link colours, tab accents
 	$theme-accent: theme-color($theme-name, accent) !global;
 	$theme-color-links: theme-color($theme-name, accent) !global;
-	
+
 	// Page background
 	$theme-background: theme-color($theme-name, background) !global;
-	
+
 	// Section backgrounds
-	$theme-background-alt: theme-color-def($theme-name, altbackground, lighten($theme-color,20)) !global;
-	
+	$theme-background-alt: theme-color-def($theme-name, altbackground, lighten($theme-color, 20)) !global;
+
 	// Section text colour & stats colours
 	$theme-color-text: theme-color($theme-name, text) !global;
 	$theme-color-text-alt: theme-color-def($theme-name, alttext, darken($theme-color-text, 15)) !global;
-	
+
 	// Header, Footer and tab text colour
 	$theme-color-text-special: theme-color($theme-name, text-special) !global;
-	
+
 	// Colour calculations based off the base colour.
-	$theme-color-dark: darken($theme-color,15) !global;
-	$theme-color-light: lighten($theme-color,10) !global;
+	$theme-color-dark: darken($theme-color, 15) !global;
+	$theme-color-light: lighten($theme-color, 10) !global;
 }
 
 // DEFAULT STUBS - These are just for IDE to recognize they will exists - values dont matter
@@ -136,7 +136,7 @@ $theme-color-links: theme-color(blue1, accent) !default;
 $theme-background: theme-color(blue1, background) !default;
 
 // Section backgrounds
-$theme-background-alt: theme-color-def(blue1, altbackground, lighten($theme-color,20)) !default;
+$theme-background-alt: theme-color-def(blue1, altbackground, lighten($theme-color, 20)) !default;
 
 // Section text colour & stats colours
 $theme-color-text: theme-color(blue1, text) !default;
@@ -146,5 +146,5 @@ $theme-color-text-alt: theme-color-def(blue1, alttext, darken($theme-color-text,
 $theme-color-text-special: theme-color(blue1, text-special) !default;
 
 // Colour calculations based off the base colour.
-$theme-color-dark: darken($theme-color,15) !default;
-$theme-color-light: lighten($theme-color,10) !default;
+$theme-color-dark: darken($theme-color, 15) !default;
+$theme-color-light: lighten($theme-color, 10) !default;

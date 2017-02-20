@@ -8,6 +8,7 @@
  *
  * @license MIT
  */
+
 namespace Starlis\Timings;
 
 class Log {

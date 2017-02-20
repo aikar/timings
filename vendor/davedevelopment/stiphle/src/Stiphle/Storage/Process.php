@@ -3,6 +3,7 @@
  * @package    Stiphle
  * @subpackage Stiphle\Storage
  */
+
 namespace Stiphle\Storage;
 
 /**
@@ -19,96 +20,90 @@ namespace Stiphle\Storage;
  *
  * @author      Dave Marshall <david.marshall@atstsolutions.co.uk>
  */
-class Process implements StorageInterface
-{
-    /**
-     * @var int
-     */
-    protected $lockWaitTimeout = 1000;
+class Process implements StorageInterface {
+	/**
+	 * @var int
+	 */
+	protected $lockWaitTimeout = 1000;
 
-    /**
-     * @var array
-     */
-    protected $locked = array();
+	/**
+	 * @var array
+	 */
+	protected $locked = array();
 
-    /**
-     * @var array
-     */
-    protected $values = array();
+	/**
+	 * @var array
+	 */
+	protected $values = array();
 
-    /**
-     * Set lock wait timeout
-     *
-     * @param int $milliseconds
-     */
-    public function setLockWaitTimeout($milliseconds)
-    {
-        $this->lockWaitTimeout = $milliseconds;
-    }
+	/**
+	 * Set lock wait timeout
+	 *
+	 * @param int $milliseconds
+	 */
+	public function setLockWaitTimeout($milliseconds) {
+		$this->lockWaitTimeout = $milliseconds;
+	}
 
-    /**
-     * Lock 
-     *
-     * If we're using storage, we might have multiple requests coming in at
-     * once, so we lock the storage
-     *
-     * @return void
-     */
-    public function lock($key)
-    {
-        if (!isset($this->locked[$key])) {
-            $this->locked[$key] = false;
-        }
+	/**
+	 * Lock
+	 *
+	 * If we're using storage, we might have multiple requests coming in at
+	 * once, so we lock the storage
+	 *
+	 * @return void
+	 */
+	public function lock($key) {
+		if (!isset($this->locked[$key])) {
+			$this->locked[$key] = false;
+		}
 
-        $start = microtime(true);
-        while($this->locked[$key]) {
-            $passed = (microtime(true) - $start) * 1000;
-            if ($passed > $this->lockWaitTimeout) {
-                throw new LockWaitTimeoutException();
-            }
-        }
+		$start = microtime(true);
+		while ($this->locked[$key]) {
+			$passed = (microtime(true) - $start) * 1000;
+			if ($passed > $this->lockWaitTimeout) {
+				throw new LockWaitTimeoutException();
+			}
+		}
 
-        $this->locked[$key] = true;
+		$this->locked[$key] = true;
 
-        return;
-    }
+		return;
+	}
 
-    /**
-     * Unlock
-     *
-     * @return void
-     */
-    public function unlock($key)
-    {
-        $this->locked[$key] = false;
-    }
+	/**
+	 * Unlock
+	 *
+	 * @return void
+	 */
+	public function unlock($key) {
+		$this->locked[$key] = false;
+	}
 
-    /**
-     * Get 
-     *
-     * @param string $key
-     * @return int
-     */
-    public function get($key)
-    {
-        if (isset($this->values[$key])) {
-            return $this->values[$key];
-        }
+	/**
+	 * Get
+	 *
+	 * @param string $key
+	 * @return int
+	 */
+	public function get($key) {
+		if (isset($this->values[$key])) {
+			return $this->values[$key];
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    /**
-     * set 
-     *
-     * @param string $key
-     * @param mixed $value
-     * @return void
-     */
-    public function set($key, $value)
-    {
-        $this->values[$key] = $value;
-    }
+	/**
+	 * set
+	 *
+	 * @param string $key
+	 * @param mixed $value
+	 * @return void
+	 */
+	public function set($key, $value) {
+		$this->values[$key] = $value;
+	}
 }
 
 

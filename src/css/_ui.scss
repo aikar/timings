@@ -12,16 +12,20 @@
 	border: solid 1px silver;
 	border-top: none;
 }
+
 #content-top {
-	display:flex;
+	display: flex;
 	justify-content: space-between;
 }
+
 #server-info, #history-selector {
 	margin: 5px;
 }
+
 #server-info {
 	min-width: 400px
 }
+
 #header {
 	width: 100%;
 	background-color: $theme-color;
@@ -45,6 +49,7 @@
 		}
 	}
 }
+
 #header-right {
 	float: right;
 	margin: 10px;
@@ -87,6 +92,7 @@ a.normal {
 		cursor: pointer;
 	}
 }
+
 .tabs {
 	background-color: $theme-color-light;
 	height: 47px;
@@ -115,12 +121,15 @@ a.normal {
 		}
 	}
 }
+
 a {
 	color: $theme-color-links;
 }
+
 a:hover {
 	color: $theme-color-text;
 }
+
 @media (max-width: 1300px) {
 	.site-title {
 		display: block;
@@ -130,29 +139,30 @@ a:hover {
 	.themes, #header-right {
 		height: 110px;
 		width: 450px;
-		float:right;
+		float: right;
 		margin: 0 10px;
 	}
 }
+
 /* Small screens */
 @media (max-width: 1100px) {
 	#header {
-		height:auto;
-		padding-bottom:5px;
+		height: auto;
+		padding-bottom: 5px;
 		.site-title {
-			float:none;
-			top:initial;
-			transform:none;
-			width:100%;
-			margin:10px;
-			text-align:center;
-			position:initial;
+			float: none;
+			top: initial;
+			transform: none;
+			width: 100%;
+			margin: 10px;
+			text-align: center;
+			position: initial;
 		}
 	}
 	#header-right, .themes {
 		width: 100%;
 		margin: 5px 0;
-		float:none;
+		float: none;
 		text-align: center;
 	}
 	#content-top {
@@ -163,9 +173,9 @@ a:hover {
 			padding: 0;
 			#history-selector, #server-info {
 				margin: 0;
-				width:100%;
-				display:block;
-				float:none;
+				width: 100%;
+				display: block;
+				float: none;
 			}
 		}
 		#top-ad {
@@ -178,20 +188,20 @@ a:hover {
 			margin: 0;
 		}
 		#tab-bar .tabs {
-			height:auto;
+			height: auto;
 			.tab-title {
-				float:none;
+				float: none;
 			}
 		}
 	}
 	#footer {
-		height:auto;
-		line-height:initial;
-		padding:20px;
+		height: auto;
+		line-height: initial;
+		padding: 20px;
 		#footer-left, #footer-right {
-			width:100%;
-			display:block;
-			text-align:center;
+			width: 100%;
+			display: block;
+			text-align: center;
 		}
 	}
 }

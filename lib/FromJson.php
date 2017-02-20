@@ -8,6 +8,7 @@
  *
  * @license MIT
  */
+
 namespace Starlis\Timings;
 
 /**
@@ -161,6 +162,7 @@ trait FromJson {
 
 		return $data;
 	}
+
 	private static function executeCb($cb, $args) {
 		if (strpos($cb, "::") === false) {
 			$cb = __CLASS__ . "::$cb";;

@@ -12,11 +12,17 @@
  */
 
 export default class JsonTemplate {
-	_rawData;
+  _rawData;
 
-	async decode() { /* abstract - will be injected from JsonObject */}
-	rawData() { /* abstract - will be injected from JsonObject */}
-	init() { };
+  async decode() { /* abstract - will be injected from JsonObject */
+  }
 
-	constructor() {}
+  rawData() { /* abstract - will be injected from JsonObject */
+  }
+
+  init() {
+  };
+
+  constructor() {
+  }
 }

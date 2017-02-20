@@ -1,5 +1,5 @@
 @function grid-width($n) {
-  @return $n * $gw-column + ($n - 1) * $gw-gutter;
+	@return $n * $gw-column + ($n - 1) * $gw-gutter;
 }
 
 // The $gw-column and $gw-gutter variables must be defined in your base stylesheet to properly use the grid-width function.

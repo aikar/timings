@@ -15,24 +15,24 @@ import JsonTemplate from "./JsonTemplate";
 
 export default class TicksRecord extends JsonTemplate {
 
-	/**
-	 * @type int
-	 */
-	timedTicks;
-	/**
-	 * @type int
-	 */
-	playerTicks;
-	/**
-	 * @type int
-	 */
-	entityTicks;
-	/**
-	 * @type int
-	 */
-	activatedEntityTicks;
-	/**
-	 * @type int
-	 */
-	tileEntityTicks;
+  /**
+   * @type int
+   */
+  timedTicks;
+  /**
+   * @type int
+   */
+  playerTicks;
+  /**
+   * @type int
+   */
+  entityTicks;
+  /**
+   * @type int
+   */
+  activatedEntityTicks;
+  /**
+   * @type int
+   */
+  tileEntityTicks;
 }

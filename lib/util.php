@@ -8,6 +8,7 @@
  *
  * @license MIT
  */
+
 namespace Starlis\Timings;
 
 class util extends \utilphp\util {
@@ -164,6 +165,7 @@ class util extends \utilphp\util {
 	public static function esc($server) {
 		return htmlentities($server);
 	}
+
 	public static function mccolor($str) {
 		$input = nl2br(str_replace('&sect;', '§', str_replace('\\n', "\n", $str)));
 		$input = preg_replace("/§([0-9lmnora-f])+/", '|#§#|§$1', $input);

@@ -20,28 +20,28 @@ import ContentTop from "./ContentTop";
 import ErrorDisplay from "./ErrorDisplay";
 
 export default class ContentWrapper extends React.Component {
-	render() {
-		return <div>
-			<Header />
-			<div id="body-wrap">
-				<div className="dev-warning"><strong>Please do not ask for help with timings in #spigot</strong></div>
+  render() {
+    return <div>
+      <Header />
+      <div id="body-wrap">
+        <div className="dev-warning"><strong>Please do not ask for help with timings in #spigot</strong></div>
 
 
-				<ContentTop/>
+        <ContentTop/>
 
-				<div id="top-ad">
-					<Advertisement adId="top" />
-				</div>
+        <div id="top-ad">
+          <Advertisement adId="top"/>
+        </div>
 
-				<ErrorDisplay />
-				<Content/>
+        <ErrorDisplay />
+        <Content/>
 
-				<div id="bottom-ad">
-					<Advertisement adId="bottom" />
-				</div>
-			</div>
-			<div className="push" style={{clear: "left"}}></div>
-			<Footer/>
-		</div>;
-	}
+        <div id="bottom-ad">
+          <Advertisement adId="bottom"/>
+        </div>
+      </div>
+      <div className="push" style={{clear: "left"}}></div>
+      <Footer/>
+    </div>;
+  }
 }

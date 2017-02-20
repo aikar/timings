@@ -17,8 +17,8 @@ import ServerInfo from "./ServerInfo";
 import HistorySelector from "./HistorySelector";
 
 export default function ContentTop() {
-	return <div id="content-top" className="row-double">
-		<ServerInfo/>
-		<HistorySelector/>
-	</div>;
+  return <div id="content-top" className="row-double">
+    <ServerInfo/>
+    <HistorySelector/>
+  </div>;
 }

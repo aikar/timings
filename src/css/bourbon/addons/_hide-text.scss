@@ -1,10 +1,10 @@
 @mixin hide-text {
-  overflow: hidden;
+	overflow: hidden;
 
-  &:before {
-    content: "";
-    display: block;
-    width: 0;
-    height: 100%;
-  }
+	&:before {
+		content: "";
+		display: block;
+		width: 0;
+		height: 100%;
+	}
 }

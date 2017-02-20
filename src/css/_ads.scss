@@ -23,6 +23,7 @@
 		display: none;
 	}
 }
+
 .advert {
 	@include small-screen {
 		display: none;
@@ -45,6 +46,7 @@
 		height: 50px;
 	}
 }
+
 #ad-top-banner {
 	margin: 0 auto 15px;
 	text-align: center;

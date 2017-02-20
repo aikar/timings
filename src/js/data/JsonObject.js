@@ -27,53 +27,53 @@ import JsonTemplate from "./JsonTemplate";
 
 let decodedInstances = 0;
 const CLASS_MAP = {
-	1: MinuteReport,
-	2: Plugin,
-	3: Region,
-	4: TicksRecord,
-	5: TimingData,
-	6: TimingHandler,
-	7: TimingHistory,
-	8: TimingIdentity,
-	9: TimingsMap,
-	10: TimingsMaster,
-	11: TimingsSystemData,
-	12: World,
+  1: MinuteReport,
+  2: Plugin,
+  3: Region,
+  4: TicksRecord,
+  5: TimingData,
+  6: TimingHandler,
+  7: TimingHistory,
+  8: TimingIdentity,
+  9: TimingsMap,
+  10: TimingsMaster,
+  11: TimingsSystemData,
+  12: World,
 };
 export default class JsonObject {
 
-	/**
-	 * Asynchronously create a JSON represented object.
-	 *
-	 * Rebuilds JS Object into classes in a non recursive manner.
-	 * This is to avoid the risk of stack overflow issues as Timings
-	 * data can be very deep.
-	 *
-	 * As each data object is processed, its children are added onto the processing stack,
-	 * so only the root request does remapping operations.
-	 *
-	 * We build asynchronously to avoid browsers warning about long operations.
-	 *
-	 * @param data
-	 * @returns {*}
-	 */
-	static async newObject(data) {
-		const queue = [];
-		if (Array.isArray(data)) {
-			for (let i = 0; i < data.length; i++) {
-				const arrData = data[i];
-				data[i] = createObject(arrData);
-				initializeData(data[i], arrData, queue);
-			}
-			await processQueue(queue);
-			return data;
-		} else {
-			const obj = createObject(data);
-			initializeData(obj, data, queue);
-			await processQueue(queue);
-			return obj;
-		}
-	}
+  /**
+   * Asynchronously create a JSON represented object.
+   *
+   * Rebuilds JS Object into classes in a non recursive manner.
+   * This is to avoid the risk of stack overflow issues as Timings
+   * data can be very deep.
+   *
+   * As each data object is processed, its children are added onto the processing stack,
+   * so only the root request does remapping operations.
+   *
+   * We build asynchronously to avoid browsers warning about long operations.
+   *
+   * @param data
+   * @returns {*}
+   */
+  static async newObject(data) {
+    const queue = [];
+    if (Array.isArray(data)) {
+      for (let i = 0; i < data.length; i++) {
+        const arrData = data[i];
+        data[i] = createObject(arrData);
+        initializeData(data[i], arrData, queue);
+      }
+      await processQueue(queue);
+      return data;
+    } else {
+      const obj = createObject(data);
+      initializeData(obj, data, queue);
+      await processQueue(queue);
+      return obj;
+    }
+  }
 }
 
 /**
@@ -82,30 +82,30 @@ export default class JsonObject {
  * @returns {Promise.<void>}
  */
 async function processQueue(queue) {
-	let item;
-	while (item = queue.pop()) {
-		if (typeof item === 'function') {
-			item();
-			continue;
-		}
-		const thisIdx = item.idx;
-		if (!item.val) {
-			console.error(item);
-		}
-		const thisData = item.val[thisIdx];
-		if (thisData[':cls']) {
-			item.val[thisIdx] = createObject(thisData);
-			initializeData(item.val[thisIdx], thisData, queue);
-		} else if (typeof item.val[thisIdx] === 'object') {
-			queueDecodes(item.val[thisIdx], queue)
-		}
+  let item;
+  while (item = queue.pop()) {
+    if (typeof item === 'function') {
+      item();
+      continue;
+    }
+    const thisIdx = item.idx;
+    if (!item.val) {
+      console.error(item);
+    }
+    const thisData = item.val[thisIdx];
+    if (thisData[':cls']) {
+      item.val[thisIdx] = createObject(thisData);
+      initializeData(item.val[thisIdx], thisData, queue);
+    } else if (typeof item.val[thisIdx] === 'object') {
+      queueDecodes(item.val[thisIdx], queue)
+    }
 
 
-		if (decodedInstances++ > 10000 && queue.length) {
-			await waitFor(10);
-			decodedInstances = 0;
-		}
-	}
+    if (decodedInstances++ > 10000 && queue.length) {
+      await waitFor(10);
+      decodedInstances = 0;
+    }
+  }
 }
 
 /**
@@ -113,19 +113,19 @@ async function processQueue(queue) {
  * @returns {JsonTemplate}
  */
 async function decodeObj(tpl) {
-	const queue = [];
-	queue.push(() => tpl.init());
-	queueDecodes(tpl, queue);
-	await processQueue(queue);
-	delete tpl['decode'];
-	Object.defineProperty(tpl, 'decode', {
-		enumerable: false,
-		value: async function() {
-			return tpl;
-		}
-	});
+  const queue = [];
+  queue.push(() => tpl.init());
+  queueDecodes(tpl, queue);
+  await processQueue(queue);
+  delete tpl['decode'];
+  Object.defineProperty(tpl, 'decode', {
+    enumerable: false,
+    value: async function () {
+      return tpl;
+    }
+  });
 
-	return obj;
+  return obj;
 }
 
 /**
@@ -134,35 +134,35 @@ async function decodeObj(tpl) {
  * @param {QueuedDecode[]} queue
  */
 function initializeData(tpl, data, queue) {
-	const deferDecoding = tpl._deferDecoding;
-	delete tpl['_deferDecoding'];
-	delete tpl['decode'];
-	delete tpl['rawData'];
+  const deferDecoding = tpl._deferDecoding;
+  delete tpl['_deferDecoding'];
+  delete tpl['decode'];
+  delete tpl['rawData'];
 
-	Object.defineProperty(tpl, 'rawData', {
-		enumerable: false,
-		value: () => data
-	});
+  Object.defineProperty(tpl, 'rawData', {
+    enumerable: false,
+    value: () => data
+  });
 
-	for (const [key, val] of Object.entries(data)) {
-		tpl[key] = val;
-	}
+  for (const [key, val] of Object.entries(data)) {
+    tpl[key] = val;
+  }
 
-	if (deferDecoding) {
-		Object.defineProperty(tpl, 'decode', {
-			enumerable: false,
-			value: decodeObj.bind(tpl, tpl)
-		});
-	} else {
-		queue.push(() => tpl.init());
-		queueDecodes(tpl, queue);
-		Object.defineProperty(tpl, 'decode', {
-			enumerable: false,
-			value: async function() {
-				return tpl;
-			}
-		});
-	}
+  if (deferDecoding) {
+    Object.defineProperty(tpl, 'decode', {
+      enumerable: false,
+      value: decodeObj.bind(tpl, tpl)
+    });
+  } else {
+    queue.push(() => tpl.init());
+    queueDecodes(tpl, queue);
+    Object.defineProperty(tpl, 'decode', {
+      enumerable: false,
+      value: async function () {
+        return tpl;
+      }
+    });
+  }
 }
 
 /**
@@ -170,19 +170,19 @@ function initializeData(tpl, data, queue) {
  * @param {QueuedDecode[]} queue
  */
 function queueDecodes(obj, queue) {
-	if (Array.isArray(obj)) {
-		for (let i = 0; i < obj.length; i++) {
-			if (obj[i] && typeof obj[i] === 'object') {
-				queue.push({idx: i, val: obj});
-			}
-		}
-	} else {
-		for (const [key, val] of Object.entries(obj)) {
-			if (val && typeof val === 'object') {
-				queue.push({idx: key, val: obj});
-			}
-		}
-	}
+  if (Array.isArray(obj)) {
+    for (let i = 0; i < obj.length; i++) {
+      if (obj[i] && typeof obj[i] === 'object') {
+        queue.push({idx: i, val: obj});
+      }
+    }
+  } else {
+    for (const [key, val] of Object.entries(obj)) {
+      if (val && typeof val === 'object') {
+        queue.push({idx: key, val: obj});
+      }
+    }
+  }
 
 }
 /**
@@ -190,20 +190,20 @@ function queueDecodes(obj, queue) {
  * @returns {JsonTemplate}
  */
 function createObject(data) {
-	const id = data[':cls'];
-	const objCls = CLASS_MAP[id];
+  const id = data[':cls'];
+  const objCls = CLASS_MAP[id];
 
-	if (typeof id !== 'undefined' && typeof objCls === 'function') {
-		/**
-		 * @type JsonTemplate
-		 */
-		const tpl = new objCls;
-		delete data[':cls'];
+  if (typeof id !== 'undefined' && typeof objCls === 'function') {
+    /**
+     * @type JsonTemplate
+     */
+    const tpl = new objCls;
+    delete data[':cls'];
 
-		return tpl;
-	}
-	console.error("Unknown Class Data:", data);
-	throw new Error("Unknown class ID:" + id);
+    return tpl;
+  }
+  console.error("Unknown Class Data:", data);
+  throw new Error("Unknown class ID:" + id);
 }
 
 /**

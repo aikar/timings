@@ -15,13 +15,13 @@ import JsonTemplate from "./JsonTemplate";
 
 export default class World extends JsonTemplate {
 
-	/**
-	 * @type string
-	 */
-	worldName;
+  /**
+   * @type string
+   */
+  worldName;
 
-	/**
-	 * @type Region[]
-	 */
-	regions;
+  /**
+   * @type Region[]
+   */
+  regions;
 }

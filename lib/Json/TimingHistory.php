@@ -8,6 +8,7 @@
  *
  * @license MIT
  */
+
 namespace Starlis\Timings\Json;
 
 use Starlis\Timings\FromJson;

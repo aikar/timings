@@ -15,13 +15,13 @@ import JsonTemplate from "./JsonTemplate";
 
 export default class TimingsSystemData extends JsonTemplate {
 
-	timingcost;
-	name;
-	version;
-	arch;
-	totalmem;
-	usedmem;
-	maxmem;
-	cpu;
-	runtime;
+  timingcost;
+  name;
+  version;
+  arch;
+  totalmem;
+  usedmem;
+  maxmem;
+  cpu;
+  runtime;
 }

@@ -15,28 +15,28 @@ import JsonTemplate from "./JsonTemplate";
 
 export default class Region extends JsonTemplate {
 
-	/**
-	 * @type string
-	 */
-	regionId;
+  /**
+   * @type string
+   */
+  regionId;
 
-	/**
-	 * @type World
-	 */
-	world;
+  /**
+   * @type World
+   */
+  world;
 
-	chunkCount;
-	areaLocX;
-	areaLocZ;
+  chunkCount;
+  areaLocX;
+  areaLocZ;
 
-	/**
-	 * @type int[]
-	 */
-	tileEntities;
+  /**
+   * @type int[]
+   */
+  tileEntities;
 
-	/**
-	 * @type int[]
-	 */
-	entities;
+  /**
+   * @type int[]
+   */
+  entities;
 
 }

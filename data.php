@@ -8,9 +8,10 @@
  *  http://aikar.co
  *  http://starlis.com
  *
- *  @license MIT
+ * @license MIT
  *
  */
+
 namespace Starlis\Timings;
 
 require_once __DIR__ . "/init.php";

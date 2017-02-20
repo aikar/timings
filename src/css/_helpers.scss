@@ -28,13 +28,15 @@ $break-xlarge: 1381px;
 		@content;
 	}
 }
+
 @mixin less-than-large-screen() {
 	@media only screen and (max-width: $break-large - 1) {
 		@content;
 	}
 }
+
 @mixin less-than-xlarge-screen() {
-	@media only screen and (max-width: $break-xlarge ) {
+	@media only screen and (max-width: $break-xlarge) {
 		@content;
 	}
 }

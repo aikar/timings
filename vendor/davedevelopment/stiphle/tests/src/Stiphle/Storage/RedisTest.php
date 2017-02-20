@@ -5,44 +5,41 @@ namespace Stiphle\Storage;
 
 use \PHPUnit_Framework_TestCase;
 
-class RedisTest extends PHPUnit_Framework_TestCase
-{
-    public function testLockThrowsLockWaitTimeoutException()
-    {
-        $redisClient = $this->getMockBuilder(\Predis\Client::class)
-                            ->setMethods(['set'])
-                            ->getMock();
+class RedisTest extends PHPUnit_Framework_TestCase {
+	public function testLockThrowsLockWaitTimeoutException() {
+		$redisClient = $this->getMockBuilder(\Predis\Client::class)
+			->setMethods(['set'])
+			->getMock();
 
-        $redisClient->expects($this->at(0))
-            ->method('set')
-            ->with('dave::LOCK', 'LOCKED', 'PX', 3600, 'NX')
-            ->will($this->returnValue(1));
+		$redisClient->expects($this->at(0))
+			->method('set')
+			->with('dave::LOCK', 'LOCKED', 'PX', 3600, 'NX')
+			->will($this->returnValue(1));
 
-        $redisClient->expects($this->any())
-            ->method('set')
-            ->with('dave::LOCK', 'LOCKED', 'PX', 3600, 'NX')
-            ->will($this->returnValue(null));
+		$redisClient->expects($this->any())
+			->method('set')
+			->with('dave::LOCK', 'LOCKED', 'PX', 3600, 'NX')
+			->will($this->returnValue(null));
 
-        $this->expectException(\Stiphle\Storage\LockWaitTimeoutException::class);
+		$this->expectException(\Stiphle\Storage\LockWaitTimeoutException::class);
 
-        $storage = new Redis($redisClient);
+		$storage = new Redis($redisClient);
 
-        $storage->lock('dave');
-        $storage->lock('dave');
-    }
+		$storage->lock('dave');
+		$storage->lock('dave');
+	}
 
-    public function testStorageCanBeUnlocked()
-    {
-        $redisClient = $this->getMockBuilder(\Predis\Client::class)
-                            ->setMethods(['del'])
-                            ->getMock();
+	public function testStorageCanBeUnlocked() {
+		$redisClient = $this->getMockBuilder(\Predis\Client::class)
+			->setMethods(['del'])
+			->getMock();
 
-        $redisClient->expects($this->once())
-            ->method('del')
-            ->with('dave::LOCK');
+		$redisClient->expects($this->once())
+			->method('del')
+			->with('dave::LOCK');
 
-        $storage = new Redis($redisClient);
+		$storage = new Redis($redisClient);
 
-        $storage->unlock('dave');
-    }
+		$storage->unlock('dave');
+	}
 }

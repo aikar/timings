@@ -16,104 +16,106 @@ import sortBy from "lodash/sortBy";
 import ExpandControl from "./ExpandControl";
 
 export default class RegionsView extends React.Component {
-	static propTypes = RegionsView.props = {
-		children: React.PropTypes.any
-	};
+  static propTypes = RegionsView.props = {
+    children: React.PropTypes.any
+  };
 
-	static defaultProps = {};
+  static defaultProps = {};
 
-	constructor(props, ctx) {
-		super(props, ctx);
-	}
+  constructor(props, ctx) {
+    super(props, ctx);
+  }
 
-	render() {
+  render() {
 
-		const areaMap = [];
-		for (const /*TimingHistory*/history of data.timingsMaster.data) {
-			for (const /*World*/world of Object.values(history.worldData)) {
-				for (const /*Region*/region of Object.values(world.regions)) {
-					const worldName = world.worldName;
-					const areaId = region.regionId;
-					if (!areaMap[worldName]) {
-						areaMap[worldName] = {};
-					}
+    const areaMap = [];
+    for (const /*TimingHistory*/history of data.timingsMaster.data) {
+      for (const /*World*/world of Object.values(history.worldData)) {
+        for (const /*Region*/region of Object.values(world.regions)) {
+          const worldName = world.worldName;
+          const areaId = region.regionId;
+          if (!areaMap[worldName]) {
+            areaMap[worldName] = {};
+          }
 
-					if (!areaMap[worldName][areaId]) {
-						areaMap[worldName][areaId] = {
-							"count" : 0,
-							"world" : world.worldName,
-							"x"     : region.areaLocX,
-							"z"     : region.areaLocZ,
-							"e"     : {},
-							"ec"    : 0,
-							"te"    : {},
-							"tec"   : 0,
-						};
-					}
-					areaMap[worldName][areaId]['count'] += region.chunkCount;
-					for (const [id, count] of Object.entries(region.tileEntities)) {
-						if (!areaMap[worldName][areaId]['te'][id]) {
-							areaMap[worldName][areaId]['te'][id] = 0;
-						}
-						areaMap[worldName][areaId]['te'][id] += count;
-						areaMap[worldName][areaId]['tec'] += count;
-					}
-					for (const [id, count] of Object.entries(region.entities)) {
-						if (!areaMap[worldName][areaId]['e'][id]) {
-							areaMap[worldName][areaId]['e'][id] = 0;
-						}
-						areaMap[worldName][areaId]['e'][id] += count;
-						areaMap[worldName][areaId]['ec'] += count;
-					}
-				}
-			}
-		}
+          if (!areaMap[worldName][areaId]) {
+            areaMap[worldName][areaId] = {
+              "count": 0,
+              "world": world.worldName,
+              "x": region.areaLocX,
+              "z": region.areaLocZ,
+              "e": {},
+              "ec": 0,
+              "te": {},
+              "tec": 0,
+            };
+          }
+          areaMap[worldName][areaId]['count'] += region.chunkCount;
+          for (const [id, count] of Object.entries(region.tileEntities)) {
+            if (!areaMap[worldName][areaId]['te'][id]) {
+              areaMap[worldName][areaId]['te'][id] = 0;
+            }
+            areaMap[worldName][areaId]['te'][id] += count;
+            areaMap[worldName][areaId]['tec'] += count;
+          }
+          for (const [id, count] of Object.entries(region.entities)) {
+            if (!areaMap[worldName][areaId]['e'][id]) {
+              areaMap[worldName][areaId]['e'][id] = 0;
+            }
+            areaMap[worldName][areaId]['e'][id] += count;
+            areaMap[worldName][areaId]['ec'] += count;
+          }
+        }
+      }
+    }
 
-		return (<div>
-			<br /><h3>NOTICE: These are not chunks, counts are NOT EXACT!!!</h3>
-			These are summaries by region.
-			They are a representation of number of times seen within this selected history window.<br />
-			They will be much higher than seen in game. It is intended
-			to help you identify where the most TE/E's are.<br/>A region can cover 512 blocks around the coordinates.<br /><br />
-			{Object.entries(areaMap).map(([world, chunks]) => (
-				<WorldView key={world} world={world} chunks={sortBy(Object.entries(chunks), sortRegions)} />
-			))}
-		</div>);
-	}
+    return (<div>
+      <br /><h3>NOTICE: These are not chunks, counts are NOT EXACT!!!</h3>
+      These are summaries by region.
+      They are a representation of number of times seen within this selected history window.<br />
+      They will be much higher than seen in game. It is intended
+      to help you identify where the most TE/E's are.<br/>A region can cover 512 blocks around the
+      coordinates.<br /><br />
+      {Object.entries(areaMap).map(([world, chunks]) => (
+        <WorldView key={world} world={world} chunks={sortBy(Object.entries(chunks), sortRegions)}/>
+      ))}
+    </div>);
+  }
 }
 
 function sortRegions([areaId, region]) {
-	return region['tec'] + region['ec'];
+  return region['tec'] + region['ec'];
 }
 function sortCounts([id, count]) {
-	return count;
+  return count;
 }
 
 class WorldView extends React.Component {
-	constructor(props, ctx) {
-		super(props, ctx);
-		this.state = {
-			expanded: false
-		}
-	}
-	render() {
-		return <ExpandControl prefix={<h3>{this.props.world}</h3>}>{
-			() => (<div className="world-item">{this.props.chunks.map(([areaId, region]) => (
-				<div className="region-details" key={areaId}>
-					<strong>{region.x},{region.z}</strong> (Area Seen {region.count} times)<br/>
-					<ExpandControl prefix={<span>
+  constructor(props, ctx) {
+    super(props, ctx);
+    this.state = {
+      expanded: false
+    }
+  }
+
+  render() {
+    return <ExpandControl prefix={<h3>{this.props.world}</h3>}>{
+      () => (<div className="world-item">{this.props.chunks.map(([areaId, region]) => (
+        <div className="region-details" key={areaId}>
+          <strong>{region.x},{region.z}</strong> (Area Seen {region.count} times)<br/>
+          <ExpandControl prefix={<span>
 						<strong>Totals</strong>: {region.ec} Entities - {region.tec}
-						{'&mdash;'}
-						Tile Entities - Summary:
+            {'&mdash;'}
+            Tile Entities - Summary:
 					</span>}>{() => (
-						<div className="chunk-row full-timing-row">
-							{sortBy(Object.entries(Object.assign(region.te, region.e)), sortCounts).map(([type, count]) => (
-								<span key={type} className='indent full-child'><strong>{type}</strong>: {count}</span>
-							))}
-						</div>)}
-					</ExpandControl>
-				</div>))}
-			</div>)}
-		</ExpandControl>;
-	}
+            <div className="chunk-row full-timing-row">
+              {sortBy(Object.entries(Object.assign(region.te, region.e)), sortCounts).map(([type, count]) => (
+                <span key={type} className='indent full-child'><strong>{type}</strong>: {count}</span>
+              ))}
+            </div>)}
+          </ExpandControl>
+        </div>))}
+      </div>)}
+    </ExpandControl>;
+  }
 }

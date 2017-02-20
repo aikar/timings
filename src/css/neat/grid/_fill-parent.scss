@@ -1,7 +1,7 @@
 @mixin fill-parent() {
-  width: 100%;
+	width: 100%;
 
-  @if $border-box-sizing == false {
-    @include box-sizing(border-box);
-  }
+	@if $border-box-sizing == false {
+		@include box-sizing(border-box);
+	}
 }

@@ -15,41 +15,41 @@ import JsonTemplate from "./JsonTemplate";
 
 export default class TimingHistory extends JsonTemplate {
 
-	/**
-	 * @type int
-	 */
-	id;
+  /**
+   * @type int
+   */
+  id;
 
-	/**
-	 */
-	start;
+  /**
+   */
+  start;
 
-	/**
-	 * @type int
-	 */
-	end;
+  /**
+   * @type int
+   */
+  end;
 
-	/**
-	 * @type int
-	 */
-	totalTicks;
+  /**
+   * @type int
+   */
+  totalTicks;
 
-	/**
-	 * @type int
-	 */
-	totalTime;
+  /**
+   * @type int
+   */
+  totalTime;
 
-	/**
-	 * @type TimingHandler[]
-	 */
-	handlers;
+  /**
+   * @type TimingHandler[]
+   */
+  handlers;
 
-	/**
-	 * @type World[]
-	 */
-	worldData;
-	/**
-	 * @type MinuteReport[]
-	 */
-	minuteReports;
+  /**
+   * @type World[]
+   */
+  worldData;
+  /**
+   * @type MinuteReport[]
+   */
+  minuteReports;
 }

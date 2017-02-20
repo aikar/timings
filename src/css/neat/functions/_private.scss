@@ -1,125 +1,115 @@
 // Checks if a number is even
 @function is-even($int) {
-  @if $int%2 == 0   {
-    @return true;
-  }
+	@if $int%2 == 0 {
+		@return true;
+	}
 
-  @return false;
+	@return false;
 }
 
 // Checks if an element belongs to a list
 @function belongs-to($tested-item, $list) {
-  @each $item in $list {
-    @if $item == $tested-item {
-      @return true;
-    }
-  }
+	@each $item in $list {
+		@if $item == $tested-item {
+			@return true;
+		}
+	}
 
-  @return false;
+	@return false;
 }
 
 // Contains display value
 @function contains-display-value($query) {
-  @if belongs-to(table, $query) or belongs-to(block, $query) or belongs-to(inline-block, $query) or belongs-to(inline, $query) {
-    @return true;
-  }
+	@if belongs-to(table, $query) or belongs-to(block, $query) or belongs-to(inline-block, $query) or belongs-to(inline, $query) {
+		@return true;
+	}
 
-  @return false;
+	@return false;
 }
 
 // Parses the first argument of span-columns()
 @function container-span($span: $span) {
-  @if length($span) == 3 {
-    $container-columns: nth($span, 3);
-    @return $container-columns;
-  }
-
-  @else if length($span) == 2 {
-    $container-columns: nth($span, 2);
-    @return $container-columns;
-  }
-
-  @else {
-    @return $grid-columns;
-  }
+	@if length($span) == 3 {
+		$container-columns: nth($span, 3);
+		@return $container-columns;
+	} @else if length($span) == 2 {
+		$container-columns: nth($span, 2);
+		@return $container-columns;
+	} @else {
+		@return $grid-columns;
+	}
 }
 
 @function container-shift($shift: $shift) {
-  $parent-columns: $grid-columns !global !default;
+	$parent-columns: $grid-columns !global !default;
 
-  @if length($shift) == 3 {
-    $container-columns: nth($shift, 3);
-    @return $container-columns;
-  }
-
-  @else if length($shift) == 2 {
-    $container-columns: nth($shift, 2);
-    @return $container-columns;
-  }
-
-  @else {
-    @return $parent-columns;
-  }
+	@if length($shift) == 3 {
+		$container-columns: nth($shift, 3);
+		@return $container-columns;
+	} @else if length($shift) == 2 {
+		$container-columns: nth($shift, 2);
+		@return $container-columns;
+	} @else {
+		@return $parent-columns;
+	}
 }
 
 // Generates a striped background
 @function gradient-stops($grid-columns, $color: $visual-grid-color) {
-  $transparent: rgba(0,0,0,0);
+	$transparent: rgba(0, 0, 0, 0);
 
-  $column-width: flex-grid(1, $grid-columns);
-  $gutter-width: flex-gutter($grid-columns);
-  $column-offset: $column-width;
+	$column-width: flex-grid(1, $grid-columns);
+	$gutter-width: flex-gutter($grid-columns);
+	$column-offset: $column-width;
 
-  $values: ($transparent 0, $color 0);
+	$values: ($transparent 0, $color 0);
 
-  @for $i from 1 to $grid-columns*2 {
-    @if is-even($i) {
-      $values: append($values, $transparent $column-offset, comma);
-      $values: append($values, $color $column-offset, comma);
-      $column-offset: $column-offset + $column-width;
-    }
+	@for $i from 1 to $grid-columns*2 {
+		@if is-even($i) {
+			$values: append($values, $transparent $column-offset, comma);
+			$values: append($values, $color $column-offset, comma);
+			$column-offset: $column-offset + $column-width;
+		} @else {
+			$values: append($values, $color $column-offset, comma);
+			$values: append($values, $transparent $column-offset, comma);
+			$column-offset: $column-offset + $gutter-width;
+		}
+	}
 
-    @else {
-      $values: append($values, $color $column-offset, comma);
-      $values: append($values, $transparent $column-offset, comma);
-      $column-offset: $column-offset + $gutter-width;
-    }
-  }
-
-  @return $values;
+	@return $values;
 }
 
 // Layout direction
 @function get-direction($layout, $default) {
-  $direction: nil;
-  
-  @if $layout == LTR or $layout == RTL {
-    $direction: direction-from-layout($layout);
-  } @else {
-    $direction: direction-from-layout($default);
-  }
+	$direction: nil;
 
-  @return $direction;
+	@if $layout == LTR or $layout == RTL {
+		$direction: direction-from-layout($layout);
+	} @else {
+		$direction: direction-from-layout($default);
+	}
+
+	@return $direction;
 }
 
 @function direction-from-layout($layout) {
-  $direction: nil;
+	$direction: nil;
 
-  @if $layout == LTR {
-    $direction: right;
-  } @else {
-    $direction: left;
-  }
+	@if $layout == LTR {
+		$direction: right;
+	} @else {
+		$direction: left;
+	}
 
-  @return $direction;
+	@return $direction;
 }
 
 @function get-opposite-direction($direction) {
-  $opposite-direction: left;
+	$opposite-direction: left;
 
-  @if $direction == left {
-    $opposite-direction: right;
-  }
+	@if $direction == left {
+		$opposite-direction: right;
+	}
 
-  @return $opposite-direction;
+	@return $opposite-direction;
 }

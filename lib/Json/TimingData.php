@@ -8,6 +8,7 @@
  *
  * @license MIT
  */
+
 namespace Starlis\Timings\Json;
 
 use Starlis\Timings\FromJson;
@@ -45,7 +46,7 @@ class TimingData {
 
 	/**
 	 * @param                $key
-	 * @param TimingData     $value
+	 * @param TimingData $value
 	 * @param FromJsonParent $parent
 	 *
 	 * @return mixed

@@ -37,9 +37,11 @@ hr {
 	margin: 0;
 	clear: both;
 }
+
 section {
 	position: relative;
 }
+
 #top-ad {
 	text-align: center;
 }
@@ -47,12 +49,14 @@ section {
 #content, #tab-bar {
 	min-height: 300px;
 }
+
 .dev-warning {
 	padding: 5px;
 	text-align: center;
 	background-color: $theme-color-light;
 	color: $theme-color-text-special;
 }
+
 #loading-indicator-overlay {
 	background: rgba(0, 0, 0, .5);
 	z-index: 2000;
@@ -67,20 +71,24 @@ section {
 		top: 130px;
 	}
 }
+
 .region-details {
 	clear: left;
 	padding-left: 20px;
 	padding-top: 10px;
 }
+
 .world-item {
 	clear: left;
 }
+
 .sk-three-bounce > div {
 	background-color: $theme-accent;
 	margin: 15px;
 	width: 50px;
 	height: 50px;
 }
+
 #show-more {
 
 	padding: 20px;
@@ -91,9 +99,11 @@ section {
 	border: 3px solid $theme-accent;
 	background: darken($theme-background-alt, 10);
 }
+
 #show-more:hover {
 	background: $theme-background-alt;
 }
+
 #controls {
 
 	float: right;
@@ -134,6 +144,7 @@ section {
 	overflow: hidden;
 
 }
+
 .timing-row {
 
 	display: table-cell;
@@ -187,18 +198,22 @@ section {
 		color: $theme-color-text-alt;
 	}
 }
+
 .expandable {
 	display: block;
 	clear: left;
 	overflow: hidden;
 }
+
 .expand-prefix, .expand-arrows {
 	cursor: pointer;
 	float: left;
 }
+
 .expand-content {
 	clear: left;
 }
+
 .full-timing-row {
 	width: 100%;
 
@@ -234,7 +249,6 @@ section {
 		cursor: pointer;
 	}
 
-
 	.expand-control {
 		cursor: pointer;
 		display: inline-block;
@@ -265,21 +279,21 @@ section {
 		height: 40px;
 		float: left;
 		cursor: pointer;
-		border:solid 1px white;
-		white-space:nowrap;
-		overflow:hidden;
+		border: solid 1px white;
+		white-space: nowrap;
+		overflow: hidden;
 		.theme-base, .theme-bg, .theme-accent {
-			width:100%;
-			display:block;
+			width: 100%;
+			display: block;
 		}
 		.theme-bg {
-			height:65%;
+			height: 65%;
 		}
 		.theme-accent {
-			height:10%;
+			height: 10%;
 		}
 		.theme-base {
-			height:25%;
+			height: 25%;
 		}
 	}
 	@each $theme, $colors in $theme-colors {
@@ -294,7 +308,7 @@ section {
 				background: map-get($colors, base);
 			}
 			.theme-bg, .theme-accent, .theme-base {
-				border-right: 5px solid lighten(map-get($colors, base),10);
+				border-right: 5px solid lighten(map-get($colors, base), 10);
 			}
 		}
 	}
@@ -304,9 +318,11 @@ section {
 .warn-high {
 	color: red;
 }
+
 .warn-medium {
 	color: #ff7820;
 }
+
 .warn-low {
 	color: #ffbf2e;
 }

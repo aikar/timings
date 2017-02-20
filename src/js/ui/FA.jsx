@@ -14,14 +14,14 @@
 import React from "react";
 
 export default function FA(props) {
-	return props.onClick ?
-		<i className={'fa fa-fw ' + props.class + ' fa-' + props.icon}
-		   onClick={props.onClick} />
-		:
-		<i className={'fa fa-fw ' + props.class + ' fa-' + props.icon} />;
+  return props.onClick ?
+    <i className={'fa fa-fw ' + props.class + ' fa-' + props.icon}
+       onClick={props.onClick}/>
+    :
+    <i className={'fa fa-fw ' + props.class + ' fa-' + props.icon}/>;
 };
 FA.propTypes = {
-	children: React.PropTypes.any,
-	class: React.PropTypes.string,
-	icon: React.PropTypes.string.isRequired
+  children: React.PropTypes.any,
+  class: React.PropTypes.string,
+  icon: React.PropTypes.string.isRequired
 };

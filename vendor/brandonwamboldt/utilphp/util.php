@@ -7,4 +7,5 @@ require __DIR__ . '/src/utilphp/util.php';
  *
  * @author Brandon Wamboldt <brandon.wamboldt@gmail.com>
  */
-class util extends \utilphp\util { }
+class util extends \utilphp\util {
+}

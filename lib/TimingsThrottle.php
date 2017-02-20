@@ -8,7 +8,7 @@
  *  http://aikar.co
  *  http://starlis.com
  *
- *  @license MIT
+ * @license MIT
  *
  */
 
@@ -32,7 +32,7 @@ class TimingsThrottle extends LeakyBucket {
 	public function throttle($key, $limit, $milliseconds) {
 
 		$key = $this->getStorageKey($key, $limit, $milliseconds);
-		$wait     = 0;
+		$wait = 0;
 		$newRatio = $this->getNewRatio($key, $limit, $milliseconds);
 		if ($newRatio > $milliseconds) {
 			$wait = ceil($newRatio - $milliseconds);

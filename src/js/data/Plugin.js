@@ -15,9 +15,9 @@ import JsonTemplate from "./JsonTemplate";
 
 export default class Plugin extends JsonTemplate {
 
-	name;
-	version;
-	description;
-	website;
-	authors;
+  name;
+  version;
+  description;
+  website;
+  authors;
 }

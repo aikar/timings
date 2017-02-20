@@ -5,6 +5,8 @@
 //           @include font-feature-settings("ss01", "ss02");
 
 @mixin font-feature-settings($settings...) {
-  @if length($settings) == 0 { $settings: none; }
-  @include prefixer(font-feature-settings, $settings, webkit moz ms spec);
+	@if length($settings) == 0 {
+		$settings: none;
+	}
+	@include prefixer(font-feature-settings, $settings, webkit moz ms spec);
 }

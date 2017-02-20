@@ -1,15 +1,15 @@
 <?php
 /**
  * Copyright (c) (2016) - Aikar's Minecraft Timings Parser
- *  
+ *
  *  Written by Aikar <aikar@aikar.co>
  *    + Contributors (See AUTHORS)
- *  
+ *
  *  http://aikar.co
  *  http://starlis.com
- *  
- *  @license MIT
- *  
+ *
+ * @license MIT
+ *
  */
 
 
@@ -17,6 +17,7 @@ namespace Starlis\Timings;
 
 class Daemon {
 	private static $lockFile = TMP_PATH . "/daemon.pid";
+
 	public static function startDaemon() {
 		if (!self::obtainLock()) {
 			echo "Could not obtain lock\n";
@@ -37,7 +38,7 @@ class Daemon {
 		$lockFile = self::$lockFile;
 
 		if (is_readable($lockFile)) {
-			$pid = (int) trim(file_get_contents($lockFile));
+			$pid = (int)trim(file_get_contents($lockFile));
 			if (posix_kill($pid, 0)) {
 				if (time() - filemtime($lockFile) >= 300) {
 					echo "dead pid: $pid\n";

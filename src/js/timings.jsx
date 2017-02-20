@@ -19,11 +19,11 @@ import ReactDOM from "react-dom";
 import ContentWrapper from "./ui/ContentWrapper";
 import "./globals";
 
-(function(doc,script,el,first){
+(function (doc, script, el, first) {
   window['GoogleAnalyticsObject'] = 'ga';
   window['ga'] = window['ga'] || function () {
       (window['ga'].q = window['ga'].q || []).push(arguments)
-  };
+    };
   window['ga'].l = 1 * new Date();
   el = doc.createElement(script);
   first = doc.getElementsByTagName(script)[0];
@@ -36,7 +36,7 @@ ga('create', 'UA-6236119-3', 'auto');
 ga('send', 'pageview');
 
 
-(function() {
-	ReactDOM.render(<ContentWrapper />, document.getElementById("wrapper"));
-	return data.loadData();
+(function () {
+  ReactDOM.render(<ContentWrapper />, document.getElementById("wrapper"));
+  return data.loadData();
 })();

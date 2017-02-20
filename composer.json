@@ -1,23 +1,23 @@
 {
-	"name": "starlis/timings",
-	"description": "Aikar's Timings Parser",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Aikar",
-			"email": "aikar@aikar.co"
-		}
-	],
-	"require": {
-		"brandonwamboldt/utilphp": "^1.1",
-		"davedevelopment/stiphle": "dev-master"
-	},
-	"autoload": {
-		"psr-4": {
-			"Starlis\\Timings\\": "lib/"
-		}
-	},
-	"config": {
-		"autoloader-suffix": "TimingsClassLoader"
-	}
+    "name": "starlis/timings",
+    "description": "Aikar's Timings Parser",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Aikar",
+            "email": "aikar@aikar.co"
+        }
+    ],
+    "require": {
+        "brandonwamboldt/utilphp": "^1.1",
+        "davedevelopment/stiphle": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Starlis\\Timings\\": "lib/"
+        }
+    },
+    "config": {
+        "autoloader-suffix": "TimingsClassLoader"
+    }
 }

@@ -14,27 +14,27 @@
 import JsonTemplate from "./JsonTemplate";
 
 export default class MinuteReport extends JsonTemplate {
-	/**
-	 * @type int
-	 */
-	time;
+  /**
+   * @type int
+   */
+  time;
 
-	/**
-	 * @type float
-	 */
-	tps;
+  /**
+   * @type float
+   */
+  tps;
 
-	/**
-	 * @type float
-	 */
-	avgPing;
+  /**
+   * @type float
+   */
+  avgPing;
 
-	/**
-	 * @type TimingData
-	 */
-	fullServerTick;
-	/**
-	 * @type TicksRecord
-	 */
-	ticks;
+  /**
+   * @type TimingData
+   */
+  fullServerTick;
+  /**
+   * @type TicksRecord
+   */
+  ticks;
 }

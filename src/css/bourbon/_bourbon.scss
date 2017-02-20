@@ -2,7 +2,6 @@
 @import "settings/prefixer";
 @import "settings/px-to-em";
 @import "settings/asset-pipeline";
-
 // Custom Helpers
 @import "helpers/convert-units";
 @import "helpers/gradient-positions-parser";
@@ -17,7 +16,6 @@
 @import "helpers/render-gradients";
 @import "helpers/shape-size-stripper";
 @import "helpers/str-to-num";
-
 // Custom Functions
 @import "functions/assign";
 @import "functions/color-lightness";
@@ -31,7 +29,6 @@
 @import "functions/tint-shade";
 @import "functions/transition-property-name";
 @import "functions/unpack";
-
 // CSS3 Mixins
 @import "css3/animation";
 @import "css3/appearance";
@@ -58,7 +55,6 @@
 @import "css3/transition";
 @import "css3/user-select";
 @import "css3/placeholder";
-
 // Addons & other mixins
 @import "addons/button";
 @import "addons/clearfix";
@@ -74,6 +70,5 @@
 @import "addons/timing-functions";
 @import "addons/triangle";
 @import "addons/word-wrap";
-
 // Soon to be deprecated Mixins
 @import "bourbon-deprecated-upcoming";

@@ -18,43 +18,44 @@ import flow from "lodash/flow";
 import _fp from "lodash/fp";
 
 export default class TimingsView extends React.Component {
-	static propTypes = TimingsView.props = {
-		children: React.PropTypes.any,
-	};
+  static propTypes = TimingsView.props = {
+    children: React.PropTypes.any,
+  };
 
-	constructor(props, ctx) {
-		super(props, ctx);
-		this.state = {
-			limit: 40
-		};
-		data.provideTo(this);
-	}
+  constructor(props, ctx) {
+    super(props, ctx);
+    this.state = {
+      limit: 40
+    };
+    data.provideTo(this);
+  }
 
-	render() {
-		if (!this.state.timingHistoryReady) {
-			return null;
-		}
+  render() {
+    if (!this.state.timingHistoryReady) {
+      return null;
+    }
 
-		let children = Object.values(data.handlerData);
-		const propTotal = prop('total');
-		const propCount = prop('count');
+    let children = Object.values(data.handlerData);
+    const propTotal = prop('total');
+    const propCount = prop('count');
 
-		const filter = lagFilter(propTotal, propCount, true);
+    const filter = lagFilter(propTotal, propCount, true);
 
-		children = flow(
-			_fp.filter(filter),
-			_fp.sortBy(sortType)
-		)(children).reverse();
-		const count = children.length;
+    children = flow(
+      _fp.filter(filter),
+      _fp.sortBy(sortType)
+    )(children).reverse();
+    const count = children.length;
 
-		children = children.slice(0, this.state.limit);
-		return (
-			<div>
-				{children.map((handler) => {
-					return <TimingRow timingRowDepth={0} key={handler.id} handler={handler} />
-				})}
-				{count > this.state.limit ? <div id="show-more" onClick={()=> this.setState({limit: this.state.limit + 20})}>Show More</div> : null}
-			</div>
-		);
-	}
+    children = children.slice(0, this.state.limit);
+    return (
+      <div>
+        {children.map((handler) => {
+          return <TimingRow timingRowDepth={0} key={handler.id} handler={handler}/>
+        })}
+        {count > this.state.limit ?
+          <div id="show-more" onClick={() => this.setState({limit: this.state.limit + 20})}>Show More</div> : null}
+      </div>
+    );
+  }
 }

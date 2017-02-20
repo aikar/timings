@@ -3,6 +3,7 @@
  * @package    Stiphle
  * @subpackage Stiphle\Throttle\LeakyBucket\Storage
  */
+
 namespace Stiphle\Storage;
 
 /**
@@ -20,47 +21,46 @@ namespace Stiphle\Storage;
  *
  * @author      Dave Marshall <david.marshall@atstsolutions.co.uk>
  */
-interface StorageInterface
-{
-    /**
-     * Set lock wait timout
-     *
-     * @param int $milliseconds
-     */
-    public function setLockWaitTimeout($milliseconds);
+interface StorageInterface {
+	/**
+	 * Set lock wait timout
+	 *
+	 * @param int $milliseconds
+	 */
+	public function setLockWaitTimeout($milliseconds);
 
-    /**
-     * Lock 
-     *
-     * We might have multiple requests coming in at once, so we lock the storage
-     *
-     * @return void
-     */
-    public function lock($key);
+	/**
+	 * Lock
+	 *
+	 * We might have multiple requests coming in at once, so we lock the storage
+	 *
+	 * @return void
+	 */
+	public function lock($key);
 
-    /**
-     * Unlock
-     *
-     * @return void
-     */
-    public function unlock($key);
+	/**
+	 * Unlock
+	 *
+	 * @return void
+	 */
+	public function unlock($key);
 
-    /**
-     * Get 
-     *
-     * @param string $key
-     * @return int
-     */
-    public function get($key);
+	/**
+	 * Get
+	 *
+	 * @param string $key
+	 * @return int
+	 */
+	public function get($key);
 
-    /**
-     * set last modified
-     *
-     * @param string $key
-     * @param mixed $value
-     * @return void
-     */
-    public function set($key, $value);
+	/**
+	 * set last modified
+	 *
+	 * @param string $key
+	 * @param mixed $value
+	 * @return void
+	 */
+	public function set($key, $value);
 }
 
 

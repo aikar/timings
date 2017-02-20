@@ -15,41 +15,41 @@ import JsonTemplate from "./JsonTemplate";
 
 export default class TimingsMaster extends JsonTemplate {
 
-	version;
-	maxplayers;
-	start;
-	end;
-	sampletime;
+  version;
+  maxplayers;
+  start;
+  end;
+  sampletime;
 
-	// <privacy false>
-	server;
-	motd;
-	onlinemode;
-	icon;
-	// </privacy false>
+  // <privacy false>
+  server;
+  motd;
+  onlinemode;
+  icon;
+  // </privacy false>
 
-	/**
-	 * @type TimingsSystemData
-	 */
-	system;
+  /**
+   * @type TimingsSystemData
+   */
+  system;
 
-	/**
-	 * @type TimingsMap
-	 */
-	idmap;
+  /**
+   * @type TimingsMap
+   */
+  idmap;
 
-	/**
-	 * @type Plugin[]
-	 */
-	plugins;
+  /**
+   * @type Plugin[]
+   */
+  plugins;
 
-	/**
-	 * @type TimingHistory[]
-	 */
-	data;
+  /**
+   * @type TimingHistory[]
+   */
+  data;
 
-	/**
-	 * @type array[]
-	 */
-	config;
+  /**
+   * @type array[]
+   */
+  config;
 }
