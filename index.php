@@ -21,6 +21,7 @@ foreach ($assets as $k => $asset) {
 		$assets[$k][$id] = "$f?$stamp";
 	}
 }
+
 ?>
 <!DOCTYPE html>
 <html>
