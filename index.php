@@ -38,8 +38,10 @@ foreach ($assets as $k => $asset) {
 		$cookie = basename($_COOKIE['timings-theme']);
 		if (file_exists(ROOT_DIR . "/src/css/themes/$cookie.scss")) $theme = $cookie;
 	}
+	global $ini;
 	?>
 	<script type="text/javascript">TIMINGS_THEME =<?=json_encode($theme);?>;</script>
+	<script type="text/javascript">CACHE_VER =<?=json_encode($ini['cache_ver']);?>;</script>
 	<link href="<?= htmlentities($assets["timings"]['css']) ?>" rel="stylesheet"/>
 	<link href="<?= htmlentities($assets["timings-theme-{$theme}"]['css']) ?>" rel="stylesheet"/>
 	<meta name="robots" content="noindex,nofollow">

@@ -18,15 +18,27 @@ import clone from "clone";
 import JsonObject from "./data/JsonObject";
 import _ from "lodash";
 import TimingData from "./data/TimingData";
-import lscache from "lscache";
+import lscache from "ls-cache";
 
 let dataReadyCB = [];
 let dataFailedCB = [];
 
+lscache.enableWarnings();
+const lastCacheVer = lscache.get("cache-ver");
+if (lastCacheVer !== CACHE_VER) {
+  lscache.flushRecursive();
+}
+lscache.set("cache-ver", CACHE_VER);
+
+const TTL = 60*24*3;
+const cache = lscache.createBucket(query.get('id') || "demo");
 
 const data = {
   first: 0,
-  history: {},
+  /**
+   * @type TimingHistory[]
+   */
+  history: [],
   ranges: [],
   start: 0,
   end: 3,
@@ -88,8 +100,11 @@ const scaleMap = data.scaleMap = {
 data.labels = [];
 data.loadData = async function loadData() {
   try {
-    // TODO: lscache root data
-    const [body] = await getData();
+    const cachedBody = cache.get("root");
+    const [body] = (cachedBody && [cachedBody]) || await getData();
+    if (!cachedBody) {
+      cache.set("root", body, TTL);
+    }
 
     for (const [key, value] of Object.entries(body)) {
       data[key] = value;
@@ -195,7 +210,13 @@ function scale(key, count) {
 
 let requestId = 0;
 async function loadTimingData() {
-  // TODO: lscache history segments
+  for (const history of data.history) {
+    history.handlers = cache.get("history_" + history.id);
+    if (history.handlers) {
+      history.handlers = await JsonObject.newObject(history.handlers);
+    }
+  }
+
   const neededIds = data.history
     .filter((h) => !h.handlers && h.id >= data.start && h.id <= data.end)
     .map((h) => h.id);
@@ -210,6 +231,7 @@ async function loadTimingData() {
     });
 
     for (const [key, history] of Object.entries(body.history)) {
+      cache.set("history_" + key, history, TTL);
       data.history[key].handlers = await JsonObject.newObject(history);
     }
     if (requestId !== thisRequest) {
