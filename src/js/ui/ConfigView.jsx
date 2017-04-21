@@ -33,7 +33,9 @@ export default class ConfigView extends React.Component {
     }
 
     return (
-      <div>{Object.entries(data.timingsMaster.config).map(([type, config]) => (
+      <div>
+        <TreeNode keyname="System Config" value={data.timingsMaster.system} />
+        {Object.entries(data.timingsMaster.config).map(([type, config]) => (
         <TreeNode key={type} depth={0} keyname={type} value={config}/>
       ))}
       </div>
@@ -62,6 +64,9 @@ class TreeNode extends React.Component {
     const style = {
       marginLeft: this.props.depth ? 25 : 10,
     };
+    if (val === null) {
+      return null;
+    }
     if (Array.isArray(val)) {
       return <div style={style}>
         <span className="key">{key}:&nbsp;</span>
@@ -70,13 +75,13 @@ class TreeNode extends React.Component {
     } else if (typeof val === 'object') {
       return <div style={style}>
         <ExpandControl prefix={<span className="key">{key}: </span>}>{() => (<span>
-					{' {'}<div>
-            {Object.entries(val).map(([k, v]) => (<div key={k}>
+          {' {'}<div>
+            {Object.entries(val).map(([k, v]) => (val === null ? null : <div key={k}>
                 <TreeNode depth={this.props.depth + 1} keyname={k} value={v}/>
               </div>
             ))}
             </div>{'}'}
-				</span>)}</ExpandControl>
+        </span>)}</ExpandControl>
       </div>;
     } else {
       return <div style={style}>{key ? <span className="key">{key}:&nbsp;</span> : null}<span>{String(val)}</span></div>
