@@ -19,10 +19,11 @@ class TimingsSystemData {
 	public $timingcost;
 	public $name;
 	public $version;
+	public $jvmversion;
 	public $arch;
-	public $totalmem;
-	public $usedmem;
 	public $maxmem;
 	public $cpu;
 	public $runtime;
+	public $flags;
+	public $gc;
 }

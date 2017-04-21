@@ -18,10 +18,11 @@ export default class TimingsSystemData extends JsonTemplate {
   timingcost;
   name;
   version;
+  jvmversion;
   arch;
-  totalmem;
-  usedmem;
   maxmem;
   cpu;
   runtime;
+  flags;
+  gc;
 }
