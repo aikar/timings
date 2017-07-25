@@ -50,4 +50,9 @@ if (!empty($ini['custom_security'])) {
 	require_once $ini['custom_security'];
 }
 libxml_disable_entity_loader(true);
+
+if (empty($ini["storage_path"])) {
+	$ini["storage_path"] = $ini['tmp_path'];
+}
 define('TMP_PATH', $ini['tmp_path']);
+define('STORAGE_PATH', $ini['storage_path']);

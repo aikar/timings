@@ -24,11 +24,14 @@ class Cache {
 	 * @return null|string
 	 */
 	public static function get($key, $type = 'timings') {
-		$file = self::getFile($key, $type);
+		$file = self::getFile($key, $type, STORAGE_PATH);
+		if (STORAGE_PATH !== TMP_PATH && !file_exists($file)) {
+			$file = self::getFile($key, $type, TMP_PATH);
+		}
 		if (!file_exists($file)) {
 			$file = self::getFile($key, $type, ROOT_DIR);
 		}
-		if (file_exists($file)) {
+		if ($file && file_exists($file)) {
 			if (is_writable($file)) {
 				touch($file);
 			}
@@ -46,9 +49,10 @@ class Cache {
 	 * @param        $key
 	 * @param        $data
 	 * @param string $type
+	 * @param bool $useStorage
 	 */
-	public static function put($key, $data, $type = 'timings') {
-		$file = self::getFile($key, $type);
+	public static function put($key, $data, $type = 'timings', $useStorage = true) {
+		$file = self::getFile($key, $type, $useStorage ? STORAGE_PATH : TMP_PATH);
 		file_put_contents($file, gzencode($data));
 	}
 
@@ -75,7 +79,7 @@ class Cache {
 		$data = serialize($data);
 		if ($data) {
 			global $ini;
-			self::put($key, $data, "objectcache" . $ini['cache_ver']);
+			self::put($key, $data, "objectcache" . $ini['cache_ver'], false);
 		}
 	}
 
