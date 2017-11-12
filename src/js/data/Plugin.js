@@ -11,9 +11,9 @@
  *
  */
 
-import JsonTemplate from "./JsonTemplate";
+import {JsonObjectBase} from "jsonobject";
 
-export default class Plugin extends JsonTemplate {
+export default class Plugin extends JsonObjectBase {
 
   name;
   version;

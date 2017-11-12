@@ -11,9 +11,9 @@
  *
  */
 
-import JsonTemplate from "./JsonTemplate";
+import {JsonObjectBase} from "jsonobject";
 
-export default class TimingsMap extends JsonTemplate {
+export default class TimingsMap extends JsonObjectBase {
 
   /**
    * @type {object<number,string>}
@@ -44,7 +44,7 @@ export default class TimingsMap extends JsonTemplate {
    */
   entityTypeMap;
 
-  init() {
+  onDeserialize() {
     this.handlerNameMap = {};
     for (const [id, identity] of Object.entries(this.handlerMap)) {
       identity.id = id;

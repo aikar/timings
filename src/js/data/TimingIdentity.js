@@ -11,9 +11,9 @@
  *
  */
 
-import JsonTemplate from "./JsonTemplate";
+import {JsonObjectBase} from "jsonobject";
 
-export default class TimingIdentity extends JsonTemplate {
+export default class TimingIdentity extends JsonObjectBase {
 
   /**
    * @type {int,string}

@@ -11,9 +11,9 @@
  *
  */
 
-import JsonTemplate from "./JsonTemplate";
+import {JsonObjectBase} from "jsonobject";
 
-export default class TimingsSystemData extends JsonTemplate {
+export default class TimingsSystemData extends JsonObjectBase {
 
   timingcost;
   name;

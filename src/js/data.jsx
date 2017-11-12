@@ -15,10 +15,40 @@ import xhr from "xhr";
 import qs from "qs";
 import query from './query';
 import clone from "clone";
-import JsonObject from "./data/JsonObject";
 import _ from "lodash";
+import JsonObject from "jsonobject";
 import TimingData from "./data/TimingData";
 import lscache from "ls-cache";
+import World from "./data/World";
+import Plugin from "./data/Plugin";
+import TimingHandler from "./data/TimingHandler";
+import MinuteReport from "./data/MinuteReport";
+import TicksRecord from "./data/TicksRecord";
+import TimingHistory from "./data/TimingHistory";
+import TimingsSystemData from "./data/TimingsSystemData";
+import TimingIdentity from "./data/TimingIdentity";
+import Region from "./data/Region";
+import TimingsMaster from "./data/TimingsMaster";
+import TimingsMap from "./data/TimingsMap";
+
+
+const TIMINGS_CLASS_MAP = {
+  1: MinuteReport,
+  2: Plugin,
+  3: Region,
+  4: TicksRecord,
+  5: TimingData,
+  6: TimingHandler,
+  7: TimingHistory,
+  8: TimingIdentity,
+  9: TimingsMap,
+  10: TimingsMaster,
+  11: TimingsSystemData,
+  12: World,
+};
+const timingsSerializer = new JsonObject({
+  mappings: TIMINGS_CLASS_MAP
+});
 
 let dataReadyCB = [];
 let dataFailedCB = [];
@@ -109,7 +139,7 @@ data.loadData = async function loadData() {
     for (const [key, value] of Object.entries(body)) {
       data[key] = value;
     }
-    data.timingsMaster = await JsonObject.newObject(data.timingsMaster); // process into object while its downloading
+    data.timingsMaster = await timingsSerializer.deserialize(data.timingsMaster); // process into object while its downloading
     if (data.end >= data.timingsMaster.data.length) {
       data.end = data.timingsMaster.data.length - 1;
     }
@@ -213,7 +243,7 @@ async function loadTimingData() {
   for (const history of data.history) {
     history.handlers = cache.get("history_" + history.id);
     if (history.handlers) {
-      history.handlers = await JsonObject.newObject(history.handlers);
+      history.handlers = await timingsSerializer.deserialize(history.handlers);
     }
   }
 
@@ -232,7 +262,7 @@ async function loadTimingData() {
 
     for (const [key, history] of Object.entries(body.history)) {
       cache.set("history_" + key, history, TTL);
-      data.history[key].handlers = await JsonObject.newObject(history);
+      data.history[key].handlers = await timingsSerializer.deserialize(history);
     }
     if (requestId !== thisRequest) {
       return; // A new request came in

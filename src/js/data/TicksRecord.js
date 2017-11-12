@@ -11,9 +11,9 @@
  *
  */
 
-import JsonTemplate from "./JsonTemplate";
+import {JsonObjectBase} from "jsonobject";
 
-export default class TicksRecord extends JsonTemplate {
+export default class TicksRecord extends JsonObjectBase {
 
   /**
    * @type int

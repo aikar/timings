@@ -11,9 +11,9 @@
  *
  */
 
-import JsonTemplate from "./JsonTemplate";
+import {JsonObjectBase} from "jsonobject";
 
-export default class MinuteReport extends JsonTemplate {
+export default class MinuteReport extends JsonObjectBase {
   /**
    * @type int
    */

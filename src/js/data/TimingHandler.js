@@ -17,7 +17,7 @@ import clone from "clone";
 export default class TimingHandler extends TimingData {
   constructor() {
     super();
-    //this._deferDecoding = true; // TODO: defer this later when we move to client parsing
+    //this._deferDeserializing = true; // TODO: defer this later when we move to client parsing
   }
 
   /**
@@ -30,8 +30,8 @@ export default class TimingHandler extends TimingData {
   childrenLagCount = 0;
   childrenLagTotal = 0;
 
-  init() {
-    super.init();
+  onSerialize() {
+    super.onDeserialize();
     this.id = parseInt(this.id);
     const children = this.children;
     this.children = {};

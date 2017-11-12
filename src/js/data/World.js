@@ -11,9 +11,9 @@
  *
  */
 
-import JsonTemplate from "./JsonTemplate";
+import {JsonObjectBase} from "jsonobject";
 
-export default class World extends JsonTemplate {
+export default class World extends JsonObjectBase {
 
   /**
    * @type string

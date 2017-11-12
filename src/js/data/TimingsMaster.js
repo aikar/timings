@@ -11,9 +11,9 @@
  *
  */
 
-import JsonTemplate from "./JsonTemplate";
+import {JsonObjectBase} from "jsonobject";
 
-export default class TimingsMaster extends JsonTemplate {
+export default class TimingsMaster extends JsonObjectBase {
 
   version;
   maxplayers;

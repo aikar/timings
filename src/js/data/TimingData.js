@@ -11,9 +11,9 @@
  *  
  */
 
-import JsonTemplate from "./JsonTemplate";
+import {JsonObjectBase} from "jsonobject";
 
-export default class TimingData extends JsonTemplate {
+export default class TimingData extends JsonObjectBase {
 
   mergedCount = 0;
   mergedLagCount = 0;
