@@ -116,17 +116,22 @@ module.exports = function (isProduction, watch) {
             use: [
               {
                 loader: 'css-loader',
-                query: {
+                options: {
                   imports: false,
                   sourceMap: true,
                   localIdentName: cssPattern,
                   importLoaders: 1
                 }
               },
-              'postcss-loader',
+              { 
+                  loader: 'postcss-loader', 
+                  options: {
+                      sourceMap: true 
+                  }
+              },
               {
                 loader: 'sass-loader',
-                query: {
+                options: {
                   sourceMap: true
                 }
               }
