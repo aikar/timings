@@ -34,7 +34,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-load-plugins": "^1.4.0",
     "gulp-util": "^3.0.8",
-    "gulp-watch": "^4.3.11",
+    "gulp-watch": "^5.0.0",
     "ini": "^1.3.4",
     "jquery": "^3.1.1",
     "json-loader": "^0.5.4",
@@ -71,7 +71,7 @@
     "webpack-auto-clean-build-plugin": "^1.0.3",
     "webpack-dev-server": "^1.16.2",
     "xhr": "^2.3.3",
-    "yarn": "^0.27.5"
+    "yarn": "^0.28.1"
   },
   "repository": {
     "type": "git",
