@@ -16,7 +16,7 @@ import qs from "qs";
 import query from './query';
 import clone from "clone";
 import _ from "lodash";
-import JsonObject from "jsonobject";
+import ObjectManager from "objectsm";
 import TimingData from "./data/TimingData";
 import lscache from "ls-cache";
 import World from "./data/World";
@@ -46,7 +46,7 @@ const TIMINGS_CLASS_MAP = {
   11: TimingsSystemData,
   12: World,
 };
-const timingsSerializer = new JsonObject({
+const timingsSerializer = new ObjectManager({
   mappings: TIMINGS_CLASS_MAP
 });
 

@@ -11,9 +11,9 @@
  *
  */
 
-import {JsonObjectBase} from "jsonobject";
+import {ObjectBase} from "objectsm";;
 
-export default class TimingsSystemData extends JsonObjectBase {
+export default class TimingsSystemData extends ObjectBase {
 
   timingcost;
   name;

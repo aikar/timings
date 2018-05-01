@@ -950,13 +950,6 @@ babel-runtime@6.x, babel-runtime@^6.0.0, babel-runtime@^6.18.0, babel-runtime@^6
     core-js "^2.4.0"
     regenerator-runtime "^0.11.0"
 
-babel-runtime@7.0.0-beta.3:
-  version "7.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-7.0.0-beta.3.tgz#7c750de5514452c27612172506b49085a4a630f2"
-  dependencies:
-    core-js "^2.4.0"
-    regenerator-runtime "^0.11.0"
-
 babel-template@^6.24.1, babel-template@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-template/-/babel-template-6.26.0.tgz#de03e2d16396b069f46dd9fff8521fb1a0e35e02"
@@ -3335,15 +3328,6 @@ jsonify@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
 
-jsonobject@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/jsonobject/-/jsonobject-1.0.7.tgz#fc4191ff07be4206bda51214f2aca46469288d85"
-  dependencies:
-    as-array "^2.0.0"
-    babel-runtime "7.0.0-beta.3"
-    clone "^2.1.1"
-    object-tojson "^1.0.1"
-
 jsonpointer@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/jsonpointer/-/jsonpointer-4.0.1.tgz#4fd92cb34e0e9db3c89c8622ecf51f9b978c6cb9"
@@ -4129,7 +4113,7 @@ object.defaults@^1.1.0:
     for-own "^1.0.0"
     isobject "^3.0.0"
 
-object.entries@^1.0.3:
+object.entries@^1.0.3, object.entries@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/object.entries/-/object.entries-1.0.4.tgz#1bf9a4dd2288f5b33f3a993d257661f05d161a5f"
   dependencies:
@@ -4166,6 +4150,16 @@ object.values@^1.0.3:
     es-abstract "^1.6.1"
     function-bind "^1.1.0"
     has "^1.0.1"
+
+objectsm@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/objectsm/-/objectsm-1.1.0.tgz#5c52dc0144ca01b4bcfae501bc27d75623ad7943"
+  dependencies:
+    as-array "^2.0.0"
+    clone "^2.1.1"
+    object-tojson "^1.0.1"
+    object.entries "^1.0.4"
+    regenerator-runtime "^0.11.0"
 
 on-finished@~2.3.0:
   version "2.3.0"

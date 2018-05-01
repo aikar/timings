@@ -11,9 +11,9 @@
  *  
  */
 
-import {JsonObjectBase} from "jsonobject";
+import {ObjectBase} from "objectsm";;
 
-export default class TimingData extends JsonObjectBase {
+export default class TimingData extends ObjectBase {
 
   mergedCount = 0;
   mergedLagCount = 0;

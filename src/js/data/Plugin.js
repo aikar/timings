@@ -11,9 +11,9 @@
  *
  */
 
-import {JsonObjectBase} from "jsonobject";
+import {ObjectBase} from "objectsm";;
 
-export default class Plugin extends JsonObjectBase {
+export default class Plugin extends ObjectBase {
 
   name;
   version;

@@ -11,9 +11,9 @@
  *
  */
 
-import {JsonObjectBase} from "jsonobject";
+import {ObjectBase} from "objectsm";;
 
-export default class Region extends JsonObjectBase {
+export default class Region extends ObjectBase {
 
   /**
    * @type string

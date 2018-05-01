@@ -11,9 +11,9 @@
  *
  */
 
-import {JsonObjectBase} from "jsonobject";
+import {ObjectBase} from "objectsm";;
 
-export default class TicksRecord extends JsonObjectBase {
+export default class TicksRecord extends ObjectBase {
 
   /**
    * @type int

@@ -11,9 +11,9 @@
  *
  */
 
-import {JsonObjectBase} from "jsonobject";
+import {ObjectBase} from "objectsm";;
 
-export default class MinuteReport extends JsonObjectBase {
+export default class MinuteReport extends ObjectBase {
   /**
    * @type int
    */

@@ -11,9 +11,9 @@
  *
  */
 
-import {JsonObjectBase} from "jsonobject";
+import {ObjectBase} from "objectsm";;
 
-export default class TimingsMaster extends JsonObjectBase {
+export default class TimingsMaster extends ObjectBase {
 
   version;
   maxplayers;

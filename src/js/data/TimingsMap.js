@@ -11,9 +11,9 @@
  *
  */
 
-import {JsonObjectBase} from "jsonobject";
+import {ObjectBase} from "objectsm";;
 
-export default class TimingsMap extends JsonObjectBase {
+export default class TimingsMap extends ObjectBase {
 
   /**
    * @type {object<number,string>}

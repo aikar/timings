@@ -11,9 +11,9 @@
  *
  */
 
-import {JsonObjectBase} from "jsonobject";
+import {ObjectBase} from "objectsm";;
 
-export default class TimingIdentity extends JsonObjectBase {
+export default class TimingIdentity extends ObjectBase {
 
   /**
    * @type {int,string}
