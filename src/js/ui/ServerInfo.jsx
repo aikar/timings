@@ -53,7 +53,7 @@ export default class ServerInfo extends React.PureComponent {
             <td className="fieldValue">{info.system.maxmem / 1024 / 1024}MB</td>
 
             <td className="fieldName">Online Mode</td>
-            <td className="fieldValue">{info.onlinemode === true ? "Enabled" : "Disabled"}</td>
+            <td className="fieldValue">{this.showOnlineMode()}</td>
           </tr>
           {motd ?
             <tr>
@@ -70,5 +70,18 @@ export default class ServerInfo extends React.PureComponent {
       </div>
 
     )
+  }
+
+  showOnlineMode() {
+    const info = data.timingsMaster;
+    const config = info.config;
+    if (info.onlinemode === true) {
+      return "Enabled";
+    }
+
+    if (config.spigot && config.spigot.settings && (config.spigot.settings.bungeecord == "true" || config.spigot.settings.bungeecord === true)) {
+      return "BungeeCord";
+    }
+    return "Disabled";
   }
 }
