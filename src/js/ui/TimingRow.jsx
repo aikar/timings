@@ -72,6 +72,10 @@ export default class TimingRow extends React.Component {
         _fp.filter(filter),
         _fp.sortBy(sortType),
         _fp.map((child) => {
+          if (!data.handlerData[child.id]) {
+            console.error("Missing Handler", child.id, child, this);
+            return null;
+          }
           const childHandle = new TimingHandler();
           childHandle.id = child.id;
           childHandle.addData(child);
