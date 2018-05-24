@@ -102,7 +102,7 @@ export default class TimingRow extends React.Component {
     }else if(children){
       childControl = <i className='expand-control fa fa-fw fa-caret-right' onClick={() => toggleChildren()}/>;
     }else{
-      childControl =  <i className='expand-control fa fa-fw fa-caret-down' onClick={() => toggleChildren()}/>;
+      childControl = <i className='expand-control fa fa-fw fa-caret-down' onClick={() => toggleChildren()}/>;
     }
 
     const toggleChildren = () => {
