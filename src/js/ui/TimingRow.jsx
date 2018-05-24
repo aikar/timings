@@ -94,13 +94,16 @@ export default class TimingRow extends React.Component {
       )(handler.children).reverse();
     }
 
-    let childControl = (childCount < 2 || handler.isSelf) ? null
-      : (
-        !children ?
-          <i className='expand-control fa fa-fw fa-caret-right' onClick={() => toggleChildren()}/>
-          :
-          <i className='expand-control fa fa-fw fa-caret-down' onClick={() => toggleChildren()}/>
-      );
+    let childControl;
+    if(handler.isSelf){
+      childControl = null;
+    }else if(childCount < 2){
+      childControl = <i className='expand-control fa fa-fw fa-minus'></i>;
+    }else if(children){
+      childControl = <i className='expand-control fa fa-fw fa-caret-right' onClick={() => toggleChildren()}/>;
+    }else{
+      childControl =  <i className='expand-control fa fa-fw fa-caret-down' onClick={() => toggleChildren()}/>;
+    }
 
     const toggleChildren = () => {
       this.setState({showChildren: !this.state.showChildren});
