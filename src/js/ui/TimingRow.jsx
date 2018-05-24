@@ -98,7 +98,7 @@ export default class TimingRow extends React.Component {
     if(handler.isSelf){
       childControl = null;
     }else if(childCount < 2){
-      childControl = <i className='expand-control fa fa-fw fa-minus'></i>;
+      childControl = <i className='expand-control fa fa-fw'></i>; // no icon, but still right indent
     }else if(children){
       childControl = <i className='expand-control fa fa-fw fa-caret-right' onClick={() => toggleChildren()}/>;
     }else{
