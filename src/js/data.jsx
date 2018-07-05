@@ -107,7 +107,7 @@ const scales = data.scales = {
   "Entities": 10000,
   "Active Entities": 10000,
   "Tile Entities": 20000,
-  "Chunks": 3000,
+  "Chunks": 300,
   "Players": 100,
   "TPS": 25
 };
@@ -115,7 +115,7 @@ const scalesCap = data.scalesCap = {
   "Entities": 15000,
   "Active Entities": 15000,
   "Tile Entities": 30000,
-  "Chunks": 5000,
+  "Chunks": 500,
   "Players": 300,
   "TPS": 25
 };
@@ -190,13 +190,16 @@ function loadChartData() {
   data.stamps = [];
 
   data.maxTime = 0;
-  let chunkCount = 0;
+  let totalChunkCount = 0;
+  let totalPlayers = 0;
+  const totalData = data.timingsMaster.data.length;
   for (const /*TimingHistory*/history of data.timingsMaster.data) {
     for (const /*World*/world of Object.values(history.worldData)) {
       for (const /*Region*/region of Object.values(world.regions)) {
-        chunkCount += region.chunkCount;
+        totalChunkCount += region.chunkCount;
       }
     }
+
     const firstMP = history.minuteReports[0];
     // I don't remember why we are doing this, but it obviously was to fix some
     // bug that i can't remember. It doesn't hurt, so just leave it here, unless
@@ -209,9 +212,21 @@ function loadChartData() {
 
     for (const /*MinuteReport*/mp of history.minuteReports) {
       data.maxTime = max(mp.fullServerTick.total, data.maxTime);
+      totalPlayers += mp.ticks.playerTicks / mp.ticks.timedTicks
     }
   }
+
+  scalesCap.Chunks = ((totalChunkCount /totalData)*2);
+  scales.Chunks = ((totalChunkCount /totalData)*1.5);
+  scalesCap.Players = ((totalPlayers /totalData)*2);
+  scales.Players = ((totalPlayers /totalData)*1.5);
   for (const /*TimingHistory*/history of data.timingsMaster.data) {
+    let chunkCount = 0;
+    for (const /*World*/world of Object.values(history.worldData)) {
+      for (const /*Region*/region of Object.values(world.regions)) {
+        chunkCount += region.chunkCount;
+      }
+    }
     for (const /*MinuteReport*/mp of history.minuteReports) {
       if (!mp.ticks.timedTicks) {
         continue;
