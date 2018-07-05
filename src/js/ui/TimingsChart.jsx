@@ -115,7 +115,7 @@ export default class TimingsChart {
           fillColor: "rgba(0,0,0,0)",
           pointColor: "#9324B5",
           pointStrokeColor: "#9324B5",
-          data: data.chunkData
+          data: data.regionData
         }
       ]
     };
