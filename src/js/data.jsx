@@ -79,7 +79,7 @@ const data = {
   plaData: [],
   tentData: [],
   entData: [],
-  regionData: [],
+  chunkData: [],
 };
 data.hasFailed = false;
 data.isReady = false;
@@ -107,7 +107,7 @@ const scales = data.scales = {
   "Entities": 10000,
   "Active Entities": 10000,
   "Tile Entities": 20000,
-  "Regions": 300,
+  "Chunks": 300,
   "Players": 100,
   "TPS": 25
 };
@@ -115,7 +115,7 @@ const scalesCap = data.scalesCap = {
   "Entities": 15000,
   "Active Entities": 15000,
   "Tile Entities": 30000,
-  "Regions": 500,
+  "Chunks": 500,
   "Players": 300,
   "TPS": 25
 };
@@ -123,7 +123,7 @@ const scaleMap = data.scaleMap = {
   "Entities": {},
   "Active Entities": {},
   "Tile Entities": {},
-  "Regions": {},
+  "Chunks": {},
   "Players": {},
   "TPS": {}
 };
@@ -185,7 +185,7 @@ function loadChartData() {
   data.tentData = [];
   data.entData = [];
   data.aentData = [];
-  data.regionData = [];
+  data.chunkData = [];
   data.plaData = [];
   data.stamps = [];
 
@@ -216,14 +216,16 @@ function loadChartData() {
     }
   }
 
-  scalesCap.Regions = ((totalChunkCount /totalData)*2);
-  scales.Regions = ((totalChunkCount /totalData)*1.5);
+  scalesCap.Chunks = ((totalChunkCount /totalData)*2);
+  scales.Chunks = ((totalChunkCount /totalData)*1.5);
   scalesCap.Players = ((totalPlayers /totalData)*2);
   scales.Players = ((totalPlayers /totalData)*1.5);
   for (const /*TimingHistory*/history of data.timingsMaster.data) {
-    let regionCount = 0;
+    let chunkCount = 0;
     for (const /*World*/world of Object.values(history.worldData)) {
-      regionCount += world.regions.length;
+      for (const /*Region*/region of Object.values(world.regions)) {
+        chunkCount += region.chunkCount;
+      }
     }
     for (const /*MinuteReport*/mp of history.minuteReports) {
       if (!mp.ticks.timedTicks) {
@@ -234,7 +236,7 @@ function loadChartData() {
       data.labels.push(new Date(mp.time * 1000).toLocaleString());
       data.tpsData.push(scale("TPS", mp.tps > 19.85 ? 20 : mp.tps));
       data.lagData.push(mp.fullServerTick.lagTotal);
-      data.regionData.push(scale("Regions", regionCount));
+      data.chunkData.push(scale("Chunks", chunkCount));
       data.entData.push(scale("Entities", mp.ticks.entityTicks / mp.ticks.timedTicks));
       data.plaData.push(scale("Players", mp.ticks.playerTicks / mp.ticks.timedTicks));
       data.aentData.push(scale("Active Entities", mp.ticks.activatedEntityTicks / mp.ticks.timedTicks));
