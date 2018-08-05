@@ -57,7 +57,7 @@
     "raw-loader": "^0.5.1",
     "rc-slider": "^6.1.0",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2",
+    "react-dom": "^16.0.1",
     "react-dump": "^0.1.11",
     "react-spinkit": "^2.0.0",
     "react-sticky": "^5.0.5",
