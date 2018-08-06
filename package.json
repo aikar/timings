@@ -4,7 +4,9 @@
   "description": "Aikar's Minecraft Timings Viewer",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "assets-webpack-plugin": "^3.5.1",
@@ -29,7 +31,7 @@
     "extract-text-webpack-plugin": "^2",
     "file-loader": "^0.9.0",
     "foreach": "^2.0.5",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-bash-completion": "^1.1.0",
     "gulp-concat": "^2.6.1",
     "gulp-load-plugins": "^1.4.0",
@@ -71,7 +73,8 @@
     "webpack-auto-clean-build-plugin": "^1.0.3",
     "webpack-dev-server": "^1.16.2",
     "xhr": "^2.3.3",
-    "yarn": "^0.28.1"
+    "yarn": "^0.28.1",
+    "snyk": "^1.78.0"
   },
   "repository": {
     "type": "git",
@@ -81,5 +84,6 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/aikar/timings/issues"
-  }
+  },
+  "snyk": true
 }
