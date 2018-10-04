@@ -18,7 +18,7 @@ export default class Footer extends React.PureComponent {
     return (
       <div id="footer">
 			<span id="footer-left">&copy; 2013-{new Date().getFullYear()}
-        Starlis LLC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;
+        &nbsp;Starlis LLC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;
 			</span>
         <span id="footer-right">Theme by Thomas Edwards</span>
       </div>
