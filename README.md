@@ -9,7 +9,7 @@ Timings v2 requires one of the following server softwares:
   - Neptune
   - Nukkit
  
-CraftBukkit/Spigot Support is vey unlikely, but it is strongly recommended to use Paper anyways! [Learn More and Get Paper here](https://paper.emc.gs)
+CraftBukkit/Spigot Support is very unlikely, but it is strongly recommended to use Paper anyways! [Learn More and Get Paper here](https://paper.emc.gs)
 
 If you can think of something to improve the system please feel free to PR it.
 
