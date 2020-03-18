@@ -285,6 +285,9 @@ async function loadTimingData() {
   }
   buildTimingData();
 }
+window.snapshot = (x) => {
+	return JSON.parse(JSON.stringify(x));
+}
 
 function buildTimingData() {
   data.handlerData = {}; // Reset handler data
@@ -301,12 +304,11 @@ function buildTimingData() {
     for (const /*TimingHandler*/handler of handlers) {
       const id = handler.id;
       if (!handlerData[id]) {
-        handlerData[id] = clone(handler, false);
-        //handlerData[id].mergedCount = 1;
-        //handlerData[id].mergedLagCount = handler.lagCount ? 1 : 0;
-      } else {
-        handlerData[id].addDataFromHandler(handler);
-      }
+        handlerData[id] = new TimingHandler();
+        handlerData[id].id = id;
+     }
+     handlerData[id].addDataFromHandler(handler);
+
     }
   }
   data.masterHandler = data.handlerData[1];
@@ -353,20 +355,27 @@ data.setFilter = function (filterVal) {
 
 function buildSelfData() {
   for (const [id, handler] of Object.entries(data.handlerData)) {
+
     const record = new TimingData();
     record.id = handler.id;
     record.isSelf = true;
+
+    handler.childrenTotal = 0;
+    handler.childrenLagTotal = 0;
     for (const child of Object.values(handler.children)) {
-      //handler.childrenCount    += child.mergedCount;
-      //handler.childrenLagCount += child.mergedLagCount;
       handler.childrenTotal += child.total || 0;
       handler.childrenLagTotal += child.lagTotal || 0;
     }
 
+    handler.childrenLagTotal = Math.min(handler.lagTotal, handler.childrenLagTotal);
+    handler.childrenTotal = Math.min(handler.total, handler.childrenTotal);
+
     record.total = handler.total - handler.childrenTotal;
     record.lagTotal = handler.lagTotal - handler.childrenLagTotal;
-    record.count = handler.count - handler.childrenCount;
-    record.lagCount = handler.lagCount - handler.childrenLagCount;
+
+    record.count = handler.count;
+    record.lagCount = handler.lagCount;
+
     handler.children[id] = record;
   }
 }

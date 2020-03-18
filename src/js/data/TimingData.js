@@ -39,14 +39,14 @@ export default class TimingData extends ObjectBase {
   lagTotal = 0;
 
   addData(data) {
-    //this.mergedCount++;
+    this.mergedCount++ ;
 
-    this.count += data.count;
-    this.total += data.total;
+    this.count += data.count || 0;
+    this.total += data.total || 0;
     if (data.lagCount) {
-      //this.mergedLagCount++;
-      this.lagCount += data.lagCount;
-      this.lagTotal += data.lagTotal;
+      this.mergedLagCount++;
+      this.lagCount += data.lagCount || 0;
+      this.lagTotal += data.lagTotal || 0;
     }
   }
 }

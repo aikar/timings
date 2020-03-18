@@ -57,7 +57,7 @@ export default class TimingRow extends React.Component {
       return null;
     }
     const id = handler.id;
-    const rowId = this.props.timingParent ? `${this.props.timingParent.id}_${handler.id}` : handler.id;
+    const rowId = this.props.parentRowId ? `${this.props.parentRowId}_${handler.id}` : handler.id;
     const depth = (this.props.timingRowDepth > 0 ? this.props.timingRowDepth % 5 : "none");
 
 
@@ -85,7 +85,8 @@ export default class TimingRow extends React.Component {
           }
           childHandle.children = data.handlerData[child.id].children;
           return <TimingRow
-            key={child.id}
+            parentRowId={rowId}
+            key={rowId + "_" + child.id}
             handler={childHandle}
             timingParent={handler}
             timingRowDepth={this.props.timingRowDepth + 1}
@@ -116,6 +117,7 @@ export default class TimingRow extends React.Component {
           {childControl}
           <TimingRecordData
             handler={handler}
+            timingParent={this.props.timingParent}
             timingRowDepth={this.props.timingRowDepth}
             onClick={() => toggleChildren()}/>
           <div className="children">
@@ -150,8 +152,8 @@ class TimingRecordData extends React.Component {
     const propTotal = prop('total');
     const propCount = prop('count');
 
-    const total = handler[propTotal];
-    const count = handler[propCount];
+    const total = handler.isSelf ? Math.min(this.props.timingParent[propTotal], handler[propTotal]) : handler[propTotal];
+    const count = handler.isSelf? this.props.timingParent[propCount] : handler[propCount];
 
     if (count === 0) {
       return null;

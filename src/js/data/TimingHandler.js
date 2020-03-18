@@ -52,6 +52,7 @@ export default class TimingHandler extends TimingData {
     for (const child of Object.values(handler.children)) {
       const id = child.id;
 
+
       if (this.children[id]) {
         this.children[id].addData(child);
       } else {
