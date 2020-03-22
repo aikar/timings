@@ -68,7 +68,7 @@
     "source-map-loader": "^0.1.6",
     "style-loader": "^0.13.1",
     "url-loader": "^0.6.0",
-    "webpack": "^2",
+    "webpack": "^4.0.0",
     "webpack-auto-clean-build-plugin": "^1.0.3",
     "webpack-dev-server": "^1.16.2",
     "xhr": "^2.5.0"
