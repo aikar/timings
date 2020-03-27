@@ -40,7 +40,7 @@ export default class Header extends React.PureComponent {
 
           <span>This system has taken years to develop. If it has helped you, consider donating :)</span>
           <br />
-          Requires <a href="http://paper.emc.gs" title="Paper Minecraft Server">Paper</a>
+          Requires <a href="https://papermc.io" title="Paper Minecraft Server">Paper</a>
           &nbsp;or <a href="https://www.spongepowered.org" title="Sponge Minecraft Server">Sponge</a>&nbsp;
           [<a href="https://www.youtube.com/watch?v=T4J0A9l7bfQ" title="Timings v2 Tutorial">Video Tutorial</a>]
         </div>
