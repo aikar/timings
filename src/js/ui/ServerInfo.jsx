@@ -14,8 +14,19 @@
 import React from "react";
 import {round} from "lodash/math";
 import data from "../data";
+import _ from "lodash";
 import replaceColorCodes from "../mccolors";
 
+function gcSummary() {
+    const system = data.timingsMaster.system;
+
+    let key=0;
+    return _.flatten(Object.entries(system.gc).map(([type, gc]) => {
+       return [<br key={key++} />, <span key={key++}>{
+           type + ": avg(" + round(gc[0] ? gc[1] / gc[0] : 0, 2) + "ms) - rate(" + round(gc[0] ? system.runtime / gc[0] / 1000 : 0, 2) + "s)"
+       }</span>];
+    }));
+}
 export default class ServerInfo extends React.PureComponent {
 
   constructor(props, ctx) {
@@ -64,6 +75,16 @@ export default class ServerInfo extends React.PureComponent {
           <tr>
             <td className="fieldName">Version</td>
             <td className="fieldValue" colSpan="3">{info.version}</td>
+          </tr>
+          <tr>
+             <td className="fieldName">GC</td>
+             <td className="fieldValue" colSpan="3">
+               {gcSummary()} <br />
+               {info.system.flags.indexOf("using.aikars.flags") === -1 ? 
+                   <span style={{color: 'red'}}>✗ Not using Aikar's flags <a href="https://mcflags.emc.gs" >FIX THIS</a></span> : 
+                   <span style={{color: 'green'}}>✓ Using Aikar's flags</span> 
+               }
+             </td>
           </tr>
           </tbody>
         </table>
