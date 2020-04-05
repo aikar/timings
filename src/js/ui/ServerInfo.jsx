@@ -95,7 +95,7 @@ function analyzeFlags() {
     if (flags.indexOf("using.aikars.flags") === -1 && flags.indexOf("G1NewSizePercent=") === -1) {
         return <span style={{color: 'red'}}>✗ Not using Aikar's flags <a href="https://mcflags.emc.gs" >FIX THIS</a></span>;
     }
-    if (flags.indexOf('G1MixedGCLiveThresholdPercent=90') === -1 || flags.indexOf("XX:MaxTenuringThreshold=1") === -1 || flags.indexOf('SurvivorRatio=200') !== -1) {
+    if (flags.indexOf('G1MixedGCLiveThresholdPercent=35') !== -1 || flags.indexOf("XX:MaxTenuringThreshold=1") === -1 || flags.indexOf('SurvivorRatio=200') !== -1) {
         return <span style={{color: 'orange'}}>✗ Using outdated flags <a href="https://mcflags.emc.gs" >FIX THIS</a></span>;
     }
     return <span style={{color: 'green'}}>✓ Using Aikar's flags</span>;
