@@ -16,6 +16,7 @@ import {round} from "lodash/math";
 import data from "../data";
 import _ from "lodash";
 import replaceColorCodes from "../mccolors";
+import lscache from "lscache";
 
 function gcSummary() {
     const system = data.timingsMaster.system;
@@ -167,15 +168,15 @@ export default class ServerInfo extends React.PureComponent {
   checkOutdated() {
   	const info = data.timingsMaster;
   	const version = info.version;
-  	if (version.indexOf("git-Paper") === -1) {
+  	if (!version.match('git-Paper-\d+')) {
   		return "";
-  	}
-  	if (localStorage.getItem('latest_build' !== null)) {
-  		return localStorage.getItem('latest_build');
-  	}
+    }
+    if (lscache.get('latest_build') !== null) {
+      return lscache.get('latest_build');
+    }
   	fetch('https://papermc.io/api/v1/paper/1.15.2').then((response) => response.json()).then((responseJson) => {
-  		const latest = responseJson.builds.latest;
-  		localStorage.setItem('latest_build', latest);
+      const latest = responseJson.builds.latest;
+      lscache.set('latest_build', latest, 60);
   		if (version.indexOf(latest) !== -1) {
   			this.setState({latest: true});
   		} else {
