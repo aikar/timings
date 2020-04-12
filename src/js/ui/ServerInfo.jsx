@@ -105,7 +105,8 @@ export default class ServerInfo extends React.PureComponent {
   constructor(props, ctx) {
     super(props, ctx);
     this.state = {
-      dataReady: false
+      dataReady: false,
+      latest: false
     };
     data.onReady(() => this.setState({dataReady: true}));
   }
@@ -147,7 +148,7 @@ export default class ServerInfo extends React.PureComponent {
             </tr> : null}
           <tr>
             <td className="fieldName">Version</td>
-            <td className="fieldValue" colSpan="3">{info.version}</td>
+            <td className="fieldValue" colSpan="3">{info.version} <br /> {this.checkOutdated()}</td>
           </tr>
           <tr>
              <td className="fieldName">GC</td>
@@ -161,6 +162,33 @@ export default class ServerInfo extends React.PureComponent {
       </div>
 
     )
+  }
+
+  checkOutdated() {
+  	const info = data.timingsMaster;
+  	const version = info.version;
+  	if (version.indexOf("git-Paper") === -1) {
+  		return "";
+  	}
+  	if (localStorage.getItem('latest_build' !== null)) {
+  		return localStorage.getItem('latest_build');
+  	}
+  	fetch('https://papermc.io/api/v1/paper/1.15.2').then((response) => response.json()).then((responseJson) => {
+  		const latest = responseJson.builds.latest;
+  		localStorage.setItem('latest_build', latest);
+  		if (version.indexOf(latest) !== -1) {
+  			this.setState({latest: true});
+  		} else {
+  			this.setState({latest: false});
+  		}
+  	}).catch((error) => {
+  		console.error(error);
+  	});
+  	if (this.state.latest) {
+  		return <span style = {{color: 'green'}} > ✓Latest Build </span>
+  	} else {
+  		return <span style = {{color: 'orange'}} > ✗Outdated Build <a href = "https://papermc.io/downloads" > UPDATE NOW </a></span>
+  	}
   }
 
   showOnlineMode() {
