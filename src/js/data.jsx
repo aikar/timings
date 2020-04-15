@@ -327,6 +327,8 @@ data.refresh = function () {
 
 data.changeOptions = function (sort, type, refresh) {
   window.sortType = sort || sortType;
+  type = type || 'lag';
+  if (type == 'lag' && !data.masterHandler['lagCount']) type = 'all';
   window.reportType = type || reportType;
   data.propTotal = prop('total');
   data.propCount = prop('count');
