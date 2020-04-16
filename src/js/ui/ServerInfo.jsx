@@ -107,7 +107,7 @@ export default class ServerInfo extends React.PureComponent {
     super(props, ctx);
     this.state = {
       dataReady: false,
-      latest: false
+      latest: null
     };
     data.onReady(() => this.setState({dataReady: true}));
   }
@@ -167,9 +167,9 @@ export default class ServerInfo extends React.PureComponent {
 
   checkOutdated() {
   	const info = data.timingsMaster;
-  	const version = info.version;
+    const version = info.version;
   	if (!version.match('git-Paper-\d+')) {
-  		return "";
+  		return null;
     }
     if (lscache.get('latest_build') !== null) {
       return lscache.get('latest_build');
@@ -184,12 +184,15 @@ export default class ServerInfo extends React.PureComponent {
   		}
   	}).catch((error) => {
   		console.error(error);
-  	});
+    });
+    if (this.state.latest === null) {
+      return null;
+    }
   	if (this.state.latest) {
   		return <span style = {{color: 'green'}} > ✓Latest Build </span>
   	} else {
   		return <span style = {{color: 'orange'}} > ✗Outdated Build <a href = "https://papermc.io/downloads" > UPDATE NOW </a></span>
-  	}
+    }
   }
 
   showOnlineMode() {
