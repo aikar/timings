@@ -86,3 +86,5 @@ echo "$(c 33)Branched and pushed up to github$(ce)..$(ce)"
 	exit 1
 ) || exit 1
 echo "$(c 32)==== Production rollout complete ====$(ce)"
+#rebuild dev
+node_modules/.bin/gulp build || echo "Dev rebuild failed"
