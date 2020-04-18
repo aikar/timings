@@ -71,8 +71,7 @@ function gcSummary() {
 	}
        }
        return [<br key={key++} />, <span key={key++}>{type.replace(/ Generation$/, '')}: {count} {' '}
-	avg(<span style={{color: avgColor}}>{avg}ms</span>)
-	rate(<span style={{color: rateColor}}>{rate}s</span>)
+          avg(<span style={{color: avgColor}}>{avg}ms</span> every <span style={{color: rateColor}}>{rate}s</span>)
        </span>];
     }));
 }
@@ -181,7 +180,9 @@ export default class ServerInfo extends React.PureComponent {
       return "Enabled";
     }
 
-    if (config.spigot && config.spigot.settings && (config.spigot.settings.bungeecord == "true" || config.spigot.settings.bungeecord === true)) {
+    if (config.paper && config.paper.settings && config.paper.settings['velocity-support'] && config.paper.settings['velocity-support']['enabled'] != 'false') {
+      return "Velocity";
+    } else if (config.spigot && config.spigot.settings && (config.spigot.settings.bungeecord == "true" || config.spigot.settings.bungeecord === true)) {
       return "BungeeCord";
     }
     return "Disabled";
