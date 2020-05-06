@@ -51,7 +51,7 @@ export default class ErrorDisplay extends React.Component {
             <br /><br /><br />
             It looks like the Timings you were trying to load does not exists anymore!
             <br/><br/>
-            Timings are only stored for 30 days after access, but this this looking to be increased.
+            Timings are only stored for 30 days after access, but this is looking to be increased.
             If this is a recent timings, then please recheck the URL given in your console.
             <br /><br /><br /><br /><br />
           </section>
