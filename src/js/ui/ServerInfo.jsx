@@ -117,9 +117,16 @@ export default class ServerInfo extends React.PureComponent {
     super(props, ctx);
     this.state = {
       dataReady: false,
-      latest: null
+      latest: null,
+      label: '',
     };
     data.onReady(() => this.setState({dataReady: true}));
+  }
+
+  componentDidUpdate() {
+    if (this.state.dataReady) {
+      this.checkIfOutdated();
+    }
   }
 
   render() {
@@ -159,7 +166,7 @@ export default class ServerInfo extends React.PureComponent {
             </tr> : null}
           <tr>
             <td className="fieldName">Version</td>
-            <td className="fieldValue" colSpan="3">{info.version} <br /> {this.checkOutdated()}</td>
+            <td className="fieldValue" colSpan="3" dangerouslySetInnerHTML={{__html: info.version + '<br />' + this.state.label}}/>
           </tr>
           <tr>
              <td className="fieldName">GC</td>
@@ -175,34 +182,55 @@ export default class ServerInfo extends React.PureComponent {
     )
   }
 
-  checkOutdated() {
+  checkIfOutdated() {
   	const info = data.timingsMaster;
-    const version = info.version;
-  	if (!version.match('git-Paper-\d+')) {
-  		return null;
-    }
-    if (lscache.get('latest_build') !== null) {
-      return lscache.get('latest_build');
-    }
+  	const version = info.version;
+  	// Make sure it's a good copy of paper
+  	if ("/git-Paper(\d+)/".match(version)) {
+  		return;
+  	}
+  	// Check if it's in cache or not
+  	if (lscache.get('latest_build') !== null) {
+  		// Check directly with cache
+  		this.checkIfOnLatest(version, lscache.get('latest_build'));
+  	} else {
+  		// Get the latest from paper api
+  		this.getLatestBuild(version);
+  	}
+  	// Set the label
+  	if (this.state.latest) {
+  		this.setState({
+  			label: "<span style = color:green > ✓Latest Build </span>"
+  		});
+  	} else {
+  		this.setState({
+  			label: "<span style = color:orange > ✗Outdated Build <a href = \"https://papermc.io/downloads\" > UPDATE NOW </a></span>"
+  		});
+  	}
+  }
+
+  // Get the latest build from paper api
+  getLatestBuild(version) {
   	fetch('https://papermc.io/api/v1/paper/1.15.2').then((response) => response.json()).then((responseJson) => {
-      const latest = responseJson.builds.latest;
-      lscache.set('latest_build', latest, 60);
-  		if (version.indexOf(latest) !== -1) {
-  			this.setState({latest: true});
-  		} else {
-  			this.setState({latest: false});
-  		}
+  		const latest = responseJson.builds.latest;
+  		lscache.set('latest_build', latest, 60);
+  		this.checkIfOnLatest(version, latest);
   	}).catch((error) => {
   		console.error(error);
-    });
-    if (this.state.latest === null) {
-      return null;
-    }
-  	if (this.state.latest) {
-  		return <span style = {{color: 'green'}} > ✓Latest Build </span>
+  	});
+  }
+
+  // Check if they are on the latest build
+  checkIfOnLatest(version, latest) {
+  	if (version.indexOf(latest) !== -1) {
+  		this.setState({
+  			latest: true
+  		});
   	} else {
-  		return <span style = {{color: 'orange'}} > ✗Outdated Build <a href = "https://papermc.io/downloads" > UPDATE NOW </a></span>
-    }
+  		this.setState({
+  			latest: false
+  		});
+  	}
   }
 
   showOnlineMode() {
