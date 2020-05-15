@@ -186,7 +186,7 @@ export default class ServerInfo extends React.PureComponent {
   	const info = data.timingsMaster;
   	const version = info.version;
   	// Make sure it's a good copy of paper
-  	if ("/git-Paper(\d+)/".match(version)) {
+  	if (!"/git-Paper(\d+)/".match(version)) {
   		return;
   	}
   	// Check if it's in cache or not
@@ -209,7 +209,7 @@ export default class ServerInfo extends React.PureComponent {
   	}
   }
 
-  // Get the latest build from paper api
+  // Get the latest build from paper
   getLatestBuild(version) {
   	fetch('https://papermc.io/api/v1/paper/1.15.2').then((response) => response.json()).then((responseJson) => {
   		const latest = responseJson.builds.latest;
