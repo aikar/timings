@@ -46,8 +46,8 @@ function gcSummary() {
 	}
 	case 'G1 Young Generation': {
 		avgColor = avg > 150 ? 'red' : (
-			avg > 100 ? 'orange' : (
-				avg > 50 ? 'yellow' : 'green' 
+			avg > 125 ? 'orange' : (
+				avg > 75 ? 'yellow' : 'green'
 			)
 		);
 		rateColor = rate < 2 ? 'red' : (
@@ -72,8 +72,7 @@ function gcSummary() {
 	}
        }
        return [<br key={key++} />, <span key={key++}>{type.replace(/ Generation$/, '')}: {count} {' '}
-	avg(<span style={{color: avgColor}}>{avg}ms</span>)
-	rate(<span style={{color: rateColor}}>{rate}s</span>)
+          avg(<span style={{color: avgColor}}>{avg}ms</span> every <span style={{color: rateColor}}>{rate}s</span>)
        </span>];
     }));
 }
@@ -82,22 +81,33 @@ function analyzeFlags() {
     const flags = system.flags;
     const gc = system.gc;
     if (gc.ZGC) {
-       const count = gc.ZGC[0];
-       const total = gc.ZGC[1];
-       const rate  = round(count ? system.runtime / count / 1000 : 0, 2);
-       const avg   = round(count ? total / count : 0, 2) ;
+      const count = gc.ZGC[0];
+      const total = gc.ZGC[1];
+      const rate  = round(count ? system.runtime / count / 1000 : 0, 2);
+      const avg   = round(count ? total / count : 0, 2) ;
 
-	if (avg < 15 && rate >= 3) {
-		return <span style={{color: 'green'}}>✓ Good Performing ZGC</span>;
-	} else {
-		return <span style={{color: 'red'}}>✗ ZGC is not performing well for you, Switch to G1 <a href="https://mcflags.emc.gs" >FIX THIS</a></span>;
-	}
+      if (system.maxmem / 1024 / 1024 < 15000) {
+        return <span style={{color: 'red'}}>✗ ZGC is not recommened with less than 15GB of memory, Switch to G1 <a href="https://mcflags.emc.gs" >FIX THIS</a>
+          <br />ZGC does not properly report GC lag spikes, and may be worse than shown.
+        </span>;
+      } else if (avg < 15 && rate >= 3) {
+        return <span style={{color: 'green'}}>✓ Good Performing ZGC</span>;
+      } else {
+        return <span style={{color: 'red'}}>✗ ZGC is not performing well for you, Switch to G1 <a href="https://mcflags.emc.gs" >FIX THIS</a></span>;
+      }
     }
-    if (flags.indexOf("using.aikars.flags") === -1 && flags.indexOf("G1NewSizePercent=") === -1) {
-        return <span style={{color: 'red'}}>✗ Not using Aikar's flags <a href="https://mcflags.emc.gs" >FIX THIS</a></span>;
+    const fixGC = "Switch Java flags to stop receiving lag spikes.";
+    if (gc["PS Scavenge"]) {
+      return <span style={{color: 'red'}}>✗ Wrong Garbage Collector <a href="https://mcflags.emc.gs" >FIX THIS</a>
+        <br />{fixGC}</span>;
+    } else if (flags.indexOf("using.aikars.flags") === -1 && flags.indexOf("G1NewSizePercent=") === -1) {
+      return <span style={{color: 'red'}}>✗ Not using Aikar's flags <a href="https://mcflags.emc.gs" >FIX THIS</a></span>;
     }
-    if (flags.indexOf('G1MixedGCLiveThresholdPercent=35') !== -1 || flags.indexOf("XX:MaxTenuringThreshold=1") === -1 || flags.indexOf('SurvivorRatio=200') !== -1) {
-        return <span style={{color: 'orange'}}>✗ Using outdated flags <a href="https://mcflags.emc.gs" >FIX THIS</a></span>;
+  let badMixed = flags.indexOf('G1MixedGCLiveThresholdPercent=35') !== -1;
+  if (badMixed || flags.indexOf("XX:MaxTenuringThreshold=1") === -1 || flags.indexOf('SurvivorRatio=200') !== -1) {
+        return <span style={{color: 'orange'}}>✗ Using outdated flags <a href="https://mcflags.emc.gs" >FIX THIS</a>
+          {badMixed ? <span><br />These flags may result in increased lag spikes from Old Gen</span> : null}
+        </span>;
     }
     return <span style={{color: 'green'}}>✓ Using Aikar's flags</span>;
 }
@@ -202,7 +212,9 @@ export default class ServerInfo extends React.PureComponent {
       return "Enabled";
     }
 
-    if (config.spigot && config.spigot.settings && (config.spigot.settings.bungeecord == "true" || config.spigot.settings.bungeecord === true)) {
+    if (config.paper && config.paper.settings && config.paper.settings['velocity-support'] && config.paper.settings['velocity-support']['enabled'] != 'false') {
+      return "Velocity";
+    } else if (config.spigot && config.spigot.settings && (config.spigot.settings.bungeecord == "true" || config.spigot.settings.bungeecord === true)) {
       return "BungeeCord";
     }
     return "Disabled";

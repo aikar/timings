@@ -326,8 +326,9 @@ data.refresh = function () {
 };
 
 data.changeOptions = function (sort, type, refresh) {
-  window.sortType = sort || sortType;
-  window.reportType = type || reportType;
+  window.sortType = sort || sortType || 'totalPct';
+  window.reportType = type || window.reportType || 'lag';
+  if (window.reportType == 'lag' && !data.masterHandler['lagCount']) window.reportType = 'all';
   data.propTotal = prop('total');
   data.propCount = prop('count');
   data.totalTicks = data.masterHandler[data.propCount];
