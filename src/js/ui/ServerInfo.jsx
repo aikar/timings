@@ -166,7 +166,7 @@ export default class ServerInfo extends React.PureComponent {
             </tr> : null}
           <tr>
             <td className="fieldName">Version</td>
-            <td className="fieldValue" colSpan="3" dangerouslySetInnerHTML={{__html: info.version + '<br />' + this.state.label}}/>
+            <td className="fieldValue" colSpan="3">{info.version} <br /> {this.state.label}</td>
           </tr>
           <tr>
              <td className="fieldName">GC</td>
@@ -184,9 +184,9 @@ export default class ServerInfo extends React.PureComponent {
 
   checkIfOutdated() {
   	const info = data.timingsMaster;
-  	const version = info.version;
-  	// Make sure it's a good copy of paper
-  	if (!"/git-Paper(\d+)/".match(version)) {
+    const version = info.version;
+    // Make sure it's a good copy of paper
+    if (!"/git-Paper(\d+)/".match(version)) {
   		return;
   	}
   	// Check if it's in cache or not
@@ -200,11 +200,11 @@ export default class ServerInfo extends React.PureComponent {
   	// Set the label
   	if (this.state.latest) {
   		this.setState({
-  			label: "<span style = color:green > ✓Latest Build </span>"
+  			label: <span style={{color: 'green'}}> ✓Latest Build </span>
   		});
   	} else {
   		this.setState({
-  			label: "<span style = color:orange > ✗Outdated Build <a href = \"https://papermc.io/downloads\" > UPDATE NOW </a></span>"
+  			label: <span style={{color: 'orange'}}> ✗Outdated Build <a href="https://papermc.io/downloads"> UPDATE NOW </a></span>
   		});
   	}
   }
