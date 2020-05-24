@@ -186,7 +186,7 @@ export default class ServerInfo extends React.PureComponent {
   	const info = data.timingsMaster;
     const version = info.version;
     // Make sure it's a good copy of paper
-    if (!"/git-Paper(\d+)/".match(version)) {
+    if (!version.match(/git-Paper(\d+)/)) {
   		return;
   	}
   	// Check if it's in cache or not
