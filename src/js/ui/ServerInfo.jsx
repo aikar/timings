@@ -95,7 +95,7 @@ function analyzeFlags() {
         return <span style={{color: 'red'}}>✗ ZGC is not performing well for you, Switch to G1 <a href="https://mcflags.emc.gs" >FIX THIS</a></span>;
       }
     }
-    const fixGC = "Switch Java flags to stop receiving lag spikes.";
+    const fixGC = "Switch to Aikar's flags!";
     if (gc["PS Scavenge"]) {
       return <span style={{color: 'red'}}>✗ Wrong Garbage Collector <a href="https://mcflags.emc.gs" >FIX THIS</a>
         <br />{fixGC}</span>;
