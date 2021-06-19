@@ -20,7 +20,7 @@ export default class Footer extends React.PureComponent {
 			<span id="footer-left">&copy; 2013-{new Date().getFullYear()}
         &nbsp;Starlis LLC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;
 			</span>
-        <span id="footer-right">Theme by Thomas Edwards</span>
+        <span id="footer-right">Theme by Thomas Burnett-Taylor</span>
       </div>
     );
   }
