@@ -51,7 +51,7 @@
     "ordered-merge-stream": "^1.0.0",
     "phpjs": "^1.3.2",
     "postcss": "^5.2.11",
-    "postcss-cssnext": "^2.9.0",
+    "postcss-cssnext": "^3.0.0",
     "postcss-loader": "^1.2.2",
     "postcss-scss": "^0.4.0",
     "qs": "^6.5.2",
