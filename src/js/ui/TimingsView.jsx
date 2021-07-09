@@ -3,6 +3,8 @@
  *
  *  Written by Aikar <aikar@aikar.co>
  *    + Contributors (See AUTHORS)
+ * 
+ * Modified by PebbleHost
  *
  *  http://aikar.co
  *  http://starlis.com
@@ -14,8 +16,8 @@
 import React from "react";
 import data from "../data";
 import TimingRow from "./TimingRow";
-import flow from "lodash/flow";
-import _fp from "lodash/fp";
+import * as loadState from "../loadState";
+import LoadingWheel from "./LoadingWheel";
 
 export default class TimingsView extends React.Component {
   static propTypes = TimingsView.props = {
@@ -25,7 +27,8 @@ export default class TimingsView extends React.Component {
   constructor(props, ctx) {
     super(props, ctx);
     this.state = {
-      limit: 40
+      limit: 40,
+      loading: false
     };
     data.provideTo(this);
   }
@@ -41,15 +44,22 @@ export default class TimingsView extends React.Component {
 
     const filter = lagFilter(propTotal, propCount, true);
 
-    children = flow(
-      _fp.filter(filter),
-      _fp.sortBy(sortType)
-    )(children).reverse();
+    loadState.onStartLoading(() => {
+      this.loadingIcon.style.display = 'block';
+    });
+    loadState.onFinishLoading(() => {
+      this.loadingIcon.style.display = 'none';
+    });
+
+    children = children.filter(c => filter(c)).sort((a, b) => b[sortType] - a[sortType]);
     const count = children.length;
 
     children = children.slice(0, this.state.limit);
     return (
-      <div>
+      <div style={{ position: 'relative' }}>
+        <div ref={item => { this.loadingIcon = item; }} style={{ paddingTop: '50px', margin: '-15px -15px', backgroundColor: '#000000a0', display: 'none', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, textAlign: 'center' }}>
+          <LoadingWheel />
+        </div>
         {children.map((handler) => {
           return <TimingRow timingRowDepth={0} key={handler.id} handler={handler}/>
         })}

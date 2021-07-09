@@ -3,6 +3,8 @@
  *  
  *  Written by Aikar <aikar@aikar.co>
  *    + Contributors (See AUTHORS)
+ * 
+ *  Modified by PebbleHost
  *  
  *  http://aikar.co
  *  http://starlis.com
@@ -15,7 +17,7 @@ import React from "react";
 import TimingsChart from "./TimingsChart";
 import Slider from "rc-slider"
 import data from "../data";
-import moment from "moment";
+import * as loadState from "../loadState";
 
 const Range = Slider.Range;
 export default class HistorySelector extends React.PureComponent {
@@ -34,15 +36,8 @@ export default class HistorySelector extends React.PureComponent {
 
     return (
       <div id="history-selector" className="section">
-        <div className="section-head">
-          <span className="section-title">Logging Period</span>
-        </div>
         <div className="canvas-wrapper">
-          <canvas ref={(ref) => {
-            new TimingsChart(ref).initialize(data)
-          }}
-                  id="tps-graph"
-                  width="98%" height="200"/>
+          <TimingsChart data={data} />
         </div>
         <TimeSelector />
       </div>
@@ -56,20 +51,26 @@ class TimeSelector extends React.Component {
   }
 
   onHistoryChange(val) {
-    data.start = val[0];
-    data.end = val[1];
-    if (this.timer) {
-      clearTimeout(this.timer);
-    }
-    this.setState({updated: new Date()});
-    data.refresh();
+    loadState.startLoading();
+    this.rangeSlider.disabled = true;
+    setTimeout(() => {
+      data.start = val[0];
+      data.end = val[1];
+      if (this.timer) {
+        clearTimeout(this.timer);
+      }
+      this.setState({updated: new Date()});
+      data.refresh();
+      loadState.finishLoading();
+      this.rangeSlider.disabled = false;
+    }, 70);
   }
 
   render() {
     const master = data.timingsMaster.data;
     return <div>
       <div id="time-selector">
-        <Range step={1} pushable={0} dots included={true}
+        <Range step={1} pushable={0} ref={item => { this.rangeSlider = item; }} dots included={true}
                allowCross={true} min={0} max={master.length - 1}
                defaultValue={[data.start, data.end]}
                onAfterChange={this.onHistoryChange}
@@ -80,6 +81,10 @@ class TimeSelector extends React.Component {
     </div>
   }
 }
+
+/* A bit messy but mitigates the need to include the entirety of moment.js in the bundle */
 function date(time) {
-  return moment(time * 1000).format('lll');
+  var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+  var date = new Date(time * 1000);
+  return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
 }

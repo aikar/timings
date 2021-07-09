@@ -49,7 +49,7 @@ export default class ErrorDisplay extends React.Component {
             <br /><br />
             <h1>Oops - Could not load Timings Report</h1>
             <br /><br /><br />
-            It looks like the Timings you were trying to load does not exists anymore!
+            It looks like the Timings you were trying to load does not exist anymore!
             <br/><br/>
             Timings are only stored for 30 days after access, but this is looking to be increased.
             If this is a recent timings, then please recheck the URL given in your console.

@@ -11,5 +11,5 @@
 
 namespace Starlis\Timings;
 
-require "init.php";
+require __DIR__."/../init.php";
 Uploader::process();

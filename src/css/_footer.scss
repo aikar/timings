@@ -1,36 +1,75 @@
 /*******************************************************************************
  * Aikar's Minecraft Timings Parser
  * Written by Aikar <aikar@aikar.co>
+ * Modified by PebbleHost
  * http://aikar.co
  * http://starlis.com
  *
  * @license MIT
  ******************************************************************************/
 
-html, body, #body-wrap, #wrapper {
+html, body, #wrapper {
 	min-height: 100%;
 }
 
 .push, #footer {
-	height: 70px;
+	height: 35px;
 }
 
 #footer {
-	clear: both;
 	color: $theme-color-text-special;
 	background: $theme-color;
 	opacity: 0.9;
 	padding-left: 20px;
 	padding-right: 20px;
-	line-height: 70px;
-}
+	line-height: 35px;
 
-#footer span {
-	line-height: 30px;
-	padding: 0 5px;
-	@include small-screen {
-		a {
-			display: none;
+	display: flex;
+	flex-direction: row;
+	@media (max-width: 1150px) {
+		flex-direction: column;
+		height: auto;
+
+		#footer-left {
+			line-height: 20px;
+			margin: 10px 0;
+			margin-bottom: 20px;
+		}
+	}
+	align-items: center;
+
+	span {
+		line-height: 35px;
+		padding: 0 5px;
+	}
+
+	#footer-contribute {
+		flex-grow: 1;
+		display: flex;
+		justify-content: flex-end;
+		padding: 0 5px;
+
+		.footer-wrapper {
+			width: max-content;
+			padding: 0;
+			display: flex;
+
+			@media (max-width: 1150px) {
+				flex-direction: column;
+
+				span {
+					text-align: center;
+				}
+
+				b {
+					line-height: 5px;
+				}
+			}
+			
+			b {
+				flex-grow: 1;
+				text-transform: uppercase;
+			}
 		}
 	}
 }

@@ -10,10 +10,10 @@
  */
 namespace Starlis\Timings;
 
-require_once __DIR__ . "/init.php";
+require_once __DIR__ . "/../init.php";
 Timings::bootstrap();
 
-$assets = "dist/webpack-assets.json";
+$assets = __DIR__."/dist/webpack-assets.json";
 $stamp = filemtime($assets);
 $assets = json_decode(file_get_contents($assets), true);
 foreach ($assets as $k => $asset) {
@@ -28,12 +28,11 @@ foreach ($assets as $k => $asset) {
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-	<title>Aikar's Timings Viewer</title>
+	<title>Timings Viewer</title>
 	<meta name="description" content="Aikar's Timings Viewer - View Timings v2 reports from Paper and Sponge"/>
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-	      crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 	<?php
-	$theme = 'blue1-dark';
+	$theme = 'redesign';
 	if (!empty($_COOKIE['timings-theme'])) {
 		$cookie = basename($_COOKIE['timings-theme']);
 		if (file_exists(ROOT_DIR . "/src/css/themes/$cookie.scss")) $theme = $cookie;

@@ -2,6 +2,7 @@
  * Aikar's Minecraft Timings Parser
  *
  * Written by Aikar <aikar@aikar.co>
+ * Modified by PebbleHost
  * http://aikar.co
  * http://starlis.com
  *
@@ -13,6 +14,7 @@
 @import "base/base";
 @import "neat/neat";
 @import "helpers";
+@import "layout";
 
 body {
 	height: 100%;
@@ -105,44 +107,47 @@ section {
 }
 
 #controls {
-
-	float: right;
-	margin-top: -47px;
-	margin-right: 0;
-	height: 47px;
-	#filter, #type-toggle, #sort-toggle {
-		height: 47px;
-		float: left;
-		overflow: hidden;
-		margin: 0 0 0 3px;
-		border: 2px solid $theme-accent;
+	margin-bottom: 15px;
+	#type-toggle, #sort-toggle {
+		margin: 11px 8px 0 8px;
+		&:first { margin-top: 0; }
+		background: $theme-background-alt;
+		display: flex; 
+		justify-content: start;
+		align-items: center;
 		> div {
 			height: 45px;
 			text-align: center;
 			min-width: 60px;
-			float: left;
-			display: block;
 			padding: 8px 14px;
 			cursor: pointer;
 			font-weight: 500;
-
-			//background: darken($theme-background-alt, 5);
-			background: $theme-color-light;
-		}
-
-		.totalPct, .avg, .lag {
-			border-right: 2px solid $theme-accent;
+			flex-grow: 1;
+			margin: 0 3px 0 3px;
+			background: $theme-background;
+			
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 		.active {
-			background: darken($theme-background-alt, 10);
-
+			background: $theme-color;
 		}
 	}
 	#filter {
-		width: 225px;
-	}
-	overflow: hidden;
+		width: calc(100% - 22px);
+		background: $theme-background;
+		border: 1px solid $theme-background-alt;
+		color: $theme-color-text;
+		border-radius: 0;
+		font-size: 18px;
+		margin: 11px;
+		margin-top: 15px;
 
+		&:focus {
+			box-shadow: none;
+		}
+	}
 }
 
 .timing-row {
@@ -256,9 +261,9 @@ section {
 		padding: 3px 6px 0 0;
 	}
 	.row-wrap:hover {
-		background: $theme-accent;
+		background: lighten($theme-background, 10%);
 		.expand-control {
-			color: $theme-color-text-special;
+			color: $theme-color-text;
 		}
 	}
 	.children {
@@ -312,7 +317,6 @@ section {
 			}
 		}
 	}
-
 }
 
 .warn-high {

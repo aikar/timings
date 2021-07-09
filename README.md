@@ -18,7 +18,7 @@ Technologies: JavaScript and UI
 We are using JSX and React for front end development.
 
 PHP is used to post process the JSON file into a more readable format and API processing, 
-but i'm open to converting that to JS and removing the PHP from the project.
+but I'm open to converting that to JS and removing the PHP from the project.
 
 If you're up for that big of a project, please coordinate with me on IRC first and keep me in the loop on progress.
 
@@ -31,15 +31,16 @@ Current Active Contributors:
   - Aikar - Project Owner
   - willies952002
   - Fudgie (UI)
+  - PebbleHost (Theme Redesign)
 
 Want to contribute? Join #aikar Spigot IRC ([join here](https://irc.spi.gt/iris/?channels=#aikar)), 
-and let me know what your interested in working on so we don't have people working on the same thing.
+and let me know what you're interested in working on so we don't have people working on the same thing.
 
 
 Setting Up Environment
 =====
-You need A webserver such as Apache or Nginx, and PHP 5.6 or PHP 7.
-Apache is preferred incase .htaccess is needed.
+You need a webserver such as Apache or Nginx, and PHP 5.6 or PHP 7.
+Apache is preferred, in case .htaccess is needed.
 
 Check out repo, copy config.ini to config.dev.ini and edit to your needs.
 
@@ -58,6 +59,14 @@ You may create config.dev.ini to override config options like so:
 >trusted_ip="10.0.1.100"    
 >dev_id=ae6cfe033ca541f39a0fc52c3b51b2e1
 
+The timings viewer uses a [charting library](https://amcharts.com) to show the main timings graph. This can be used for free with
+a watermark however to remove the watermark an [Amcharts license](https://www.amcharts.com/online-store/) is needed.
+
+To add the license key, create a file `src/js/amcharts.js` with the contents:
+
+```js
+export const key = 'CHXXXXXXXXX';
+```
 
 Timings File Format
 ======
@@ -75,6 +84,8 @@ License
 Minecraft Timings (c) Daniel Ennis (Aikar) 2014-present.
 
 Minecraft Timings is licensed [MIT](https://tldrlegal.com/license/mit-license). See [LICENSE](LICENSE)
+
+The redesign theme is (c) PebbleHost 2021-present, see [LICENSE](src/css/themes/LICENSE)
 
 I'd really prefer if clones did not start up for no good reason.
 

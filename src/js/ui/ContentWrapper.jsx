@@ -1,47 +1,66 @@
 /*
- * Copyright (c) (2017) - Aikar's Minecraft Timings Parser
+ * Copyright (c) (2021) - PebbleHost Timings Theme
  *
- *  Written by Aikar <aikar@aikar.co>
+ *  Written by PebbleHost Team <support@pebblehost.com>
  *    + Contributors (See AUTHORS)
  *
- *  http://aikar.co
- *  http://starlis.com
- *
- *  @license MIT
+ *  https://pebblehost.com
+ *  
+ *  See full license at /src/css/themes/LICENSE
  *
  */
+
 import React from "react";
 
-import Header from "./Header";
-import Footer from "./Footer";
-import Advertisement from "./Advertisement";
 import Content from "./Content";
-import ContentTop from "./ContentTop";
 import ErrorDisplay from "./ErrorDisplay";
+import Sidebar from "./Sidebar";
+import query from "../query";
+import Footer from "./Footer";
 
 export default class ContentWrapper extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activeTab: window.location.hash ? window.location.hash.split("#")[1] : 'timings',
+      loadedTips: false,
+      tipsData: null,
+    }
+
+    this.updateTab = this.updateTab.bind(this);
+  }
+
+  async componentDidMount() {
+    try {
+      let res = await fetch('/analyze?id='+(query.get("id") || ""))
+      let tipsData = await res.json();
+      this.setState({ loadedTips: true, tipsData })
+    } catch (e) {
+      this.setState({ loadedTips: false, tipsData: null });
+    }
+  }
+
+  updateTab(activeTab) {
+    this.setState({
+      activeTab
+    });
+  }
+
   render() {
-    return <div>
-      <Header />
-      <div id="body-wrap">
-        <div className="dev-warning"><strong>Please do not ask for help with timings in #spigot</strong></div>
-
-
-        <ContentTop/>
-
-        <div id="top-ad">
-          <Advertisement adId="top"/>
+    return (
+      <div className="content-wrap">
+        <div className="full-body">
+          <div className="sidebar">
+            <Sidebar updateTab={this.updateTab} loadedTips={this.state.loadedTips} tipsData={this.state.tipsData} />
+          </div>
+          <div className="body">
+            <ErrorDisplay />
+            <Content activeTab={this.state.activeTab} loadedTips={this.state.loadedTips} tipsData={this.state.tipsData} />
+          </div>
         </div>
-
-        <ErrorDisplay />
-        <Content/>
-
-        <div id="bottom-ad">
-          <Advertisement adId="bottom"/>
-        </div>
+        <Footer />
       </div>
-      <div className="push" style={{clear: "left"}}></div>
-      <Footer/>
-    </div>;
+    );
   }
 }

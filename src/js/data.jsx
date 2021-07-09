@@ -15,7 +15,6 @@ import xhr from "xhr";
 import qs from "qs";
 import query from './query';
 import clone from "clone";
-import _ from "lodash";
 import ObjectManager from "objectsm";
 import TimingData from "./data/TimingData";
 import lscache from "ls-cache";
@@ -30,7 +29,6 @@ import TimingIdentity from "./data/TimingIdentity";
 import Region from "./data/Region";
 import TimingsMaster from "./data/TimingsMaster";
 import TimingsMap from "./data/TimingsMap";
-
 
 const TIMINGS_CLASS_MAP = {
   1: MinuteReport,
@@ -151,7 +149,7 @@ data.loadData = async function loadData() {
     }
     let version = data.timingsMaster.version;
     // Support a bug in Sponge that serialized an optional
-    if (!empty(version['value'])) {
+    if (version['value']) {
       version = version['value'];
     }
     if (version === '$version') {
@@ -169,7 +167,7 @@ data.loadData = async function loadData() {
       }
     }
     data.first = first;
-    data.ranges = _.uniq(ranges);
+    data.ranges = ranges.filter((value, index, self) => self.indexOf(value) === index);
     loadChartData();
     await loadTimingData();
     dataSuccess();
@@ -211,7 +209,7 @@ function loadChartData() {
     }
 
     for (const /*MinuteReport*/mp of history.minuteReports) {
-      data.maxTime = max(mp.fullServerTick.total, data.maxTime);
+      data.maxTime = Math.max(mp.fullServerTick.total, data.maxTime);
       totalPlayers += mp.ticks.playerTicks / mp.ticks.timedTicks
     }
   }
@@ -233,7 +231,7 @@ function loadChartData() {
       }
 
       data.stamps.push(mp.time);
-      data.labels.push(new Date(mp.time * 1000).toLocaleString());
+      data.labels.push(new Date(mp.time * 1000));
       data.tpsData.push(scale("TPS", mp.tps > 19.85 ? 20 : mp.tps));
       data.lagData.push(mp.fullServerTick.lagTotal);
       data.chunkData.push(scale("Chunks", chunkCount));
