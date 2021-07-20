@@ -16,21 +16,22 @@ const fs = require('fs');
 const gutil = require("gulp-util");
 const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 const DefinePlugin = require('webpack/lib/DefinePlugin');
-const ProvidePlugin = require('webpack/lib/ProvidePlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
-const EnvironmentPlugin = require('webpack/lib/EnvironmentPlugin');
 const AssetsPlugin = require('assets-webpack-plugin');
-const WebpackAutoCleanBuildPlugin = require("webpack-auto-clean-build-plugin");
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const cssPattern = '_[name]_[local]-[hash:5]';
-const themes = fs.readdirSync(path.join(__dirname, "src/css/themes/")).map((themeFile) => {
+const themes = fs.readdirSync(path.join(__dirname, "src/css/themes/")).filter(themeFile => themeFile.endsWith('.scss')).map((themeFile) => {
   return themeFile.match(/(.*)\.scss/)[1];
 });
 module.exports = function (isProduction, watch) {
+  // Add amcharts key if not exists
+  try {
+    fs.statSync(path.join(__dirname, 'src', 'js', 'amcharts.js'));
+  } catch (e) {
+    if (e.code === "ENOENT") fs.writeFileSync(path.join(__dirname, 'src', 'js', 'amcharts.js'), `export const key = null;`);
+  }
+
   watch = watch || false;
   process.env.NODE_ENV = isProduction ? "production" : "development";
   gutil.log("[webpack] isProduction: " + (isProduction ? "true" : "false"));
@@ -57,13 +58,17 @@ module.exports = function (isProduction, watch) {
   }
 
   const config = {
+    externals: function (context, request, callback) {
+      if (/xlsx|canvg|pdfmake/.test(request)) {
+        return callback(null, "commonjs " + request);
+      }
+      callback();
+    },
     context: __dirname,
     entry: {
       vendor: [
         "babel-polyfill",
         "es7-shim",
-        //"jquery",
-        "chart.js",
         "react",
         "react-dom",
       ],
@@ -74,7 +79,7 @@ module.exports = function (isProduction, watch) {
     cache: !isProduction,
     devtool: isProduction ? 'source-map' : 'source-map',
     output: {
-      path: path.join(__dirname, "dist"),
+      path: path.join(__dirname, "public", "dist"),
       publicPath: "dist/",
       filename: "[name].js",
       chunkFilename: "chunk.[id].js",
@@ -98,9 +103,7 @@ module.exports = function (isProduction, watch) {
                 "react",
                 "stage-0"
               ],
-              plugins: [
-                'lodash'
-              ],
+              plugins: [],
               sourceMap: true,
               babelrc: false,
             }
@@ -200,7 +203,7 @@ module.exports = function (isProduction, watch) {
         mangle: true,
         sourceMap: true,
       }) : null,
-      new AssetsPlugin({path: path.join(__dirname, "dist")}),
+      new AssetsPlugin({path: path.join(__dirname, "public", "dist")}),
       new CommonsChunkPlugin({
         name: 'vendor',
         minChunks: 3,

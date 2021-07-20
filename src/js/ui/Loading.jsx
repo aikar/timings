@@ -3,6 +3,8 @@
  *
  *  Written by Aikar <aikar@aikar.co>
  *    + Contributors (See AUTHORS)
+ * 
+ *  Modified by PebbleHost
  *
  *  http://aikar.co
  *  http://starlis.com
@@ -43,23 +45,12 @@ export default class Loading extends React.Component {
       </div>;
     }
     return (
-      <div id="content">
-        <div id="tab-bar" className="ui-tabs ui-widget ui-widget-content ui-corner-all">
-          <div id="tab-panel"
-               className="tabs ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-            <div className="tab-title active" style={{width: "100%"}}>
-              <a className="tab ui-tabs-anchor" style={{width: "100%"}}>&nbsp;</a>
-            </div>
-
-          </div>
-          <section className={"content active"} style={{textAlign: "center"}}>
-            <br /><br />
-            <h3>Timings is currently loading</h3>
-            <br /><br /><br />
-            <Spinner noFadeIn spinnerName="three-bounce"/>
-            <br /><br /><br /><br /><br />
-          </section>
-        </div>
+      <div className="tab-ct-wrapper" style={{textAlign: "center"}}>
+        <br /><br />
+        <h3>Timings is currently loading</h3>
+        <br /><br /><br />
+        <Spinner noFadeIn spinnerName="three-bounce"/>
+        <br /><br /><br /><br /><br />
       </div>
     );
   }

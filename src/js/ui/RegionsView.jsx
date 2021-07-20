@@ -3,6 +3,8 @@
  *
  *  Written by Aikar <aikar@aikar.co>
  *    + Contributors (See AUTHORS)
+ * 
+ *  Modified by PebbleHost
  *
  *  http://aikar.co
  *  http://starlis.com
@@ -12,7 +14,6 @@
  */
 
 import React from "react";
-import sortBy from "lodash/sortBy";
 import ExpandControl from "./ExpandControl";
 
 export default class RegionsView extends React.Component {
@@ -68,26 +69,18 @@ export default class RegionsView extends React.Component {
         }
       }
     }
-
     return (<div>
-      <br /><h3>NOTICE: These are not chunks, counts are NOT EXACT!!!</h3>
+      <h3>NOTICE: These are not chunks, counts are NOT EXACT!!!</h3>
       These are summaries by region.
       They are a representation of number of times seen within this selected history window.<br />
       They will be much higher than seen in game. It is intended
       to help you identify where the most TE/E's are.<br/>A region can cover 512 blocks around the
       coordinates.<br /><br />
       {Object.entries(areaMap).map(([world, chunks]) => (
-        <WorldView key={world} world={world} chunks={sortBy(Object.entries(chunks), sortRegions)}/>
+        <WorldView key={world} world={world} chunks={Object.entries(chunks).sort((a, b) => (b[1].tec+b[1].ec) - (a[1].tec+a[1].ec))}/>
       ))}
     </div>);
   }
-}
-
-function sortRegions([areaId, region]) {
-  return region['tec'] + region['ec'];
-}
-function sortCounts([id, count]) {
-  return count;
 }
 
 class WorldView extends React.Component {
@@ -109,9 +102,19 @@ class WorldView extends React.Component {
             Tile Entities - Summary:
 					</span>}>{() => (
             <div className="chunk-row full-timing-row">
-              {sortBy(Object.entries(Object.assign(region.te, region.e)), sortCounts).map(([type, count]) => (
-                <span key={type} className='indent full-child'><strong>{type}</strong>: {count}</span>
-              ))}
+              {
+                Object.entries(
+                  Object.assign(region.te, region.e)
+                )
+                .sort((a, b) => {
+                  return b[1] - a[1];
+                })
+                .map(([type, count]) => 
+                  (
+                    <span key={type} className='indent full-child'><strong>{type}</strong>: {count}</span>
+                  )
+                )
+              }
             </div>)}
           </ExpandControl>
         </div>))}

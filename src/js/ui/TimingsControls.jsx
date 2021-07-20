@@ -1,19 +1,17 @@
 /*
- * Copyright (c) (2017) - Aikar's Minecraft Timings Parser
+ * Copyright (c) (2021) - PebbleHost Timings Theme
  *
- *  Written by Aikar <aikar@aikar.co>
+ *  Written by PebbleHost Team <support@pebblehost.com>
  *    + Contributors (See AUTHORS)
  *
- *  http://aikar.co
- *  http://starlis.com
- *
- *  @license MIT
+ *  https://pebblehost.com
+ *  
+ *  See full license at /src/css/themes/LICENSE
  *
  */
 
 import React from "react";
 import data from "../data";
-import cx from "classnames";
 
 export default class TimingsControls extends React.Component {
   filterTimer;
@@ -41,25 +39,36 @@ export default class TimingsControls extends React.Component {
   };
 
   render() {
+    let controls = {
+      totalPct: "Total",
+      avg: "Avg",
+      avgCountTick: "Count"
+    }
     return <div id="controls">
       <input id="filter" placeholder="Filter Results" type="text" onChange={this.onFilterChange}/>
       <div id="sort-toggle">
-        <div className={cx("totalPct", {active: sortType === "totalPct"})}
-             onClick={() => this.sort("totalPct")}>Total
-        </div>
-        <div className={cx("avg", {active: sortType === "avg"})}
-             onClick={() => this.sort("avg")}>Avg
-        </div>
-        <div className={cx("avgCountTick", {active: sortType === "avgCountTick"})}
-             onClick={() => this.sort("avgCountTick")}>Count
-        </div>
+        {Object.keys(controls).map(control => (
+          <div
+            className={control + (sortType === control ? " active" : "")}
+            onClick={() => this.sort(control)}
+            key={control}
+          >
+            {controls[control]}
+          </div>
+        ))}
       </div>
       <div id="type-toggle">
-        <div className={cx("lag", {active: reportType === "lag"})}
-             onClick={() => this.type("lag")}>Lag
+        <div
+          className={`lag${reportType === "lag" ? " active" : ""}`}
+          onClick={() => this.type("lag")}
+        >
+          Lag (&gt;50ms)
         </div>
-        <div className={cx("all", {active: reportType === "all"})}
-             onClick={() => this.type("all")}>All
+        <div
+          className={`all${reportType === "all" ? " active" : ""}`}
+          onClick={() => this.type("all")}
+        >
+          All
         </div>
       </div>
     </div>;

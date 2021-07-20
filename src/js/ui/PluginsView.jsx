@@ -4,6 +4,8 @@
  *  Written by Aikar <aikar@aikar.co>
  *    + Contributors (See AUTHORS)
  *
+ *  Modified by PebbleHost
+ * 
  *  http://aikar.co
  *  http://starlis.com
  *
@@ -14,9 +16,6 @@
 import React from "react";
 import data from "../data";
 import TimingRow from "./TimingRow";
-import flow from "lodash/flow";
-import _fp from "lodash/fp";
-import _ from "lodash";
 import Plugin from "../data/Plugin";
 
 export default class PluginsView extends React.Component {
@@ -35,19 +34,21 @@ export default class PluginsView extends React.Component {
     if (!this.state.timingHistoryReady) {
       return null;
     }
-    let plugins = flow(
-      _fp.sortBy(`handler.${sortType}`)
-    )(Object.values(data.timingsMaster.plugins).map((plugin) => {
+
+    let plugins = Object.values(data.timingsMaster.plugins).map((plugin) => {
       const handlerId = data.timingsMaster.idmap.handlerNameMap[`${plugin.name}::Combined Total`];
       const handler = handlerId && data.handlerData[handlerId.id];
       return {plugin, handler: handler && handler[data.propTotal] ? handler : null};
-    }));
-    let results = _.partition(plugins, (p) => p.handler);
-    results[0] = results[0].reverse();
-    plugins = results[0].concat(results[1]);
+    }).sort((a, b) => {
+      if (!a.handler || !b.handler) return -1;
+      return a.handler[sortType] - b.handler[sortType];
+    })
+
+    plugins = plugins.filter(p => p.handler).reverse().concat(plugins.filter(p => !p.handler));
     return (
       <div>
         {plugins.map((p) => <PluginRow key={p.plugin.name} handler={p.handler} plugin={p.plugin}/>)}
+        {plugins.length === 0 ? <h2>No plugins installed</h2> : null}
       </div>
     );
   }

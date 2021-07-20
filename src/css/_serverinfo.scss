@@ -2,6 +2,8 @@
  * Aikar's Minecraft Timings Parser
  *
  * Written by Aikar <aikar@aikar.co> - Butchered by Fudgie <thomas@burnett-taylor.me>
+ * Modified by PebbleHost
+ * 
  * http://aikar.co
  * http://starlis.com
  *
@@ -11,7 +13,9 @@
 #server-info {
 	text-align: center;
 
-	width: 30%;
+	@media (min-width: 1110px) {
+		width: 30%;
+	}
 	min-height: 318px;
 
 	.server-title {
@@ -35,16 +39,13 @@
 			margin-left: 10px;
 		}
 	}
-	table {
-		text-align: initial;
-		.fieldName {
-			font-weight: bold;
-			text-align: right;
-			padding-right: 5px;
-		}
-		.fieldValue {
-			padding-left: 5px;
-		}
+	
+}
+
+table {
+	.fieldName {
+		font-weight: bold;
+		text-align: center;
 	}
 }
 

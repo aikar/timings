@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Aikar's Minecraft Timings Parser
  * Written by Aikar <aikar@aikar.co>
+ * Modified by PebbleHost
  * http://aikar.co
  * http://starlis.com
  *
@@ -12,10 +13,7 @@
 		width: 98%;
 		height: 200px;
 	}
-	padding: 10px;
 	text-align: center;
-
-	width: 69.5%;
 
 	#time-selector {
 		height: 20px;
@@ -23,7 +21,7 @@
 		margin-left: 5px;
 
 		text-align: center;
-		padding: 0;
+		padding: 0 21px;
 		position: relative;
 
 	}
@@ -125,8 +123,8 @@
 	margin-left: -4px;
 	width: 10px;
 	height: 10px;
-	border: 2px solid $theme-background-alt;
-	background-color: $theme-background;
+	border: 2px solid $theme-color-text;
+	background-color: $theme-color;
 	cursor: pointer;
 	border-radius: 50%;
 	vertical-align: middle;

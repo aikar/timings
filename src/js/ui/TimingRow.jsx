@@ -3,7 +3,9 @@
  *
  *  Written by Aikar <aikar@aikar.co>
  *    + Contributors (See AUTHORS)
- *
+ * 
+ *  Modified by PebbleHost
+ * 
  *  http://aikar.co
  *  http://starlis.com
  *
@@ -14,9 +16,6 @@
 import React from "react";
 import TimingHandler from "../data/TimingHandler";
 import data from "../data";
-import flow from "lodash/flow";
-import _fp from "lodash/fp";
-import {round} from "lodash/math";
 
 export default class TimingRow extends React.Component {
 
@@ -68,10 +67,10 @@ export default class TimingRow extends React.Component {
       const propCount = prop('count');
 
       const filter = lagFilter(propTotal, propCount);
-      children = flow(
-        _fp.filter(filter),
-        _fp.sortBy(sortType),
-        _fp.map((child) => {
+      children = Object.values(handler.children)
+        .filter(c => filter(c))
+        .sort((a, b) => a[sortType] - b[sortType])
+        .map(child => {
           if (!data.handlerData[child.id]) {
             console.error("Missing Handler", child.id, child, this);
             return null;
@@ -92,7 +91,7 @@ export default class TimingRow extends React.Component {
             timingRowDepth={this.props.timingRowDepth + 1}
           />
         })
-      )(handler.children).reverse();
+        .reverse()
     }
 
     let childControl;
@@ -182,7 +181,7 @@ class TimingRecordData extends React.Component {
 
       pctOfTick = pctView(tickAvg / 50 * 100, 50, 30, 20, 10);
     }
-    const avgCountTick = number_format(handler.avgCountTick, 2);
+    const avgCountTick = handler.avgCountTick.toFixed(2);
 
     return (
       <div className='row-wrap' onClick={this.props.onClick}>

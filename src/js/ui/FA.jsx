@@ -14,11 +14,7 @@
 import React from "react";
 
 export default function FA(props) {
-  return props.onClick ?
-    <i className={'fa fa-fw ' + props.class + ' fa-' + props.icon}
-       onClick={props.onClick}/>
-    :
-    <i className={'fa fa-fw ' + props.class + ' fa-' + props.icon}/>;
+  return <i className={`${props.type ? props.type : 'fa'} fa-fw ${props.class} fa-${props.icon}`} onClick={props.onClick ? props.onClick : null} />;
 };
 FA.propTypes = {
   children: React.PropTypes.any,
