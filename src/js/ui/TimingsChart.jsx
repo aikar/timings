@@ -19,7 +19,6 @@ import TimingsChartOptions from './TimingsChartOptions';
 import * as keyFile from '../amcharts';
 
 // Install am4core themes & license key
-am4core.useTheme(am4themes_animated);
 am4core.useTheme(am4themes_dark);
 if (keyFile.key) am4core.addLicense(keyFile.key);
 
