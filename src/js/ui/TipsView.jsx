@@ -41,7 +41,7 @@ export default class TipsView extends React.Component {
     }
 
     var tips = {};
-    for (const tip of this.props.data.tips) {
+    for (const tip of this.props.data) {
       if (!tips.hasOwnProperty(tip.file)) tips[tip.file] = [];
       tips[tip.file].push(tip);
     }

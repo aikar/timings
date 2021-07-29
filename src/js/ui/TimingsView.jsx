@@ -27,8 +27,7 @@ export default class TimingsView extends React.Component {
   constructor(props, ctx) {
     super(props, ctx);
     this.state = {
-      limit: 40,
-      loading: false
+      limit: 40
     };
     data.provideTo(this);
   }

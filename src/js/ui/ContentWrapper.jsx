@@ -15,30 +15,19 @@ import React from "react";
 import Content from "./Content";
 import ErrorDisplay from "./ErrorDisplay";
 import Sidebar from "./Sidebar";
-import query from "../query";
 import Footer from "./Footer";
+import data from "../data";
 
 export default class ContentWrapper extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      activeTab: window.location.hash ? window.location.hash.split("#")[1] : 'timings',
-      loadedTips: false,
-      tipsData: null,
+      activeTab: window.location.hash ? window.location.hash.split("#")[1] : 'timings'
     }
 
     this.updateTab = this.updateTab.bind(this);
-  }
-
-  async componentDidMount() {
-    try {
-      let res = await fetch('/analyze?id='+(query.get("id") || ""))
-      let tipsData = await res.json();
-      this.setState({ loadedTips: true, tipsData })
-    } catch (e) {
-      this.setState({ loadedTips: false, tipsData: null });
-    }
+    data.provideTo(this);
   }
 
   updateTab(activeTab) {
@@ -52,11 +41,11 @@ export default class ContentWrapper extends React.Component {
       <div className="content-wrap">
         <div className="full-body">
           <div className="sidebar">
-            <Sidebar updateTab={this.updateTab} loadedTips={this.state.loadedTips} tipsData={this.state.tipsData} />
+            <Sidebar updateTab={this.updateTab} loadedTips={this.state.timingHistoryReady} tipsData={data.tips} />
           </div>
           <div className="body">
             <ErrorDisplay />
-            <Content activeTab={this.state.activeTab} loadedTips={this.state.loadedTips} tipsData={this.state.tipsData} />
+            <Content activeTab={this.state.activeTab} loadedTips={this.state.timingHistoryReady} tipsData={data.tips} />
           </div>
         </div>
         <Footer />

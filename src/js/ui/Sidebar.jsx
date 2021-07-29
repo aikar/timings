@@ -73,7 +73,7 @@ export default class Sidebar extends React.Component {
                         <li>
                             <button onClick={() => this.setTab("tips")} className={this.state.activeTab === "tips" ? 'active' : ''}>
                                 <FA icon='lightbulb' />
-                                Tips {this.props.loadedTips ? <span className="tips-badge">{this.props.tipsData.tips.length}</span> : null}
+                                Tips {this.props.loadedTips ? <span className="tips-badge">{this.props.tipsData.length}</span> : null}
                             </button>
                         </li>
                     </ul>
