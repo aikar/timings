@@ -1,24 +1,21 @@
 /*
- * Copyright (c) (2017) - Aikar's Minecraft Timings Parser
+ * Copyright (c) (2021) - PebbleHost Timings Theme
  *
- *  Written by Aikar <aikar@aikar.co>
+ *  Written by PebbleHost Team <support@pebblehost.com>
  *    + Contributors (See AUTHORS)
  *
- *  http://aikar.co
- *  http://starlis.com
- *
- *  @license MIT
+ *  https://pebblehost.com
+ *  
+ *  See full license at /src/css/themes/LICENSE
  *
  */
 
 import React from "react";
-import TabContainer from "./TabContainer";
-import TabbedPanel from "./TabbedPanel";
 import RegionsView from "./RegionsView";
 import PluginsView from "./PluginsView";
 import ConfigView from "./ConfigView";
 import TimingsView from "./TimingsView";
-import TimingsControls from "./TimingsControls";
+import HistorySelector from "./HistorySelector";
 import data from "../data";
 import Loading from "./Loading";
 
@@ -38,32 +35,29 @@ export default class Content extends React.Component {
     if (!this.state.dataReady) {
       return <Loading ref={(load) => data.loadingIndicator = load} isReady={false}/>;
     }
-    return <div id="content">
-      <div id="tab-bar" className="ui-tabs ui-widget ui-widget-content ui-corner-all">
-        <TabContainer
-          activeTab="timings"
-          tabs={{
-            "timings": "Timings",
-            "regions": "Regions",
-            "config": "Config",
-            "plugins": "Plugins",
-          }}
-          stickyChildren={<TimingsControls />}
-        >
-          <Loading ref={(load) => data.loadingIndicator = load} isReady={this.state.dataReady}/>
-          <TabbedPanel tabId="timings">
-            <TimingsView reportType="lag"/>
-          </TabbedPanel>
-          <TabbedPanel tabId="config">
-            <ConfigView />
-          </TabbedPanel>
-          <TabbedPanel tabId="regions">
-            <RegionsView />
-          </TabbedPanel>
-          <TabbedPanel tabId="plugins">
-            <PluginsView />
-          </TabbedPanel>
-        </TabContainer>
+
+    return <div>
+      <div style={{ display: this.props.activeTab === "timings" ? 'block' : 'none'}} className="tab">
+        <div className="tab-ct-wrapper less-padding">
+          <div className="tab-ct-header">Timings Report</div>
+          <HistorySelector/>
+        </div>
+        <div className="tab-ct-wrapper">
+          <div className="tab-ct-header">Breakdown</div>
+          <TimingsView reportType="lag"/>
+        </div>
+      </div>
+      <div style={{ display: this.props.activeTab === "regions" ? 'block' : 'none' }} className="tab-ct-wrapper">
+        <div className="tab-ct-header">Regions</div>
+        <RegionsView />
+      </div>
+      <div style={{ display: this.props.activeTab === "config" ? 'block' : 'none' }} className="tab-ct-wrapper">
+        <div className="tab-ct-header">Config</div>
+        <ConfigView />
+      </div>
+      <div style={{ display: this.props.activeTab === "plugins" ? 'block' : 'none' }} className="tab-ct-wrapper">
+        <div className="tab-ct-header">Plugins</div>
+        <PluginsView />
       </div>
     </div>;
   }

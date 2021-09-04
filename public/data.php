@@ -14,7 +14,7 @@
 
 namespace Starlis\Timings;
 
-require_once __DIR__ . "/init.php";
+require_once __DIR__ . "/../init.php";
 if ($_SERVER['HTTP_ACCEPT'] === 'application/json') {
 	header("Content-Type: application/json");
 }
