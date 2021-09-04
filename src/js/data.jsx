@@ -29,7 +29,6 @@ import TimingIdentity from "./data/TimingIdentity";
 import Region from "./data/Region";
 import TimingsMaster from "./data/TimingsMaster";
 import TimingsMap from "./data/TimingsMap";
-import { getTips } from "./tips";
 
 const TIMINGS_CLASS_MAP = {
   1: MinuteReport,
@@ -102,11 +101,6 @@ data.masterHandler = null;
  */
 data.handlerData = {};
 
-/**
- * @type {Array<any>}
- */
-data.tips = [];
-
 const scales = data.scales = {
   "Entities": 10000,
   "Active Entities": 10000,
@@ -174,7 +168,6 @@ data.loadData = async function loadData() {
     }
     data.first = first;
     data.ranges = ranges.filter((value, index, self) => self.indexOf(value) === index);
-    data.tips = getTips(data.timingsMaster);
     loadChartData();
     await loadTimingData();
     dataSuccess();

@@ -99,9 +99,6 @@
 
 				&:hover {
 					color: $theme-color;
-					.tips-badge {
-						color: white;
-					}
 				}
 
 				&.active {
@@ -110,11 +107,6 @@
 
 					i {
 						color: white;
-					}
-
-					.tips-badge {
-						background-color: white;
-						color: $theme-color;
 					}
 				}
 
@@ -169,12 +161,6 @@
 			.tab-ct-header {
 				margin: -5px;
 			}
-		}
-
-		&.tips {
-			background-color: unset;
-			padding: 0;
-			border: unset;
 		}
 	}
 	.tab .tab-ct-wrapper {
@@ -339,98 +325,6 @@
 	100% {
 	  transform: rotate(360deg);
 	}
-}
-
-/* Tips */
-
-.tips-list {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: flex-start;
-	align-items: flex-start;
-	.tip-file {
-		flex-basis: 50%;
-		padding: 15px;
-
-		.tip-file-header {
-			display: flex; 
-			justify-content: flex-start;
-			flex-wrap: wrap;
-			align-items: center;
-			margin-bottom: 10px;
-			padding: 5px;
-			border: 1px solid #1b2024;
-
-			span {
-				flex-grow: 1;
-				font-size: 1.5em;
-				padding-left: 6px;
-				line-height: 1.25;
-				font-family: 'Montserrat', sans-serif;
-				text-transform: uppercase;
-			}
-
-			a {
-				padding-right: 5px;
-				color: $theme-color;
-				&:hover {
-					color: white;
-				}
-			}
-
-			button {
-				background-color: transparent;
-				color: $theme-color;
-
-				&:hover {
-					color: white;
-				}
-				&:focus {
-					outline: none;
-				}
-			}
-
-			#how-to-panel {
-				flex-basis: 100%;
-
-				ol {
-					list-style-type: decimal;
-					margin: 0;
-					padding: 10px 40px;
-				}
-			}
-		}
-
-		.tip-item {
-			width: 100%;
-			padding: 8px;
-			//background: #0f1114;
-			background: #13171a;
-			&:not(:last-child) {
-				margin-bottom: 15px;
-			}
-
-			.tip-header {
-				border-bottom: 1px solid $theme-color;
-				color: $theme-color;
-				margin: -8px;
-				font-family: 'Montserrat', sans-serif;
-				margin-bottom: 5px;
-				padding: 5px;
-			}
-		}
-	}
-}
-.tips-badge {
-	background-color: $theme-color;
-	margin-left: 10px;
-    height: 20px;
-    padding: 8px;
-	font: 14px Montserrat, sans-serif;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 
 .sidebar-info {

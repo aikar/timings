@@ -41,11 +41,11 @@ export default class ContentWrapper extends React.Component {
       <div className="content-wrap">
         <div className="full-body">
           <div className="sidebar">
-            <Sidebar updateTab={this.updateTab} loadedTips={this.state.timingHistoryReady} tipsData={data.tips} />
+            <Sidebar updateTab={this.updateTab} />
           </div>
           <div className="body">
             <ErrorDisplay />
-            <Content activeTab={this.state.activeTab} loadedTips={this.state.timingHistoryReady} tipsData={data.tips} />
+            <Content activeTab={this.state.activeTab} />
           </div>
         </div>
         <Footer />

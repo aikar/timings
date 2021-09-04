@@ -13,7 +13,6 @@
 import React from "react";
 import RegionsView from "./RegionsView";
 import PluginsView from "./PluginsView";
-import TipsView from "./TipsView";
 import ConfigView from "./ConfigView";
 import TimingsView from "./TimingsView";
 import HistorySelector from "./HistorySelector";
@@ -59,9 +58,6 @@ export default class Content extends React.Component {
       <div style={{ display: this.props.activeTab === "plugins" ? 'block' : 'none' }} className="tab-ct-wrapper">
         <div className="tab-ct-header">Plugins</div>
         <PluginsView />
-      </div>
-      <div style={{ display: this.props.activeTab === "tips" ? 'block' : 'none' }} className=" tips">
-        <TipsView loaded={this.props.loadedTips} data={this.props.tipsData} />
       </div>
     </div>;
   }
