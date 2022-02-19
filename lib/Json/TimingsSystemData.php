@@ -17,12 +17,16 @@ class TimingsSystemData {
 	use FromJson;
 
 	public $timingcost;
+	public $loadavg;
 	public $name;
 	public $version;
 	public $jvmversion;
+	public $jvmvendor;
+	public $jvmvendorversion;
 	public $arch;
 	public $maxmem;
 	public $cpu;
+	public $cpuname;
 	public $runtime;
 	public $flags;
 	public $gc;
