@@ -16,12 +16,16 @@ import {ObjectBase} from "objectsm";;
 export default class TimingsSystemData extends ObjectBase {
 
   timingcost;
+  loadavg;
   name;
   version;
   jvmversion;
+  jvmvendor;
+  jvmvendorversion;
   arch;
   maxmem;
   cpu;
+  cpuname;
   runtime;
   flags;
   gc;
