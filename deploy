@@ -35,6 +35,11 @@ if [ -s "$NVM_DIR/nvm.sh" ]; then
 	nvm install >/dev/null || exit 1
 	nvm use >/dev/null || exit 1
 fi
+if command -v node >/dev/null && ! command -v yarn >/dev/null; then
+	echo "$(c 33)yarn not found, installing yarn 1 for node $(node -v)$(ce)"
+	npm install -g yarn@1 >/dev/null || echo "$(c 1 31)Failed to install yarn$(ce)"
+	hash -r
+fi
 for tool in node yarn; do
 	if ! command -v $tool >/dev/null; then
 		echo "$(c 1 31)$tool not found.$(ce) Install nvm for this user, then: nvm install && npm install -g yarn@1"
