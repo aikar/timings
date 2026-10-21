@@ -1,6 +1,9 @@
 #!/bin/bash
 
 # Aikar timings deploy script
+#
+# Deploys the current state of this dev checkout to ../production. No git network access is needed
+# (no branch push/pull), so it can run as the web user: sudo -u www-data ./deploy
 
 
 timestamp() {
@@ -19,21 +22,25 @@ ce() {
 echo -e "\e[m"
 }
 
-if [ ! -d ".git" ]; then
-	echo "Please run from dev checkout";
-	return 1;
+if [ ! -d ".git" ] || [ ! -d "../production" ]; then
+	echo "Please run from the dev checkout (next to ../production)"
+	exit 1
 fi
-echo "$(c 32)You are in git branch$(ce)"
-git branch || exit
-echo
-echo "$(c 32)Current branch:$(ce)"
+
+echo "$(c 32)Deploying this checkout:$(ce)"
 echo
 git log -n 1 | cat -
-
 echo
+dirty="$(git status --porcelain --untracked-files=no)"
+if [ -n "$dirty" ]; then
+	echo "$(c 1 33)Uncommitted changes that will be deployed too:$(ce)"
+	echo "$dirty"
+	echo
+fi
+
 echo "$(c 32)Current production:$(ce)"
 echo
-git log -n 1 production | cat -
+cat ../production/DEPLOYED_VERSION 2>/dev/null || echo "(no DEPLOYED_VERSION file)"
 
 echo
 read -p "$(c 32)  Are you sure you want to deploy this? Press $(c 1 33)y/n $(ce)" -n 1 -r
@@ -42,16 +49,6 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
 echo "$(c 1 31)Aborted$(ce)"
 exit;
 fi
-
-echo "$(c 33)Resetting production branch to here..$(ce)"
-(
-	git branch -f production || exit 1
-	git push origin production -f || exit 1
-) || (
-	echo "$(c 1 31)  Failed to push up to github$(ce)"
-	exit 1
-) || exit
-echo "$(c 33)Branched and pushed up to github$(ce)..$(ce)"
 
 (
 	cd .. || exit 1
@@ -65,7 +62,6 @@ echo "$(c 33)Branched and pushed up to github$(ce)..$(ce)"
 ) || exit
 
 (
-	git checkout production || exit 1
 	echo "$(c 33)Updating Dependencies$(ce)"
 	yarn install || exit 1
 	echo "$(c 33)Building$(ce)"
@@ -73,11 +69,17 @@ echo "$(c 33)Branched and pushed up to github$(ce)..$(ce)"
 	echo "$(c 33)Done! Let's launch it.$(ce)"
 	rm -rf ../production || exit 1
 	echo "$(c 33)Copying$(ce)"
-	cp -a . ../production || exit 1
+	mkdir ../production || exit 1
+	# everything except git metadata, so production isn't a linked checkout
+	tar -c --exclude=./.git . | tar -x -C ../production || exit 1
 	echo "$(c 33)Restoring production configuration$(ce)"
 	cp ../prod_backups/$backup/config.dev.ini ../production/ || exit 1
-	rm -f ../production/.git # remove .git reference so its not linked to dev
-	git checkout master
+	{
+		echo "commit: $(git rev-parse HEAD) ($(git rev-parse --abbrev-ref HEAD))"
+		echo "subject: $(git log -n 1 --format=%s)"
+		echo "deployed: $(date -R) by $(whoami)"
+		[ -n "$dirty" ] && echo "uncommitted changes included:" && echo "$dirty"
+	} > ../production/DEPLOYED_VERSION
 	cd ../
 	echo "$(c 33)Restoring Symlink to new production$(ce)"
 	ln -sfn production prod || exit 1
