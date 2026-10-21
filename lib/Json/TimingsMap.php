@@ -14,6 +14,7 @@ namespace Starlis\Timings\Json;
 use Starlis\Timings\FromJson;
 use Starlis\Timings\Singleton;
 
+#[\AllowDynamicProperties] // FromJson tags instances with a ":cls" property
 class TimingsMap {
 	use FromJson, Singleton;
 

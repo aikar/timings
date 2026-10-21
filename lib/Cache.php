@@ -66,7 +66,8 @@ class Cache {
 	 */
 	public static function getObject($key) {
 		global $ini;
-		return unserialize(self::get($key, "objectcache" . $ini['cache_ver']));
+		$data = self::get($key, "objectcache" . $ini['cache_ver']);
+		return $data === null ? false : unserialize($data); // unserialize(null) is deprecated in 8.1
 	}
 
 	/**
@@ -98,6 +99,6 @@ class Cache {
 		if (\is_null($dir)) {
 			$dir = $ini["tmp_path"];
 		}
-		return $dir . "/${type}_${key}.gz";
+		return $dir . "/{$type}_{$key}.gz";
 	}
 }

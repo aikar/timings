@@ -17,6 +17,7 @@ use Starlis\Timings\FromJsonParent;
 /**
  * @mapper normalizeData
  */
+#[\AllowDynamicProperties] // FromJson tags instances with a ":cls" property
 class TimingData {
 	use FromJson;
 	/**

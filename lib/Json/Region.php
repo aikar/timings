@@ -15,6 +15,7 @@ use Starlis\Timings\FromJson;
 use Starlis\Timings\FromJsonParent;
 use Starlis\Timings\util;
 
+#[\AllowDynamicProperties] // FromJson tags instances with a ":cls" property
 class Region {
 	use FromJson;
 

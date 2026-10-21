@@ -15,6 +15,7 @@ use Starlis\Timings\FromJson;
 use Starlis\Timings\FromJsonParent;
 use utilphp\util;
 
+#[\AllowDynamicProperties] // FromJson tags instances with a ":cls" property
 class World {
 	use FromJson;
 

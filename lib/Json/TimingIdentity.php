@@ -13,6 +13,7 @@ namespace Starlis\Timings\Json;
 
 use Starlis\Timings\FromJson;
 
+#[\AllowDynamicProperties] // FromJson tags instances with a ":cls" property
 class TimingIdentity {
 	use FromJson;
 
