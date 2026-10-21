@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f278e454ded1f54cdae499d70fcdaac7",
+    "content-hash": "c12814cdc3e67dfcbdbd2e0441867086",
     "packages": [
         {
             "name": "brandonwamboldt/utilphp",
@@ -50,6 +50,10 @@
                 "php",
                 "utility"
             ],
+            "support": {
+                "issues": "https://github.com/brandonwamboldt/utilphp/issues",
+                "source": "https://github.com/brandonwamboldt/utilphp/tree/master"
+            },
             "time": "2015-02-02T17:56:14+00:00"
         },
         {
@@ -58,25 +62,29 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/davedevelopment/stiphle.git",
-                "reference": "c714ba50275e41b6c77cb90c06cedd1c24e61fc3"
+                "reference": "5d1c244f0525d265e231a65db538b74eb5483768"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/davedevelopment/stiphle/zipball/c714ba50275e41b6c77cb90c06cedd1c24e61fc3",
-                "reference": "c714ba50275e41b6c77cb90c06cedd1c24e61fc3",
+                "url": "https://api.github.com/repos/davedevelopment/stiphle/zipball/5d1c244f0525d265e231a65db538b74eb5483768",
+                "reference": "5d1c244f0525d265e231a65db538b74eb5483768",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.1"
+                "php": "^5.6.0|^7.0|^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.5",
-                "predis/predis": "^1.1"
+                "doctrine/cache": "^1.0",
+                "phpunit/phpunit": "^6.5|^7.5|^8.4",
+                "predis/predis": "^1.1",
+                "zendframework/zend-cache": "^2.8"
             },
             "suggest": {
                 "doctrine/cache": "~1.0",
-                "predis/predis": "~1.1"
+                "predis/predis": "~1.1",
+                "zendframework/zend-cache": "^2.8"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -102,7 +110,11 @@
                 "throttle",
                 "throttling"
             ],
-            "time": "2017-01-11 07:18:09"
+            "support": {
+                "issues": "https://github.com/davedevelopment/stiphle/issues",
+                "source": "https://github.com/davedevelopment/stiphle/tree/0.9.4"
+            },
+            "time": "2022-11-25T16:30:20+00:00"
         }
     ],
     "packages-dev": [],
@@ -113,6 +125,10 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": []
+    "platform": {},
+    "platform-dev": {},
+    "platform-overrides": {
+        "php": "7.4.33"
+    },
+    "plugin-api-version": "2.6.0"
 }

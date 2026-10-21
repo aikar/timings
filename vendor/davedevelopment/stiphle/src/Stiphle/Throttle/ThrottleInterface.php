@@ -1,10 +1,12 @@
 <?php
 /**
  * @package    Stiphle
- * @subpackage
+ * @subpackage 
  */
 
 namespace Stiphle\Throttle;
+
+use Stiphle\Storage\LockWaitTimeoutException;
 
 /**
  * This file is part of Stiphle
@@ -20,29 +22,31 @@ namespace Stiphle\Throttle;
  *
  * @author      Dave Marshall <david.marshall@atstsolutions.co.uk>
  */
-interface ThrottleInterface {
+interface ThrottleInterface
+{
 
-	/**
-	 * Throttle
-	 *
-	 * @param string $key - A unique key for what we're throttling
-	 * @param int $limit - How many are allowed
-	 * @param int $milliseconds - In this many milliseconds
-	 * @return void
-	 */
-	public function throttle($key, $limit, $milliseconds);
+    /**
+     * Throttle
+     *
+     * @param string $key  - A unique key for what we're throttling
+     * @param int $limit   - How many are allowed
+     * @param int $milliseconds - In this many milliseconds
+     * @return int
+     * @throws LockWaitTimeoutException
+     */
+    public function throttle($key, $limit, $milliseconds);
 
-	/**
-	 * Get Estimate
-	 *
-	 * If I were to throttle now, how long would I be waiting
-	 *
-	 * @param string $key - A unique key for what we're throttling
-	 * @param int $limit - How many are allowed
-	 * @param int $milliseconds - In this many milliseconds
-	 * @return int - the number of milliseconds before this request should be allowed
-	 */
-	public function getEstimate($key, $limit, $milliseconds);
+    /**
+     * Get Estimate
+     *
+     * If I were to throttle now, how long would I be waiting
+     *
+     * @param string $key  - A unique key for what we're throttling
+     * @param int $limit   - How many are allowed
+     * @param int $milliseconds - In this many milliseconds
+     * @return int - the number of milliseconds before this request should be allowed
+     */
+    public function getEstimate($key, $limit, $milliseconds);
 }
 
 

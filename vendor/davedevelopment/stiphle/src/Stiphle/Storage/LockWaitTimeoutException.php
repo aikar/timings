@@ -3,7 +3,6 @@
  * @package    Stiphle
  * @subpackage Stiphle\Storage
  */
-
 namespace Stiphle\Storage;
 
 /**
@@ -20,5 +19,4 @@ namespace Stiphle\Storage;
  *
  * @author      Dave Marshall <david.marshall@atstsolutions.co.uk>
  */
-class LockWaitTimeoutException extends \Exception {
-}
+class LockWaitTimeoutException extends \Exception {}

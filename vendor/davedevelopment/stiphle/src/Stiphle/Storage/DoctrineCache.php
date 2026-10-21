@@ -12,56 +12,62 @@ use Doctrine\Common\Cache\Cache;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-class DoctrineCache implements StorageInterface {
-	protected $lockWaitTimeout = 1000;
-	protected $lockWaitInterval = 100;
 
-	public function __construct(Cache $cache, $lockWaitTimeout = 1000, $lockWaitInterval = 100) {
-		$this->cache = $cache;
-		$this->lockWaitTimeout = $lockWaitTimeout;
-		$this->lockWaitInterval = $lockWaitInterval;
-	}
+class DoctrineCache implements StorageInterface
+{
+    /** @var Cache */
+    protected $cache;
 
-	public function setLockWaitTimeout($milliseconds) {
-		$this->lockWaitTimeout = $milliseconds;
-		return;
-	}
+    /** @var int */
+    protected $lockWaitTimeout;
 
-	public function setSleep($microseconds) {
-		$this->sleep = $microseconds;
-		return;
-	}
+    /** @var int */
+    protected $lockWaitInterval;
 
-	public function lock($key) {
-		$key = $key . "::LOCK";
-		$start = microtime(true);
-		while ($this->cache->contains($key)) {
-			$passed = (microtime(true) - $start) * 1000;
-			if ($passed > $this->lockWaitTimeout) {
-				throw new LockWaitTimeoutException();
-			}
-			usleep($this->sleep);
-		}
-		$this->cache->save($key, true);
+    public function __construct(Cache $cache, $lockWaitTimeout = 1000, $lockWaitInterval = 100)
+    {
+        $this->cache = $cache;
+        $this->lockWaitTimeout = $lockWaitTimeout;
+        $this->lockWaitInterval = $lockWaitInterval;
+    }
 
-		return;
-	}
+    public function setLockWaitTimeout($milliseconds)
+    {
+        $this->lockWaitTimeout = $milliseconds;
+    }
 
-	public function unlock($key) {
-		$key = $key . "::LOCK";
-		$this->cache->delete($key);
-	}
+    public function setSleep($microseconds)
+    {
+        $this->lockWaitInterval = $microseconds;
+    }
 
-	public function get($key) {
-		return $this->cache->fetch($key);
-	}
+    public function lock($key)
+    {
+        $key = $key . "::LOCK";
+        $start = microtime(true);
+        while ($this->cache->contains($key)) {
+            $passed = (microtime(true) - $start) * 1000;
+            if ($passed > $this->lockWaitTimeout) {
+                throw new LockWaitTimeoutException();
+            }
+            usleep($this->lockWaitInterval);
+        }
+        $this->cache->save($key, true);
+    }
 
-	public function set($key, $value) {
-		$this->cache->save($key, $value);
-		return;
-	}
+    public function unlock($key)
+    {
+        $key = $key . "::LOCK";
+        $this->cache->delete($key);
+    }
 
+    public function get($key)
+    {
+        return $this->cache->fetch($key);
+    }
+
+    public function set($key, $value)
+    {
+        $this->cache->save($key, $value);
+    }
 }
-
-
-

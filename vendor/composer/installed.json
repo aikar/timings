@@ -1,104 +1,118 @@
-[
-    {
-        "name": "brandonwamboldt/utilphp",
-        "version": "1.1.0",
-        "version_normalized": "1.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/brandonwamboldt/utilphp.git",
-            "reference": "36c32efc4f0679c05163464a550f45c8d83fe683"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/brandonwamboldt/utilphp/zipball/36c32efc4f0679c05163464a550f45c8d83fe683",
-            "reference": "36c32efc4f0679c05163464a550f45c8d83fe683",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "satooshi/php-coveralls": "dev-master"
-        },
-        "time": "2015-02-02T17:56:14+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "utilphp\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
+{
+        "packages": [
+                {
+                        "name": "brandonwamboldt/utilphp",
+                        "version": "1.1.0",
+                        "version_normalized": "1.1.0.0",
+                        "source": {
+                                "type": "git",
+                                "url": "https://github.com/brandonwamboldt/utilphp.git",
+                                "reference": "36c32efc4f0679c05163464a550f45c8d83fe683"
+                        },
+                        "dist": {
+                                "type": "zip",
+                                "url": "https://api.github.com/repos/brandonwamboldt/utilphp/zipball/36c32efc4f0679c05163464a550f45c8d83fe683",
+                                "reference": "36c32efc4f0679c05163464a550f45c8d83fe683",
+                                "shasum": ""
+                        },
+                        "require": {
+                                "php": ">=5.3.3"
+                        },
+                        "require-dev": {
+                                "satooshi/php-coveralls": "dev-master"
+                        },
+                        "time": "2015-02-02T17:56:14+00:00",
+                        "type": "library",
+                        "installation-source": "dist",
+                        "autoload": {
+                                "psr-0": {
+                                        "utilphp\\": "src/"
+                                }
+                        },
+                        "notification-url": "https://packagist.org/downloads/",
+                        "license": [
+                                "MIT"
+                        ],
+                        "authors": [
+                                {
+                                        "name": "Brandon Wamboldt",
+                                        "email": "brandon.wamboldt@gmail.com"
+                                }
+                        ],
+                        "description": "util.php is a collection of useful functions and snippets that you need or could use every day, designed to avoid conflicts with existing projects",
+                        "homepage": "https://github.com/brandonwamboldt/utilphp",
+                        "keywords": [
+                                "collection",
+                                "helpers",
+                                "php",
+                                "utility"
+                        ],
+                        "install-path": "../brandonwamboldt/utilphp"
+                },
+                {
+                        "name": "davedevelopment/stiphle",
+                        "version": "dev-master",
+                        "version_normalized": "dev-master",
+                        "source": {
+                                "type": "git",
+                                "url": "https://github.com/davedevelopment/stiphle.git",
+                                "reference": "5d1c244f0525d265e231a65db538b74eb5483768"
+                        },
+                        "dist": {
+                                "type": "zip",
+                                "url": "https://api.github.com/repos/davedevelopment/stiphle/zipball/5d1c244f0525d265e231a65db538b74eb5483768",
+                                "reference": "5d1c244f0525d265e231a65db538b74eb5483768",
+                                "shasum": ""
+                        },
+                        "require": {
+                                "php": "^5.6.0|^7.0|^8.0"
+                        },
+                        "require-dev": {
+                                "doctrine/cache": "^1.0",
+                                "phpunit/phpunit": "^6.5|^7.5|^8.4",
+                                "predis/predis": "^1.1",
+                                "zendframework/zend-cache": "^2.8"
+                        },
+                        "suggest": {
+                                "doctrine/cache": "~1.0",
+                                "predis/predis": "~1.1",
+                                "zendframework/zend-cache": "^2.8"
+                        },
+                        "time": "2022-11-25T16:30:20+00:00",
+                        "default-branch": true,
+                        "type": "library",
+                        "installation-source": "dist",
+                        "autoload": {
+                                "psr-0": {
+                                        "Stiphle": "src/"
+                                }
+                        },
+                        "notification-url": "https://packagist.org/downloads/",
+                        "license": [
+                                "MIT"
+                        ],
+                        "authors": [
+                                {
+                                        "name": "Dave Marshall",
+                                        "email": "dave.marshall@atstsolutions.co.uk",
+                                        "homepage": "http://davedevelopment.co.uk"
+                                }
+                        ],
+                        "description": "Simple rate limiting/throttling for php",
+                        "homepage": "http://github.com/davedevelopment/stiphle",
+                        "keywords": [
+                                "rate limit",
+                                "rate limiting",
+                                "throttle",
+                                "throttling"
+                        ],
+                        "support": {
+                                "issues": "https://github.com/davedevelopment/stiphle/issues",
+                                "source": "https://github.com/davedevelopment/stiphle/tree/0.9.4"
+                        },
+                        "install-path": "../davedevelopment/stiphle"
+                }
         ],
-        "authors": [
-            {
-                "name": "Brandon Wamboldt",
-                "email": "brandon.wamboldt@gmail.com"
-            }
-        ],
-        "description": "util.php is a collection of useful functions and snippets that you need or could use every day, designed to avoid conflicts with existing projects",
-        "homepage": "https://github.com/brandonwamboldt/utilphp",
-        "keywords": [
-            "collection",
-            "helpers",
-            "php",
-            "utility"
-        ]
-    },
-    {
-        "name": "davedevelopment/stiphle",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/davedevelopment/stiphle.git",
-            "reference": "c714ba50275e41b6c77cb90c06cedd1c24e61fc3"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/davedevelopment/stiphle/zipball/c714ba50275e41b6c77cb90c06cedd1c24e61fc3",
-            "reference": "c714ba50275e41b6c77cb90c06cedd1c24e61fc3",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.1"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "^5.5",
-            "predis/predis": "^1.1"
-        },
-        "suggest": {
-            "doctrine/cache": "~1.0",
-            "predis/predis": "~1.1"
-        },
-        "time": "2017-01-11T07:18:09+00:00",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "Stiphle": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Dave Marshall",
-                "email": "dave.marshall@atstsolutions.co.uk",
-                "homepage": "http://davedevelopment.co.uk"
-            }
-        ],
-        "description": "Simple rate limiting/throttling for php",
-        "homepage": "http://github.com/davedevelopment/stiphle",
-        "keywords": [
-            "rate limit",
-            "rate limiting",
-            "throttle",
-            "throttling"
-        ]
-    }
-]
+        "dev": false,
+        "dev-package-names": []
+}

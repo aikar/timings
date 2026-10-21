@@ -18,6 +18,9 @@
         }
     },
     "config": {
-        "autoloader-suffix": "TimingsClassLoader"
+        "autoloader-suffix": "TimingsClassLoader",
+        "platform": {
+            "php": "7.4.33"
+        }
     }
 }
