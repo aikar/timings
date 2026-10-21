@@ -91,7 +91,7 @@ trait FromJson {
 				$data = $parentObj->name;
 			} else if ($index === '@value') {
 				$data = $rootData;
-			} else if (array_key_exists($index, $vars)) {
+			} else if (is_array($vars) && array_key_exists($index, $vars)) { // scalar $rootData: PHP 8 TypeError
 				$data = $vars[$index];
 			} else if (strpos($index, "::") !== false) {
 				$data = self::executeCb($index, [$obj, $rootData, $parentObj]);
